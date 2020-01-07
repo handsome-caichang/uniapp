@@ -1,0 +1,44 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.content.data-v-e53acbde {
+  margin: 180rpx 50rpx;
+  border: 1rpx solid #717171;
+  padding: 10rpx;
+}
+.content .title.data-v-e53acbde {
+    color: #212121;
+    font-size: 34rpx;
+    text-align: center;
+}
+.content .contact.data-v-e53acbde {
+    font-size: 28rpx;
+    color: #575757;
+    text-align: center;
+}
+.content .res.data-v-e53acbde {
+    font-size: 28rpx;
+    color: #575757;
+}
+.content .time.data-v-e53acbde {
+    margin-top: 10rpx;
+    text-align: right;
+    font-size: 22rpx;
+    color: #575757;
+}
+

@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.uni-page-body .header-box.data-v-d612e4b6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  background: -webkit-linear-gradient(top, #18c02c 0%, #7fea8b 100%);
+  background: linear-gradient(180deg, #18c02c 0%, #7fea8b 100%);
+  padding: 40rpx;
+  margin-bottom: 24rpx;
+}
+.uni-page-body .header-box .img.data-v-d612e4b6 {
+    height: 142rpx;
+    width: 142rpx;
+    margin-right: 8rpx;
+}
+.uni-page-body .header-box .price-box.data-v-d612e4b6 {
+    color: #FFFFFF;
+    font-size: 56rpx;
+}
+.uni-page-body .header-box .uni-icon-clear.data-v-d612e4b6,
+  .uni-page-body .header-box .uni-icon-eye.data-v-d612e4b6 {
+    color: #999;
+}
+.uni-page-body .uni-page-footer.data-v-d612e4b6 {
+  position: fixed;
+  bottom: 50rpx;
+  left: 0rpx;
+  right: 0rpx;
+  text-align: center;
+  color: #1F96F7;
+  font-size: 22rpx;
+}
+.uni-page-body .uni-page-footer .icon.data-v-d612e4b6 {
+    margin-right: 10rpx;
+}
+

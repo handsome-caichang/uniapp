@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "报表",
+  "usingComponents": {
+    "input-bond": "/pages/report/child/inputbond",
+    "out-bond": "/pages/report/child/outbond"
+  }
+}

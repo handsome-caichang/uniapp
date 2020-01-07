@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "保证金",
+  "usingComponents": {
+    "input-bond": "/pages/user/userinfo/bondchild/inputbond",
+    "out-bond": "/pages/user/userinfo/bondchild/outbond"
+  }
+}

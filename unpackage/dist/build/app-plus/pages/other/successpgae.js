@@ -1,0 +1,2 @@
+setCssToHead(["@charset \x22UTF-8\x22;\n.",[1],"uni-page-body .",[1],"text.",[1],"data-v-a317fb4e { text-align: center; color: #767676; }\n",],undefined,{path:"./pages/other/successpgae.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/other/successpgae.wxml') } }));

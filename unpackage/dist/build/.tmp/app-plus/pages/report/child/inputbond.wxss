@@ -1,0 +1,44 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.uni-page-body.data-v-7968c6f6 {
+  /* 通用样式 */
+  /* 横屏样式 */
+}
+.uni-page-body .qiun-charts.data-v-7968c6f6 {
+    width: 750rpx;
+    height: 500rpx;
+    background-color: #FFFFFF;
+}
+.uni-page-body .charts.data-v-7968c6f6 {
+    width: 750rpx;
+    height: 500rpx;
+    background-color: #FFFFFF;
+}
+.uni-page-body .qiun-charts-rotate.data-v-7968c6f6 {
+    width: 700rpx;
+    height: 1100rpx;
+    background-color: #FFFFFF;
+    padding: 25rpx;
+}
+.uni-page-body .charts-rotate.data-v-7968c6f6 {
+    width: 700rpx;
+    height: 1100rpx;
+    background-color: #FFFFFF;
+}
+

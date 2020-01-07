@@ -1,0 +1,2 @@
+setCssToHead(["@charset \x22UTF-8\x22;\n.",[1],"uni-page-body .",[1],"uni-page-footer.",[1],"data-v-2ddbc59f { position: fixed; bottom: ",[0,50],"; left: ",[0,0],"; right: ",[0,0],"; text-align: center; color: #1F96F7; font-size: ",[0,22],"; }\n.",[1],"uni-page-body .",[1],"uni-page-footer .",[1],"icon.",[1],"data-v-2ddbc59f { margin-right: ",[0,10],"; }\n",],undefined,{path:"./pages/user/userinfo/userinfopoint.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/user/userinfo/userinfopoint.wxml') } }));

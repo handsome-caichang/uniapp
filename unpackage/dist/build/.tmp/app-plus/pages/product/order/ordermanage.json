@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "匹配订单管理",
+  "usingComponents": {
+    "input-order": "/pages/product/order/child/inputorder",
+    "out-order": "/pages/product/order/child/outorder"
+  }
+}

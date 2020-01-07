@@ -1,0 +1,376 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/tabBar/home/home",
+			"style": {  // 用于设置每个页面的状态栏、导航条、标题、窗口背景色等。页面中配置项会覆盖 globalStyle 中相同的配置项
+				// "navigationBarTextStyle":"black", // 导航栏标题颜色及状态栏前景颜色
+				"onReachBottomDistance":50,
+				"app-plus": {
+					"titleNView": false //禁用原生导航栏
+					// "softinputNavBar":"none" // iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#409EFF",
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/tabBar/buypro/buypro",
+			"style": {
+				"enablePullDownRefresh": true,
+				"navigationBarTextStyle":"black",
+				"app-plus": {
+					"titleNView": false ,//禁用原生导航栏
+					"softinputNavBar":"none"
+				}
+			}
+		},{
+			"path": "pages/tabBar/recover/recover",
+			"style": {
+				"navigationBarTextStyle":"black",
+				"onReachBottomDistance":50,
+				"app-plus": {
+					"titleNView": false ,//禁用原生导航栏
+					"bounce":"none"
+				}
+			}
+		},
+		{
+			"path": "pages/tabBar/user/user",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "我的",
+				"navigationBarTextStyle":"black",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"type": "transparent",
+						"buttons": [{
+								"fontSrc": "/static/iconfont/yticon.ttf",
+								"text": "\ue60f",
+								"fontSize": "24",
+								"color": "#303133",
+								"width": "46px",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"fontSrc": "/static/iconfont/yticon.ttf",
+								"text": "\ue744",
+								"fontSize": "28",
+								"color": "#303133",
+								"background": "rgba(0,0,0,0)",
+								"redDot": true
+							}
+						]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/customer/customerdetail",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},{
+			"path": "pages/other/successpgae",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/other/fabusuccess",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/other/chongzhisuccess",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/other/tixiansuccess",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/other/pipeisuccess",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/product/productdetail",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/product/malldetail",
+			"style": {
+				"navigationBarTitleText": "详情展示",
+				"onReachBottomDistance":50,
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			}
+		},{
+            "path" : "pages/user/notice",
+            "style" : {
+				"navigationBarTitleText": "通知"
+			}
+        },
+		{
+			"path": "pages/user/set",
+			"style": {
+				"navigationBarTitleText": "设置"
+			}
+		},
+		{
+			"path": "pages/user/userinfo/userinfo",
+			"style": {
+				"navigationBarTitleText": "个人资料"
+			}
+		},
+		{
+			"path": "pages/user/userinfo/headimgset",
+			"style": {
+				"navigationBarTitleText": "设置个人头像"
+			}
+		},
+		{
+			"path": "pages/user/userinfo/userinfoset",
+			"style": {
+				"navigationBarTitleText": "身份管理中心"
+			}
+		},
+		{
+			"path": "pages/user/userinfo/userinfopoint",
+			"style": {
+				"navigationBarTitleText": "个人信息"
+			}
+		},
+		{
+			"path": "pages/user/userinfo/userbond",
+			"style": {
+				"navigationBarTitleText": "保证金"
+			}
+		},
+		{
+			"path": "pages/user/moneybag/mbag",
+			"style": {
+				"navigationBarTitleText": "余额"
+			}
+		},
+		{
+			"path": "pages/user/moneybag/chongzhi",
+			"style": {
+				"navigationBarTitleText": "充值"
+			}
+		},
+		{
+			"path": "pages/user/moneybag/tixian",
+			"style": {
+				"navigationBarTitleText": "提现"
+			}
+		},
+		{
+			"path": "pages/user/moneybag/mingxi",
+			"style": {
+				"navigationBarTitleText": "收支明细"
+			}
+		},
+		{
+			"path": "pages/user/reputationvalue",
+			"style": {
+				"navigationBarTitleText": "信誉值"
+			}
+		},
+		{
+			"path": "pages/user/reputationrun",
+			"style": {
+				"navigationBarTitleText": "信誉值评定方法"
+			}
+		},
+		{
+			"path": "pages/user/vipsend",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/customer/fabumanage/fabumanage",
+			"style": {
+				"navigationBarTitleText": "发布管理"
+			}
+		},
+		{
+			"path": "pages/customer/fabumanage/examineres",
+			"style": {
+				"navigationBarTitleText": "审核结果"
+			}
+		},
+		{
+			"path": "pages/product/order/ordermanage",
+			"style": {
+				"navigationBarTitleText": "匹配订单管理"
+			}
+		},
+		{
+			"path": "pages/product/order/applicationrecord",
+			"style": {
+				"navigationBarTitleText": "申请记录"
+			}
+		},
+		{
+			"path": "pages/product/order/orderdetail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/product/order/orderdetailhuozhu",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/product/payorder/payordermanage",
+			"style": {
+				"navigationBarTitleText": "交易订单管理"
+			}
+		},
+		{
+			"path": "pages/product/payorder/payorderdetail",
+			"style": {
+				"navigationBarTitleText": "交易详情"
+			}
+		},
+		{
+			"path": "pages/product/importorder",
+			"style": {
+				"navigationBarTitleText": "录入订单"
+			}
+		},
+		{
+			"path": "pages/product/payorder/hzpayorderdetail",
+			"style": {
+				"navigationBarTitleText": "交易详情"
+			}
+		},
+		{
+			"path": "pages/product/hzimportorder",
+			"style": {
+				"navigationBarTitleText": "录入订单"
+			}
+		},{
+			"path": "pages/user/safeset",
+			"style": {
+				"navigationBarTitleText": "安全设置"
+			}
+		},{
+			"path": "pages/user/payset",
+			"style": {
+				"navigationBarTitleText": "支付设置"
+			}
+		},{
+			"path": "pages/user/idcardset",
+			"style": {
+				"navigationBarTitleText": "银行卡"
+			}
+		},{
+			"path": "pages/report/report",
+			"style": {
+				"navigationBarTitleText": "报表"
+			}
+		},{
+			"path": "pages/product/newsdetail",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}
+	],
+	"globalStyle": { // 文档 https://uniapp.dcloud.io/collocation/pages?id=globalstyle
+		"navigationBarBackgroundColor": "#fff", // 导航栏背景颜色（同状态栏背景色）
+		"navigationBarTextStyle": "black",  // 导航栏标题颜色及状态栏前景颜色，仅支持 black/white
+		"navigationBarTitleText": "废品帮", // 导航栏标题文字内容
+		"backgroundColor": "#fff" // 窗口的背景色
+	},
+	"condition": { //模式配置，仅开发期间生效
+	    "current": 0, //当前激活的模式（list 的索引项）
+	    "list": [
+			{
+	            "name": "swiper", //模式名称
+	            "path": "/pages/customer/customerdetail", //启动页面，必选
+	            "query": "id=1" //启动参数，在页面的onLoad函数里面得到。
+	        },
+	        {
+	            "name": "swiper",
+	            "path": "pages/product/productdetail",
+				"query": "id=1" //启动参数，在页面的onLoad函数里面得到。
+	        },
+	        {
+	            "name": "swiper",
+	            "path": "pages/product/malldetail",
+				"query": "id=1" //启动参数，在页面的onLoad函数里面得到。
+	        },
+	        {
+	            "name": "swiper",
+	            "path": "pages/other/successpgae",
+				"query": "type=1" //启动参数，在页面的onLoad函数里面得到。
+	        },
+	        {
+	            "name": "swiper",
+	            "path": "pages/tabBar/recover/recover"
+	        },
+	        {
+	            "name": "swiper",
+	            "path": "pages/user/userinfo"
+	        }
+	    ]
+	},
+	"tabBar": {
+		"color": "#333333",
+		"selectedColor": "#f06c7a",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/tabBar/home/home",
+				"iconPath": "static/img/tabBar/home.png",
+				"selectedIconPath": "static/img/tabBar/home-on.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tabBar/recover/recover",
+				"iconPath": "static/img/tabBar/category.png",
+				"selectedIconPath": "static/img/tabBar/category-on.png",
+				"text": "我是回收人"
+			},
+			{
+				"pagePath": "pages/tabBar/buypro/buypro",
+				"iconPath": "static/img/tabBar/cart.png",
+				"selectedIconPath": "static/img/tabBar/cart-on.png",
+				"text": "我是货主"
+			},
+			{
+				"pagePath": "pages/tabBar/user/user",
+				"iconPath": "static/img/tabBar/user.png",
+				"selectedIconPath": "static/img/tabBar/user-on.png",
+				"text": "我的"
+			}
+		]
+	}
+}

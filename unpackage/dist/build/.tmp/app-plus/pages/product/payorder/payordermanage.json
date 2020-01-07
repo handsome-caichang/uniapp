@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "交易订单管理",
+  "usingComponents": {
+    "record-list": "/pages/product/payorder/child/recordlist",
+    "recovery-list": "/pages/product/payorder/child/recoverylist",
+    "sell-list": "/pages/product/payorder/child/sellList"
+  }
+}

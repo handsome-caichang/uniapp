@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "支付设置",
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons"
+  }
+}

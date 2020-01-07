@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.payorderdetail.data-v-06a65c9a {
+  margin-top: 20rpx;
+}
+.payorderdetail .uni-media-list-body.data-v-06a65c9a {
+    position: relative;
+}
+.payorderdetail .uni-media-list-logo.data-v-06a65c9a {
+    width: 48rpx;
+    height: 48rpx;
+}
+.payorderdetail .uni-media-list-body.data-v-06a65c9a {
+    height: auto;
+}
+.payorderdetail .payicon.data-v-06a65c9a {
+    position: absolute;
+    right: 168rpx;
+    width: 108rpx;
+    height: 86rpx;
+}
+.payorderdetail .rowicon.data-v-06a65c9a {
+    position: absolute;
+    right: 0rpx;
+}
+

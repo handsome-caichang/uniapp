@@ -1,0 +1,118 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.orderdetail .header.data-v-27c5220c {
+  color: #575757;
+  font-size: 28rpx;
+  margin-left: 54rpx;
+  margin-top: 20rpx;
+}
+.orderdetail .content.data-v-27c5220c {
+  padding: 0 20rpx;
+  margin-top: 100rpx;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.orderdetail .content .jiaoyiimg.data-v-27c5220c {
+    width: 80rpx;
+    height: 40rpx;
+}
+.orderdetail .content .left.data-v-27c5220c,
+  .orderdetail .content .right.data-v-27c5220c {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+            flex: 1;
+    width: 298rpx;
+    height: 371rpx;
+    border-radius: 12rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    border: 1rpx solid #717171;
+}
+.orderdetail .content .left .headerimg.data-v-27c5220c,
+    .orderdetail .content .right .headerimg.data-v-27c5220c {
+      height: 150rpx;
+      width: 150rpx;
+      border-radius: 50%;
+}
+.orderdetail .content .left .title.data-v-27c5220c,
+    .orderdetail .content .right .title.data-v-27c5220c {
+      height: 46rpx;
+      font-size: 34rpx;
+}
+.orderdetail .content .left .pinfen.data-v-27c5220c,
+    .orderdetail .content .right .pinfen.data-v-27c5220c {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+              align-items: center;
+}
+.orderdetail .content .left .address.data-v-27c5220c,
+    .orderdetail .content .right .address.data-v-27c5220c {
+      width: 100%;
+      color: #575757;
+      text-align: right;
+}
+.orderdetail .towbtn.data-v-27c5220c {
+  margin-top: 100rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 0 30rpx;
+}
+.orderdetail .towbtn .primary-btn.data-v-27c5220c {
+    width: 290rpx;
+    height: 104rpx;
+    line-height: 104rpx;
+    font-size: 38rpx;
+    text-align: center;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: #18C02C;
+}
+.orderdetail .towbtn .error-btn.data-v-27c5220c {
+    width: 290rpx;
+    height: 104rpx;
+    line-height: 104rpx;
+    font-size: 38rpx;
+    text-align: center;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background-color: #E7211A;
+}
+

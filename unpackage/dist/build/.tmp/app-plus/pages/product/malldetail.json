@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "详情展示",
+  "onReachBottomDistance": 50,
+  "titleNView": {
+    "type": "transparent"
+  },
+  "usingComponents": {
+    "uni-rate": "/components/uni-rate/uni-rate",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "uni-goods-nav": "/components/uni-goods-nav/uni-goods-nav"
+  }
+}

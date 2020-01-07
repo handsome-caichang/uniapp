@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发布管理",
+  "usingComponents": {
+    "input-bond": "/pages/customer/fabumanage/child/inputbond",
+    "out-bond": "/pages/customer/fabumanage/child/outbond"
+  }
+}

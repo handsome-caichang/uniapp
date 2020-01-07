@@ -1,0 +1,68 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.uni-page-body .input-container.data-v-6f2821e2 {
+  padding: 30rpx 34rpx;
+}
+.uni-page-body .input-container .point.data-v-6f2821e2 {
+    padding-left: 30rpx;
+    color: #212121;
+    font-size: 34rpx;
+}
+.uni-page-body .input-container .input-box.data-v-6f2821e2 {
+    margin-top: 30rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    border: 1rpx solid #717171;
+    padding: 4rpx 10rpx;
+    border-radius: 4rpx;
+}
+.uni-page-body .input-container .input-box .icon-box.data-v-6f2821e2 {
+      width: 60rpx;
+      height: 80rpx;
+      line-height: 80rpx;
+      margin-right: 10rpx;
+      text-align: center;
+      font-size: 44rpx;
+      color: #212121;
+}
+.uni-page-body .input-container .input-box .input.data-v-6f2821e2 {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+              flex: 1;
+}
+.uni-page-body .btnbox.data-v-6f2821e2 {
+  margin: 0 auto;
+  margin-top: 78rpx;
+  width: 50%;
+  text-align: center;
+  line-height: 100rpx;
+  height: 100rpx;
+  color: #fff;
+  background-color: #18C02C;
+  font-size: 40rpx;
+  border-radius: 8rpx;
+}
+.uni-page-body .btnbox.isded.data-v-6f2821e2 {
+    background-color: #ADDBB3;
+}
+

@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.container-box .item-box.data-v-304f489a {
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.container-box .uni-flooter-box.data-v-304f489a {
+  margin-top: 100rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.container-box .uni-flooter-box .checked-box.data-v-304f489a {
+    padding-left: 20rpx;
+}
+.container-box .uni-flooter-box .btn.data-v-304f489a {
+    margin-left: 50rpx;
+    width: 332rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    background: #aaaaaa;
+    border-radius: 8px;
+    text-align: center;
+    color: #fff;
+    font-size: 38rpx;
+}
+.container-box .uni-flooter-box .btn.active.data-v-304f489a {
+      background-color: #18C02C;
+}
+.container-box .point-box.data-v-304f489a {
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  padding: 0 18%;
+}
+

@@ -1,0 +1,94 @@
+@charset "UTF-8";
+/* 颜色变量 */
+/* 页面左右间距 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+/* 文字尺寸 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.uni-page-body .btn.data-v-7cb0e878 {
+  background-color: #18C02C;
+  color: #fff;
+  margin: 0 64rpx;
+  margin-top: 120rpx;
+  text-align: center;
+  line-height: 86rpx;
+  height: 86rpx;
+  border-radius: 6rpx;
+}
+.uni-page-body .header-box.data-v-7cb0e878 {
+  padding: 20rpx;
+}
+.uni-page-body .body-box.data-v-7cb0e878 {
+  padding: 0 20rpx;
+  position: relative;
+}
+.uni-page-body .body-box .carditem.data-v-7cb0e878 {
+    background: -webkit-linear-gradient(276deg, #28adb2 0%, #2b8c90 100%);
+    background: linear-gradient(174deg, #28adb2 0%, #2b8c90 100%);
+    border-radius: 24rpx;
+    height: 265rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+            justify-content: space-between;
+    padding: 20rpx;
+    padding-left: 50rpx;
+}
+.uni-page-body .body-box .carditem.postion.data-v-7cb0e878 {
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+}
+.uni-page-body .body-box .carditem .left.data-v-7cb0e878 {
+      background-color: #fff;
+      border-radius: 50%;
+      height: 70rpx;
+      width: 70rpx;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+              justify-content: center;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+              align-items: center;
+      margin-right: 20rpx;
+}
+.uni-page-body .body-box .carditem .left .img.data-v-7cb0e878 {
+        width: 60rpx;
+        height: 60rpx;
+        border-radius: 50%;
+}
+.uni-page-body .body-box .carditem .center.data-v-7cb0e878 {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+              flex: 1;
+      text-align: left;
+}
+.uni-page-body .body-box .carditem .center .title.data-v-7cb0e878 {
+        font-size: 38rpx;
+        color: #fff;
+        font-weight: bold;
+}
+.uni-page-body .body-box .carditem .center .point.data-v-7cb0e878 {
+        font-size: 28rpx;
+        color: #fff;
+}
+.uni-page-body .body-box .carditem .right.data-v-7cb0e878 {
+      font-size: 28rpx;
+      color: #fff;
+}
+

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "录入订单",
+  "usingComponents": {
+    "uni-rate": "/components/uni-rate/uni-rate",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "rul-pop": "/pages/product/child/rulpop"
+  }
+}

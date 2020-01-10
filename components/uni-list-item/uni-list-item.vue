@@ -5,7 +5,7 @@
 	<view :class="disabled ? 'uni-list-item--disabled' : ''" :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'"
 	 class="uni-list-item" @click="onClick">
 		<view class="uni-list-item__container" :class="{'uni-list-item--first':isFirstChild}">
-			<view v-if="thumb" class="uni-list-item__icon">
+			<view v-if="thumb" class="uni-list-item__icon" style="display: flex;">
 				<image :src="thumb" class="uni-list-item__icon-img" />
 			</view>
 			<view v-else-if="showExtraIcon" class="uni-list-item__icon">

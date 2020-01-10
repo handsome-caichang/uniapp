@@ -4,7 +4,7 @@
 		<view class="form-box">
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/leibie.png"></image>
 					<text class="text bitian">货物类别</text>
 				</view>
 				<view class="input-box">
@@ -16,7 +16,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/shulian.png"></image>
 					<text class="text bitian">货物数量(吨)</text>
 				</view>
 				<view class="input-box">
@@ -25,7 +25,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/shoujia.png"></image>
 					<text class="text">售价</text>
 				</view>
 				<view class="input-box">
@@ -34,7 +34,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/dizhi.png"></image>
 					<text class="text bitian">货物地址</text>
 				</view>
 				<view class="input-box" @tap="chooseCity">
@@ -44,7 +44,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/lianxiren.png"></image>
 					<text class="text bitian">联系人</text>
 				</view>
 				<view class="input-box">
@@ -53,7 +53,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/dianhua.png"></image>
 					<text class="text bitian">联系电话</text>
 				</view>
 				<view class="input-box">
@@ -62,7 +62,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/goods/p1.jpg"></image>
+					<image class="img-icon" src="/static/img/huozhu/pipeishu.png"></image>
 					<text class="text">允许匹配数</text>
 				</view>
 				<view class="input-box">
@@ -146,7 +146,7 @@
 					cityCode: ""
 				},
 				cityPickerValue: [0, 0, 1],
-				numberleng: 0,
+				numberleng: "",
 				price: "",
 				contentname: '',
 				contentphone: '',

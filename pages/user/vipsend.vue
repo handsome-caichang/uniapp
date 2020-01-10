@@ -1,10 +1,10 @@
 <template>
-	<view class="uni-page-body">
+	<view class="uni-page-body vipsend">
 
 		<view class="header-box">
 			<view class="uni-flex">
 				<image src="/static/img/goods/p1.jpg" class="img"></image>
-				<view>
+				<view class="name-box">
 					<text class="name">小牛犊</text>
 					<text class="vip">黄金</text>
 				</view>
@@ -14,7 +14,9 @@
 				<view class="vip-text">货物推荐 &bull; 首页展示 &bull; 发布求购</view>
 				<view class="vip-text">货物推荐 &bull; 首页展示 &bull; 发布求购</view>
 			</view>
-			<image class="xingyu" src="/static/img/goods/p10.jpg"></image>
+			<view class="xingyu">
+				VIP
+			</view>
 		</view>
 		
 		<view class="vip-content">
@@ -43,7 +45,7 @@
 			</view>
 			
 			<view class="list-sku">
-				<view class="sku-item did">3个月</view>
+				<view class="sku-item" :class="{'active': isactivesku==1}" @tap="changesuk(1)">3个月</view>
 				<view class="sku-item" :class="{'active': isactivesku==2}" @tap="changesuk(2)">6个月</view>
 				<view class="sku-item" :class="{'active': isactivesku==3}" @tap="changesuk(3)" >1年</view>
 			</view>
@@ -55,7 +57,7 @@
 			<radio-group @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 					<view style="display:flex;justify-content: center;">
-						<image style="width: 48upx;height: 48upx;margin-right: 20upx;" src="/static/img/gongkao.png"></image>
+						<image style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 						<text>{{item.name}}</text>
 					</view>
 					<view>
@@ -98,20 +100,23 @@
 				price: '368',
 				items: [{
 						value: 'USA',
-						name: '余额支付'
-					},
-					{
+						name: '余额支付',
+						icon: '/static/img/pay/yuebao.png',
+					},{
 						value: 'CHN',
 						name: '支付宝支付',
-						checked: 'true'
+						checked: 'true',
+						icon: '/static/img/pay/zhifubao.png',
 					},
 					{
 						value: 'BRA',
-						name: '微信支付'
+						name: '微信支付',
+						icon: '/static/img/pay/weixin.png',
 					},
 					{
 						value: 'JPN',
-						name: '银行卡支付'
+						name: '银行卡支付',
+						icon: '/static/img/pay/yinhanka.png',
 					}
 				],
 				current: 0
@@ -162,8 +167,8 @@
 </script>
 
 <style scoped lang="scss">
-	.uni-page-body {
-		
+	.vipsend {
+		padding-bottom: 98upx;
 		.btnbox {
 			position: fixed;
 			bottom: 0;
@@ -258,8 +263,12 @@
 				position: absolute;
 				right: 20upx;
 				bottom: 62upx;
-				height: 144upx;
 				width: 382upx;
+				height: 144upx;
+				font-size: 200upx;
+				line-height: 1;
+				text-align: center;
+				color:rgba(254,254,254,0.37);
 			}
 
 			.img {
@@ -269,6 +278,7 @@
 			}
 
 			.vip-point {
+				margin-top: 20upx;
 				.vip-text {
 					color: #fff;
 					font-size: 22upx;
@@ -278,7 +288,8 @@
 			.name-box {
 				color: #fff;
 				width: 120upx;
-
+				margin-left: 10upx;
+				line-height: 1;
 				.name {
 					font-size: 38upx;
 					font-weight: 500;

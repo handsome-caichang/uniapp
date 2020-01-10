@@ -104,7 +104,7 @@
 					</view>
 				</scroll-view>
 				
-				<view class="fo-box">
+				<view class="fo-box border-top">
 					<view class="primary-btn" @tap="checkbtn">
 						确认申请
 					</view>
@@ -228,9 +228,26 @@
 				font-size: 32upx;
 			}
 			.uni-list {
+				background-color: #EBEBEB;
 				.right {
 					flex: 1;
 					margin-left: 30upx;
+				}
+			}
+			.fo-box {
+				padding-top: 40upx;
+				padding-bottom: 40upx;
+				display: flex;
+				justify-content: center;
+				.primary-btn{
+					width: 290upx;
+					height: 98upx;
+					line-height: 98upx;
+					font-size: 38upx;
+					text-align: center;
+					border-radius: 8upx;
+					color: $font-color-withe;
+					background-color: $uni-bg-color-grey;
 				}
 			}
 		}
@@ -289,7 +306,7 @@
 				line-height: 104upx;
 				font-size: 38upx;
 				text-align: center;
-				border-radius: 5px;
+				border-radius: 8upx;
 				color: $font-color-withe;
 				background-color: #E7211A;
 			}

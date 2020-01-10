@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "fa-bu": "/pages/tabBar/recover/child/child/fabu",
-    "tui-jian": "/pages/tabBar/recover/child/child/tuijian"
-  }
-}

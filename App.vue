@@ -22,6 +22,8 @@ export default {
 <style lang="scss">
 /* #ifndef APP-PLUS-NVUE */
 	@import '/static/css/uni.css';
+	@import '/static/css/iconfont.css';
 	@import '/static/css/common.scss';
 /* #endif*/
 </style>
+                   

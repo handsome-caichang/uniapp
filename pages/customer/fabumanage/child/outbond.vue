@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-page-body">
+	<view class="uni-page-body outbond">
 		<view class="uni-list-cell" hover-class="uni-list-cell-hover" v-for="(item,index) in list" :key="index">
 			<view class="uni-media-list">
 				<image class="uni-media-list-logo" :src="item.img"></image>
@@ -10,17 +10,17 @@
 						<text>{{item.address}}</text>
 					</view>
 				</view>
-				<view class="option">
-					<uni-icons type="arrowthinup" size="18"></uni-icons>
-					<uni-icons type="arrowthindown" size="18" ></uni-icons>
-					<uni-icons type="trash" size="18" ></uni-icons>
+				<view class="option-box">
+					<uni-icons type="arrowthinup" size="24"></uni-icons>
+					<uni-icons type="arrowthindown" size="24" ></uni-icons>
+					<uni-icons type="trash" size="24" ></uni-icons>
 					<view class="checked-box">
-						<checkbox :checked="item.isjiaji" :disabled="true" color="#E7211A" />
+						<checkbox :checked="item.isjiaji" color="#E7211A" />
 						<text style="color: #E7211A;">加急</text>
 					</view>
 				</view>
 			</view>
-		</view>
+		</view>	
 	</view>
 	</view>
 </template>
@@ -65,15 +65,21 @@
 </script>
 
 <style scoped lang="scss">
-	.uni-page-body {
-		.option {
+	.outbond {
+		.option-box {
 			display: flex;
 			align-items: center;
 			.uni-icons {
-				width: 60upx;
-				margin-right: 4upx;
+				display: inline-block;
+				height: 80upx;
+				width: 80upx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-right: 10upx;
 			}
-			.uni-checkbox-wrapper{
+			.checked-box{
+				margin-left: 20upx;
 			}
 		}
 	}

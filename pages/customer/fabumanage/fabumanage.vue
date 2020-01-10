@@ -1,14 +1,14 @@
 <template>
-	<view class="uni-page-body header-page-body">
+	<view class="uni-page-body header-page-bodys">
 		<view class="header-box">
-			<view class="item" :class="isactive?'active':''"  @tap="changepage(true)" >
+			<view class="item" :class="isactive?'active':''" @tap="changepage(true)">
 				发布货物
 			</view>
-			<view class="item" :class="!isactive?'active':''"  @tap="changepage(false)" >
+			<view class="item" :class="!isactive?'active':''" @tap="changepage(false)">
 				发布求购
 			</view>
 		</view>
-		<view class="container">
+		<view class="containers">
 			<input-bond ref="sellpro" v-if="isactive"></input-bond>
 			<out-bond ref="buypro" v-if="!isactive"></out-bond>
 		</view>
@@ -32,29 +32,32 @@
 				this.isactive = flag;
 			},
 			getmore() {
-				
+
 			}
 		}
 	}
 </script>
 <style lang="scss" scoped>
-	.header-box {
-		width: 100%;
-		padding: 0 4%;
-		height: 100upx;
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
+	.header-page-bodys {
 
-		.item {
-			color: #212121;
-			font-size: 38upx;
-			padding: 0 20upx;
+		.header-box {
+			width: 100%;
+			padding: 0 4%;
+			height: 100upx;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
 
-			&.active {
-				border-bottom: 4upx solid $font-color-light;
+			.item {
+				color: #212121;
+				font-size: 38upx;
+				padding: 0 20upx;
+
+				&.active {
+					border-bottom: 4upx solid $font-color-light;
+				}
 			}
+
 		}
-		
 	}
 </style>

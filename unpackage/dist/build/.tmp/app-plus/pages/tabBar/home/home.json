@@ -1,7 +1,0 @@
-{
-  "onReachBottomDistance": 50,
-  "titleNView": false,
-  "usingComponents": {
-    "uni-rate": "/components/uni-rate/uni-rate"
-  }
-}

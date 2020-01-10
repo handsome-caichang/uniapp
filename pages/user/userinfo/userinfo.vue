@@ -1,22 +1,22 @@
 <template>
 	<view class="uni-page-body sss">
 		<uni-list>
-			<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" title="头像" @tap="navTo('/pages/user/userinfo/headimgset')">
-				<image src="/static/img/gongkao.png" style="width: 76upx;height: 76upx;border-radius: 50%;margin-right: 20upx;"></image>
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/headimg.png" title="头像" @tap="navTo('/pages/user/userinfo/headimgset')">
+				<image src="/static/img/missing-face.png" style="width: 76upx;height: 76upx;border-radius: 50%;margin-right: 20upx;"></image>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')" >
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')" >
 				<view class="uni-flex">
 					<text style="color: #575757;margin-right: 20upx;">张三</text>
 					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;">已实名</text>
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" title="绑定手机号">
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/phone.png" title="绑定手机号">
 				<text style="color: #575757;margin-right: 20upx;">1865226654</text>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" title="地区" />
-			<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" title="从业年限" />
-			<uni-list-item :show-extra-icon="true" :extra-icon="extraIcon1" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" />
-			<uni-list-item :show-extra-icon="true" :showArrow="false" :extra-icon="extraIcon1" title="更多展示" />
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/diqu.png" title="地区" />
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="从业年限" />
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" />
+			<uni-list-item :show-extra-icon="true" :showArrow="false"  thumb="/static/img/user/gengduo.png" title="更多展示" />
 		</uni-list>
 		<view class="img-box">
 

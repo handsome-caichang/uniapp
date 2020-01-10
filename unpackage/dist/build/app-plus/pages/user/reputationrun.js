@@ -1,2 +1,0 @@
-setCssToHead(["@charset \x22UTF-8\x22;\n.",[1],"run.",[1],"data-v-2adeac91 { padding: ",[0,38],"; }\n.",[1],"run .",[1],"title.",[1],"data-v-2adeac91 { color: #212121; font-size: ",[0,30],"; }\n.",[1],"run .",[1],"text.",[1],"data-v-2adeac91 { color: #575757; }\n",],undefined,{path:"./pages/user/reputationrun.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/user/reputationrun.wxml') } }));

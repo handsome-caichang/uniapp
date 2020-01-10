@@ -3,11 +3,11 @@
 
 		<view class="content-box">
 			<checkbox-group @change="checkboxChange">
-				<label class="uni-list-cell uni-list-cell-pd" v-for="item in items" :key="item.value">
+				<label class="uni-list-cell" v-for="item in items" :key="item.value">
 					<view v-if="showguanli">
 						<checkbox :value="item.value" :checked="item.checked" />
 					</view>
-					<view>
+					<view style="flex:1;">
 						<view class="uni-media-list" @tap="resultres(item)">
 							<image class="uni-media-list-logo" src="/static/img/gongkao.png"></image>
 							<view class="uni-media-list-body">
@@ -152,6 +152,9 @@
 
 <style scoped lang="scss">
 	.uni-page-body {
+		.uni-media-list {
+			justify-content: space-between;
+		}
 		.guanlibtn {
 			position: fixed;
 			bottom: 0;

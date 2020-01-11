@@ -37,9 +37,10 @@
 					<image class="img-icon" src="/static/img/huozhu/dizhi.png"></image>
 					<text class="text bitian">货物地址</text>
 				</view>
-				<view class="input-box" @tap="chooseCity">
-					<view class="input " :class="region.cityCode?'':'place'">{{region.label}}</view>
-					<uni-icons class="icon" type="arrowdown"></uni-icons>
+				<view class="input-box">
+					<input class="uni-input" v-model="contentname" type="text" placeholder="货物地址" />
+					<!-- <view class="input " :class="region.cityCode?'':'place'">{{region.label}}</view>
+					<uni-icons class="icon" type="arrowdown"></uni-icons> -->
 				</view>
 			</view>
 			<view class="uni-flex item-box">
@@ -65,6 +66,7 @@
 					<image class="img-icon" src="/static/img/huozhu/pipeishu.png"></image>
 					<text class="text">允许匹配数</text>
 				</view>
+				<!-- 下拉框 5 15 20 -->
 				<view class="input-box">
 					<input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="如不输入，系统默认无限量" />
 				</view>
@@ -163,6 +165,7 @@
 
 		},
 		methods: {
+			// 
 			fabu() {
 				uni.navigateTo({
 					url: "/pages/other/fabusuccess"

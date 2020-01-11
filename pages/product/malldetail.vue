@@ -80,7 +80,7 @@
 		</view>
 
 		<view class="cont-box" style="margin-bottom: 120upx;">
-			<view class="example-box" v-for="(item,index) in prolist" :key="index">
+			<view class="example-box" v-for="(item,index) in prolist" :key="index" @tap="nvto(index, item)">
 				<view class="uni-flex uni-row item-box">
 					<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
 						<image :src="item" style="width: 180rpx;height: 180rpx;"></image>
@@ -108,7 +108,7 @@
 					<uni-icons type="star" size="20" :color="haveac?'#F4EA2A':'#717171'"></uni-icons>
 					<text style="margin-top: -20upx;" :style="{color:haveac?'#F4EA2A':'#717171'}">{{haveac?'取消收藏':'收藏'}}</text>
 				</view>
-				<view class="right-box">
+				<view class="right-box" @tap="call">
 					<uni-icons size="20" type="phone-filled" color="#ffffff"></uni-icons>
 					<text style="margin-top: -20upx;">联系回收站</text>
 				</view>
@@ -133,6 +133,7 @@
 				haveac: false,
 				lefttext: '收藏',
 				imgList: [{
+					src: 'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg',
 					src: 'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg'
 				}],
 				prolist: [
@@ -157,6 +158,15 @@
 		methods: {
 			shouc() {
 				this.haveac = !this.haveac;
+			},
+			nvto(index) {
+				// item
+				uni.navigateTo({
+					url: `/pages/product/malldetail?id=${index}`
+				})
+			},
+			call() {
+				// 直接拨打电话
 			}
 		}
 	}

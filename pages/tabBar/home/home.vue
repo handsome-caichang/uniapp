@@ -23,7 +23,7 @@
 			</view>
 
 		</view>
-		<!-- banner -->
+		<!-- 自动滚动 -->
 		<view class="seckill-section m-t">
 			<view class="s-header"><text class="title">VIP用户</text></view>
 			<scroll-view class="floor-list" scroll-x>
@@ -37,6 +37,7 @@
 				</view>
 			</scroll-view>
 		</view>
+			<!-- 自动滚动 -->
 		<view class="seckill-section m-t">
 			<view class="s-header"><text class="title">货物</text></view>
 			<scroll-view class="floor-list" scroll-x>
@@ -85,7 +86,7 @@
 
 		<!-- 商品列表 -->
 		<view class="seckill-section m-t news">
-			<view class="s-header"><text class="title">预览</text></view>
+			<view class="s-header"><text class="title">行业资讯</text></view>
 			<scroll-view id="tab-bar" class="scroll-h" :scroll-x="true" :show-scrollbar="false">
 				<view v-for="(tab, index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index" @click="ontabtap(tab, index)">
 					<text class="uni-tab-item-title" :class="tabIndex == index ? 'uni-tab-item-title-active' : ''">{{ tab.name }}</text>
@@ -212,15 +213,13 @@
 				this.tabIndex = index;
 			},
 			toGoods(tap) {
-				uni.navigateTo({
-					url: '/pages/product/newsdetail?post_id=' + tap.goods_id + '&title=' + tap.name
-				});
+				// url 跳转
+				// uni.navigateTo({
+				// 	url: '/pages/product/newsdetail?post_id=' + tap.goods_id + '&title=' + tap.name
+				// });
 			},
 			previewImage(current, imageList) {
-				uni.previewImage({
-					current: current,
-					urls: imageList
-				});
+				// 跳转 url
 			},
 			async loadData() {
 				this.arrayText = await this.$api.json('arrayText');
@@ -228,9 +227,9 @@
 				this.goodsList = await this.$api.json('goodsList');
 				this.tabBars = await this.$api.json('tabList');
 				this.productList = await this.$api.json('productList');
-				this.$nextTick(() => {
-					this.$refs.showqiandao.open();
-				})
+				// this.$nextTick(() => {
+				// 	this.$refs.showqiandao.open();
+				// })
 			},
 			closepop() {
 				this.$nextTick(() => {
@@ -241,7 +240,7 @@
 			navToDetailPage(item, index) {
 				let id = item.id;
 				uni.navigateTo({
-					url: `/pages/customer/customerdetail?id=${index}`
+					url: `/pages/customer/customerdetail?id=${index}&sourcetype=1`
 				});
 			},
 			navToDetailPagepro(item, index) {

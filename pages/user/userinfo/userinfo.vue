@@ -6,8 +6,9 @@
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')" >
 				<view class="uni-flex">
-					<text style="color: #575757;margin-right: 20upx;">张三</text>
-					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;">已实名</text>
+					<!-- <text style="color: #575757;margin-right: 20upx;">张三</text> -->
+					<!-- <text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;">已实名</text> -->
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> 
 				</view>
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/phone.png" title="绑定手机号">

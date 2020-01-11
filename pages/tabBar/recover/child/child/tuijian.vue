@@ -34,7 +34,7 @@
 		data() {
 			return {
 				productList: [],
-				novip: false,
+				novip: true,
 			}
 		},
 		created() {

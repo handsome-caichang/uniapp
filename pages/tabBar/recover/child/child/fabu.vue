@@ -14,7 +14,7 @@
 				<checkbox :checked="ischeck" color="#E7211A" />
 				<text style="color: #E7211A;">加急</text>
 			</view>
-			<view class="btn" :class="btnactive?'active':''" >
+			<view class="btn" :class="btnactive?'active':''" @tap="fabucur" >
 				确认发布
 			</view>
 		</view>
@@ -55,12 +55,18 @@
 				],
 				activeindex: 0,
 				ischeck: false,
-				btnactive: true
+				btnactive: false, // 如果不是vip 不能发布
 			}
 		},
 		methods: {
 			clickitem(index) {
 				this.activeindex = index;
+			},
+			fabucur() {
+				// 需要实名，
+				// uni.showModal({
+				// 	title: "发布成功"
+				// });
 			}
 		}
 	}

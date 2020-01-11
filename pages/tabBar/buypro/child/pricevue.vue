@@ -4,7 +4,7 @@
 			<view class="nominal">
 				货物地址
 			</view>
-			<view class="input" @tap="chooseCity">
+			<view class="text-btn" @tap="chooseCity">
 				{{region.label}}
 			</view>
 		</view>
@@ -127,8 +127,8 @@
 				color: #575757;
 				font-size: 28upx;
 			}
-			.input {
-				padding: 20upx;
+			.text-btn {
+				padding: 2upx 10upx;
 				border: 1px solid #575757;
 				border-radius: 6upx;
 				margin-left: 20upx;

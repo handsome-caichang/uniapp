@@ -12,7 +12,7 @@
 			</view>
 			<view class="vip-card-box">
 				<image class="card-bg" src="/static/img/vip-card-bg.png" mode=""></image>
-				<view class="b-btn">
+				<view class="b-btn"  @tap="navTo('/pages/user/vipsend')">
 					立即开通
 				</view>
 				<view class="tit">
@@ -20,7 +20,6 @@
 					Recovery Station会员
 				</view>
 				<text class="e-m">Recovery Station</text>
-				<text class="e-b" @tap="navTo('/pages/user/vipsend')">开通会员</text>
 			</view>
 		</view>
 
@@ -69,7 +68,7 @@
 					工具 
 				</view>
 				<view class="c-list-box">
-					<view class="c-list-item" v-for="(item, index) in list4 " :key="index" >
+					<view class="c-list-item" v-for="(item, index) in list4 " :key="index"  @tap="geren(item)"  >
 						<image :src="item.icon" class="img-icon" ></image>
 						<text class="text">{{item.name}}</text>
 					</view>
@@ -150,7 +149,8 @@
 				list4: [
 					{
 						name: '计算器',
-						icon: '/static/img/user/jisuanqi.png'
+						icon: '/static/img/user/jisuanqi.png',
+						url: '/pages/tool/calc'
 					},{
 						name: '万年历',
 						icon: '/static/img/user/rili.png'

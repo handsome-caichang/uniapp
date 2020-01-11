@@ -43,7 +43,7 @@
 			</scroll-view>
 		</view>
 		
-		<view class="towbtn">
+		<!-- <view class="towbtn">
 			<view class="error-btn" @tap="clearbtn">
 				取消
 			</view>
@@ -59,28 +59,28 @@
 			<view class="primary-btn" @tap="tongyi">
 				同意
 			</view>
-		</view>
-		
-		<view class="btn-container">
+		</view> -->
+		<!-- v-if="sourcetype == '1'" 根据当前登录用户是否实名，没有去实名 -->
+		<view class="btn-container" >
 			<!-- <button type="primary">申请匹配</button> -->
 			<view class="primary-btn" @tap="popbtn">
 				申请匹配
 			</view>
 		</view>
 		
-		<view class="btn-container contact">
-			<!-- <button type="primary">申请匹配</button> -->
+	<!-- 	<view class="btn-container contact">
 			<view class="primary-btn" @tap="popbtn">
 				<uni-icons type="phone" size="18" color="#fff" ></uni-icons>
 				<text>联系回收人</text>
 			</view>
-		</view>
+		</view> -->
 		
 		<uni-popup ref="showtip" type="bottom">
 			<view class="pop-container">
 				<view class="top-box">
 					选择匹配货物
 				</view>
+			<!-- 新增跳转tab 发布货物 -->
 				<scroll-view scroll-y="true" class="scroll-box" >
 					<view class="uni-list">
 						<radio-group @change="checkboxChange">
@@ -154,7 +154,7 @@
 					}
 				],
 				detail: {
-					img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
+					img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 				},
 				prolist: [
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
@@ -162,10 +162,17 @@
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
-				]
+				],
+				sourcetype: ''
 			}
 		},
+		onLoad: (options) => {
+			console.log(options)
+			console.log(this)
+			// this.sourcetype = options.sourcetype;
+		},
 		methods: {
+			//  f
 			headtap() {
 				uni.previewImage({
 					current: 0,
@@ -192,6 +199,11 @@
 			checkbtn() {
 				this.$refs.showtip.close();
 				console.log(this.items.filter(item=>item.checked)[0])
+				
+				uni.showModal({
+					title: '申请匹配成功，等待回收人确认。'
+				})
+				
 			},
 			checkboxChange (e) {
 				var items = this.items,

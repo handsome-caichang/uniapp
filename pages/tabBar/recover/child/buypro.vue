@@ -4,7 +4,7 @@
 			<view class="uni-flex" style="justify-content: space-around;">
 				<view class="userbox">
 					<image :src="headerimg" class="img" ></image>
-					<view class="kaitong" v-if="!isvip">
+					<view class="kaitong" v-if="!isvip" @tap="tovipsend">
 						立即开通会员
 					</view>
 				</view>
@@ -62,6 +62,11 @@
 						this.$refs.tuijian.getmore();
 					})
 				}
+			},
+			tovipsend() {
+				uni.navigateTo({
+					url: "/pages/user/vipsend"
+				})
 			}
 		}
 	}

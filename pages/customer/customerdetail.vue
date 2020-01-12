@@ -43,7 +43,7 @@
 			</scroll-view>
 		</view>
 		
-		<view class="towbtn">
+		<!-- <view class="towbtn">
 			<view class="error-btn" @tap="clearbtn">
 				取消
 			</view>
@@ -59,28 +59,28 @@
 			<view class="primary-btn" @tap="tongyi">
 				同意
 			</view>
-		</view>
-		
-		<view class="btn-container">
+		</view> -->
+		<!-- v-if="sourcetype == '1'" 根据当前登录用户是否实名，没有去实名 -->
+		<view class="btn-container" >
 			<!-- <button type="primary">申请匹配</button> -->
 			<view class="primary-btn" @tap="popbtn">
 				申请匹配
 			</view>
 		</view>
 		
-		<view class="btn-container">
-			<!-- <button type="primary">申请匹配</button> -->
+	<!-- 	<view class="btn-container">
 			<view class="icon-btn" @tap="callCustomer">
 				<uni-icons type="phone" size="18" color="#fff" ></uni-icons>
 				<text>联系回收人</text>
 			</view>
-		</view>
+		</view> -->
 		
 		<uni-popup ref="showtip" type="bottom">
 			<view class="pop-container">
 				<view class="top-box">
 					选择匹配货物
 				</view>
+			<!-- 新增跳转tab 发布货物 -->
 				<scroll-view scroll-y="true" class="scroll-box" >
 					<view class="uni-list">
 						<radio-group @change="checkboxChange">
@@ -104,7 +104,7 @@
 					</view>
 				</scroll-view>
 				
-				<view class="fo-box">
+				<view class="fo-box border-top">
 					<view class="primary-btn" @tap="checkbtn">
 						确认申请
 					</view>
@@ -163,10 +163,17 @@
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
-				]
+				],
+				sourcetype: ''
 			}
 		},
+		onLoad: (options) => {
+			console.log(options)
+			console.log(this)
+			// this.sourcetype = options.sourcetype;
+		},
 		methods: {
+			//  f
 			headtap() {
 				uni.previewImage({
 					current: 0,
@@ -193,6 +200,11 @@
 			checkbtn() {
 				this.$refs.showtip.close();
 				console.log(this.items.filter(item=>item.checked)[0])
+				
+				uni.showModal({
+					title: '申请匹配成功，等待回收人确认。'
+				})
+				
 			},
 			checkboxChange (e) {
 				var items = this.items,
@@ -234,9 +246,26 @@
 				font-size: 32upx;
 			}
 			.uni-list {
+				background-color: #EBEBEB;
 				.right {
 					flex: 1;
 					margin-left: 30upx;
+				}
+			}
+			.fo-box {
+				padding-top: 40upx;
+				padding-bottom: 40upx;
+				display: flex;
+				justify-content: center;
+				.primary-btn{
+					width: 290upx;
+					height: 98upx;
+					line-height: 98upx;
+					font-size: 38upx;
+					text-align: center;
+					border-radius: 8upx;
+					color: $font-color-withe;
+					background-color: $uni-bg-color-grey;
 				}
 			}
 		}
@@ -314,7 +343,7 @@
 				line-height: 104upx;
 				font-size: 38upx;
 				text-align: center;
-				border-radius: 5px;
+				border-radius: 8upx;
 				color: $font-color-withe;
 				background-color: #E7211A;
 			}

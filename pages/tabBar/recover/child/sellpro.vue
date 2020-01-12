@@ -11,7 +11,8 @@
 				<uni-icons class="icon" type="search"></uni-icons>
 			</view>
 			<view class="icon-btn" @tap="filtertap">
-				<uni-icons type="more"></uni-icons>
+				<view class="iconfont icon-shaixuanicon"></view>
+				<!-- <uni-icons type="more"></uni-icons> -->
 			</view>
 		</view>
 
@@ -36,9 +37,9 @@
 							</view>
 							<view class="uni-flex title" style="align-items: center;height: 40upx;">
 								<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">废铁</text>
-								<text class="price uni-ellipsis" style="width:350upx;font-size: 24upx;">2000-2150元/吨（预估运费40元/吨）</text>
+								<text class="price " style="width:350upx;font-size: 24upx;">2000-2150元/吨（预估运费40元/吨）</text>
 							</view>
-							<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;">
+							<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;margin-top: 10upx;">
 								宁波市镇海团桥菜场对面张三废品回收
 							</view>
 							<view class="uni-flex" style="justify-content: space-between;font-size: 20upx;color: #575757;">

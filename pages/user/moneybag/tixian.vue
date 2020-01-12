@@ -20,7 +20,7 @@
 		<radio-group @change="radioChange">
 			<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 				<view style="display:flex;justify-content: center;">
-					<image style="width: 48upx;height: 48upx;margin-right: 20upx;" src="/static/img/gongkao.png"></image>
+					<image style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 					<text>{{item.name}}</text>
 				</view>
 				<view>
@@ -53,12 +53,14 @@
 				items: [
 					{
 						value: 'CHN',
-						name: '支付宝',
-						checked: 'true'
+						name: '支付宝支付',
+						checked: 'true',
+						icon: '/static/img/pay/zhifubao.png',
 					},
 					{
 						value: 'JPN',
-						name: '银行卡'
+						name: '银行卡支付',
+						icon: '/static/img/pay/yinhanka.png',
 					}
 				],
 				current: 0

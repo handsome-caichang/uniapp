@@ -299,6 +299,11 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},{
+			"path": "pages/tool/calc",
+			"style": {
+				"navigationBarTitleText": "计算器"
+			}
 		}
 	],
 	"globalStyle": { // 文档 https://uniapp.dcloud.io/collocation/pages?id=globalstyle
@@ -342,7 +347,7 @@
 	},
 	"tabBar": {
 		"color": "#333333",
-		"selectedColor": "#f06c7a",
+		"selectedColor": "#18C02C",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [

@@ -1,17 +1,8 @@
 <template>
 	<view class="uni-rate">
 		<view :key="index" :style="{ marginLeft: margin + 'px' }" @click="_onClick(index)" class="uni-rate__icon" v-for="(star, index) in stars">
-			<uni-icons :color="color" :size="size" :type="isFill ? 'star-filled' : 'star'" />
-			<!-- #ifdef APP-NVUE -->
-			<view :style="{ width: star.activeWitch.replace('%','')*size/100+'px'}" class="uni-rate__icon-on">
-				<uni-icons style="text-align: left;" :color="activeColor" :size="size" type="star-filled" />
-			</view>
-			<!-- #endif -->
-			<!-- #ifndef APP-NVUE -->
-			<view :style="{ width: star.activeWitch }" class="uni-rate__icon-on">
-				<uni-icons :color="activeColor" :size="size" type="star-filled" />
-			</view>
-			<!-- #endif -->
+			<!-- <uni-icons :color="color" :size="size" :type="isFill ? 'star-filled' : 'star'" /> -->
+			<view class="iconfont icon-xingxingxuanzhong" :style="{color:value >= index ? activeColor : color}"></view>
 		</view>
 	</view>
 </template>
@@ -27,7 +18,7 @@
 			isFill: {
 				// 星星的类型，是否镂空
 				type: [Boolean, String],
-				default: true
+				default: false
 			},
 			color: {
 				// 星星的颜色
@@ -113,7 +104,7 @@
 	};
 </script>
 
-<style scoped>
+<style scoped lang="scss" >
 	.uni-rate {
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -131,7 +122,11 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		
+		.iconfont {
+			line-height: 0;
+			font-size: 10px;
+			transform: scale(0.8);
+		}
 	}
 
 	.uni-rate__icon-on {

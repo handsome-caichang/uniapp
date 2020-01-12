@@ -12,9 +12,9 @@
 		<view class="viod"></view>
 		
 		<uni-list>
-			<uni-list-item thumb="/static/img/gongkao.png" title="充值" @tap="navTo('/pages/user/moneybag/chongzhi')" />
-			<uni-list-item thumb="/static/img/gongkao.png" title="提现"  @tap="navTo('/pages/user/moneybag/tixian')" />
-			<uni-list-item thumb="/static/img/gongkao.png" title="收支明细"  @tap="navTo('/pages/user/moneybag/mingxi')" />
+			<uni-list-item thumb="/static/img/user/chongzhi.png" title="充值" @tap="navTo('/pages/user/moneybag/chongzhi')" />
+			<uni-list-item thumb="/static/img/user/tixian.png" title="提现"  @tap="navTo('/pages/user/moneybag/tixian')" />
+			<uni-list-item thumb="/static/img/user/mingxi.png" title="收支明细"  @tap="navTo('/pages/user/moneybag/mingxi')" />
 		</uni-list>
 		
 		<view class="uni-page-footer">

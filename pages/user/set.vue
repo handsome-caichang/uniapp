@@ -1,22 +1,6 @@
 <template>
 	<view class="container">
-		<view class="list-cell m-t border-bottom" @click="navTo('/pages/user/userinfo/userinfo')" >
-			<text class="cell-tit">个人资料</text>
-			<text class="cell-more">
-				
-				<uni-icons class="icon" type="arrowright"></uni-icons>
-			</text>
-		</view>
-		<view class="list-cell border-bottom" @click="navTo('/pages/user/userinfo/userinfoset')" >
-			<text class="cell-tit">实名认证</text>
-			<text class="cell-more">
-				<uni-icons class="icon" type="arrowright"></uni-icons>
-			</text>
-		</view>
-		<view class="list-cell border-bottom"  >
-			<text class="cell-tit">关于</text>
-			<text class="cell-more ">版本号1.0</text>
-		</view>
+
 		<view class="list-cell border-bottom" @click="navTo('/pages/user/safeset')" >
 			<text class="cell-tit">安全设置</text>
 			<text class="cell-more">
@@ -24,11 +8,15 @@
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
-		<view class="list-cell" @click="navTo('/pages/user/payset')" >
-			<text class="cell-tit">支付设置</text>
+		<view class="list-cell  border-bottom" @click="navTo('/pages/user/payset')" >
+			<text class="cell-tit">收款方式</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
+		</view>
+		<view class="list-cell"  >
+			<text class="cell-tit">关于</text>
+			<text class="cell-more ">版本号1.0</text>
 		</view>
 		<view class="list-cell log-out-btn" @click="toLogout">
 			<text class="cell-tit">退出登录</text>

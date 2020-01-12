@@ -8,13 +8,13 @@
 			</text>
 		</view>
 		<view class="list-cell border-bottom" @click="navTo('/pages/user/userinfo/userinfoset')" >
-			<text class="cell-tit">重置支付密码</text>
+			<text class="cell-tit">修改支付密码</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
 		<view class="list-cell" @click="navTo('/pages/user/userinfo/userinfoset')" >
-			<text class="cell-tit">重置登录密码</text>
+			<text class="cell-tit">修改登录密码</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>

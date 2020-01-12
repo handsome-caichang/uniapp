@@ -12,7 +12,7 @@
 			</view>
 			<view class="vip-card-box">
 				<image class="card-bg" src="/static/img/vip-card-bg.png" mode=""></image>
-				<view class="b-btn">
+				<view class="b-btn"  @tap="navTo('/pages/user/vipsend')">
 					立即开通
 				</view>
 				<view class="tit">
@@ -20,7 +20,6 @@
 					Recovery Station会员
 				</view>
 				<text class="e-m">Recovery Station</text>
-				<text class="e-b">开通会员</text>
 			</view>
 		</view>
 
@@ -37,7 +36,7 @@
 				</view>
 				<view class="c-list-box">
 					<view class="c-list-item" v-for="(item, index) in list1 " :key="index" @tap="geren(item)" >
-						<image src="/static/img/goods/p1.jpg" class="img-icon" ></image>
+						<image :src="item.icon" class="img-icon" ></image>
 						<text class="text">{{item.name}}</text>
 					</view>
 				</view>
@@ -48,7 +47,7 @@
 				</view>
 				<view class="c-list-box">
 					<view class="c-list-item" v-for="(item, index) in list2 " :key="index" @tap="geren(item)" style="width: 300upx;" >
-						<image src="/static/img/goods/p1.jpg" class="img-icon" ></image>
+						<image :src="item.icon" class="img-icon" ></image>
 						<text class="text">{{item.name}}</text>
 					</view>
 				</view>
@@ -59,7 +58,7 @@
 				</view>
 				<view class="c-list-box">
 					<view class="c-list-item" v-for="(item, index) in list3 " :key="index" @tap="geren(item)" >
-						<image src="/static/img/goods/p1.jpg" class="img-icon" ></image>
+						<image :src="item.icon" class="img-icon" ></image>
 						<text class="text">{{item.name}}</text>
 					</view>
 				</view>
@@ -69,8 +68,8 @@
 					工具 
 				</view>
 				<view class="c-list-box">
-					<view class="c-list-item" v-for="(item, index) in list4 " :key="index" >
-						<image src="/static/img/goods/p1.jpg" class="img-icon" ></image>
+					<view class="c-list-item" v-for="(item, index) in list4 " :key="index"  @tap="geren(item)"  >
+						<image :src="item.icon" class="img-icon" ></image>
 						<text class="text">{{item.name}}</text>
 					</view>
 				</view>
@@ -104,59 +103,60 @@
 				list1: [
 					{
 						name: '余额',
-						icon: '/static/img/goods/p1.jpg',
+						icon: '/static/img/user/yue.png',
 						url: '/pages/user/moneybag/mbag'
 					},{
 						name: '信誉值',
-						icon: '/static/img/goods/p2.jpg',
+						icon: '/static/img/user/xinyu.png',
 						url: '/pages/user/reputationvalue'
 					},{
 						name: '废品帮VIP',
-						icon: '/static/img/goods/p1.jpg',
+						icon: '/static/img/user/VIP.png',
 						url: '/pages/user/vipsend'
 					},{
 						name: '我的成就',
-						icon: '/static/img/goods/p2.jpg'
+						icon: '/static/img/user/chengjiu.png'
 					},{
 						name: '我的发布',
-						icon: '/static/img/goods/p1.jpg',
+						icon: '/static/img/user/fabu.png',
 						url: '/pages/customer/fabumanage/fabumanage'
 					}
 				],
 				list2: [
 					{
 						name: '匹配订单管理',
-						icon: '/static/img/goods/p1.jpg',
+						icon: '/static/img/user/dingdan.png',
 						url: '/pages/product/order/ordermanage'
 					},{
 						name: '交易订单管理',
-						icon: '/static/img/goods/p2.jpg',
+						icon: '/static/img/user/jiaoyi.png',
 						url: '/pages/product/payorder/payordermanage'
 					}
 				],
 				list3: [
 					{
 						name: '财务报表',
-						icon: '/static/img/goods/p1.jpg',
+						icon: '/static/img/user/caiwu.png',
 						url: '/pages/report/report'
 					},{
 						name: '余额宝',
-						icon: '/static/img/goods/p2.jpg'
+						icon: '/static/img/user/yuebao.png'
 					},{
 						name: '卡包',
-						icon: '/static/img/goods/p2.jpg'
+						icon: '/static/img/user/kabao.png'
 					}
 				],
 				list4: [
 					{
 						name: '计算器',
-						icon: '/static/img/goods/p1.jpg'
+						icon: '/static/img/user/jisuanqi.png',
+						url: '/pages/tool/calc'
 					},{
 						name: '万年历',
-						icon: '/static/img/goods/p2.jpg'
+						icon: '/static/img/user/rili.png'
 					},{
 						name: '备忘录',
-						icon: '/static/img/goods/p2.jpg'
+						icon: '/static/img/user/beiwanglu.png'
 					}
 				],
 			}

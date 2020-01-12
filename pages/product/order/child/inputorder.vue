@@ -62,7 +62,7 @@
 								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.age}}年</text>
 								<uni-rate class="rate" :size="12" :value="item.xinyu" />
 							</view>
-							<view class="btn" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 20upx;">接受</view>
+							<view class="btn" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
 						</uni-list-item>
 					</uni-list>
 				</view>

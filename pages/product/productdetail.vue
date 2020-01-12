@@ -25,7 +25,7 @@
 				<image class="img" v-for="(item,index) in prolist" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
 			</scroll-view>
 		</view>
-		
+		<!-- 首页进来，实名认证  -->
 		<view class="btn-container">
 			<!-- <button type="primary">申请匹配</button> -->
 			<view class="primary-btn" @tap="popbtn">
@@ -33,22 +33,21 @@
 			</view>
 		</view>
 		
-		<view class="towbtn">
+		<!-- <view class="towbtn">
 			<view class="error-btn" @tap="clearbtn">
 				拒绝
 			</view>
 			<view class="primary-btn" @tap="tongyi">
 				同意
 			</view>
-		</view>
+		</view> -->
 	
-		<view class="btn-container contact">
-			<!-- <button type="primary">申请匹配</button> -->
+		<!-- <view class="btn-container contact">
 			<view class="primary-btn" @tap="popbtn">
 				<uni-icons type="phone" size="18" color="#fff" ></uni-icons>
 				<text>联系回收人</text>
 			</view>
-		</view>
+		</view> -->
 	
 	</view>
 </template>
@@ -138,7 +137,10 @@
 				}
 			},
 			popbtn() {
-				this.$refs.showtip.open();
+				uni.showModal({
+					title: '申请匹配成功，等待货主确认。'
+				})
+				// this.$refs.showtip.open();
 			}
 		}
 	}

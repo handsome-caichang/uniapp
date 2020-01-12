@@ -11,6 +11,7 @@
 		</view>
 		<view class="container">
 			<price-vue ref="sellpro" v-if="isactive"></price-vue>
+			<!-- 需要实名 -->
 			<fabu-vue ref="buypro" v-if="!isactive"></fabu-vue>
 		</view>
 	</view>

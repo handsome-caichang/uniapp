@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "身份管理中心",
-  "usingComponents": {
-    "uni-list": "/components/uni-list/uni-list",
-    "uni-list-item": "/components/uni-list-item/uni-list-item",
-    "uni-icons": "/components/uni-icons/uni-icons"
-  }
-}

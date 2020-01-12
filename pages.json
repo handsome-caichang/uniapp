@@ -4,7 +4,6 @@
 			"path": "pages/tabBar/home/home",
 			"style": {  // 用于设置每个页面的状态栏、导航条、标题、窗口背景色等。页面中配置项会覆盖 globalStyle 中相同的配置项
 				// "navigationBarTextStyle":"black", // 导航栏标题颜色及状态栏前景颜色
-				"onReachBottomDistance":50,
 				"app-plus": {
 					"titleNView": false //禁用原生导航栏
 					// "softinputNavBar":"none" // iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
@@ -25,11 +24,11 @@
 		{
 			"path": "pages/tabBar/buypro/buypro",
 			"style": {
-				"enablePullDownRefresh": true,
+				// "enablePullDownRefresh": true,
 				"navigationBarTextStyle":"black",
 				"app-plus": {
-					"titleNView": false ,//禁用原生导航栏
-					"softinputNavBar":"none"
+					"titleNView": false //禁用原生导航栏
+					// "softinputNavBar":"none"
 				}
 			}
 		},{

@@ -68,9 +68,9 @@
 			</view>
 		</view>
 		
-		<view class="btn-container contact">
+		<view class="btn-container">
 			<!-- <button type="primary">申请匹配</button> -->
-			<view class="primary-btn" @tap="popbtn">
+			<view class="icon-btn" @tap="callCustomer">
 				<uni-icons type="phone" size="18" color="#fff" ></uni-icons>
 				<text>联系回收人</text>
 			</view>
@@ -154,7 +154,8 @@
 					}
 				],
 				detail: {
-					img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
+					img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
+					phone: '18602186762'
 				},
 				prolist: [
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
@@ -207,6 +208,11 @@
 			},
 			popbtn() {
 				this.$refs.showtip.open();
+			},
+			callCustomer() {
+				uni.makePhoneCall({
+				    phoneNumber: this.detail.phone //仅为示例
+				});
 			}
 		}
 	}
@@ -251,21 +257,40 @@
 				}
 			}
 			.primary-btn {
-				position: relative;
-				display: block;
-				margin-left: auto;
-				margin-right: auto;
+				margin: 0 auto;
+				width: 50%;
+				height: 104upx;
+				line-height: 104upx;
+				padding-left: 14px;
+				padding-right: 14px;
+				font-size: 36upx;
+				text-align: center;
+				text-decoration: none;
+				border-radius: 5px;
+				overflow: hidden;
+				color: $font-color-withe;
+				background-color: $uni-bg-color-grey;
+			}
+			.icon-btn {
+				margin: 0 auto;
+				width: 50%;
+				height: 104upx;
 				padding-left: 14px;
 				padding-right: 14px;
 				box-sizing: border-box;
 				font-size: 36upx;
 				text-align: center;
 				text-decoration: none;
-				line-height: 2.55555556;
 				border-radius: 5px;
 				overflow: hidden;
 				color: $font-color-withe;
 				background-color: $uni-bg-color-grey;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.uni-icon {
+					margin-right: 10upx;
+				}
 			}
 		}
 		.towbtn {

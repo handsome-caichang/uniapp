@@ -3,84 +3,79 @@
 		<!-- banner板块 -->
 		<view class="index-banner">
 			<view class="swiper" v-if="bannerlist.length > 0">
-				<swiper class="swiper-container" :autoplay="true" :interval="4000" :circular="true" :indicator-dots="true"
-				 indicator-active-color="#18C02C" indicator-color="#FFFFFF">
+				<swiper
+					class="swiper-container"
+					:autoplay="true"
+					:interval="3000"
+					:circular="true"
+					:indicator-dots="true"
+					indicator-active-color="#18C02C"
+					indicator-color="#FFFFFF"
+				>
 					<block v-for="(item, index) in bannerlist" :key="index">
-						<swiper-item class="swiper-wrapper" @tap="previewImage(index, bannerlist)">
-							<image :src="item" mode="widthFix"></image>
-						</swiper-item>
+						<swiper-item class="swiper-wrapper" @tap="previewImage(item)"><image :src="item.src" mode="widthFix"></image></swiper-item>
 					</block>
 				</swiper>
 			</view>
-
 			<view class="tianqi-po">
 				<view class="tianqi">
-					<image :src="'/static/img/peartianqi/'+tianqi.wea_img+'.png'" class="tianqiimg"></image>
-					<text class="tem">{{tianqi.tem}}&#8451;</text>
-					<text class="address">{{tianqi.city}}</text>
-					<text class="wea">{{tianqi.wea}}</text>
+					<image :src="'/static/img/peartianqi/' + tianqi.wea_img + '.png'" class="tianqiimg"></image>
+					<text class="tem">{{ tianqi.tem }}&#8451;</text>
+					<text class="address">{{ tianqi.city }}</text>
+					<text class="wea">{{ tianqi.wea }}</text>
 				</view>
 			</view>
-
 		</view>
 		<!-- 自动滚动 -->
-		<view class="seckill-section m-t">
+		<view class="seckill-section m-t vipuser ">
 			<view class="s-header"><text class="title">VIP用户</text></view>
-			<scroll-view class="floor-list" scroll-x>
-				<view class="scoll-wrapper">
-					<view v-for="(item, index) in goodsList" :key="index" class="floor-item" @click="navToDetailPage(item, index)">
-						<image class="img" :src="item.image" mode="aspectFill"></image>
-						<text class="name">黄先生</text>
-						<text class="name">从业3年</text>
-						<uni-rate class="rate" :value="5" />
-					</view>
-				</view>
-			</scroll-view>
+
+			<swiper :autoplay="true" :interval="2000" :duration="2000" :circular="true">
+				<block v-for="(item, index) in vipusers" :key="index">
+					<swiper-item class="swiper-item-width">
+						<view class="floor-item" @click="navToDetailPage(item, index)">
+							<image class="img" :src="item.image" mode="aspectFill"></image>
+							<text class="name">{{ item.name }}</text>
+							<text class="name">从业{{ item.age }}年</text>
+							<uni-rate class="rate" :value="item.rate" />
+						</view>
+					</swiper-item>
+				</block>
+			</swiper>
 		</view>
-			<!-- 自动滚动 -->
-		<view class="seckill-section m-t">
+		<view class="seckill-section m-t huowubox">
 			<view class="s-header"><text class="title">货物</text></view>
-			<scroll-view class="floor-list" scroll-x>
-				<view class="scoll-wrapper">
-					<view v-for="(item, index) in goodsList" :key="index" class="floor-item pro-box" @click="navToDetailPagepro(item, index)">
-						<view class="box">
-							<text>废铁</text>
-							<text>3吨</text>
+			<swiper :autoplay="true" :interval="2000" :duration="2000" :circular="true">
+				<block v-for="(item, index) in huowulist" :key="index">
+					<swiper-item class="swiper-item-width">
+						<view class="pro-box" @click="navToDetailPagepro(item, index)">
+							<view class="box">
+								<text>{{ item.type }}</text>
+								<text>{{ item.num }}吨</text>
+							</view>
+							<view class="box uni-ellipsis">
+								<text class="uni-ellipsis">{{ item.campusname }}</text>
+							</view>
+							<view class="box">
+								<text>{{ item.time }}</text>
+								<text>{{ item.address }}</text>
+							</view>
 						</view>
-						<view class="box"><text>宁波****有限公司</text></view>
-						<view class="box">
-							<text>12/12</text>
-							<text>镇海</text>
-						</view>
-					</view>
-				</view>
-			</scroll-view>
+					</swiper-item>
+				</block>
+			</swiper>
 		</view>
 
 		<view class="border-top border-bottom notice-box">
 			<image class="img" src="/static/img/gongkao.png"></image>
-
 			<view class="content-box">
-				<view class="sw-con">
-					<swiper class="swiper" :autoplay="true" :vertical="true" :circular="true" :display-multiple-items="2" :interval="3000"
-					 :duration="1000">
+				<swiper class="swiper" :autoplay="true" :vertical="true" :circular="true" :display-multiple-items="2" :interval="3000" :duration="1000">
+					<block v-for="(item, index) in gonkaolist" :key="index">
 						<swiper-item>
-							<view class="swiper-item uni-ellipsis">11扩展：现在需要在应用到选择老师的时候，也希望根据当</view>
+							<view class="swiper-item uni-ellipsis">{{ item }}</view>
 						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item uni-ellipsis">222扩展：现在需要在应用到选择老师的时候，也希望根据当</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item uni-ellipsis">333扩展：现在需要在应用到选择老师的时候，也希望根据当</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item uni-ellipsis">444扩展：现在需要在应用到选择老师的时候，也希望根据当</view>
-						</swiper-item>
-						<swiper-item>
-							<view class="swiper-item uni-ellipsis">555扩展：现在需要在应用到选择老师的时候，也希望根据当</view>
-						</swiper-item>
-					</swiper>
-				</view>
+					</block>
+				</swiper>
 			</view>
 		</view>
 
@@ -94,7 +89,13 @@
 			</scroll-view>
 
 			<view class="product-list">
-				<view class="uni-flex uni-row  border-bottom" v-for="product in productList" :key="product.goods_id" @tap="toGoods(product)">
+				<view
+					class="uni-flex uni-row"
+					v-for="(product, index) in productList"
+					:key="product.goods_id"
+					@tap="previewImage(product)"
+					:class="{'border-bottom':index != productList.length-1 }"
+				>
 					<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
 						<image :src="product.img" style="width: 150rpx;height: 150rpx;"></image>
 					</view>
@@ -105,344 +106,166 @@
 						</view>
 					</view>
 				</view>
-				<view class="loading-text">{{ loadingText }}</view>
 			</view>
 		</view>
 
-	
 		<uni-popup ref="showqiandao" type="center">
-			<view class="uni-pup">
-				<qian-daopop @closepop="closepop"></qian-daopop>
-			</view>
+			<view class="uni-pup"><qian-daopop @closepop="closepop"></qian-daopop></view>
 		</uni-popup>
-
-
+		
 	</view>
 </template>
 <script>
-	import uniPopup from '@/components/uni-popup/uni-popup.vue'
-	import uniRate from '@/components/uni-rate/uni-rate.vue';
-	import {
-		mapMutations
-	} from 'vuex';
-	import permision from "@/common/permission.js"
-	import qianDaopop from './qiandaopop.vue'
-	export default {
-		components: {
-			uniRate,
-			qianDaopop,
-			uniPopup
-		},
-		data() {
-			return {
-				arrayText: [],
-				bannerlist: [],
-				goodsList: [],
-				tabBars: [],
-				tabIndex: 0,
-				headerPosition: 'fixed',
-				productList: [],
-				loadingText: '正在加载...',
-				tianqi: {
-					"cityid": "101250101",
-					"date": "2020-01-04",
-					"week": "星期六",
-					"update_time": "21:00",
-					"city": "长沙",
-					"cityEn": "changsha",
-					"country": "中国",
-					"countryEn": "China",
-					"wea": "阴",
-					"wea_img": "yin",
-					"tem": "7",
-					"tem1": "8",
-					"tem2": "6",
-					"win": "西北风",
-					"win_speed": "1级",
-					"win_meter": "小于12km/h",
-					"humidity": "91%",
-					"visibility": "1.36km",
-					"pressure": "1020",
-					"air": "178",
-					"air_pm25": "178",
-					"air_level": "中度污染",
-				},
-				tianqiimg: '',
-				locations: {}
-			};
-		},
-		onLoad() {
-			this.loadData();
-			this.doGetLocation();
-		},
-		onPageScroll(e) {
-			//兼容iOS端下拉时顶部漂移
-			if (e.scrollTop >= 0) {
-				this.headerPosition = 'fixed';
-			} else {
-				this.headerPosition = 'absolute';
-			}
-		},
-		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-		onReachBottom() {
-			let len = this.productList.length;
-			if (len >= 40) {
-				this.loadingText = '到底了';
-				return false;
-			}
-			// 演示,随机加入商品,生成环境请替换为ajax请求
-			let end_goods_id = this.productList[len - 1].goods_id;
-			for (let i = 1; i <= 10; i++) {
-				let goods_id = end_goods_id + i;
-				let p = {
-					goods_id: goods_id,
-					img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg',
-					name: '商品名称商品名称商品名称商品名称商品名称',
-					price: '￥168',
-					slogan: '1235人付款'
-				};
-				this.productList.push(p);
-			}
-		},
-		onShow() {},
-		methods: {
-			closeDrawer() {
-				this.showqiandao = false;
+import uniPopup from '@/components/uni-popup/uni-popup.vue';
+import uniRate from '@/components/uni-rate/uni-rate.vue';
+import { mapMutations } from 'vuex';
+import permision from '@/common/permission.js';
+import qianDaopop from './qiandaopop.vue';
+export default {
+	components: {
+		uniRate,
+		qianDaopop,
+		uniPopup
+	},
+	data() {
+		return {
+			bannerlist: [],
+			vipusers: [],
+			huowulist: [],
+			gonkaolist: [],
+			tabBars: [],
+			productList: [],
+			tabIndex: 0,
+			headerPosition: 'fixed',
+			tianqi: {
+				cityid: '101250101',
+				date: '2020-01-04',
+				week: '星期六',
+				update_time: '21:00',
+				city: '长沙',
+				cityEn: 'changsha',
+				country: '中国',
+				countryEn: 'China',
+				wea: '阴',
+				wea_img: 'yin',
+				tem: '7',
+				tem1: '8',
+				tem2: '6',
+				win: '西北风',
+				win_speed: '1级',
+				win_meter: '小于12km/h',
+				humidity: '91%',
+				visibility: '1.36km',
+				pressure: '1020',
+				air: '178',
+				air_pm25: '178',
+				air_level: '中度污染'
 			},
-			ontabtap(tap, index) {
-				this.tabIndex = index;
-			},
-			toGoods(tap) {
-				// url 跳转
-				// uni.navigateTo({
-				// 	url: '/pages/product/newsdetail?post_id=' + tap.goods_id + '&title=' + tap.name
-				// });
-			},
-			previewImage(current, imageList) {
-				// 跳转 url
-			},
-			async loadData() {
-				this.arrayText = await this.$api.json('arrayText');
-				this.bannerlist = await this.$api.json('bannerlist');
-				this.goodsList = await this.$api.json('goodsList');
-				this.tabBars = await this.$api.json('tabList');
-				this.productList = await this.$api.json('productList');
-				// this.$nextTick(() => {
-				// 	this.$refs.showqiandao.open();
-				// })
-			},
-			closepop() {
-				this.$nextTick(() => {
-					this.$refs.showqiandao.close();
-				})
-			},
-			//详情页
-			navToDetailPage(item, index) {
-				let id = item.id;
-				uni.navigateTo({
-					url: `/pages/customer/customerdetail?id=${index}&sourcetype=1`
-				});
-			},
-			navToDetailPagepro(item, index) {
-				let id = item.id;
-				uni.navigateTo({
-					url: `/pages/product/productdetail?id=${index}`
-				});
-			},
-			async checkPermission() {
-				let status = permision.isIOS ? await permision.requestIOS('location') :
-					await permision.requestAndroid('android.permission.ACCESS_FINE_LOCATION');
-				if (status === null || status === 1) {
-					status = 1;
-				} else {}
-				return status;
-			},
-			async doGetLocation() {
-				uni.getLocation({
-					geocode: true,
-					success: res => {
-						uni.setStorageSync('_location', res);
-						let city = res.address.city.slice(0, res.address.city.length - 1);
-						uni.request({
-							url: 'https://www.tianqiapi.com/api/',
-							data: {
-								appid: '34831141',
-								appsecret: 'xxRnF4E2',
-								version: 'v6',
-								city: city,
-								vue: 1,
-							},
-							success: rest => {
-								this.tianqi = rest.data;
-							}
-						})
-					},
-					fail: err => {}
-				});
-			},
+			tianqiimg: '',
+			locations: {}
+		};
+	},
+	onLoad() {
+		this.loadData();
+		this.doGetLocation();
+	},
+	onPageScroll(e) {
+		//兼容iOS端下拉时顶部漂移
+		if (e.scrollTop >= 0) {
+			this.headerPosition = 'fixed';
+		} else {
+			this.headerPosition = 'absolute';
 		}
-	};
+	},
+	onShow() {},
+	methods: {
+		closeDrawer() {
+			this.showqiandao = false;
+		},
+		ontabtap(tap, index) {
+			this.tabIndex = index;
+		},
+		previewImage(item) {
+			uni.navigateTo({
+				url: '/pages/webviewpage/webviewpage?url=' + encodeURIComponent(item.link)
+			});
+		},
+		async loadData() {
+			this.bannerlist = await this.$api.json('bannerlist');
+			this.vipusers = await this.$api.json('vipusers');
+			this.huowulist = await this.$api.json('huowulist');
+			this.gonkaolist = await this.$api.json('gonkaolist');
+			this.tabBars = await this.$api.json('tabList');
+			this.productList = await this.$api.json('productList');
+
+			// this.$nextTick(() => {
+			// 	this.$refs.showqiandao.open();
+			// })
+		},
+		closepop() {
+			this.$nextTick(() => {
+				this.$refs.showqiandao.close();
+			});
+		},
+		//详情页
+		navToDetailPage(item, index) {
+			let id = item.id;
+			uni.navigateTo({
+				url: `/pages/customer/customerdetail?id=${index}&sourcetype=1`
+			});
+		},
+		navToDetailPagepro(item, index) {
+			let id = item.id;
+			uni.navigateTo({
+				url: `/pages/product/productdetail?id=${index}`
+			});
+		},
+		async checkPermission() {
+			let status = permision.isIOS ? await permision.requestIOS('location') : await permision.requestAndroid('android.permission.ACCESS_FINE_LOCATION');
+			if (status === null || status === 1) {
+				status = 1;
+			} else {
+			}
+			return status;
+		},
+		async doGetLocation() {
+			uni.getLocation({
+				geocode: true,
+				success: res => {
+					uni.setStorageSync('_location', res);
+					let city = res.address.city.slice(0, res.address.city.length - 1);
+					uni.request({
+						url: 'https://www.tianqiapi.com/api/',
+						data: {
+							appid: '34831141',
+							appsecret: 'xxRnF4E2',
+							version: 'v6',
+							city: city,
+							vue: 1
+						},
+						success: rest => {
+							this.tianqi = rest.data;
+						}
+					});
+				},
+				fail: err => {}
+			});
+		}
+	}
+};
 </script>
 <style lang="scss" scoped>
-	.index-content {
-		overflow: hidden;
-
-		.notice-box {
-			padding: 20upx;
-			display: flex;
-			margin-bottom: 20upx;
-
-			.img {
-				height: 80upx;
-				width: 80upx;
-				margin-right: 10upx;
-			}
-
-			.swiper {
-				height: 80upx;
-			}
-
-			uni-swiper {
-				height: 80upx;
-			}
-
-			.content-box {
-				flex: 1;
-
-				.sw-con {
-					height: 40upx;
-
-					.swiper-item {
-						height: 40upx;
-						color: #575757;
-						font-size: 24upx;
-					}
-				}
-			}
+.index-content {
+	overflow: hidden;
+	.vipuser {
+		margin-top: 10upx;
+		uni-swiper {
+			height: 200upx;
 		}
-
-		.index-banner {
-			width: 100%;
-			position: relative;
-
-			.tianqi-po {
-				position: absolute;
-				z-index: 99;
-				width: 50%;
-				right: 0;
-				top: 0;
-				/*  #ifdef  APP-PLUS  */
-				top: var(--status-bar-height); //覆盖样式
-
-				/*  #endif  */
-				.tianqi {
-					margin-top: 12upx;
-					width: 100%;
-					height: 84upx;
-					background-color: rgba($color: #fff, $alpha: 0.83);
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					border-radius: 42upx 0px 0px 42upx;
-					font-size: 34upx;
-					color: #000000;
-
-					.tianqiimg {
-						height: 54upx;
-						width: 54upx;
-						margin-right: 20upx;
-					}
-
-					.tem {
-						margin-right: 20upx;
-					}
-
-					.address {
-						font-size: 28upx;
-						margin-right: 20upx;
-					}
-
-					.wea {
-						font-size: 28upx;
-						margin-right: 20upx;
-					}
-				}
-			}
-
-			swiper-item {
-				height: 350px;
-
-				image {
-					width: 100%;
-				}
-			}
-		}
-
-		.m-t {
-			margin-top: 10upx;
-		}
-
-		/* 秒杀专区 */
-		.seckill-section {
-			padding: 4upx 30upx 24upx;
-			background: #fff;
-
-			.s-header {
-				display: flex;
-				align-items: center;
-				height: 92upx;
-				line-height: 1;
-
-				.title {
-					color: #212121;
-					font-size: 33upx;
-					padding-bottom: 10upx;
-					border-bottom: 2px solid $font-color-light;
-				}
-
-				.s-img {
-					width: 140upx;
-					height: 30upx;
-				}
-
-				.tip {
-					font-size: $font-base;
-					color: $font-color-light;
-					margin: 0 20upx 0 40upx;
-				}
-
-				.timer {
-					display: inline-block;
-					width: 40upx;
-					height: 36upx;
-					text-align: center;
-					line-height: 36upx;
-					margin-right: 14upx;
-					font-size: $font-sm + 2upx;
-					color: #fff;
-					border-radius: 2px;
-					background: rgba(0, 0, 0, 0.8);
-				}
-
-				.icon-you {
-					font-size: $font-lg;
-					color: $font-color-light;
-					flex: 1;
-					text-align: right;
-				}
-			}
-
-			.floor-list {
-				white-space: nowrap;
-			}
-
-			.scoll-wrapper {
-				display: flex;
-				align-items: flex-start;
-			}
-
+		.swiper-item-width {
+			width: 220upx !important;
 			.floor-item {
-				width: 200upx;
+				width: 220upx;
 				margin-right: 20upx;
 				font-size: $font-sm + 2upx;
 				color: $font-color-withe;
@@ -461,72 +284,245 @@
 					font-size: 24upx;
 					height: 30upx;
 				}
-
-				&.pro-box {
-					width: 300upx;
-					background-color: #18c02c;
-					border-radius: 10upx;
-					padding: 0 10upx;
-
-					.box {
-						width: 220upx;
-						display: flex;
-						justify-content: space-around;
-					}
-
-					text {
-						color: #fff;
-					}
-				}
-			}
-		}
-
-		.news {
-			padding: 0px;
-
-			.title {
-				margin-left: 30upx;
-			}
-
-			.scroll-h {
-				padding: 0upx 30upx;
-				width: 100%;
-				height: 80upx;
-				flex-direction: row;
-				white-space: nowrap;
-
-				.uni-tab-item {
-					display: inline-block;
-					flex-wrap: nowrap;
-					padding-right: 16upx;
-				}
-
-				.uni-tab-item-title {
-					color: #575757;
-					font-size: 30upx;
-					height: 80upx;
-					line-height: 80upx;
-					flex-wrap: nowrap;
-					white-space: nowrap;
-				}
-
-				.uni-tab-item-title-active {
-					color: $font-color-light;
-				}
-			}
-		}
-
-		.product-list {
-			.title {
-				font-size: 22upx;
-				color: #212121;
-			}
-
-			.point {
-				text-indent: 48upx;
-				font-size: 20upx;
-				color: #575757;
 			}
 		}
 	}
+	.huowubox {
+		margin-top: 10upx;
+		uni-swiper {
+			height: 160upx;
+		}
+		.swiper-item-width {
+			width: 300upx !important;
+			.pro-box {
+				width: 240upx;
+				background-color: #18c02c;
+				border-radius: 10upx;
+				padding: 0 10upx;
+				margin-right: 10upx;
+				font-size: $font-sm + 2upx;
+				color: $font-color-withe;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				.img {
+					border-radius: 50%;
+					width: 100upx;
+					height: 100upx;
+				}
+				.name {
+					color: #303030;
+					font-size: 24upx;
+					height: 30upx;
+				}
+				.box {
+					display: flex;
+					justify-content: space-around;
+					padding: 0 20upx;
+				}
+				text {
+					color: #fff;
+					line-height: 1.5;
+				}
+			}
+		}
+	}
+	.notice-box {
+		padding: 20upx;
+		display: flex;
+		margin-bottom: 20upx;
+
+		.img {
+			height: 80upx;
+			width: 120upx;
+			margin-right: 10upx;
+		}
+
+		.swiper {
+			height: 80upx;
+		}
+
+		uni-swiper {
+			height: 80upx;
+		}
+
+		.content-box {
+			flex: 1;
+			height: 40upx;
+			.swiper-item {
+				height: 40upx;
+				color: #575757;
+				font-size: 24upx;
+			}
+		}
+	}
+
+	.index-banner {
+		width: 100%;
+		position: relative;
+
+		.tianqi-po {
+			position: absolute;
+			z-index: 99;
+			width: 50%;
+			right: 0;
+			top: 0;
+			/*  #ifdef  APP-PLUS  */
+			top: var(--status-bar-height); //覆盖样式
+
+			/*  #endif  */
+			.tianqi {
+				margin-top: 12upx;
+				width: 100%;
+				height: 84upx;
+				background-color: rgba($color: #fff, $alpha: 0.83);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 42upx 0px 0px 42upx;
+				font-size: 34upx;
+				color: #000000;
+
+				.tianqiimg {
+					height: 54upx;
+					width: 54upx;
+					margin-right: 20upx;
+				}
+
+				.tem {
+					margin-right: 20upx;
+				}
+
+				.address {
+					font-size: 28upx;
+					margin-right: 20upx;
+				}
+
+				.wea {
+					font-size: 28upx;
+					margin-right: 20upx;
+				}
+			}
+		}
+
+		swiper-item {
+			height: 350px;
+
+			image {
+				width: 100%;
+			}
+		}
+	}
+
+	.m-t {
+		margin-top: 10upx;
+	}
+
+	.seckill-section {
+		padding: 4upx 30upx 24upx;
+		background: #fff;
+
+		.s-header {
+			display: flex;
+			align-items: center;
+			height: 92upx;
+			line-height: 1;
+
+			.title {
+				color: #212121;
+				font-size: 33upx;
+				padding-bottom: 10upx;
+				border-bottom: 2px solid $font-color-light;
+			}
+
+			.s-img {
+				width: 140upx;
+				height: 30upx;
+			}
+
+			.tip {
+				font-size: $font-base;
+				color: $font-color-light;
+				margin: 0 20upx 0 40upx;
+			}
+
+			.timer {
+				display: inline-block;
+				width: 40upx;
+				height: 36upx;
+				text-align: center;
+				line-height: 36upx;
+				margin-right: 14upx;
+				font-size: $font-sm + 2upx;
+				color: #fff;
+				border-radius: 2px;
+				background: rgba(0, 0, 0, 0.8);
+			}
+
+			.icon-you {
+				font-size: $font-lg;
+				color: $font-color-light;
+				flex: 1;
+				text-align: right;
+			}
+		}
+		.floor-list {
+			white-space: nowrap;
+		}
+
+		.scoll-wrapper {
+			display: flex;
+			align-items: flex-start;
+		}
+	}
+
+	.news {
+		padding: 0px;
+
+		.title {
+			margin-left: 30upx;
+		}
+
+		.scroll-h {
+			padding: 0upx 30upx;
+			width: 100%;
+			height: 80upx;
+			flex-direction: row;
+			white-space: nowrap;
+
+			.uni-tab-item {
+				display: inline-block;
+				flex-wrap: nowrap;
+				padding-right: 16upx;
+			}
+
+			.uni-tab-item-title {
+				color: #575757;
+				font-size: 30upx;
+				height: 80upx;
+				line-height: 80upx;
+				flex-wrap: nowrap;
+				white-space: nowrap;
+			}
+
+			.uni-tab-item-title-active {
+				color: $font-color-light;
+			}
+		}
+	}
+
+	.product-list {
+		margin-bottom: 20upx;
+		.title {
+			font-size: 22upx;
+			color: #212121;
+		}
+
+		.point {
+			text-indent: 48upx;
+			font-size: 20upx;
+			color: #575757;
+		}
+	}
+}
 </style>

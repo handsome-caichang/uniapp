@@ -57,23 +57,25 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.header-box {
-		width: 100%;
-		padding: 0 4%;
-		height: 100upx;
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
+	.header-page-body {
+		
+		.header-box {
+			width: 100%;
+			padding: 0 4%;
+			height: 100upx;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
 
-		.item {
-			color: #212121;
-			font-size: 38upx;
-			padding: 0 20upx;
+			.item {
+				color: #212121;
+				font-size: 38upx;
+				padding: 0 20upx;
 
-			&.active {
-				border-bottom: 4upx solid $font-color-light;
+				&.active {
+					border-bottom: 4upx solid $font-color-light;
+				}
 			}
 		}
-		
 	}
 </style>

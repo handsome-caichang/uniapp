@@ -1,5 +1,8 @@
 <script>
 export default {
+	globalData: {  
+		// webviewlink: ''
+	},  
 	created() {
 		// #ifdef APP-PLUS
 		plus.navigator.closeSplashscreen(); 
@@ -24,6 +27,12 @@ export default {
 	@import '/static/css/uni.css';
 	@import '/static/css/iconfont.css';
 	@import '/static/css/common.scss';
+	uni-page-body, uni-page-refresh {
+		height: 100%;
+	}
+	.header-page-body {
+		height: 100%;
+	}
 /* #endif*/
 </style>
                    

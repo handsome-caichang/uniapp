@@ -1,6 +1,5 @@
 <template>
 	<view class="container-sell" style="padding: 0 20upx;">
-
 		<view class="header-box-sell">
 			<view class="addr" @tap="chooselocation">
 				<uni-icons type="location"></uni-icons>
@@ -17,15 +16,12 @@
 		</view>
 
 		<view class="news">
-
 			<view class="tablebox">
-				<view class="tableitem" v-for="(item,index) in tablist" :key="index" :class="activeindex==index?'active':''" @tap="changetab(index)">
-					{{item}}
-				</view>
+				<view class="tableitem" v-for="(item, index) in tablist" :key="index" :class="activeindex == index ? 'active' : ''" @tap="changetab(index)">{{ item }}</view>
 			</view>
 
 			<view class="cont-box" style="margin-bottom: 20upx;" v-if="productList.length">
-				<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="toGoods(item)">
+				<view class="example-box" v-for="(item, index) in productList" :key="index" @tap="toGoods(item)">
 					<view class="uni-flex uni-row item-box">
 						<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
 							<image :src="item.img" style="width: 180rpx;height: 180rpx;"></image>
@@ -44,150 +40,143 @@
 							</view>
 							<view class="uni-flex" style="justify-content: space-between;font-size: 20upx;color: #575757;">
 								<uni-rate class="rate" :size="12" :value="5" />
-								<view class="text">
-									距我2.3km
-								</view>
+								<view class="text">距我2.3km</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 
-			<view class="no-pro" v-if="!productList.length && activeindex == 2 ">
+			<view class="no-pro" v-if="!productList.length && activeindex == 2">
 				<icon type="warn" size="80" color="#F8B551"></icon>
 				<view class="text">您还没有常用回收站</view>
 				<view>快去搜索添加收藏吧</view>
 			</view>
-
 		</view>
 
 		<view class="filter-box">
 			<uni-drawer :visible="showRight" mode="right" @close="closeDrawer('right')">
 				<view class="uni-flex uni-row filter">
-					<view class="text" v-for="(item,index) in tabLists" :key="index" :class="{'active':item.isactive}" @tap="checkitem(item)">
-					{{item.name}}
-					</view>
+					<view class="text" v-for="(item, index) in tabLists" :key="index" :class="{ active: item.isactive }" @tap="checkitem(item)">{{ item.name }}</view>
 				</view>
 			</uni-drawer>
 		</view>
-		
+
 		<mpvue-city-picker ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue" @onConfirm="onConfirm"></mpvue-city-picker>
-		
 	</view>
 </template>
 <script>
-	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
-	import uniRate from '@/components/uni-rate/uni-rate.vue'
-	import uniIcons from '@/components/uni-icons/uni-icons.vue'
-	import uniDrawer from '@/components/uni-drawer/uni-drawer.vue'
-	import amap from '@/common/SDK/amap-wx.js';
-	export default {
-		components: {
-			uniDrawer,
-			uniIcons,
-			uniRate,
-			mpvueCityPicker
+import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue';
+import uniRate from '@/components/uni-rate/uni-rate.vue';
+import uniIcons from '@/components/uni-icons/uni-icons.vue';
+import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
+import amap from '@/common/SDK/amap-wx.js';
+export default {
+	components: {
+		uniDrawer,
+		uniIcons,
+		uniRate,
+		mpvueCityPicker
+	},
+	data() {
+		return {
+			headerPosition: 'fixed',
+			city: '北京',
+			cityPickerValue: [0, 0, 1],
+			tabIndex: 0,
+			productList: [],
+			showRight: false,
+			tabLists: [],
+			tablist: ['价格', '距离', '常用'],
+			activeindex: 0
+		};
+	},
+	created() {
+		this.getlocation();
+		this.loadData();
+	},
+	methods: {
+		onConfirm(e) {
+			this.city = e.label;
+			this.cityPickerValue = e.value;
 		},
-		data() {
-			return {
-				headerPosition: 'fixed',
-				city: '北京',
-				cityPickerValue: [0, 0, 1],
-				tabIndex: 0,
-				productList: [],
-				showRight: false,
-				tabLists: [],
-				tablist: ['价格', '距离', '常用'],
-				activeindex: 0
+		getmore() {
+			let len = this.productList.length;
+			if (len >= 20) {
+				return false;
+			}
+			// 演示,随机加入商品,生成环境请替换为ajax请求
+			let end_goods_id = this.productList[len - 1] ? this.productList[len - 1].goods_id : 0;
+			for (let i = 1; i <= 10; i++) {
+				let goods_id = end_goods_id + i;
+				let p = {
+					goods_id: goods_id,
+					img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg',
+					name: '商品名称商品名称商品名称商品名称商品名称',
+					price: '￥168',
+					slogan: '1235人付款'
+				};
+				this.productList.push(p);
 			}
 		},
-		created() {
+		checkitem(item) {
+			item.isactive = !item.isactive;
+		},
+		changetab(index) {
+			this.activeindex = index;
+			if (index == 2) {
+				this.productList = [];
+			} else {
+				this.getmore();
+			}
+		},
+		closeDrawer() {
+			this.showRight = false;
+		},
+		filtertap() {
+			this.showRight = true;
+		},
+		async loadData() {
+			this.productList = await this.$api.json('productList');
+			this.tabLists = await this.$api.json('tabList');
+			for (var i = 0; i < this.tabLists.length; i++) {
+				this.$set(this.tabLists[i], 'isactive', false);
+			}
 			this.getlocation();
-			this.loadData();
 		},
-		methods: {
-			onConfirm(e) {
-				this.city = e.label;
-				this.cityPickerValue = e.value;
-			},
-			getmore() {
-				let len = this.productList.length;
-				if (len >= 20) {
-					return false;
+		getlocation() {
+			uni.getStorage({
+				key: '_location',
+				succeses: function(res) {
+					this.city = res.data.address.city;
 				}
-				// 演示,随机加入商品,生成环境请替换为ajax请求
-				let end_goods_id = this.productList[len - 1] ? this.productList[len - 1].goods_id : 0;
-				for (let i = 1; i <= 10; i++) {
-					let goods_id = end_goods_id + i;
-					let p = {
-						goods_id: goods_id,
-						img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg',
-						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
-						slogan: '1235人付款'
-					};
-					this.productList.push(p);
-				}
-			},
-			checkitem(item) {
-				item.isactive = !item.isactive;
-			},
-			changetab(index) {
-				this.activeindex = index;
-				if (index == 2) {
-					this.productList = [];
-				} else {
-					this.getmore()
-				}
-			},
-			closeDrawer() {
-				this.showRight = false;
-			},
-			filtertap() {
-				this.showRight = true;
-			},
-			async loadData() {
-				this.productList = await this.$api.json('productList');
-				this.tabLists = await this.$api.json('tabList');
-				for (var i = 0; i < this.tabLists.length; i++) {
-					this.$set(this.tabLists[i], 'isactive', false)
-				}
-				this.getlocation();
-			},
-			getlocation() {
-				uni.getStorage({
-					key: '_location',
-					succeses: function(res){
-						this.city = res.data.address.city;
-					}
-				})
-				uni.getLocation({
-					geocode: true,
-					success: res => {
-						uni.setStorageSync('_location', res);
-						this.city = res.address.city;
-					},
-					fail: err => {
-					}
-				});
-			},
-			toSearch() {},
-			toGoods(item) {
-				let id = item.goods_id;
-				uni.navigateTo({
-					url: `/pages/product/malldetail?id=${id}`
-				})
-			},
-			chooselocation() {
-				this.$refs.mpvueCityPicker.show()
-			}
+			});
+			uni.getLocation({
+				geocode: true,
+				success: res => {
+					uni.setStorageSync('_location', res);
+					this.city = res.address.city;
+				},
+				fail: err => {}
+			});
+		},
+		toSearch() {},
+		toGoods(item) {
+			let id = item.goods_id;
+			uni.navigateTo({
+				url: `/pages/product/malldetail?id=${id}`
+			});
+		},
+		chooselocation() {
+			this.$refs.mpvueCityPicker.show();
 		}
 	}
+};
 </script>
 <style lang="scss" scoped>
-	.container-sell {
-		position: relative;
-	}
+.container-sell {
+	position: relative;
+
 	.no-pro {
 		display: flex;
 		flex-direction: column;
@@ -202,7 +191,6 @@
 	}
 
 	.filter-box {
-
 		// position: absolute;
 		// top: 0;
 		// bottom: 0;
@@ -223,11 +211,10 @@
 
 				&.active {
 					background-color: green;
-					color: #FFFFFF;
+					color: #ffffff;
 				}
 			}
 		}
-
 	}
 
 	.header-box-sell {
@@ -296,8 +283,12 @@
 	}
 
 	.news {
-		position: relative;
-
+		position: absolute;
+		top: 100upx;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		z-index: 10;
 		.tablebox {
 			padding: 0upx 20upx;
 			display: flex;
@@ -361,9 +352,10 @@
 					}
 				}
 
-				.address {}
+				.address {
+				}
 			}
-
 		}
 	}
+}
 </style>

@@ -304,6 +304,11 @@
 			"style": {
 				"navigationBarTitleText": "计算器"
 			}
+		},{
+			"path": "pages/webviewpage/webviewpage",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"globalStyle": { // 文档 https://uniapp.dcloud.io/collocation/pages?id=globalstyle

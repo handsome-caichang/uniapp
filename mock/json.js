@@ -1,28 +1,4 @@
-const tabList = [{
-		id: "tab01",
-		name: '推荐',
-		newsid: 0
-	}, {
-		id: "tab02",
-		name: '二手设备',
-		newsid: 23
-	}, {
-		id: "tab03",
-		name: '非金属',
-		newsid: 223
-	}, {
-		id: "tab04",
-		name: '消费',
-		newsid: 221
-	}, {
-		id: "tab05",
-		name: '娱乐',
-		newsid: 225
-	}, {
-		id: "tab06",
-		name: '区块链',
-		newsid: 208
-	}];
+
 const newsList = [{
 		id: 1,
 		title: '从亲密无间到相爱相杀，这就是人类一败涂地的真相',
@@ -113,11 +89,7 @@ const evaList = [{
 		content: '楼上说的好有道理。'
 	}
 ]
-const bannerlist = [
-	"/static/img/temp/banner3.jpg",
-	"/static/img/temp/banner2.jpg",
-	"/static/img/temp/banner4.jpg"
-]
+
 const arrayText = [
 	'设置支付密码。为了确保您的资金安全，',
 	'设置支付密码。为了确保您的资金安全，',
@@ -172,85 +144,141 @@ const goodsList = [{
 	},
 ]
 const	productList = [
-			{
-				goods_id: 0,
-				img: '/static/img/goods/p1.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 1,
-				img: '/static/img/goods/p2.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 2,
-				img: '/static/img/goods/p3.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 3,
-				img: '/static/img/goods/p4.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 4,
-				img: '/static/img/goods/p5.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 5,
-				img: '/static/img/goods/p6.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 6,
-				img: '/static/img/goods/p7.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 7,
-				img: '/static/img/goods/p8.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 8,
-				img: '/static/img/goods/p9.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			},
-			{
-				goods_id: 9,
-				img: '/static/img/goods/p10.jpg',
-				name: '商品名称商品名称商品名称商品名称商品名称',
-				price: '￥168',
-				slogan: '1235人付款'
-			}
-		]
-			
-
+	{
+		goods_id: 0,
+		img: '/static/img/goods/p1.jpg',
+		name: '商品名称商品名称商品名称商品名称商品名称',
+		price: '￥168',
+		slogan: '1235人付款',
+		link: "https://www.baidu.com/index.html"
+	},
+	{
+		goods_id: 9,
+		img: '/static/img/goods/p10.jpg',
+		name: '商品名称商品名称商品名称商品名称商品名称',
+		price: '￥168',
+		slogan: '1235人付款',
+		link: "https://www.baidu.com/index.html"
+	}
+];
+const tabList = [{
+		id: "tab01",
+		name: '推荐',
+		newsid: 0
+	}, {
+		id: "tab02",
+		name: '二手设备',
+		newsid: 23
+	}, {
+		id: "tab03",
+		name: '非金属',
+		newsid: 223
+	}, {
+		id: "tab04",
+		name: '消费',
+		newsid: 221
+	}, {
+		id: "tab05",
+		name: '娱乐',
+		newsid: 225
+	}, {
+		id: "tab06",
+		name: '区块链',
+		newsid: 208
+}];
+const gonkaolist = [
+	'扩展：现在需要在应用到选择老师的时候，也希望根据当',
+	'扩展：现在需要在应用到选择老师的时候，也希望根据当',
+	'扩展：现在需要在应用到选择老师的时候，也希望根据当',
+	'扩展：现在需要在应用到选择老师的时候，也希望根据当',
+	'扩展：现在需要在应用到选择老师的时候，也希望根据当',
+];
+const bannerlist = [
+	{
+		src: "/static/img/temp/banner3.jpg",
+		link: "https://www.baidu.com/index.html"
+	},
+	{
+		src: "/static/img/temp/banner2.jpg",
+		link: "https://www.baidu.com/index.html"
+	},
+	{
+		src: "/static/img/temp/banner3.jpg",
+		link: "https://www.baidu.com/index.html"
+	}
+]
+const vipusers = [
+	{
+		image: "/static/img/temp/banner3.jpg",
+		name: '张三',
+		age: 5,
+		rate: 3
+	},{
+		image: "/static/img/temp/banner2.jpg",
+		name: '李四',
+		age: 3,
+		rate: 5
+	},{
+		image: "/static/img/temp/banner3.jpg",
+		name: '王五',
+		age: 2,
+		rate: 1
+	},{
+		image: "/static/img/temp/banner2.jpg",
+		name: '小六',
+		age: 5,
+		rate: 4
+	},{
+		image: "/static/img/temp/banner4.jpg",
+		name: '七十',
+		age: 3,
+		rate: 5
+	},
+]
+const huowulist = [
+	{
+		type: '废铁',
+		num: 3,
+		campusname: 'chag发的发斯蒂芬公司',
+		time: '12/12',
+		address: '长沙'
+	},{
+		type: '废铁',
+		num: 3,
+		campusname: 'chag发的发斯蒂芬公司',
+		time: '12/12',
+		address: '长沙'
+	},{
+		type: '废铁',
+		num: 3,
+		campusname: 'chag发的发斯蒂芬公司',
+		time: '12/12',
+		address: '长沙'
+	},{
+		type: '废铁',
+		num: 3,
+		campusname: 'chag发的发斯蒂芬公司',
+		time: '12/12',
+		address: '长沙'
+	},{
+		type: '废铁',
+		num: 3,
+		campusname: 'chag发的发斯蒂芬公司',
+		time: '12/12',
+		address: '长沙'
+	},
+]
 export default {
+	goodsList,
+	vipusers,
+	huowulist,
+	gonkaolist,
+	productList,
 	tabList,
+	
 	newsList,
 	evaList,
 	bannerlist,
 	arrayText,
-	goodsList,
-	productList
+	
 }

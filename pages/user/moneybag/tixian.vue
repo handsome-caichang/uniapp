@@ -10,7 +10,7 @@
 				</view>
 				<input type="number" class="input" v-model="bondnum" maxlength="12">
 			</view>
-			<view class="point" style="color:#575757;font-size: 24upx;">可用余额3156.00元</view>
+			<view class="point" style="color:#575757;font-size: 24upx;">可用余额{{CashMoney}}元</view>
 		</view>
 		<view class="input-container">
 			<view class="point">
@@ -63,7 +63,8 @@
 						icon: '/static/img/pay/yinhanka.png',
 					}
 				],
-				current: 0
+				current: 0,
+				CashMoney: ""
 			}
 		},
 		methods: {
@@ -81,7 +82,15 @@
 						url: '/pages/other/tixiansuccess'
 					})
 				}
+			},
+			initdata() {
+				this.api.home.getCashMoney({
+					userId: getApp().globalData.userdata.userId,
+				}).then(res => {
+					this.CashMoney = res;
+				})
 			}
+			// 
 		}
 	}
 </script>

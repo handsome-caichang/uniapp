@@ -7,7 +7,9 @@
 				<text>{{showyue}}</text>
 				<text style="font-size: 34upx;">元</text>
 			</view>
-			<uni-icons style="margin-left:10upx" color="#fff" :type="showprice?'eye-slash':'eye'" size="24"  @click="changePassword" ></uni-icons>
+			<view class="iconfont icon-buxianshi" v-if="showprice" @click="changePassword" ></view>
+			<view class="iconfont icon-xianshi" v-else @click="changePassword" ></view>
+			<!-- <uni-icons style="margin-left:10upx" color="#fff" :type="showprice?'eye-slash':'eye'" size="24"  @click="changePassword" ></uni-icons> -->
 		</view>
 		<view class="viod"></view>
 		
@@ -54,6 +56,9 @@
 				}
 			},
 		},
+		created() {
+			this.initdata();
+		},
 		methods: {
 			navTo(url) {
 				uni.navigateTo({
@@ -62,6 +67,13 @@
 			},
 			changePassword() {
 				this.showprice = !this.showprice;
+			},
+			initdata() {
+				this.api.home.getWealth({
+					userId: getApp().globalData.userdata.userId,
+				}).then(res => {
+					this.yue = res.wealth;
+				})
 			}
 		}
 	}
@@ -71,10 +83,10 @@
 	.uni-page-body {
 		.header-box{
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
 			background:linear-gradient(180deg,rgba(24,192,44,1) 0%,rgba(127,234,139,1) 100%);
-			padding: 40upx;
+			padding: 40upx 100upx;
 			margin-bottom: 24upx;
 			.img {
 				height: 142upx;
@@ -84,11 +96,11 @@
 			.price-box {
 				color: #FFFFFF;
 				font-size: 56upx;
-				
 			}
-			.uni-icon-clear,
-			.uni-icon-eye {
-				color: #999;
+			.iconfont {
+				margin-left: 20upx;
+				color: #fff;
+				font-size: 48upx;
 			}
 		}
 		.uni-page-footer{

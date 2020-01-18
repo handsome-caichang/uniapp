@@ -4,7 +4,6 @@
 			
 		</view>
 		<view class="input-container">
-			
 			<view class="point">
 				转出金额（元）
 			</view>
@@ -19,7 +18,7 @@
 			</view>
 		</view>
 		
-		<view class="btnbox" :class="{'isded':!bondnum}" >
+		<view class="btnbox" @tap="zhuanchu" :class="{'isded':!bondnum}" >
 			确认转出
 		</view>
 		
@@ -40,7 +39,19 @@
 			}
 		},
 		methods: {
-			
+			zhuanchu() {
+				if (this.bondnum) {
+					this.api.home.depositToMoney({
+						userId: getApp().globalData.userdata.userId,
+						money: Number(this.bondnum)
+					}).then(res => {
+						uni.showToast({
+							title: "转出成功",
+							icon: "success"
+						})
+					})
+				}
+			},
 		}
 	}
 </script>

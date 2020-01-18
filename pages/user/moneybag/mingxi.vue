@@ -23,28 +23,12 @@
 		</view>
 		
 		<uni-list>
-			<uni-list-item title="李四公司交易订单支付佣金" note="2019/12/17" :showArrow="false" :showBadge="true" >
-				<view class="list-succ">
-					-3260
-				</view>
-			</uni-list-item>
-			<uni-list-item title="李四公司交易订单支付佣金" note="2019/12/17" :showArrow="false" :showBadge="true" >
-				<view class="list-price">
-					+56
-				</view>
-			</uni-list-item>
-			<uni-list-item title="李四公司交易订单支付佣金" note="2019/12/17" :showArrow="false" :showBadge="true" >
-				<view class="list-succ">
-					-3260
-				</view>
-			</uni-list-item>
-			<uni-list-item title="李四公司交易订单支付佣金" note="2019/12/17" :showArrow="false" :showBadge="true" >
-				<view class="list-price">
-					+56
+			<uni-list-item v-for="item in list[timeindex+1]" :key="item.orderNo" :title="item.remark" :note="item.createTime" :showArrow="false" :showBadge="true" >
+				<view class="list-succ" :class="{'list-price': item.type==0,'list-succ': item.type == 1}" >
+					{{item.type==0?'+':'-'}}{{item.count}}
 				</view>
 			</uni-list-item>
 		</uni-list>
-		
 	</view>
 </template>
 <script>
@@ -68,21 +52,48 @@
 				],
 				activeindex: 0,
 				array: [
-					{name:'本月'},{name: '上月'}, {name:'半年'}, {name:'一年'}
+					{name:'一月'},
+					{name:'二月'},
+					{name:'三月'},
+					{name:'四月'},
+					{name:'五月'},
+					{name:'六月'},
+					{name:'七月'},
+					{name:'八月'},
+					{name:'九月'},
+					{name:'十月'},
+					{name:'十一月'},
+					{name:'十二月'}
 				],
 				timeindex: 0,
+				list: [],
 			}
 		},
 		created() {
-			console.log(this.date)
+			this.getdata();
 		},
 		methods: {
 			changetab(index) {
 				this.activeindex = index;
+				this.getdata();
 			},
 			bindPickerChange: function(e) {
 				this.timeindex = e.target.value
 			},
+			getdata() {
+				this.list = [];
+				let userdata = uni.getStorageSync('userdata');
+				// console.log(userdata)
+				this.api.home.getBillList({
+					userId: userdata.userId,
+					countPerPage: 1000,
+					pageIndex: 1,
+					orderType: this.activeindex,
+				}).then(res => {
+					this.list = res.data;
+				})
+			}
+			// mingxi
 		}
 	}
 </script>

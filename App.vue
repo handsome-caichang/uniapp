@@ -1,7 +1,7 @@
 <script>
 export default {
 	globalData: {  
-		// webviewlink: ''
+		userdata: {}
 	},  
 	created() {
 		// #ifdef APP-PLUS
@@ -14,6 +14,8 @@ export default {
 			uni.reLaunch({
 				url: '/pages/login/login'
 			})
+		}else {
+			this.globalData.userdata = userdata;
 		}
 	},
 	onShow: function() {},

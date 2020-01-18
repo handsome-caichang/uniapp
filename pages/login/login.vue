@@ -38,7 +38,7 @@ export default {
 	components: {},
 	data() {
 		return {
-			phoneNum: '',
+			phoneNum: '18602186762',
 			yzm: '',
 			password: '',
 			btnMsg: '',
@@ -91,53 +91,21 @@ export default {
 			uni.showLoading({
 				title: '登录中'
 			});
-			setTimeout(() => {
-				// getLogin().then(res => {
-				//console.log(res)
-				let res = {
-					data: {
-						username: '张三',
-						phoneNum: '12345678910',
-						accesstoken: '12ddfg3fsfzsdf343r'
-					}
-				};
-				let userdata = {
-					username: res.data.username,
-					phoneNum: res.data.phoneNum,
-					accesstoken: res.data.accesstoken
-				}; //保存用户信息和accesstoken
-				// 	_this.$store.dispatch("setUserData",userdata); //存入状态
-				// 	try {
-				uni.setStorageSync('userdata', userdata); //存入缓存
-				// } catch (e) {
-				// 	// error
-				// }
+			this.api.home.login({
+				mobilePhone: this.phoneNum,
+				code: this.yzm
+			}).then(res => {
+				uni.setStorageSync('userdata', res.data); //存入缓存
 				uni.showToast({
 					icon: 'success',
 					position: 'bottom',
 					title: '登录成功'
 				});
+				uni.hideLoading();
 				uni.reLaunch({
 					url: '/pages/tabBar/home/home'
 				});
-				// }else{
-				// 	_this.passData=""
-				// 	uni.showToast({
-				// 		icon: 'error',
-				// 		position: 'bottom',
-				// 		title: '账号或密码错误，账号admin密码admin'
-				// 	});
-				// }
-				uni.hideLoading();
-			}, 1000);
-			// }).catch(err => {
-			// 	uni.hideLoading();
-			// })
-
-			// console.log('1')
-			// uni.switchTab({
-			// 	url: '/pages/tabBar/home/home'
-			// });
+			})
 		},
 		// 登录方式切换
 		loginChange() {
@@ -145,32 +113,39 @@ export default {
 		},
 		// 账号登录获取验证码
 		getCode() {
-			this.btnMsg = 's重发';
-			this.disable = false;
 			const TIME_COUNT = 60;
 			if (!this.timer) {
-				this.count = TIME_COUNT;
-				this.timer = setInterval(() => {
-					if (this.count > 0 && this.count <= TIME_COUNT) {
-						this.count--;
-					} else {
-						clearInterval(this.timer);
-						this.timer = null;
-						this.disable = true;
-						this.count = '重新获取';
-						this.btnMsg = '';
-					}
-				}, 1000);
-				this.showToast('发送成功', 'success');
+				this.api.home.sendVerificationCode({
+					mobilePhone: this.phoneNum
+				}).then(res => {
+					uni.showToast({
+						title: "发送成功",
+						icon:  'success',
+						position: 'bottom',
+					});
+					this.count = TIME_COUNT;
+					this.btnMsg = 's重发';
+					this.disable = false;
+					this.timer = setInterval(() => {
+						if (this.count > 0 && this.count <= TIME_COUNT) {
+							this.count--;
+						} else {
+							clearInterval(this.timer);
+							this.timer = null;
+							this.disable = true;
+							this.count = '重新获取';
+							this.btnMsg = '';
+						}
+					}, 1000);
+				},rej => {
+					clearInterval(this.timer);
+					this.timer = null;
+					this.disable = true;
+					this.count = '重新获取';
+					this.btnMsg = '';
+				})
 			}
 		},
-		// 消息弹框
-		showToast(title, icon) {
-			uni.showToast({
-				title: String(title),
-				icon: String(icon)
-			});
-		}
 	}
 };
 </script>

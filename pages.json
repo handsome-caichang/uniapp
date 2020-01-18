@@ -318,7 +318,7 @@
 		"backgroundColor": "#fff" // 窗口的背景色
 	},
 	"condition": { //模式配置，仅开发期间生效
-	    "current": 0, //当前激活的模式（list 的索引项）
+	    "current": 1, //当前激活的模式（list 的索引项）
 	    "list": [
 			{
 	            "name": "swiper", //模式名称
@@ -327,8 +327,7 @@
 	        },
 	        {
 	            "name": "swiper",
-	            "path": "pages/product/productdetail",
-				"query": "id=1" //启动参数，在页面的onLoad函数里面得到。
+	            "path": "pages/user/moneybag/mbag"
 	        },
 	        {
 	            "name": "swiper",

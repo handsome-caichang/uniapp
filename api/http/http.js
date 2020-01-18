@@ -3,9 +3,12 @@ import Request from './request.js'
 const http = new Request()
 
 http.setConfig((config) => { /* 设置全局配置 */
-  config.baseUrl = 'https://wxmalltest.xiaogj.com/wxtest/wx.do?appid=2&action=' /* 根域名不同 */
+  config.baseUrl = 'http://47.111.254.105:9000/api/' /* 根域名不同 */
   config.header = {
     ...config.header,
+	// 'content-type': "application/json;charset=utf-8",
+	'Access-Control-Allow-Origin': '*',
+	// "access-control-allow-credentials": "true"
   }
   return config
 })
@@ -38,11 +41,16 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
   // if (response.config.custom.verification) { // 演示自定义参数的作用
   //   return response.data
   // }
-  if (response.data.result.code !== 200) {
+  if (response.data.isSuccessful !== 1) {
+	  console.log(response.data.error)
 	  uni.showToast({
-	  	title: response.data.result.msg
+	  	title: response.data.error,
+		icon:  'error',
+		position: 'bottom',
 	  })
+	   return Promise.reject(response)
   }else {
+	  console.log(response.data.data)
 	  return response.data
   }
   return response

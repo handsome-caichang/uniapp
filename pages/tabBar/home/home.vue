@@ -2,7 +2,7 @@
 	<view class="index-content">
 		<!-- banner板块 -->
 		<view class="index-banner">
-			<view class="swiper" v-if="bannerlist.length > 0">
+			<view class="swiper">
 				<swiper
 					class="swiper-container"
 					:autoplay="true"
@@ -13,7 +13,7 @@
 					indicator-color="#FFFFFF"
 				>
 					<block v-for="(item, index) in bannerlist" :key="index">
-						<swiper-item class="swiper-wrapper" @tap="previewImage(item)"><image :src="item.src" mode="widthFix"></image></swiper-item>
+						<swiper-item class="swiper-wrapper" @tap="previewImage(item.url)"><image :src="item.image" mode="widthFix"></image></swiper-item>
 					</block>
 				</swiper>
 			</view>
@@ -191,16 +191,31 @@ export default {
 			});
 		},
 		async loadData() {
-			this.bannerlist = await this.$api.json('bannerlist');
+			console.log(getApp())
+			await this.api.home.checkIn({
+				userId: getApp().globalData.userdata.userId
+			}).then(res => {
+				if (res.data.status == "0") {
+					this.$nextTick(() => {
+						// this.$refs.showqiandao.open();
+					})
+				}
+			})
+			await this.api.home.getAdvertList().then(res => {
+				this.bannerlist = res.data;
+			});
+			// /api/check/checkIn
+			// this.api.home.getClassify().then(res => {
+			// 	uni.setStorageSync('goodtypelist', res.data); //存入缓存
+			// })
+			// this.bannerlist = await this.api.home.getAdvertList;
 			this.vipusers = await this.$api.json('vipusers');
 			this.huowulist = await this.$api.json('huowulist');
 			this.gonkaolist = await this.$api.json('gonkaolist');
 			this.tabBars = await this.$api.json('tabList');
 			this.productList = await this.$api.json('productList');
 
-			// this.$nextTick(() => {
-			// 	this.$refs.showqiandao.open();
-			// })
+			
 		},
 		closepop() {
 			this.$nextTick(() => {

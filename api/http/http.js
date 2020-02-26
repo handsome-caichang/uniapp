@@ -50,7 +50,7 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
 	  })
 	   return Promise.reject(response)
   }else {
-	  console.log(response.data.data)
+	  // console.log(response.data.data)
 	  return response.data
   }
   return response

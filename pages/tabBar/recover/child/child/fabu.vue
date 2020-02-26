@@ -55,7 +55,7 @@
 				],
 				activeindex: 0,
 				ischeck: false,
-				btnactive: false, // 如果不是vip 不能发布
+				btnactive: true, // 如果不是vip 不能发布
 			}
 		},
 		methods: {
@@ -63,10 +63,29 @@
 				this.activeindex = index;
 			},
 			fabucur() {
-				// 需要实名，
-				// uni.showModal({
-				// 	title: "发布成功"
-				// });
+				let address = uni.getStorageSync('_location');
+				console.log(address);
+				// "address": {
+				// 	"city": "长沙市",
+				// 	"district": "岳麓区",
+				// 	"poiName": "保利林语社区公园",
+				// 	"province": "湖南省",
+				// 	"street": "桐梓坡西路",
+				// 	"streetNum": "316号"
+				// },
+				this.api.home.realseRecovery({
+					classifyId: this.activeindex,
+					urgent: !this.ischeck ? 1 : 0,
+					userId: getApp().globalData.userdata.userId,
+					province: address.address.province,
+					city: address.address.city,
+					district: address.address.district,
+				}).then(res => {
+					// 需要实名，
+					uni.showModal({
+						title: "发布成功"
+					});
+				})
 			}
 		}
 	}

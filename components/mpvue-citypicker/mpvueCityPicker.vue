@@ -14,9 +14,9 @@
 					<picker-view-column>
 						<div class="picker-item" v-for="(item,index) in cityDataList" :key="index">{{item.label}}</div>
 					</picker-view-column>
-					<picker-view-column>
+					<!-- <picker-view-column>
 						<div class="picker-item" v-for="(item,index) in areaDataList" :key="index">{{item.label}}</div>
-					</picker-view-column>
+					</picker-view-column> -->
 				</block>
 			</picker-view>
 		</div>

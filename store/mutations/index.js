@@ -9,5 +9,11 @@ export default {
     logout(state) {
         state.userName = "";
         state.hasLogin = false;
-    }
+    },
+	setuserInfo(state, data) {
+		state.userInfo = Object.assign(state.userInfo, data);
+	},
+	setProvinceList(state, data) {
+		state.ProvinceList = data;
+	},
 }

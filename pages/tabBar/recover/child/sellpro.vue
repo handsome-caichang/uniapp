@@ -71,6 +71,7 @@ import uniRate from '@/components/uni-rate/uni-rate.vue';
 import uniIcons from '@/components/uni-icons/uni-icons.vue';
 import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
 import amap from '@/common/SDK/amap-wx.js';
+import { mapMutations,mapState } from 'vuex';
 export default {
 	components: {
 		uniDrawer,
@@ -92,8 +93,11 @@ export default {
 		};
 	},
 	created() {
-		this.getlocation();
+		// this.getlocation();
 		this.loadData();
+	},
+	computed: {
+		...mapState(["userInfo"])
 	},
 	methods: {
 		onConfirm(e) {
@@ -137,28 +141,27 @@ export default {
 			this.showRight = true;
 		},
 		async loadData() {
-			this.productList = await this.$api.json('productList');
-			this.tabLists = await this.$api.json('tabList');
-			for (var i = 0; i < this.tabLists.length; i++) {
-				this.$set(this.tabLists[i], 'isactive', false);
-			}
-			this.getlocation();
-		},
-		getlocation() {
-			uni.getStorage({
-				key: '_location',
-				succeses: function(res) {
-					this.city = res.data.address.city;
-				}
-			});
 			uni.getLocation({
 				geocode: true,
 				success: res => {
+					this.api.home.getRealseGoodsList({
+						type: this.activeindex+1,
+						userId: getApp().globalData.userdata.userId,
+						lat: ""+res.latitude,
+						longitude: ""+res.longitude,
+					}).then(res => {
+						this.productList = JSON.parse(res.data)
+					})
 					uni.setStorageSync('_location', res);
 					this.city = res.address.city;
 				},
 				fail: err => {}
 			});
+			// this.productList = await this.$api.json('productList');
+			this.tabLists = await this.$api.json('tabList');
+			for (var i = 0; i < this.tabLists.length; i++) {
+				this.$set(this.tabLists[i], 'isactive', false);
+			}
 		},
 		toSearch() {},
 		toGoods(item) {
@@ -175,8 +178,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .container-sell {
-	position: relative;
-
+	position: absolute;
+	top: 200upx;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	flex: 1;
+	height: 100%;
 	.no-pro {
 		display: flex;
 		flex-direction: column;
@@ -289,6 +297,8 @@ export default {
 		right: 0;
 		left: 0;
 		z-index: 10;
+		flex: 1;
+		height: 100%;
 		.tablebox {
 			padding: 0upx 20upx;
 			display: flex;

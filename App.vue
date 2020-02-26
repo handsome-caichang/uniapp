@@ -1,7 +1,9 @@
 <script>
+
 export default {
 	globalData: {  
-		userdata: {}
+		userdata: {},
+		address: {}
 	},  
 	created() {
 		// #ifdef APP-PLUS
@@ -15,7 +17,11 @@ export default {
 				url: '/pages/login/login'
 			})
 		}else {
-			this.globalData.userdata = userdata;
+			// this.api.home.getRecoveryInfo({
+			// 	userId: userdata.userId
+			// }).then(res => {
+				this.globalData.userdata = userdata;
+			// })
 		}
 	},
 	onShow: function() {},

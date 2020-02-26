@@ -3,6 +3,8 @@ const DataState = {
     
     // 用户基本信息
     userInfo: {},
+	ProvinceList: [],
+	
 	forcedLogin: true,
 	hasLogin: false,
 	userName: "",

@@ -13,7 +13,7 @@
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
-		<view class="list-cell" @click="navTo('/pages/user/userinfo/userinfoset')" >
+		<view class="list-cell" @click="navTo('/pages/user/userinfo/setpassword')" >
 			<text class="cell-tit">修改登录密码</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>

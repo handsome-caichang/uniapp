@@ -7,12 +7,15 @@
 					<image class="img-icon" src="/static/img/huozhu/leibie.png"></image>
 					<text class="text bitian">货物类别</text>
 				</view>
-				<view class="input-box">
-					<view class="input" :class="protype.value?'':'place'">
+				<picker @change="bindPickerChange" :value="protypeindex" :range="array" range-key="name">
+					<view class="uni-input">{{protype.value ? protype.value : protype.label }}</view>
+				</picker>
+				<!-- <view class="input-box" @tap="selectprotype"> -->
+					<!-- <view class="input" :class="protype.value?'':'place'">
 						{{protype.value ? protype.value : protype.label }}
 					</view>
-					<uni-icons class="icon" type="arrowdown"></uni-icons>
-				</view>
+					<uni-icons class="icon" type="arrowdown"></uni-icons> -->
+				<!-- </view> -->
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
@@ -29,7 +32,7 @@
 					<text class="text">售价</text>
 				</view>
 				<view class="input-box">
-					<input class="uni-input" v-model="price" type="number" placeholder="请输入货物数量（可预估）" />
+					<input class="uni-input" v-model="price" type="number" placeholder="请输入货物售价（可预估）" />
 				</view>
 			</view>
 			<view class="uni-flex item-box">
@@ -38,7 +41,7 @@
 					<text class="text bitian">货物地址</text>
 				</view>
 				<view class="input-box">
-					<input class="uni-input" v-model="contentname" type="text" placeholder="货物地址" />
+					<input class="uni-input" v-model="address" type="text" placeholder="货物地址" />
 					<!-- <view class="input " :class="region.cityCode?'':'place'">{{region.label}}</view>
 					<uni-icons class="icon" type="arrowdown"></uni-icons> -->
 				</view>
@@ -141,7 +144,15 @@
 					label: "请选择货物类别",
 					value: "",
 				},
-
+				protypeindex: 0,
+				array: [
+					{
+						name: '紫铜',
+					},
+					{
+						name: '电线电缆',
+					}
+				],
 				region: {
 					label: "请点击选择地址",
 					value: [],
@@ -153,7 +164,7 @@
 				contentname: '',
 				contentphone: '',
 				pipeinum: "",
-
+				address: '',
 				sourceType: ['拍照', '相册', '拍照或相册'],
 				sourceTypeIndex: 2,
 				imageList: [],
@@ -165,11 +176,48 @@
 
 		},
 		methods: {
+			bindPickerChange: function(e) {
+				console.log(e.target)
+				this.protypeindex = e.target.value;
+				this.protype.value = this.array[this.protypeindex].name;
+			},
 			// 
 			fabu() {
-				uni.navigateTo({
-					url: "/pages/other/fabusuccess"
+				let address = uni.getStorageSync('_location');
+				// console.log(address);
+				// "address": {
+				// 	"city": "长沙市",
+				// 	"district": "岳麓区",
+				// 	"poiName": "保利林语社区公园",
+				// 	"province": "湖南省",
+				// 	"street": "桐梓坡西路",
+				// 	"streetNum": "316号"
+				// },
+				this.api.home.realseGoods({
+					classifyId: +this.protypeindex,
+					count: +this.numberleng,
+					"address": this.address,
+					"userId": getApp().globalData.userdata.userId,
+					"linkName": this.contentname,
+					"tel": this.contentphone,
+					"images": "",
+					"matchingNumber": +this.pipeinum,
+					"bedrockPrice": +this.price,
+					"outsidePrice": +this.price,
+					province: address.address.province,
+					city: address.address.city,
+					district: address.address.district,
+				}).then(res => {
+					uni.navigateTo({
+						url: "/pages/other/fabusuccess"
+					})
 				})
+				// uni.navigateTo({
+				// 	url: "/pages/other/fabusuccess"
+				// })
+			},
+			selectprotype() {
+				
 			},
 			async checkPermission(code) {
 				let type = code ? code - 1 : this.sourceTypeIndex;

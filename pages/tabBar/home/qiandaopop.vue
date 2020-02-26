@@ -9,12 +9,12 @@
 				<view class="success-text">
 					签到成功
 				</view>
-				<view class="point-text">
+				<!-- <view class="point-text">
 					已经连续签到
 				</view>
 				<view class="list-box">
 					<uni-steps :options="list1" active-color="#18C02C" :active="activeindex" />
-				</view>
+				</view> -->
 			</view>
 			<view class="content">
 				<image class="img" src="/static/img/qiandao.png" mode=""></image>

@@ -63,6 +63,7 @@
 				themeColor: '#007AFF',
 				activeindex: 0,
 				region:{label:"请点击选择地址",value:[],cityCode:""},
+				pricelist: [],
 				list: [
 					'紫铜',
 					'电线电缆',
@@ -87,8 +88,14 @@
 				]
 			}
 		},
-		created() {},
-		onReady() {},
+		created() {
+			this.api.home.searchPriceByArea({
+				province: "湖南",
+				city: "长沙"
+			}).then(res => {
+				this.pricelist = res.data;
+			})
+		},
 		onShow() {},
 		methods: {
 			clickitem(index) {

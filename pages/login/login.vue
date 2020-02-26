@@ -15,10 +15,10 @@
 				<text class="hot">+86 |</text>
 				<input class="phone" type="number" :maxlength="11" v-model="phoneNum" placeholder="请输入手机号" placeholder-class="p-active" />
 			</view>
-			<view class="section" v-if="isShow">
-				<input class="pwd" type="password" :maxlength="18" v-model="password" placeholder="请输入密码" placeholder-class="p-active" />
+			<view class="section" v-if="isShow || wangjimima">
+				<input class="pwd" type="password" :maxlength="18" v-model="password" :placeholder="wangjimima?'请输入新密码':'请输入密码'"  placeholder-class="p-active" />
 			</view>
-			<view class="section" v-if="!isShow">
+			<view class="section" v-if="!isShow || wangjimima">
 				<input class="pwd" type="number" :maxlength="6" v-model="yzm" placeholder="请输入短信验证码" placeholder-class="p-active" />
 				<text class="btns" type="default" @tap="getCode" :class="{ isColor: disable != true }">{{ count }}{{ btnMsg }}</text>
 			</view>
@@ -28,7 +28,7 @@
 			<view class="box-two" @tap="loginChange">
 				<text class="two">{{ isShow ? '验证码登录' : '密码登录' }}</text>
 			</view>
-			<view class="point" @tap="loginChange">{{ isShow ? '忘记密码' : '收不到验证码？' }}</view>
+			<view class="point" @tap="passwordold">{{ isShow ? '忘记密码' : '收不到验证码？' }}</view>
 		</view>
 	</view>
 </template>
@@ -46,12 +46,21 @@ export default {
 			disable: true,
 			count: '获取验证码',
 			timer: null,
-			isRotate: false
+			isRotate: false,
+			wangjimima: false,
 		};
 	},
 	onLoad() {},
 	mounted() {},
 	methods: {
+		passwordold() {
+			if (this.isShow) {
+				this.wangjimima = true;
+			}else {
+				this.isShow = true;
+				this.wangjimima = false;
+			}
+		},
 		login() {
 			//登录
 			if (this.isRotate) {
@@ -91,25 +100,46 @@ export default {
 			uni.showLoading({
 				title: '登录中'
 			});
-			this.api.home.login({
-				mobilePhone: this.phoneNum,
-				code: this.yzm
-			}).then(res => {
-				uni.setStorageSync('userdata', res.data); //存入缓存
-				uni.showToast({
-					icon: 'success',
-					position: 'bottom',
-					title: '登录成功'
-				});
-				uni.hideLoading();
-				uni.reLaunch({
-					url: '/pages/tabBar/home/home'
-				});
-			})
+			
+			if (this.wangjimima) {
+				// forgetPayPassword  forgetPassword
+				this.api.home.forgetPassword({
+					mobilePhone: this.phoneNum,
+					code: this.yzm,
+					password: this.password
+				}).then( res => {
+					uni.showToast({
+						icon: 'success',
+						position: 'bottom',
+						title: '成功'
+					});
+				}, rej => {
+					this.isRotate = false;
+				})
+			}else {
+				this.api.home.login({
+					mobilePhone: this.phoneNum,
+					code: this.yzm
+				}).then(res => {
+					uni.setStorageSync('userdata', res.data); //存入缓存
+					uni.showToast({
+						icon: 'success',
+						position: 'bottom',
+						title: '登录成功'
+					});
+					uni.hideLoading();
+					uni.reLaunch({
+						url: '/pages/tabBar/home/home'
+					});
+				}, rej => {
+					this.isRotate = false;
+				})
+			}
 		},
 		// 登录方式切换
 		loginChange() {
 			this.isShow = !this.isShow;
+			this.wangjimima = false;
 		},
 		// 账号登录获取验证码
 		getCode() {

@@ -16,7 +16,7 @@
 		</view>
 		<view class="list-cell"  >
 			<text class="cell-tit">关于</text>
-			<text class="cell-more ">版本号1.0</text>
+			<text class="cell-more ">版本号 {{enableMinVersionCode}} </text>
 		</view>
 		<view class="list-cell log-out-btn" @click="toLogout">
 			<text class="cell-tit">退出登录</text>
@@ -35,8 +35,20 @@
 		},
 		data() {
 			return {
-				
+				enableMinVersionCode: 0,
 			};
+		},
+		onLoad() {
+			this.api.home.getAppVersion().then(res => {
+				console.log(res.data);
+				this.enableMinVersionCode = res.data.enableMinVersionCode;
+				// "enableMinVersionCode": 1,
+				// "createTime": null,
+				// "appDescribe": null,
+				// "appUrl": "www.baiduc.om",
+				// "appSize": null,
+				// "versionCode": null
+			})
 		},
 		methods:{
 

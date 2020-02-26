@@ -72,7 +72,7 @@
 				<swiper class="swiper" :autoplay="true" :vertical="true" :circular="true" :display-multiple-items="2" :interval="3000" :duration="1000">
 					<block v-for="(item, index) in gonkaolist" :key="index">
 						<swiper-item>
-							<view class="swiper-item uni-ellipsis">{{ item }}</view>
+							<view class="swiper-item uni-ellipsis">{{ item.content }}</view>
 						</swiper-item>
 					</block>
 				</swiper>
@@ -97,12 +97,12 @@
 					:class="{'border-bottom':index != productList.length-1 }"
 				>
 					<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
-						<image :src="product.img" style="width: 150rpx;height: 150rpx;"></image>
+						<image :src="product.image" style="width: 150rpx;height: 150rpx;"></image>
 					</view>
 					<view class="uni-flex uni-column" style="flex: 1;justify-content: center;padding-right:30rpx">
-						<view class="text title" style="text-align: left;padding-top: 10rpx;">BP开发出PET塑料废料回收新技术</view>
+						<view class="text title" style="text-align: left;padding-top: 10rpx;">{{product.title}}</view>
 						<view class="text point" style="text-align: left;padding-left: 20rpx;padding-top: 10rpx;">
-							废品回收在资源再生领域的前端，起着非常重要的作用。可以将废塑料......
+							{{product.content}}
 						</view>
 					</view>
 				</view>
@@ -118,7 +118,7 @@
 <script>
 import uniPopup from '@/components/uni-popup/uni-popup.vue';
 import uniRate from '@/components/uni-rate/uni-rate.vue';
-import { mapMutations } from 'vuex';
+import { mapMutations,mapState } from 'vuex';
 import permision from '@/common/permission.js';
 import qianDaopop from './qiandaopop.vue';
 export default {
@@ -165,9 +165,17 @@ export default {
 			locations: {}
 		};
 	},
+	computed: {
+		...mapState(["userInfo"])
+	},
 	onLoad() {
-		this.loadData();
-		this.doGetLocation();
+		// this.api.home.getRealseSellInfo({
+		// 	userId: getApp().globalData.userdata.userId
+		// }).then(res => {
+		// 	this.setuserInfo(res.data);
+			this.loadData();
+			this.doGetLocation();
+		// })
 	},
 	onPageScroll(e) {
 		//兼容iOS端下拉时顶部漂移
@@ -179,6 +187,7 @@ export default {
 	},
 	onShow() {},
 	methods: {
+		...mapMutations(['setuserInfo', 'setProvinceList']),
 		closeDrawer() {
 			this.showqiandao = false;
 		},
@@ -191,7 +200,9 @@ export default {
 			});
 		},
 		async loadData() {
-			console.log(getApp())
+			await this.api.home.getProvinceList().then(res => {
+				this.setProvinceList(JSON.stringify(res.data));
+			})
 			await this.api.home.checkIn({
 				userId: getApp().globalData.userdata.userId
 			}).then(res => {
@@ -202,19 +213,35 @@ export default {
 				}
 			})
 			await this.api.home.getAdvertList().then(res => {
-				this.bannerlist = res.data;
+				this.bannerlist = JSON.parse(res.data.advertList);
 			});
 			// /api/check/checkIn
-			// this.api.home.getClassify().then(res => {
+			// await this.api.home.getClassify().then(res => {
+			// 	console.log(res.data);
 			// 	uni.setStorageSync('goodtypelist', res.data); //存入缓存
 			// })
+			await this.api.home.getVipList({
+				countPerPage: 100,
+				pageIndex: 1
+			}).then(res => {
+				this.vipusers = res.data;
+			})
+			await this.api.home.getNoticeList().then(res => {
+				this.gonkaolist = res.data;
+			})
+			await this.api.home.getIndustryInformationList({
+				countPerPage: 100,
+				pageIndex: 1,
+				classify: '1'
+			}).then(res => {
+				this.productList = res.data;
+			})
 			// this.bannerlist = await this.api.home.getAdvertList;
-			this.vipusers = await this.$api.json('vipusers');
+			// this.this.vipusers =  = await this.$api.json('vipusers');
 			this.huowulist = await this.$api.json('huowulist');
-			this.gonkaolist = await this.$api.json('gonkaolist');
+			// this.gonkaolist = await this.$api.json('gonkaolist');
 			this.tabBars = await this.$api.json('tabList');
-			this.productList = await this.$api.json('productList');
-
+			// this.productList = await this.$api.json('productList');
 			
 		},
 		closepop() {
@@ -249,19 +276,19 @@ export default {
 				success: res => {
 					uni.setStorageSync('_location', res);
 					let city = res.address.city.slice(0, res.address.city.length - 1);
-					uni.request({
-						url: 'https://www.tianqiapi.com/api/',
-						data: {
-							appid: '34831141',
-							appsecret: 'xxRnF4E2',
-							version: 'v6',
-							city: city,
-							vue: 1
-						},
-						success: rest => {
-							this.tianqi = rest.data;
-						}
-					});
+					// uni.request({
+					// 	url: 'https://www.tianqiapi.com/api/',
+					// 	data: {
+					// 		appid: '34831141',
+					// 		appsecret: 'xxRnF4E2',
+					// 		version: 'v6',
+					// 		city: city,
+					// 		vue: 1
+					// 	},
+					// 	success: rest => {
+					// 		this.tianqi = rest.data;
+					// 	}
+					// });
 				},
 				fail: err => {}
 			});

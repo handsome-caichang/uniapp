@@ -58,7 +58,7 @@
 </script>
 <style lang="scss" scoped>
 	.header-page-body {
-		
+		height: 100%;
 		.header-box {
 			width: 100%;
 			padding: 0 4%;
@@ -76,6 +76,10 @@
 					border-bottom: 4upx solid $font-color-light;
 				}
 			}
+		}
+		.container {
+			flex: 1;
+			height: 100%;
 		}
 	}
 </style>

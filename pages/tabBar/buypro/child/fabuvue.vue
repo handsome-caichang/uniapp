@@ -7,7 +7,7 @@
 					<image class="img-icon" src="/static/img/huozhu/leibie.png"></image>
 					<text class="text bitian">货物类别</text>
 				</view>
-				<picker @change="bindPickerChange" :value="protypeindex" :range="array" range-key="name">
+				<picker @change="bindPickerChange" :value="protypeindex" :range="goodtypelist" range-key="name">
 					<view class="uni-input">{{protype.value ? protype.value : protype.label }}</view>
 				</picker>
 				<!-- <view class="input-box" @tap="selectprotype"> -->
@@ -129,6 +129,7 @@
 		['original'],
 		['compressed', 'original']
 	]
+	import { mapMutations,mapState } from 'vuex';
 	import permision from "@/common/permission.js"
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
@@ -173,13 +174,12 @@
 			}
 		},
 		computed: {
-
+			...mapState(["goodtypelist"])
 		},
 		methods: {
 			bindPickerChange: function(e) {
-				console.log(e.target)
 				this.protypeindex = e.target.value;
-				this.protype.value = this.array[this.protypeindex].name;
+				this.protype.value = this.goodtypelist[this.protypeindex].name;
 			},
 			// 
 			fabu() {
@@ -194,13 +194,13 @@
 				// 	"streetNum": "316号"
 				// },
 				this.api.home.realseGoods({
-					classifyId: +this.protypeindex,
+					classify: this.protype.value,
 					count: +this.numberleng,
 					"address": this.address,
 					"userId": getApp().globalData.userdata.userId,
 					"linkName": this.contentname,
 					"tel": this.contentphone,
-					"images": "",
+					"images": "https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090",
 					"matchingNumber": +this.pipeinum,
 					"bedrockPrice": +this.price,
 					"outsidePrice": +this.price,

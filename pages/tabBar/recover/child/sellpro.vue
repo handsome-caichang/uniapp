@@ -57,7 +57,7 @@
 		<view class="filter-box">
 			<uni-drawer :visible="showRight" mode="right" @close="closeDrawer('right')">
 				<view class="uni-flex uni-row filter">
-					<view class="text" v-for="(item, index) in tabLists" :key="index" :class="{ active: item.isactive }" @tap="checkitem(item)">{{ item.name }}</view>
+					<view class="text" v-for="(item, index) in goodtypelist" :key="index" :class="{ active: item.isactive }" @tap="checkitem(item)">{{ item.name }}</view>
 				</view>
 			</uni-drawer>
 		</view>
@@ -87,9 +87,10 @@ export default {
 			tabIndex: 0,
 			productList: [],
 			showRight: false,
-			tabLists: [],
+			// goodtypelist: [], 
 			tablist: ['价格', '距离', '常用'],
-			activeindex: 0
+			activeindex: 0,
+			locationobj: {},
 		};
 	},
 	created() {
@@ -97,42 +98,24 @@ export default {
 		this.loadData();
 	},
 	computed: {
-		...mapState(["userInfo"])
+		...mapState(["userInfo","goodtypelist"])
 	},
 	methods: {
 		onConfirm(e) {
 			this.city = e.label;
 			this.cityPickerValue = e.value;
 		},
-		getmore() {
-			let len = this.productList.length;
-			if (len >= 20) {
-				return false;
-			}
-			// 演示,随机加入商品,生成环境请替换为ajax请求
-			let end_goods_id = this.productList[len - 1] ? this.productList[len - 1].goods_id : 0;
-			for (let i = 1; i <= 10; i++) {
-				let goods_id = end_goods_id + i;
-				let p = {
-					goods_id: goods_id,
-					img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg',
-					name: '商品名称商品名称商品名称商品名称商品名称',
-					price: '￥168',
-					slogan: '1235人付款'
-				};
-				this.productList.push(p);
-			}
-		},
 		checkitem(item) {
 			item.isactive = !item.isactive;
 		},
 		changetab(index) {
 			this.activeindex = index;
-			if (index == 2) {
-				this.productList = [];
-			} else {
-				this.getmore();
-			}
+			// if (index == 2) {
+			// 	this.productList = [];
+			// } else {
+			// 	this.getmore();
+			// }
+			this.getRealseGoodsList();
 		},
 		closeDrawer() {
 			this.showRight = false;
@@ -140,20 +123,27 @@ export default {
 		filtertap() {
 			this.showRight = true;
 		},
+		getRealseGoodsList() {
+			this.api.home.getRealseGoodsList({
+				data: {
+					type: this.activeindex+1,
+					userId: getApp().globalData.userdata.userId,
+					lat: ""+this.locationobj.latitude,
+					longitude: ""+this.locationobj.longitude,
+				}
+			}).then(res => {
+				console.log(res);
+				this.productList = res.data;
+			})
+		},
 		async loadData() {
 			uni.getLocation({
 				geocode: true,
 				success: res => {
-					this.api.home.getRealseGoodsList({
-						type: this.activeindex+1,
-						userId: getApp().globalData.userdata.userId,
-						lat: ""+res.latitude,
-						longitude: ""+res.longitude,
-					}).then(res => {
-						this.productList = JSON.parse(res.data)
-					})
+					this.locationobj = res;
 					uni.setStorageSync('_location', res);
 					this.city = res.address.city;
+					this.getRealseGoodsList();
 				},
 				fail: err => {}
 			});

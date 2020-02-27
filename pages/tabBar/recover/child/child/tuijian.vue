@@ -38,7 +38,7 @@
 			}
 		},
 		created() {
-			this.loadData();
+			this.getdata();
 		},
 		methods: {
 			clickitem(item) {
@@ -47,28 +47,21 @@
 					url: `/pages/product/productdetail?id=${id}`
 				})
 			},
-			async loadData() {
-				this.productList = await this.$api.json('productList');
+			getdata() {
+				let res = uni.getStorageSync('_location');
+				this.api.home.goodsRecommend({
+					data: {
+						userId: getApp().globalData.userdata.userId,
+						lat: ""+res.latitude,
+						lng: ""+res.longitude,
+					}
+				}).then(res => {
+					console.log(res);
+					this.productList = res.data;
+				})
 			},
 			getmore() {
-				console.log('more')
-				let len = this.productList.length;
-				if (len >= 20) {
-					return false;
-				}
-				// 演示,随机加入商品,生成环境请替换为ajax请求
-				let end_goods_id = this.productList[len - 1].goods_id;
-				for (let i = 1; i <= 10; i++) {
-					let goods_id = end_goods_id + i;
-					let p = {
-						goods_id: goods_id,
-						img: '/static/img/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg',
-						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
-						slogan: '1235人付款'
-					};
-					this.productList.push(p);
-				}
+				this.getdata();
 			},
 		}
 	}

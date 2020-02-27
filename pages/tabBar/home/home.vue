@@ -93,7 +93,7 @@
 					class="uni-flex uni-row"
 					v-for="(product, index) in productList"
 					:key="product.goods_id"
-					@tap="previewImage(product)"
+					@tap="previewImage(product.url)"
 					:class="{'border-bottom':index != productList.length-1 }"
 				>
 					<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
@@ -166,7 +166,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(["userInfo"])
+		...mapState(["userInfo","goodtypelist"])
 	},
 	onLoad() {
 		// this.api.home.getRealseSellInfo({
@@ -187,22 +187,37 @@ export default {
 	},
 	onShow() {},
 	methods: {
-		...mapMutations(['setuserInfo', 'setProvinceList']),
+		...mapMutations(['setuserInfo', 'setProvinceList', "setgoodtypelist"]),
 		closeDrawer() {
 			this.showqiandao = false;
 		},
 		ontabtap(tap, index) {
 			this.tabIndex = index;
+			this.getIndustryInformationList(index);
 		},
-		previewImage(item) {
+		previewImage(url) {
 			uni.navigateTo({
-				url: '/pages/webviewpage/webviewpage?url=' + encodeURIComponent(item.link)
+				url: '/pages/webviewpage/webviewpage?url=' + encodeURIComponent(url)
 			});
 		},
+		getIndustryInformationList(id="") {
+			this.api.home.getIndustryInformationList({
+				data: {
+					countPerPage: 100,
+					pageIndex: 1,
+					// classify: id
+				}
+			}).then(res => {
+				console.log(res)
+				// this.productList = res.data;
+			})
+		},
 		async loadData() {
+			// 省份
 			await this.api.home.getProvinceList().then(res => {
 				this.setProvinceList(JSON.stringify(res.data));
 			})
+			// 签到
 			await this.api.home.checkIn({
 				userId: getApp().globalData.userdata.userId
 			}).then(res => {
@@ -212,35 +227,56 @@ export default {
 					})
 				}
 			})
+			// 公告
 			await this.api.home.getAdvertList().then(res => {
 				this.bannerlist = JSON.parse(res.data.advertList);
 			});
-			// /api/check/checkIn
-			// await this.api.home.getClassify().then(res => {
-			// 	console.log(res.data);
-			// 	uni.setStorageSync('goodtypelist', res.data); //存入缓存
-			// })
-			await this.api.home.getVipList({
-				countPerPage: 100,
-				pageIndex: 1
+			// 类型
+			await this.api.home.getClassify().then(res => {
+				res.data.forEach(item => {
+					item.isactive = false;
+				})
+				console.log(res)
+				this.setgoodtypelist(res.data);
+				// uni.setStorageSync('goodtypelist', res.data); //存入缓存
+			})
+			this.api.home.getVipList({
+				data: {
+					countPerPage: 100,
+					pageIndex: 1
+				}
 			}).then(res => {
-				this.vipusers = res.data;
+				console.log(res)
+				// this.vipusers = res.data;
 			})
 			await this.api.home.getNoticeList().then(res => {
 				this.gonkaolist = res.data;
 			})
-			await this.api.home.getIndustryInformationList({
-				countPerPage: 100,
-				pageIndex: 1,
-				classify: '1'
-			}).then(res => {
-				this.productList = res.data;
+			this.api.home.getIndustryInformationClassify().then(res => {
+				this.tabBars = res.data;
 			})
+			uni.getLocation({
+				geocode: true,
+				success: res => {
+					this.api.home.goodsRecommend({
+						data: {
+							userId: getApp().globalData.userdata.userId,
+							lat: ""+res.latitude,
+							lng: ""+res.longitude,
+						}
+					}).then(res => {
+						console.log(res);
+						// this.huowulist = JSON.parse(res.data)
+					})
+				},
+				fail: err => {}
+			});
+			this.getIndustryInformationList();
 			// this.bannerlist = await this.api.home.getAdvertList;
 			// this.this.vipusers =  = await this.$api.json('vipusers');
-			this.huowulist = await this.$api.json('huowulist');
+			// this.huowulist = await this.$api.json('huowulist');
 			// this.gonkaolist = await this.$api.json('gonkaolist');
-			this.tabBars = await this.$api.json('tabList');
+			// this.tabBars = await this.$api.json('tabList');
 			// this.productList = await this.$api.json('productList');
 			
 		},

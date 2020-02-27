@@ -161,7 +161,7 @@ export default class Request {
     }
 
     get (url, options = {}) {
-		console.log(options);
+		// console.log(options);
 		  return this.request({
 			url,
 			method: 'GET',
@@ -170,7 +170,7 @@ export default class Request {
     }
 
     post (url, data, options = {}) {
-		console.log(data);
+		// console.log(data);
       return this.request({
         url,
         data,

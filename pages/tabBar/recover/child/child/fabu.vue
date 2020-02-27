@@ -4,8 +4,8 @@
 			选择分类
 		</view>
 		<view class="uni-flex item-box">
-			<view class="_itemtype" :class="activeindex===index?'active':''" v-for="(item, index) in  list" :key="index" @tap="clickitem(index)" >
-				{{item}}
+			<view class="_itemtype" :class="activeindex===index?'active':''" v-for="(item, index) in  goodtypelist" :key="index" @tap="clickitem(index)" >
+				{{item.name}}
 			</view>
 		</view>
 		
@@ -28,35 +28,17 @@
 </template>
 
 <script>
+	import { mapMutations,mapState } from 'vuex';
 	export default {
 		data() {
 			return {
-				list: [
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料'
-				],
 				activeindex: 0,
 				ischeck: false,
 				btnactive: true, // 如果不是vip 不能发布
 			}
+		},
+		computed: {
+			...mapState(['goodtypelist'])
 		},
 		methods: {
 			clickitem(index) {
@@ -64,22 +46,16 @@
 			},
 			fabucur() {
 				let address = uni.getStorageSync('_location');
-				console.log(address);
-				// "address": {
-				// 	"city": "长沙市",
-				// 	"district": "岳麓区",
-				// 	"poiName": "保利林语社区公园",
-				// 	"province": "湖南省",
-				// 	"street": "桐梓坡西路",
-				// 	"streetNum": "316号"
-				// },
+				console.log(this.goodtypelist[this.activeindex].id)
 				this.api.home.realseRecovery({
-					classifyId: this.activeindex,
+					classify: this.goodtypelist[this.activeindex].name,
 					urgent: !this.ischeck ? 1 : 0,
 					userId: getApp().globalData.userdata.userId,
 					province: address.address.province,
 					city: address.address.city,
 					district: address.address.district,
+					lat: ""+address.latitude,
+					lng: ""+address.longitude,
 				}).then(res => {
 					// 需要实名，
 					uni.showModal({

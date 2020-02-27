@@ -16,4 +16,7 @@ export default {
 	setProvinceList(state, data) {
 		state.ProvinceList = data;
 	},
+	setgoodtypelist(state, data) {
+		state.goodtypelist = data;
+	}
 }

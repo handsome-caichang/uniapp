@@ -168,5 +168,10 @@ export default {
 			params
 		);
 	},
-	
+	getIndustryInformationClassify(params) {
+		return http.get(
+			'advert/getIndustryInformationClassify',
+			params
+		);
+	},
 }

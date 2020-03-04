@@ -11,11 +11,9 @@
 				url: '',
 			}
 		},
-		onLoad(options) {
-			if (options && options.url) {
-				this.url = decodeURIComponent(options.url);
-			}
-		},
+		created() {
+			this.url = getApp().globalData.webviewlink 
+		}
 	}
 </script>
 

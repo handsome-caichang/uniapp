@@ -29,15 +29,14 @@
 		<!-- 自动滚动 -->
 		<view class="seckill-section m-t vipuser ">
 			<view class="s-header"><text class="title">VIP用户</text></view>
-
-			<swiper :autoplay="true" :interval="2000" :duration="2000" :circular="true">
+			<swiper style="height: 200upx" :autoplay="true" :interval="2000" :duration="2000" :circular="true">
 				<block v-for="(item, index) in vipusers" :key="index">
 					<swiper-item class="swiper-item-width">
 						<view class="floor-item" @click="navToDetailPage(item, index)">
-							<image class="img" :src="item.image" mode="aspectFill"></image>
-							<text class="name">{{ item.name }}</text>
-							<text class="name">从业{{ item.age }}年</text>
-							<uni-rate class="rate" :value="item.rate" />
+							<image class="img" :src="item.headImage" mode="aspectFill"></image>
+							<text class="name">{{ item.nickName }}</text>
+							<text class="name">从业{{ item.years }}年</text>
+							<uni-rate class="rate" :value="item.star" />
 						</view>
 					</swiper-item>
 				</block>
@@ -45,19 +44,17 @@
 		</view>
 		<view class="seckill-section m-t huowubox">
 			<view class="s-header"><text class="title">货物</text></view>
-			<swiper :autoplay="true" :interval="2000" :duration="2000" :circular="true">
+			<swiper  style="height: 160upx"  :autoplay="true" :interval="2000" :duration="2000" :circular="true">
 				<block v-for="(item, index) in huowulist" :key="index">
 					<swiper-item class="swiper-item-width">
 						<view class="pro-box" @click="navToDetailPagepro(item, index)">
 							<view class="box">
-								<text>{{ item.type }}</text>
-								<text>{{ item.num }}吨</text>
+								<text>{{ item.classifyName }}</text>
+								<text>{{ item.count }}吨</text>
 							</view>
-							<view class="box uni-ellipsis">
-								<text class="uni-ellipsis">{{ item.campusname }}</text>
-							</view>
+							<text class="uni-ellipsis">{{ item.name }}</text>
 							<view class="box">
-								<text>{{ item.time }}</text>
+								<text>{{ utils.timeTodate('m-d', item.createTime) }}</text>
 								<text>{{ item.address }}</text>
 							</view>
 						</view>
@@ -92,17 +89,17 @@
 				<view
 					class="uni-flex uni-row"
 					v-for="(product, index) in productList"
-					:key="product.goods_id"
-					@tap="previewImage(product.url)"
+					:key="index"
+					@tap="tonot(product)"
 					:class="{'border-bottom':index != productList.length-1 }"
 				>
 					<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
 						<image :src="product.image" style="width: 150rpx;height: 150rpx;"></image>
 					</view>
-					<view class="uni-flex uni-column" style="flex: 1;justify-content: center;padding-right:30rpx">
-						<view class="text title" style="text-align: left;padding-top: 10rpx;">{{product.title}}</view>
-						<view class="text point" style="text-align: left;padding-left: 20rpx;padding-top: 10rpx;">
-							{{product.content}}
+					<view class="uni-flex uni-column" style="flex: 1;padding-right:30upx">
+						<view class="text title" style="text-align: left;padding-top: 10upx;">{{product.title}}</view>
+						<view class="text point" style="text-align: left;padding-left: 20upx;padding-top: 1urpx;text-overflow:ellipsis;" v-html="product.content">
+							<!-- {{product.content}} -->
 						</view>
 					</view>
 				</view>
@@ -121,6 +118,7 @@ import uniRate from '@/components/uni-rate/uni-rate.vue';
 import { mapMutations,mapState } from 'vuex';
 import permision from '@/common/permission.js';
 import qianDaopop from './qiandaopop.vue';
+import utils from '@/components/shoyu-date/utils.filter.js';
 export default {
 	components: {
 		uniRate,
@@ -129,9 +127,57 @@ export default {
 	},
 	data() {
 		return {
+			utils,
 			bannerlist: [],
 			vipusers: [],
-			huowulist: [],
+			huowulist: [
+				{
+					"realseId": 5,
+					"images": [
+						"https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090"
+					],
+					"address": "长沙",
+					"distance": "0.0",
+					"star": 0,
+					"createTime": "2020-24-29 04:24:23",
+					"sellUserId": 2,
+					"outsidePrice": 20,
+					"bedrockPrice": 20,
+					"freight": 0.6,
+					"name": "废铁",
+					"classifyName": "废铁"
+				}, {
+					"realseId": 4,
+					"images": [
+						"https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090"
+					],
+					"address": "喜欢的话",
+					"distance": "0.0",
+					"star": 0,
+					"createTime": "2020-02-29 04:02:54",
+					"sellUserId": 2,
+					"outsidePrice": 100,
+					"bedrockPrice": 100,
+					"freight": 3,
+					"name": "铜",
+					"classifyName": "铜"
+				}, {
+					"realseId": 2,
+					"images": [
+						"https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090"
+					],
+					"address": "上海市",
+					"distance": "0.0",
+					"star": 0,
+					"createTime": "2020-38-27 04:38:25",
+					"sellUserId": 2,
+					"outsidePrice": 222,
+					"bedrockPrice": 222,
+					"freight": 6.66,
+					"name": "铁",
+					"classifyName": "废铁"
+				}
+			],
 			gonkaolist: [],
 			tabBars: [],
 			productList: [],
@@ -193,32 +239,42 @@ export default {
 		},
 		ontabtap(tap, index) {
 			this.tabIndex = index;
-			this.getIndustryInformationList(index);
+			this.getIndustryInformationList();
 		},
-		previewImage(url) {
+		tonot(product) {
+			uni.setStorageSync('_notContent', product)
 			uni.navigateTo({
-				url: '/pages/webviewpage/webviewpage?url=' + encodeURIComponent(url)
+				url: '/pages/tabBar/home/nothtmlvue/nothtmlvue'
 			});
 		},
-		getIndustryInformationList(id="") {
+		previewImage(url) {
+			getApp().globalData.webviewlink = url;
+			uni.navigateTo({
+				url: '/pages/webviewpage/webviewpage'
+			});
+		},
+		getIndustryInformationList() {
 			this.api.home.getIndustryInformationList({
 				data: {
 					countPerPage: 100,
 					pageIndex: 1,
-					// classify: id
+					classify: this.tabBars[this.tabIndex].name
 				}
 			}).then(res => {
-				console.log(res)
-				// this.productList = res.data;
+				this.productList = res.data;
 			})
 		},
 		async loadData() {
+			// 资讯tab
+			await this.api.home.getIndustryInformationClassify().then(res => {
+				this.tabBars = res.data;
+			})
 			// 省份
-			await this.api.home.getProvinceList().then(res => {
+			this.api.home.getProvinceList().then(res => {
 				this.setProvinceList(JSON.stringify(res.data));
 			})
 			// 签到
-			await this.api.home.checkIn({
+			this.api.home.checkIn({
 				userId: getApp().globalData.userdata.userId
 			}).then(res => {
 				if (res.data.status == "0") {
@@ -227,34 +283,33 @@ export default {
 					})
 				}
 			})
-			// 公告
-			await this.api.home.getAdvertList().then(res => {
+			// bannber图
+			this.api.home.getAdvertList().then(res => {
 				this.bannerlist = JSON.parse(res.data.advertList);
 			});
 			// 类型
-			await this.api.home.getClassify().then(res => {
+			this.api.home.getClassify().then(res => {
 				res.data.forEach(item => {
 					item.isactive = false;
 				})
-				console.log(res)
 				this.setgoodtypelist(res.data);
 				// uni.setStorageSync('goodtypelist', res.data); //存入缓存
 			})
+			// vip用户列表
 			this.api.home.getVipList({
 				data: {
 					countPerPage: 100,
 					pageIndex: 1
 				}
 			}).then(res => {
-				console.log(res)
-				// this.vipusers = res.data;
+				// console.log(res)
+				this.vipusers = res.data;
 			})
-			await this.api.home.getNoticeList().then(res => {
+			// 公告
+			 this.api.home.getNoticeList().then(res => {
 				this.gonkaolist = res.data;
 			})
-			this.api.home.getIndustryInformationClassify().then(res => {
-				this.tabBars = res.data;
-			})
+			// 货物推荐
 			uni.getLocation({
 				geocode: true,
 				success: res => {
@@ -265,20 +320,14 @@ export default {
 							lng: ""+res.longitude,
 						}
 					}).then(res => {
+						console.log('货物')
 						console.log(res);
-						// this.huowulist = JSON.parse(res.data)
+						// this.huowulist = res.data;
 					})
 				},
 				fail: err => {}
 			});
 			this.getIndustryInformationList();
-			// this.bannerlist = await this.api.home.getAdvertList;
-			// this.this.vipusers =  = await this.$api.json('vipusers');
-			// this.huowulist = await this.$api.json('huowulist');
-			// this.gonkaolist = await this.$api.json('gonkaolist');
-			// this.tabBars = await this.$api.json('tabList');
-			// this.productList = await this.$api.json('productList');
-			
 		},
 		closepop() {
 			this.$nextTick(() => {
@@ -287,16 +336,19 @@ export default {
 		},
 		//详情页
 		navToDetailPage(item, index) {
-			let id = item.id;
+			item.sourcetype = 1;
+			getApp().globalData.customerdata = item;
 			uni.navigateTo({
-				url: `/pages/customer/customerdetail?id=${index}&sourcetype=1`
+				url: `/pages/customer/customerdetail`
 			});
 		},
 		navToDetailPagepro(item, index) {
-			let id = item.id;
+			item.sourcetype = 1;
+			getApp().globalData.productdetail = item;
 			uni.navigateTo({
-				url: `/pages/product/productdetail?id=${index}`
+				url: `/pages/product/productdetail`
 			});
+			
 		},
 		async checkPermission() {
 			let status = permision.isIOS ? await permision.requestIOS('location') : await permision.requestAndroid('android.permission.ACCESS_FINE_LOCATION');
@@ -338,7 +390,7 @@ export default {
 	.vipuser {
 		margin-top: 10upx;
 		uni-swiper {
-			height: 200upx;
+			height: 200upx !important;
 		}
 		.swiper-item-width {
 			width: 220upx !important;
@@ -368,16 +420,17 @@ export default {
 	.huowubox {
 		margin-top: 10upx;
 		uni-swiper {
-			height: 160upx;
+			height: 160upx !important;
 		}
 		.swiper-item-width {
-			width: 300upx !important;
+			width: 340upx !important;
+			border-radius: 10upx;
 			.pro-box {
-				width: 240upx;
+				width: 300upx;
 				background-color: #18c02c;
 				border-radius: 10upx;
-				padding: 0 10upx;
-				margin-right: 10upx;
+				padding: 10upx;
+				margin-right: 20upx;
 				font-size: $font-sm + 2upx;
 				color: $font-color-withe;
 				display: flex;
@@ -388,6 +441,9 @@ export default {
 					width: 100upx;
 					height: 100upx;
 				}
+				.uni-ellipsis {
+					padding: 20upx;
+				}
 				.name {
 					color: #303030;
 					font-size: 24upx;
@@ -395,15 +451,17 @@ export default {
 				}
 				.box {
 					display: flex;
-					justify-content: space-around;
+					flex: 1; 
+					justify-content: space-between;
 					padding: 0 20upx;
 				}
 				text {
 					color: #fff;
-					line-height: 1.5;
+					line-height: 1;
 				}
 			}
 		}
+		
 	}
 	.notice-box {
 		padding: 20upx;
@@ -600,6 +658,8 @@ export default {
 			text-indent: 48upx;
 			font-size: 20upx;
 			color: #575757;
+			height: 40upx;
+			text-overflow:ellipsis;
 		}
 	}
 }

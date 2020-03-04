@@ -3,15 +3,15 @@
 		<view class="shoudao">
 			<view class="uni-list">
 				<uni-list>
-					<uni-list-item :thumb="item.img" :showBadge="true" :showArrow="false" :note="'最近交易：'+item.time+'  '+item.address"
+					<uni-list-item :thumb="item.headerimg" :showBadge="true" :showArrow="false" :note="'最近交易：'+item.createTime+'  '+item.district"
 					 v-for="(item,index) in recordlist" :key="index">
 						<view slot="content" style="height: 50upx;">
-							<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
+							<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
 							<text style="padding:2upx 4upx;font-size: 22upx;border: 1upx solid #AAAAAA;color: #575757;border-radius: 10upx;"
 							 @tap="addRemk(item)">备注</text>
 						</view>
 						<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-							<text style="margin-right: 20upx;">交易种类：{{item.type}}</text>
+							<text style="margin-right: 20upx;">交易种类：{{item.goodsName}}</text>
 						</view>
 						<view @tap="clickitem(item)" style="background-color: #18C02C;color: #fff;padding: 4upx 8upx;border-radius: 10upx;">
 							再次交易
@@ -51,40 +51,21 @@
 			uniBadge
 		},
 		created() {
+			this.api.order.getBuyOrderList({
+				data: {
+					userId: getApp().globalData.userdata.userId,
+					countPerPage: 200,
+					pageIndex: 1,
+				}
+			}).then(res => {
+				console.log(res);
+				this.recordlist = res.data;
+			})
 		},
 		data() {
 			return {
 				remak: '',
-				recordlist: [
-					{
-						name: '宁波康达医疗有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						count: 1,
-					},{
-						name: '宁波康达医疗有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						count: 1,
-					},{
-						name: '宁波康达医疗有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						count: 1,
-					},
-				]
+				recordlist: []
 			}
 		},
 		methods: {

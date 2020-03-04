@@ -46,10 +46,9 @@
 			},
 			fabucur() {
 				let address = uni.getStorageSync('_location');
-				console.log(this.goodtypelist[this.activeindex].id)
 				this.api.home.realseRecovery({
 					classify: this.goodtypelist[this.activeindex].name,
-					urgent: !this.ischeck ? 1 : 0,
+					urgent: this.ischeck ? 1 : 0,
 					userId: getApp().globalData.userdata.userId,
 					province: address.address.province,
 					city: address.address.city,
@@ -57,9 +56,10 @@
 					lat: ""+address.latitude,
 					lng: ""+address.longitude,
 				}).then(res => {
-					// 需要实名，
 					uni.showModal({
-						title: "发布成功"
+						title: "提示",
+						content: '发布成功',
+						showCancel: false,
 					});
 				})
 			}

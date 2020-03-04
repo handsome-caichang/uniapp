@@ -170,7 +170,7 @@ export default class Request {
     }
 
     post (url, data, options = {}) {
-		// console.log(data);
+		console.log(data);
       return this.request({
         url,
         data,

@@ -3,7 +3,12 @@
 export default {
 	globalData: {  
 		userdata: {},
-		address: {}
+		address: {},
+		webviewlink: "",
+		customerdata: {},
+		productdetail: {},
+		orderdetail: {},
+		userlistmanage: {}
 	},  
 	created() {
 		// #ifdef APP-PLUS

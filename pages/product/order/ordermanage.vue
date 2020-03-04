@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-page-body header-page-body">
+	<view class="uni-page-body">
 		<view class="header-box">
 			<view class="item" :class="isactive?'active':''"  @tap="changepage(true)" >
 				我要卖货

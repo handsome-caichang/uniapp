@@ -6,14 +6,14 @@
 			</view>
 			<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 30upx;">
 				<view class="text title" style="text-align: left;padding-top: 10rpx;color: #212121;">
-					废铁 
-					<text>2吨</text>
+					{{detail.classifyName}} 
+					<text>{{detail.count}}吨</text>
 				</view>
-				<view class="price">2015~3000元/吨</view>
-				<view style="color: #212121;">宁波*****有限公司</view>
+				<view class="price">{{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨</view>
+				<view style="color: #212121;">{{detail.name}}</view>
 				<view class="uni-flex" style="justify-content:space-between;color: #575757;">
-					<text>2019/12/13</text>
-					<text>镇海</text>
+					<text>{{utils.timeTodate('m-d', detail.createTime)}}</text>
+					<text>{{detail.address}}</text>
 				</view>
 			</view>
 		</view>
@@ -26,79 +26,69 @@
 			</scroll-view>
 		</view>
 		<!-- 首页进来，实名认证  -->
-		<view class="btn-container">
+		<view class="btn-container" v-if="productdetail.sourcetype == 1">
 			<!-- <button type="primary">申请匹配</button> -->
 			<view class="primary-btn" @tap="popbtn">
 				申请匹配
 			</view>
 		</view>
 		
-		<!-- <view class="towbtn">
+		<view class="towbtn"  v-if="productdetail.sourcetype == 2">
 			<view class="error-btn" @tap="clearbtn">
 				拒绝
 			</view>
 			<view class="primary-btn" @tap="tongyi">
 				同意
 			</view>
-		</view> -->
+		</view>
 	
-		<!-- <view class="btn-container contact">
-			<view class="primary-btn" @tap="popbtn">
+		<view class="btn-container contact" v-if="productdetail.sourcetype == 3">
+			<view class="primary-btn" @tap="dianhua">
 				<uni-icons type="phone" size="18" color="#fff" ></uni-icons>
 				<text>联系回收人</text>
 			</view>
-		</view> -->
+		</view>
 	
 	</view>
 </template>
 
 <script>
-	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	import uniIcons from "@/components/uni-icons/uni-icons.vue";
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniIcons
 		},
 		data() {
 			return {
-				items: [{
-						value: 'USA',
-						name: '美国'
-					},
-					{
-						value: 'CHN',
-						name: '中国',
-						checked: 'true'
-					},
-					{
-						value: 'BRA',
-						name: '巴西'
-					},
-					{
-						value: 'JPN',
-						name: '日本'
-					},
-					{
-						value: 'ENG',
-						name: '英国'
-					},
-					{
-						value: 'FRA',
-						name: '法国'
-					}
+				utils,
+				items: [
 				],
 				detail: {
-					img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
 				},
 				prolist: [
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
-				]
+				],
+				productdetail: {},
 			}
 		},
+		created() {
+			this.productdetail = getApp().globalData.productdetail;
+			this.api.home.getRealseGoodsInfo({
+				data: {
+					realseId:this.productdetail.realseId,
+					userId: getApp().globalData.userdata.userId
+				}
+			}).then(res => {
+				console.log(res);
+				this.detail = res.data;
+			})
+		},
 		methods: {
+			dianhua() {
+				uni.makePhoneCall({
+					 phoneNumber: '114' //仅为示例
+				})
+			},
 			headtap() {
 				uni.previewImage({
 					current: 0,
@@ -112,35 +102,45 @@
 					urls: this.prolist,
 				})
 			},
-			clearbtn() {
-				
-			},
 			tongyi() {
-				uni.navigateTo({
-					url: '/pages/other/pipeisuccess'
+				this.api.home.recoverysureMatching({
+					userId: getApp().globalData.userdata.userId,
+					matchId: this.productdetail.matchId
+				}).then(res => {
+					console.log(res);
+					uni.navigateTo({
+						url: '/pages/other/pipeisuccess'
+					})
+				})
+			},
+			clearbtn() {
+				this.api.home.recoverycancelMatching({
+					userId: getApp().globalData.userdata.userId,
+					matchId: this.productdetail.matchId
+				}).then(res => {
+					uni.showModal({
+						title: "提示",
+						content: '成功拒绝',
+						showCancel: false,
+					});
 				})
 			},
 			checkbtn() {
 				this.$refs.showtip.close();
 				console.log(this.items.filter(item=>item.checked)[0])
 			},
-			checkboxChange (e) {
-				var items = this.items,
-					values = e.detail.value;
-				for (var i = 0, lenI = items.length; i < lenI; ++i) {
-					const item = items[i]
-					if(values.indexOf(item.value) >= 0){
-						this.$set(item,'checked',true)
-					}else{
-						this.$set(item,'checked',false)
-					}
-				}
-			},
 			popbtn() {
-				uni.showModal({
-					title: '申请匹配成功，等待货主确认。'
+				this.api.home.recoveryAddMatching({
+					realseId: this.productdetail.realseId,
+					userId: getApp().globalData.userdata.userId,
+					toUserId:  this.detail.userId,
+				}).then(res => {
+					uni.showModal({
+						title: "提示",
+						content: '申请匹配成功，等待卖家确认。',
+						showCancel: false,
+					});
 				})
-				// this.$refs.showtip.open();
 			}
 		}
 	}

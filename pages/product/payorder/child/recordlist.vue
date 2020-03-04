@@ -3,14 +3,14 @@
 		<view class="shoudao">
 			<view class="uni-list">
 				<uni-list>
-					<uni-list-item :thumb="item.img" :showBadge="true" :showArrow="false" :note="'交易时间：'+item.time+'  '+item.address+'       '+item.cardid"
-					 v-for="(item,index) in recordlist" :key="index" @tap="clickitem(item)">
+					<uni-list-item :thumb="item.headerimg" :showBadge="true" :showArrow="false" :note="'交易时间：'+item.createTime+'  '+item.district"
+					 v-for="(item,index) in recordlist" :key="index">
 						<view slot="content" style="height: 50upx;">
-							<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
+							<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
 						</view>
 						<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-							<text style="margin-right: 20upx;">{{item.type}}</text>
-							<text style="margin-right: 20upx;">{{item.num}}</text>
+							<text style="margin-right: 20upx;">{{item.goodsName}}</text>
+							<text style="margin-right: 20upx;">{{item.count}}</text>
 						</view>
 					</uni-list-item>
 				</uni-list>
@@ -30,39 +30,22 @@
 		created() {},
 		data() {
 			return {
-				recordlist: [{
-					name: '王先生',
-					num: '3吨',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					type: '废铁',
-					cardid: 'NO.1111112',
-				}, {
-					name: '王先生',
-					num: '3吨',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					type: '废铁',
-					cardid: 'NO.1111112',
-				}, {
-					name: '王先生',
-					num: '3吨',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					type: '废铁',
-					cardid: 'NO.1111112',
-				}, ]
+				recordlist: []
 			}
 		},
+		created() {
+			this.api.order.getOrderList({
+				data: {
+					userId: getApp().globalData.userdata.userId,
+					countPerPage: 200,
+					pageIndex: 1,
+				}
+			}).then(res => {
+				console.log(res);
+				this.recordlist = res.data;
+			})
+		},
 		methods: {
-			clickitem(item) {
-				uni.navigateTo({
-					url: '/pages/product/payorder/payorderdetail'
-				})
-			}
 		},
 	}
 </script>

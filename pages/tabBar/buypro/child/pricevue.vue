@@ -14,28 +14,12 @@
 		</view>
 		
 		<view class="uni-flex" style="flex-wrap: wrap;">
-			<view class="_itemtype" :class="activeindex===index?'active':''" v-for="(item, index) in  list" :key="index" @tap="clickitem(index)" >
-				{{item}}
+			<view class="_itemtype" :class="activeindex===index?'active':''" v-for="(item, index) in goodtypelist" :key="index" @tap="clickitem(item)" >
+				{{item.name}}
 			</view>
 		</view>
 		
 		<view class="price-box">
-			<view class="uni-flex">
-				<text class="text">镇海区：</text>
-				<text class="price">38000~42000元/吨</text>
-			</view>
-			<view class="uni-flex">
-				<text class="text">镇海区：</text>
-				<text class="price">38000~42000元/吨</text>
-			</view>
-			<view class="uni-flex">
-				<text class="text">镇海区：</text>
-				<text class="price">38000~42000元/吨</text>
-			</view>
-			<view class="uni-flex">
-				<text class="text">镇海区：</text>
-				<text class="price">38000~42000元/吨</text>
-			</view>
 			<view class="uni-flex">
 				<text class="text">镇海区：</text>
 				<text class="price">38000~42000元/吨</text>
@@ -52,6 +36,7 @@
 	</view>
 </template>
 <script>
+	import { mapMutations,mapState } from 'vuex';
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	export default {
 		components: {
@@ -64,42 +49,27 @@
 				activeindex: 0,
 				region:{label:"请点击选择地址",value:[],cityCode:""},
 				pricelist: [],
-				list: [
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-					'紫铜',
-					'电线电缆',
-					'黄铜',
-					'电线废料',
-					'供电局废料',
-				]
+				list: []
 			}
 		},
-		created() {
-			this.api.home.searchPriceByArea({
-				province: "湖南",
-				city: "长沙"
-			}).then(res => {
-				this.pricelist = res.data;
-			})
+		computed: {
+			...mapState(["goodtypelist"])
 		},
-		onShow() {},
+		created() {
+		},
 		methods: {
+			getdata() {
+				this.api.home.searchPriceByArea({
+					classify: this.goodtypelist[this.activeindex].name,
+					cityId: "001"
+				}).then(res => {
+					console.log(res);
+					this.pricelist = res.data;
+				})
+			},
 			clickitem(index) {
 				this.activeindex = index;
+				this.getdata();
 			},
 			onCancel(e) {
 				console.log(e)

@@ -7,11 +7,11 @@
 				</view>
 				<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
-						<view style="color: #343434;font-weight: 500;font-size: 34upx;">废铁 | 10000吨</view>
-						<text class="time" style="color: #575757;font-size: 20upx;">更新时间：2019/12/6</text>
+						<view style="color: #343434;font-weight: 500;font-size: 34upx;">{{item.classifyName}} | {{item.count}}吨</view>
+						<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{utils.timeTodate('m-d', item.createTime)}}</text>
 					</view>
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
-						<view style="color: #212121;font-size: 28upx;">宁波****有限公司</view>
+						<view style="color: #212121;font-size: 28upx;">{{item.name}}</view>
 						<text class="detail-btn" :class="novip?'noclick':''">查看详情</text>
 					</view>
 					<view class="vipmore" v-if="novip">
@@ -19,8 +19,8 @@
 						<text style="margin-left: 10upx;">注册会员才能查看详情喔！</text>
 					</view>
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;">
-						<view class="price" style="font-size: 28upx;font-weight: 500;">价格面议</view>
-						<text class="time" style="color: #343434;font-size: 22upx;">宁波镇海</text>
+						<view class="price" style="font-size: 28upx;font-weight: 500;">{{item.bedrockPrice}}-{{item.outsidePrice}}</view>
+						<text class="time" style="color: #343434;font-size: 22upx;">{{item.address}}</text>
 					</view>
 
 				</view>
@@ -30,11 +30,13 @@
 </template>
 
 <script>
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		data() {
 			return {
 				productList: [],
 				novip: true,
+				utils,
 			}
 		},
 		created() {
@@ -42,9 +44,10 @@
 		},
 		methods: {
 			clickitem(item) {
-				let id = item.goods_id;
+				item.sourcetype = 1;
+				getApp().globalData.productdetail = item;
 				uni.navigateTo({
-					url: `/pages/product/productdetail?id=${id}`
+					url: `/pages/product/productdetail`
 				})
 			},
 			getdata() {

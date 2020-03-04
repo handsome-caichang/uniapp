@@ -31,9 +31,6 @@
 			changepage(flag) {
 				this.isactive = flag;
 			},
-			getmore() {
-
-			}
 		}
 	}
 </script>

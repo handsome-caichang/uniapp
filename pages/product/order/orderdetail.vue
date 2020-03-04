@@ -2,40 +2,40 @@
 	<view class="orderdetail">
 		
 		<view class="header">
-			订单编号：0000001
+			订单编号：{{orderdetail.matchId}}
 		</view>
 		
 		<view class="uni-flex content">
 			<view class="right">
 				<image src="/static/img/goods/p8.jpg" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
-					<text>废铁</text>
-					<text style="margin-left: 10upx;">2吨</text>
+					<text>{{orderdetail.sellUserName}}</text>
+					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
 				</view>
 				<view class="title">
-					宁波*****有限公司
+					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					2019/12/13
+					{{orderdetail.createTime}}
 				</view>
 				<view class="address">
-					<text style="margin-right: 20upx;">镇海</text>
+					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
 				</view>
 			</view>
 			<image class="jiaoyiimg" src="/static/img/jiaoyi.png" ></image>
 			<view class="left">
-				<image src="/static/img/goods/p8.jpg" class="headerimg" ></image>
+				<image :src="orderdetail.buyUserHeadImage" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
-					黄先生
+					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					从业年限：5年
+					从业年限：{{orderdetail.buyUserYear}}年
 				</view>
 				<view class="title pinfen">
-					信誉评分：<uni-rate class="rate" :size="12" :value="5" />
+					信誉评分：<uni-rate class="rate" :size="12" :value="orderdetail.star" />
 				</view>
 				<view class="address">
-					<text style="margin-right: 20upx;">镇海</text>
+					<text style="margin-right: 20upx;">{{orderdetail.buyDistrict}}</text>
 				</view>
 			</view>
 		</view>
@@ -45,7 +45,10 @@
 				取消匹配
 			</view>
 			<view class="primary-btn" @tap="jiaoyi">
-				开始交易
+				联系回收人
+			</view>
+			<view class="primary-btn" @tap="luru">
+				录入订单
 			</view>
 		</view>
 	
@@ -60,13 +63,24 @@
 		},
 		data() {
 			return {
+				orderdetail: {},
 			}
 		},
+		created() {
+			this.orderdetail = getApp().globalData.orderdetail;
+		},
 		methods: {
-			
 			jiaoyi() {
+				this.orderdetail.sourcetype = 0;
+				this.orderdetail.userId = this.orderdetail.buyUserId;
+				getApp().globalData.customerdata = this.orderdetail;
 				uni.navigateTo({
 					url: '/pages/customer/customerdetail'
+				})
+			},
+			luru(){
+				uni.navigateTo({
+					url: '/pages/product/importorder'
 				})
 			},
 			clearbtn() {
@@ -77,13 +91,21 @@
 					cancelText: '确认取消',
 					success: function(res) {
 						if (res.confirm) {
-							
+							this.api.home.cancelMatching({
+								userId: getApp().globalData.userdata.userId,
+								matchId: this.customerdata.matchId
+							}).then(res => {
+								uni.showModal({
+									title: "提示",
+									content: '取消成功',
+									showCancel: false,
+								});
+							})
 						} else if (res.cancel) {
 							uni.navigateBack();
 						}
 					}
 				})
-
 			}
 		}
 	}
@@ -144,7 +166,7 @@
 			justify-content: space-between;
 			padding: 0 30upx;
 			.primary-btn {
-				width: 290upx;
+				width: 230upx;
 				height: 104upx;
 				line-height: 104upx;
 				font-size: 38upx;
@@ -154,7 +176,7 @@
 				background-color: $uni-bg-color-grey;
 			}
 			.error-btn {
-				width: 290upx;
+				width: 230upx;
 				height: 104upx;
 				line-height: 104upx;
 				font-size: 38upx;

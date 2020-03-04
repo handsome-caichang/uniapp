@@ -6,13 +6,13 @@
 					<view class="uni-flex">
 						<image :src="detail.img" class="headerimg" style="margin-top: 20upx;"></image>
 						<view class="content" style="margin-left:10upx;flex: 1">
-							<view class="title" style="font-size: 34upx;">{{detail.name}}</view>
+							<view class="title" style="font-size: 34upx;">{{detail.nickName}}</view>
 							<view class="title" style="font-size: 34upx;">
-								<text>{{detail.type}}</text>
-								<text style="margin-left: 20upx;">{{detail.num}}</text>
+								<text>{{detail.goodsName}}</text>
+								<text style="margin-left: 20upx;">{{detail.count}}</text>
 							</view>
 							<view style="color: #575757;font-size: 28upx;">
-								发布时间：<text>{{detail.time}}</text> <text>{{detail.address}}</text>
+								发布时间：<text>{{detail.createTime}}</text> <text>{{detail.sellDistrict}}</text>
 							</view>
 						</view>
 						<view class="btnbox" style="margin-top: 30upx;" @tap="showguanli" >
@@ -22,12 +22,12 @@
 				</view>
 			</view>
 			<view class="huishouren" style="padding: 0upx;">
-				<view class="cusitem" v-for="(user,index) in huishoulist" :key="index">
+				<view class="cusitem" v-for="(user,index) in detail.userList" :key="index">
 					<uni-icons type="close" size="12" color="#E7211A" class="clear-icon" v-if="guanlishow" @tap="clearuser(user,index)" ></uni-icons>
-					<image :src="user.img" class="headerimg"></image>
-					<view class="name">{{user.name}}</view>
-					<view class="point">从业{{user.age}}年</view>
-					<uni-rate class="rate" :size="12" :value="user.xinyu" />
+					<image :src="user.headImage" class="headerimg"></image>
+					<view class="name">{{user.nickName}}</view>
+					<view class="point">从业{{user.years}}年</view>
+					<uni-rate class="rate" :size="12" :value="user.star" />
 				</view>
 			</view>
 		</view>
@@ -49,64 +49,29 @@
 			return {
 				guanlishow: false,
 				detail: {
-					name: '宁波易鑫科技有限公司',
-					num: '3吨',
-					type: '废铁',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
 				},
-				huishoulist: [{
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					},
-					{
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}
-				]
 			}
+		},
+		created() {
+			this.detail =  getApp().globalData.userlistmanage;
 		},
 		methods: {
 			clearuser(user,index) {
-				this.huishoulist.splice(index,1);
+				// this.huishoulist.splice(index,1);
+				this.api.home.cancelMatching({
+					userId: user.buyUserId,
+					matchId: this.detail.matchId
+				}).then(res => {
+					uni.showModal({
+						title: "提示",
+						content: '删除成功',
+						showCancel: false,
+					});
+					this.detail.userList.splice(index,1);
+				})
 			},
 			showguanli() {
-				this.guanlishow = !this.guanlishow
+				this.guanlishow = !this.guanlishow;
 			},
 			
 		},

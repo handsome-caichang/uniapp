@@ -147,12 +147,6 @@
 				},
 				protypeindex: 0,
 				array: [
-					{
-						name: '紫铜',
-					},
-					{
-						name: '电线电缆',
-					}
 				],
 				region: {
 					label: "请点击选择地址",
@@ -207,6 +201,8 @@
 					province: address.address.province,
 					city: address.address.city,
 					district: address.address.district,
+					lat: ""+address.latitude,
+					lng: ""+address.longitude,
 				}).then(res => {
 					uni.navigateTo({
 						url: "/pages/other/fabusuccess"

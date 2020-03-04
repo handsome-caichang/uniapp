@@ -315,7 +315,13 @@
 				"navigationBarTitleText": "修改密码"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/tabBar/home/nothtmlvue/nothtmlvue",
+            "style" : {
+				"navigationBarTitleText": ""
+			}
+        }
+    ],
 	"globalStyle": { // 文档 https://uniapp.dcloud.io/collocation/pages?id=globalstyle
 		"navigationBarBackgroundColor": "#fff", // 导航栏背景颜色（同状态栏背景色）
 		"navigationBarTextStyle": "black",  // 导航栏标题颜色及状态栏前景颜色，仅支持 black/white

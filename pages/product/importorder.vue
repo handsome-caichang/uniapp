@@ -4,34 +4,33 @@
 			<view class="right">
 				<image src="/static/img/goods/p8.jpg" class="headerimg"></image>
 				<view class="title" style="font-weight: 500;">
-					<text>废铁</text>
-					<text style="margin-left: 10upx;">2吨</text>
+					<text>{{orderdetail.sellUserName}}</text>
+					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
 				</view>
 				<view class="title">
-					宁波*****有限公司
+						{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					2019/12/13
+					{{orderdetail.createTime}}
 				</view>
 				<view class="address">
-					<text style="margin-right: 20upx;">镇海</text>
+					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
 				</view>
 			</view>
 			<image class="jiaoyiimg" src="/static/img/jiaoyi.png"></image>
 			<view class="left">
-				<image src="/static/img/goods/p8.jpg" class="headerimg"></image>
+				<image :src="orderdetail.buyUserHeadImage" class="headerimg"></image>
 				<view class="title" style="font-weight: 500;">
-					黄先生
+					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					从业年限：5年
+					从业年限：{{orderdetail.buyUserYear}}年
 				</view>
 				<view class="title pinfen">
-					信誉评分：
-					<uni-rate class="rate" :size="12" :value="5" />
+					信誉评分：<uni-rate class="rate" :size="12" :value="orderdetail.star" />
 				</view>
 				<view class="address">
-					<text style="margin-right: 20upx;">镇海</text>
+					<text style="margin-right: 20upx;">{{orderdetail.buyDistrict}}</text>
 				</view>
 			</view>
 		</view>
@@ -52,10 +51,13 @@
 						<text class="text bitian">货物类别</text>
 					</view>
 					<view class="input-box">
-						<view class="input" :class="protype.value?'':'place'">
+						<picker @change="bindPickerChange" :value="protypeindex" :range="goodtypelist" range-key="name">
+							<view class="uni-input">{{protype.value ? protype.value : protype.label }}</view>
+						</picker>
+						<!-- <view class="input" :class="protype.value?'':'place'">
 							{{protype.value ? protype.value : protype.label }}
 						</view>
-						<uni-icons class="icon" type="arrowdown"></uni-icons>
+						<uni-icons class="icon" type="arrowdown"></uni-icons> -->
 					</view>
 				</view>
 				<view class="item-box">
@@ -73,12 +75,12 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				需支付佣金：                         
+				可获得鼓励金 ：                             
 				<view class="price"> ¥500 </view>
 			</view>
 			<view class="lj-detail" >
@@ -92,10 +94,9 @@
 						<text class="text bitian">货物类别</text>
 					</view>
 					<view class="input-box">
-						<view class="input" :class="protype.value?'':'place'">
-							{{protype.value ? protype.value : protype.label }}
-						</view>
-						<uni-icons class="icon" type="arrowdown"></uni-icons>
+						<picker @change="bindPickerChange" :value="protypeindex" :range="goodtypelist" range-key="name">
+							<view class="uni-input">{{protype.value ? protype.value : protype.label }}</view>
+						</picker>
 					</view>
 				</view>
 				<view class="item-box">
@@ -108,12 +109,12 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				需支付佣金：                         
+				可获得鼓励金 ：
 				<view class="price"> ¥500 </view>
 			</view>
 			<view class="lj-detail">
@@ -121,33 +122,11 @@
 			</view>
 		</view>
 		
-		
-		<view style="padding-bottom: 100upx;">
-			<radio-group @change="radioChange">
-				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
-					<view style="display:flex;justify-content: center;">
-						<image style="width: 48upx;height: 48upx;margin-right: 20upx;" src="/static/img/gongkao.png"></image>
-						<text>{{item.name}}</text>
-					</view>
-					<view>
-						<radio color="#FFCC33" :value="item.value" :checked="index === current" />
-					</view>
-				</label>
-			</radio-group>
+		<view class="primary-btn" @tap="luru">
+			确认录入
 		</view>
 		
-		<view class="btnbox">
-			<view class="pri-box border-top">
-				<view class="sun">
-					总计：<text class="price">{{price}}元</text>
-				</view>
-			</view>
-			<view class="rightbtn" @tap="payclick">
-				确认支付
-			</view>
-		</view>
 		
-		<!-- 底部分享弹窗 -->
 		<uni-popup ref="showrul" type="center">
 			<view class="uni-pup">
 				<rul-pop></rul-pop>
@@ -164,6 +143,7 @@
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
+	import { mapMutations,mapState } from 'vuex';
 	export default {
 		components: {
 			uniRate,
@@ -180,29 +160,36 @@
 				},
 				numberleng: "",
 				pipeinum: "",
-				price: '368',
-				items: [{
-						value: 'USA',
-						name: '余额支付'
-					},
-					{
-						value: 'CHN',
-						name: '支付宝支付',
-						checked: 'true'
-					},
-					{
-						value: 'BRA',
-						name: '微信支付'
-					},
-					{
-						value: 'JPN',
-						name: '银行卡支付'
-					}
-				],
-				current: 0
+				current: 0,
+				orderdetail: {},
+				protypeindex: 0,
 			}
 		},
+		created() {
+			this.orderdetail =  getApp().globalData.orderdetail;
+		},
+		computed: {
+			...mapState(["goodtypelist"])
+		},
 		methods: {
+			bindPickerChange: function(e) {
+				this.protypeindex = e.target.value;
+				this.protype.value = this.goodtypelist[this.protypeindex].name;
+			},
+			luru() {
+				this.api.order.sellUserWriteOrder({
+					userId: getApp().globalData.userdata.userId,
+					classify: this.protype.value,
+					money: +this.pipeinum,
+					type: this.isactive ? 1 : 2,
+					count: +this.numberleng,
+					matchId: this.orderdetail.matchId
+				}).then(res => {
+					uni.navigateTo({
+						url: '/pages/other/successpgae'
+					})
+				})
+			},
 			openrul() {
 				this.$nextTick(() => {
 					this.$refs.showrul.open();
@@ -211,19 +198,6 @@
 			changepage(flag) {
 				this.isactive = flag;
 			},
-			payclick() {
-				uni.navigateTo({
-					url: '/pages/customer/customerdetail'
-				})
-			},
-			radioChange(evt) {
-				for (let i = 0; i < this.items.length; i++) {
-					if (this.items[i].value === evt.target.value) {
-						this.current = i;
-						break;
-					}
-				}
-			}
 		}
 	}
 </script>
@@ -270,6 +244,23 @@
 				color: #83551F;
 				font-size: 28upx;
 			}
+		}
+		
+		.primary-btn {
+			margin: 0 auto;
+			margin-top: 150upx;
+			width: 50%;
+			height: 104upx;
+			line-height: 104upx;
+			padding-left: 14px;
+			padding-right: 14px;
+			font-size: 36upx;
+			text-align: center;
+			text-decoration: none;
+			border-radius: 5px;
+			overflow: hidden;
+			color: $font-color-withe;
+			background-color: $uni-bg-color-grey;
 		}
 		
 		.text-class {

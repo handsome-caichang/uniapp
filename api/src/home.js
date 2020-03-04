@@ -156,6 +156,12 @@ export default {
 			params
 		);
 	},
+	getSellUserGoodsList(params) {
+		return http.get(
+			'recovery/getSellUserGoodsList',
+			params
+		);
+	},
 	goodsRecommend(params) {
 		return http.get(
 			'recovery/goodsRecommend',
@@ -171,6 +177,132 @@ export default {
 	getIndustryInformationClassify(params) {
 		return http.get(
 			'advert/getIndustryInformationClassify',
+			params
+		);
+	},
+	getRecoveryInfo(params) {
+		return http.get(
+			'user/getRecoveryInfo',
+			params
+		);
+	},
+	recoveryAddMatching(params) {
+		return http.post(
+			'recovery/addMatching',
+			params
+		);
+	},
+	realseAddMatching(params) {
+		return http.post(
+			'realse/addMatching',
+			params
+		);
+	},
+	getRealseGoodsInfo(params) {
+		return http.get(
+			'recovery/getRealseGoodsInfo',
+			params
+		);
+	},
+	getApplyMatchList(params) {
+		return http.get(
+			'realse/getApplyMatchList',
+			params
+		);
+	},
+	getReceivedMatchList(params) {
+		return http.get(
+			'realse/getReceivedMatchList',
+			params
+		);
+	},
+	sureMatching(params) {
+		return http.post(
+			'realse/sureMatching',
+			params
+		);
+	},
+	cancelMatching(params) {
+		return http.post(
+			'realse/cancelMatching',
+			params
+		);
+	},
+	recoverygetApplyMatchList(params) {
+		return http.get(
+			'recovery/getApplyMatchList',
+			params
+		);
+	},
+	recoverygetReceivedMatchList(params) {
+		return http.get(
+			'recovery/getReceivedMatchList',
+			params
+		);
+	},
+	getMatchSuccessList(params) {
+		return http.get(
+			'realse/getMatchSuccessList',
+			params
+		);
+	},
+	recoverygetMatchSuccessList(params) {
+		return http.get(
+			'recovery/getMatchSuccessList',
+			params
+		);
+	},
+	recoverysureMatching(params) {
+		return http.post(
+			'recovery/sureMatching',
+			params
+		);
+	},
+	recoverycancelMatching(params) {
+		return http.post(
+			'recovery/cancelMatching',
+			params
+		);
+	},
+	getRecommendRecoverUserList(params) {
+		return http.get(
+			'realse/getRecommendRecoverUserList',
+			params
+		);
+	},
+	getRealseList(params) {
+		return http.get(
+			'realse/getRealseList',
+			params
+		);
+	},
+	cancelRealse(params) {
+		return http.post(
+			'realse/cancelRealse',
+			params
+		);
+	},
+	getRecoveryList(params) {
+		return http.get(
+			'recovery/getRecoveryList',
+			params
+		);
+	},
+	delRecovery(params) {
+		return http.post(
+			'recovery/delRecovery',
+			params
+		);
+	},
+	urgentRecovery(params) {
+		return http.post(
+			'recovery/urgentRecovery',
+			params
+		);
+	},
+	cancelUrgentRecovery(params) {
+		return http.post(
+			'recovery/cancelUrgentRecovery',
 			params
 		);
 	},

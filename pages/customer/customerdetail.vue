@@ -2,67 +2,67 @@
 	<view class="detail">
 		<view class="uni-flex uni-row item">
 			<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;" @tap="headtap">
-				<image :src="detail.img" style="width: 150rpx;height: 150rpx;"></image>
+				<image :src="detail.headImage" style="width: 150rpx;height: 150rpx;"></image>
 			</view>
 			<view class="uni-flex uni-column" style="flex: 1;justify-content: center;">
 				<view class="text title" style="text-align: left;padding-top: 10rpx;">
-					黄先生
+					{{detail.name}}
 				</view>
 				<view class="address">
-					震撼
+					{{detail.province}}{{detail.city}}{{detail.district}}
 				</view>
 				<view>
 					可收货物：
 				</view>
 				<view class="uni-flex uni-row listbox">
-					<view class="pro-type-item">飞天<text class="jiaji">(加急)</text>
+					<view class="pro-type-item" v-for="(item,index) in detail.recoverys" :key="index" >{{item}}</view>
+					<!-- <view class="pro-type-item">飞天<text class="jiaji">(加急)</text>
 					</view>
 					<view class="pro-type-item">飞天</view>
 					<view class="pro-type-item">飞天</view>
 					<view class="pro-type-item">飞天</view>
-					<view class="pro-type-item">飞天</view>
-					<view class="pro-type-item">飞天</view>
+					<view class="pro-type-item">飞天</view> -->
+					<!-- <view class="pro-type-item">飞天</view> -->
 				</view>
 			</view>
 		</view>
 		<view class="item">
-			从业年限：<text>5年</text>
+			从业年限：<text>{{detail.year}}年</text>
 		</view>
 		<view class="item uni-flex"  style="align-items: center;" >
-			信誉评分：<uni-rate class="rate" size="14" :value="3" /> <text class="btn" @tap="toRateDetail">了解详情</text>
+			信誉评分：<uni-rate class="rate" size="14" :value="customerdata.star" /> <text class="btn" @tap="toRateDetail">了解详情</text>
 		</view>
 		<view class="item">
-			保证金缴纳：<text>5300元</text>
+			保证金缴纳：<text>{{detail.depositMoney}}元</text>
 		</view>
 		<view class="item">
 			更多展示
 		</view>
 		<view class="s-container">
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-				<image class="img" v-for="(item,index) in prolist" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
+				<image class="img" v-for="(item,index) in detail.images.split(',')" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
 			</scroll-view>
 		</view>
 		
-		<!-- <view class="towbtn">
+		<view class="towbtn"  v-if="customerdata.sourcetype == 3">
 			<view class="error-btn" @tap="clearbtn">
-				取消
+				取消申请
 			</view>
 			<view class="primary-btn" @tap="popbtn">
 				申请匹配
 			</view>
 		</view>
 		
-		<view class="towbtn">
+		<view class="towbtn" v-if="customerdata.sourcetype == 2">
 			<view class="error-btn" @tap="clearbtn">
 				拒绝
 			</view>
 			<view class="primary-btn" @tap="tongyi">
 				同意
 			</view>
-		</view> -->
+		</view>
 		<!-- v-if="sourcetype == '1'" 根据当前登录用户是否实名，没有去实名 -->
-		<view class="btn-container" >
-			<!-- <button type="primary">申请匹配</button> -->
+		<view class="btn-container" v-if="customerdata.sourcetype == 1"  >
 			<view class="primary-btn" @tap="popbtn">
 				申请匹配
 			</view>
@@ -84,19 +84,19 @@
 				<scroll-view scroll-y="true" class="scroll-box" >
 					<view class="uni-list">
 						<radio-group @change="checkboxChange">
-							<label class="uni-list-cell uni-list-cell-pd" v-for="item in items" :key="item.value">
+							<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in productlist" :key="index">
 								<view>
-									<radio color="#09BB07" :value="item.value" :checked="item.checked" />
+									<radio color="#09BB07" :value="item.realseId" :checked="index === currentindex" />
 								</view>
 								<view class="right">
 									<view class="top" style="font-size: 32upx;">
-										<text>飞天</text>
-										<text style="margin-left: 30upx;">3顿</text>
+										<text>{{item.classify}}</text>
+										<text style="margin-left: 30upx;">{{item.count}}吨</text>
 									</view>
-									<view style="font-size: 24upx;">宁波易鑫科技有限公司</view>
+									<view style="font-size: 24upx;">{{item.nickName}}</view>
 									<view class="bottom" style="font-size: 24upx;">
-										<text>发布时间：2019/12/13</text>
-										<text style="margin-left: 30upx;">镇海</text>
+										<text>发布时间：{{item.createTime}}</text>
+										<!-- <text style="margin-left: 30upx;">镇海</text> -->
 									</view>
 								</view>
 							</label>
@@ -127,50 +127,33 @@
 		},
 		data() {
 			return {
-				items: [{
-						value: 'USA',
-						name: '美国'
-					},
-					{
-						value: 'CHN',
-						name: '中国',
-						checked: 'true'
-					},
-					{
-						value: 'BRA',
-						name: '巴西'
-					},
-					{
-						value: 'JPN',
-						name: '日本'
-					},
-					{
-						value: 'ENG',
-						name: '英国'
-					},
-					{
-						value: 'FRA',
-						name: '法国'
-					}
-				],
+				productlist: [],
+				currentindex: 0,
 				detail: {
-					img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					phone: '18602186762'
+					// img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
+					// phone: '18602186762'
 				},
 				prolist: [
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
+					// 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 				],
-				sourcetype: ''
+				sourcetype: '',
+				customerdata: {},
 			}
 		},
-		onLoad: (options) => {
-			console.log(options)
-			console.log(this)
-			// this.sourcetype = options.sourcetype;
+		created() {
+			this.customerdata = getApp().globalData.customerdata;
+			console.log(this.customerdata);
+			if (this.customerdata.sourcetype == 2 || this.customerdata.sourcetype == 3) {
+				this.customerdata.userId = this.customerdata.buyUserId;
+			}
+			this.api.home.getRecoveryInfo({
+				data: {
+					userId: this.customerdata.userId
+				}
+			}).then(res => {
+				console.log(res);
+				this.detail = res.data;
+			})
 		},
 		methods: {
 			//  f
@@ -193,33 +176,60 @@
 				})
 			},
 			tongyi() {
-				uni.navigateTo({
-					url: '/pages/other/pipeisuccess'
+				this.api.home.sureMatching({
+					userId: getApp().globalData.userdata.userId,
+					matchId: this.customerdata.matchId
+				}).then(res => {
+					console.log(res);
+					uni.navigateTo({
+						url: '/pages/other/pipeisuccess'
+					})
+				})
+			},
+			clearbtn() {
+				this.api.home.cancelMatching({
+					userId: getApp().globalData.userdata.userId,
+					matchId: this.customerdata.matchId
+				}).then(res => {
+					uni.showModal({
+						title: "提示",
+						content: '成功拒绝',
+						showCancel: false,
+					});
 				})
 			},
 			checkbtn() {
-				this.$refs.showtip.close();
-				console.log(this.items.filter(item=>item.checked)[0])
-				
-				uni.showModal({
-					title: '申请匹配成功，等待回收人确认。'
+				this.api.home.realseAddMatching({
+					"userId": getApp().globalData.userdata.userId,
+					"toUserId": this.customerdata.userId,
+					"realseId": this.productlist[this.currentindex].realseId,
+				}).then(res => {
+					uni.showModal({
+						title: "提示",
+						content: '申请匹配成功，等待回收人确认。',
+						showCancel: false,
+					});
+					this.$refs.showtip.close();
 				})
-				
 			},
 			checkboxChange (e) {
-				var items = this.items,
-					values = e.detail.value;
-				for (var i = 0, lenI = items.length; i < lenI; ++i) {
-					const item = items[i]
-					if(values.indexOf(item.value) >= 0){
-						this.$set(item,'checked',true)
-					}else{
-						this.$set(item,'checked',false)
+			   for (let i = 0; i < this.productlist.length; i++) {
+					if (this.productlist[i].value === e.target.value) {
+						this.currentindex = i;
+						break;
 					}
 				}
 			},
 			popbtn() {
-				this.$refs.showtip.open();
+				this.api.home.getSellUserGoodsList({
+					data: {
+						userId: getApp().globalData.userdata.userId
+					}
+				}).then(res => {
+					console.log(res);
+					this.productlist = res.data;
+					this.$refs.showtip.open();
+				})
 			},
 			callCustomer() {
 				uni.makePhoneCall({

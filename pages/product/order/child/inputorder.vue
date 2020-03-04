@@ -9,11 +9,11 @@
 		<view class="listbox" style="margin-top: 20upx;">
 			<view v-if="activeindex === 0">
 				<view class="huishouren">
-					<view class="cusitem" v-for="(item,index) in huishoulist" :key="index" @tap="nvto(item, '/pages/customer/customerdetail')">
-						<image :src="item.img" class="headerimg"></image>
-						<view class="name">{{item.name}}</view>
-						<view class="point">从业{{item.age}}年</view>
-						<uni-rate class="rate" :size="12" :value="item.xinyu" />
+					<view class="cusitem" v-for="(item,index) in huishoulist" :key="index" @tap="nvtocustomer(item,1)">
+						<image :src="item.headImage" class="headerimg"></image>
+						<view class="name">{{item.nickName}}</view>
+						<view class="point">从业{{item.year}}年</view>
+						<uni-rate class="rate" :size="12" :value="item.star" />
 					</view>
 				</view>
 				<view class="genghuanbtn" style="text-align: right;color:#1F96F7;margin-top: 20upx;margin-right: 40upx;">
@@ -26,25 +26,25 @@
 					<view class="uni-flex">
 						<image :src="item.img" class="headerimg" style="margin-top: 20upx;"></image>
 						<view class="content" style="margin-left:10upx;flex: 1">
-							<view class="title" style="font-size: 34upx;">{{item.name}}</view>
+							<view class="title" style="font-size: 34upx;">{{item.nickName}}</view>
 							<view class="title" style="font-size: 34upx;">
-								<text>{{item.type}}</text>
-								<text style="margin-left: 20upx;">{{item.num}}</text>
+								<text>{{item.goodsName}}</text>
+								<text style="margin-left: 20upx;">{{item.count}}吨</text>
 							</view>
 							<view style="color: #575757;font-size: 28upx;">
-								发布时间：<text>{{item.time}}</text> <text>{{item.address}}</text>
+								发布时间：<text>{{item.createTime}}</text> <text>{{item.sellDistrict}}</text>
 							</view>
 						</view>
-						<view class="btnbox" style="margin-top: 30upx;"  @tap="nvto(item, '/pages/product/order/applicationrecord')" >
+						<view class="btnbox" style="margin-top: 30upx;"  @tap="guanli(item, '/pages/product/order/applicationrecord')" >
 							<view style="color: #18C02C;border: 1upx solid #18C02C;padding: 2upx 20upx;border-radius: 20upx;">管理</view>
 						</view>
 					</view>
 					<view class="huishouren" style="padding: 0upx;">
-						<view class="cusitem" v-for="(user) in item.list" :key="user.userid" @tap="nvto(user, '/pages/customer/customerdetail')">
-							<image :src="user.img" class="headerimg"></image>
-							<view class="name">{{user.name}}</view>
-							<view class="point">从业{{user.age}}年</view>
-							<uni-rate class="rate" :size="12" :value="user.xinyu" />
+						<view class="cusitem" v-for="(user) in item.userList" :key="user.buyUserId" @tap="nvtocustomer(user,3,item)">
+							<image :src="user.headImage" class="headerimg"></image>
+							<view class="name">{{user.nickName}}</view>
+							<view class="point">从业{{user.years}}年</view>
+							<uni-rate class="rate" :size="12" :value="user.star" />
 						</view>
 					</view>
 				</view>
@@ -53,14 +53,14 @@
 			<view class="shoudao" v-if="activeindex === 2">
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.img" :note="'申请时间：'+item.time+'  '+item.address" v-for="(item,index) in shoudaolist"
-						 :key="index"  @tap="nvto(user, '/pages/customer/customerdetail')" >
+						<uni-list-item class="" :thumb="item.headerimg" :note="'申请时间：'+item.createTime" v-for="(item,index) in shoudaolist"
+						 :key="index"  @tap="sureMatching(item)" >
 							<view slot="content" style="height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.age}}年</text>
-								<uni-rate class="rate" :size="12" :value="item.xinyu" />
+								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
+								<uni-rate class="rate" :size="12" :value="item.start" />
 							</view>
 							<view class="btn" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
 						</uni-list-item>
@@ -71,14 +71,14 @@
 			<view class="shoudao" v-if="activeindex === 3">
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.img" :note="'关闭时间：'+item.time+'  '+item.address" v-for="(item,index) in successlist"
-						 :key="index"  @tap="nvto(item, '/pages/product/order/orderdetail')" >
+						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'关闭时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in successlist"
+						 :key="index"  @tap="toorderdetail(item, '/pages/product/order/orderdetail')" >
 							<view slot="content" style="height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.type}}</text>
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.num}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
 							</view>
 							<view class="btn" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
@@ -103,177 +103,103 @@
 		},
 		data() {
 			return {
-				successlist: [
-					{
-						name: '宁波****有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁'
-					},{
-						name: '宁波****有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁'
-					},{
-						name: '宁波****有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁'
-					},
-				],
-				shoudaolist: [{
-					name: '张三',
-					num: '3吨',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					age: 3,
-					xinyu: 5
-				},{
-					name: '张三',
-					num: '3吨',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					age: 3,
-					xinyu: 5
-				},{
-					name: '张三',
-					num: '3吨',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					age: 3,
-					xinyu: 5
-				}],
+				successlist: [],
+				shoudaolist: [],
 				tablist: [
 					'回收人推荐',
 					'申请记录',
 					'收到申请',
 					'匹配成功',
 				],
-				jilulist: [{
-					name: '宁波易鑫科技有限公司',
-					num: '3吨',
-					type: '废铁',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					list: [{
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '123'
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '126343'
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '15345'
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '12434'
-					}, ]
-				}, {
-					name: '宁波易鑫科技有限公司',
-					num: '3吨',
-					type: '废铁',
-					time: '2019/12/13',
-					address: '镇海',
-					img: '/static/img/missing-face.png',
-					list: [{
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '6756'
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '87697'
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '456'
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5,
-						userid: '456456'
-					}]
-				}],
+				jilulist: [],
 				activeindex: 0,
-				huishoulist: [{
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					},
-					{
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}, {
-						name: '战三',
-						img: '/static/img/missing-face.png',
-						age: 3,
-						xinyu: 3.5
-					}
-				]
+				huishoulist: []
 			}
 		},
+		created() {
+			this.gettuijian();
+		},
 		methods: {
-			changetab(active) {
-				this.activeindex = active
+			nvtocustomer(item, sourcetype, parent) {
+				item.sourcetype = sourcetype;
+				item.matchId = parent ? parent.matchId : '';
+				getApp().globalData.customerdata = item;
+				uni.navigateTo({
+					url: `/pages/customer/customerdetail`
+				});
 			},
-			nvto(item, url) {
+			changetab(active) {
+				this.activeindex = active;
+				if (this.activeindex == 1) {
+					this.getjilu();
+				}else if (this.activeindex == 2) {
+					this.getshoudao();
+				}else if (this.activeindex == 3) {
+					this.getMatchSuccessList();
+				}
+			},
+			gettuijian() {
+				// 回收人推荐
+				this.api.home.getRecommendRecoverUserList({
+					data: {
+						userId: getApp().globalData.userdata.userId,
+						countPerPage: 2000,
+						pageIndex: 1,
+					}
+				}).then(res => {
+					console.log("回收人推荐");
+					console.log(res);
+					this.huishoulist = res.data;
+				})
+			},
+			getjilu() {
+				this.api.home.getApplyMatchList({
+					data: {
+						userId: getApp().globalData.userdata.userId
+					}
+				}).then(res => {
+					console.log("申请记录");
+					console.log(res);
+					this.jilulist = res.data;
+				})
+			},
+			getMatchSuccessList() {
+				this.api.home.getMatchSuccessList({
+					data: {
+						userId: getApp().globalData.userdata.userId
+					}
+				}).then(res => {
+					console.log("匹配成功");
+					console.log(res);
+					this.successlist = res.data;
+				})
+			},
+			getshoudao(){
+				this.api.home.getReceivedMatchList({
+					data: {
+						userId: getApp().globalData.userdata.userId
+					}
+				}).then(res => {
+					console.log("收到的申请");
+					console.log(res);
+					this.shoudaolist = res.data;
+				})
+			},
+			sureMatching(item) {
+				item.sourcetype = 2;
+				getApp().globalData.customerdata = item;
+				uni.navigateTo({
+					url: `/pages/customer/customerdetail`
+				});
+			},
+			toorderdetail(item) {
+				getApp().globalData.orderdetail = item;
+				uni.navigateTo({
+					url: `/pages/product/order/orderdetail`
+				});
+			},
+			guanli(item, url){
+				getApp().globalData.userlistmanage = item;
 				uni.navigateTo({
 					url,
 				})

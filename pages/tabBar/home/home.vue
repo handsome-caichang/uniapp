@@ -278,6 +278,7 @@ export default {
 			uni.getLocation({
 				geocode: true,
 				success: res => {
+					console.log(res);
 					this.api.home.goodsRecommend({
 						data: {
 							userId: getApp().globalData.userdata.userId,

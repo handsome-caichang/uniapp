@@ -38,7 +38,7 @@ export default {
 	components: {},
 	data() {
 		return {
-			phoneNum: '18602186762',
+			phoneNum: '',
 			yzm: '',
 			password: '',
 			btnMsg: '',
@@ -108,32 +108,77 @@ export default {
 					code: this.yzm,
 					password: this.password
 				}).then( res => {
-					uni.showToast({
-						icon: 'success',
-						position: 'bottom',
-						title: '成功'
-					});
+					this.api.home.login({
+						mobilePhone: this.phoneNum,
+						code: this.yzm
+					}).then(res => {
+						console.log(res)
+						uni.setStorageSync('userdata', res.data); //存入缓存
+						getApp().globalData.userdata = res.data;
+						uni.showToast({
+							icon: 'success',
+							position: 'bottom',
+							title: '登录成功'
+						});
+						uni.hideLoading();
+						uni.reLaunch({
+							url: '/pages/tabBar/home/home'
+						});
+					}, rej => {
+						console.log(rej)
+						this.isRotate = false;
+						uni.hideLoading();
+					})
 				}, rej => {
 					this.isRotate = false;
+					uni.hideLoading();
 				})
 			}else {
-				this.api.home.login({
-					mobilePhone: this.phoneNum,
-					code: this.yzm
-				}).then(res => {
-					uni.setStorageSync('userdata', res.data); //存入缓存
-					uni.showToast({
-						icon: 'success',
-						position: 'bottom',
-						title: '登录成功'
-					});
-					uni.hideLoading();
-					uni.reLaunch({
-						url: '/pages/tabBar/home/home'
-					});
-				}, rej => {
-					this.isRotate = false;
-				})
+				if (this.isShow && !this.wangjimima) {
+					this.api.home.loginByPassword({
+						mobilePhone: this.phoneNum,
+						password: this.password
+					}).then(res => {
+						console.log(res)
+						uni.setStorageSync('userdata', res.data); //存入缓存
+						getApp().globalData.userdata = res.data;
+						uni.showToast({
+							icon: 'success',
+							position: 'bottom',
+							title: '登录成功'
+						});
+						uni.hideLoading();
+						uni.reLaunch({
+							url: '/pages/tabBar/home/home'
+						});
+					}, rej => {
+						console.log(rej)
+						this.isRotate = false;
+						uni.hideLoading();
+					})
+				}else {
+					this.api.home.login({
+						mobilePhone: this.phoneNum,
+						code: this.yzm
+					}).then(res => {
+						console.log(res)
+						uni.setStorageSync('userdata', res.data); //存入缓存
+						getApp().globalData.userdata = res.data;
+						uni.showToast({
+							icon: 'success',
+							position: 'bottom',
+							title: '登录成功'
+						});
+						uni.hideLoading();
+						uni.reLaunch({
+							url: '/pages/tabBar/home/home'
+						});
+					}, rej => {
+						console.log(rej)
+						this.isRotate = false;
+						uni.hideLoading();
+					})
+				}
 			}
 		},
 		// 登录方式切换

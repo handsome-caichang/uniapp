@@ -8,7 +8,8 @@ export default {
 		customerdata: {},
 		productdetail: {},
 		orderdetail: {},
-		userlistmanage: {}
+		userlistmanage: {},
+		examineres: {}
 	},  
 	created() {
 		// #ifdef APP-PLUS

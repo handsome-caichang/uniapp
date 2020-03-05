@@ -43,11 +43,13 @@
 		data() {
 			return {
 				bondnum: '',
-				items: [{
-						value: 'USA',
-						name: '余额支付',
-						icon: '/static/img/pay/yuebao.png',
-					},{
+				items: [
+					// {
+					// 	value: 'USA',
+					// 	name: '余额支付',
+					// 	icon: '/static/img/pay/yuebao.png',
+					// },
+					{
 						value: 'CHN',
 						name: '支付宝支付',
 						checked: 'true',
@@ -64,7 +66,7 @@
 						icon: '/static/img/pay/yinhanka.png',
 					}
 				],
-				current: 1
+				current: 0
 			}
 		},
 		methods: {
@@ -80,8 +82,8 @@
 				if (this.bondnum) {
 					this.api.home.payDeposit({
 						userId: getApp().globalData.userdata.userId,
-						money: Number(this.bondnum),
-						typeId: this.current - 1,
+						money: ""+this.bondnum,
+						typeId: this.current + 1,
 					}).then(res => {
 						uni.showToast({
 							title: "缴纳成功",

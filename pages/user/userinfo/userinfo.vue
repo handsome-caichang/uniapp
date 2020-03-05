@@ -2,20 +2,36 @@
 	<view class="uni-page-body sss">
 		<uni-list>
 			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/headimg.png" title="头像" @tap="navTo('/pages/user/userinfo/headimgset')">
-				<image src="/static/img/missing-face.png" style="width: 76upx;height: 76upx;border-radius: 50%;margin-right: 20upx;"></image>
+				<image :src="userdata.headImage" style="width: 76upx;height: 76upx;border-radius: 50%;margin-right: 20upx;"></image>
+			</uni-list-item>
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="昵称" >
+				<view class="uni-flex">
+					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.nickName" maxlength="10" type="text" placeholder="用户昵称" />
+				</view>
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')" >
 				<view class="uni-flex">
 					<!-- <text style="color: #575757;margin-right: 20upx;">张三</text> -->
-					<!-- <text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;">已实名</text> -->
-					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> 
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 1">审核中</text>
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 2" >已实名</text>
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="!userdata.isReal">未实名</text> 
 				</view>
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/phone.png" title="绑定手机号">
-				<text style="color: #575757;margin-right: 20upx;">1865226654</text>
+				<text style="color: #575757;margin-right: 20upx;">{{userdata.mobilePhone}}</text>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/diqu.png" title="地区" />
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="从业年限" />
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/diqu.png" title="地区" @tap="setaddress" >
+				<view class="uni-flex">
+					<text style="color: #575757;margin-right: 20upx;">{{region.label}}</text>
+					<!-- <text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;">已实名</text> -->
+					<!-- <text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> -->
+				</view>
+			</uni-list-item>
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="从业年限" >
+				<view class="uni-flex">
+					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.years" maxlength="2" type="number" placeholder="请填写从业年限" />
+				</view>
+			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" />
 			<uni-list-item :show-extra-icon="true" :showArrow="false"  thumb="/static/img/user/gengduo.png" title="更多展示" />
 		</uni-list>
@@ -28,6 +44,7 @@
 							<view class="uni-uploader__files">
 								<block v-for="(image,index) in imageList" :key="index">
 									<view class="uni-uploader__file">
+										<uni-icons type="close" size="20" color="#E7211A" class="sunui-img-removeicon clear-icon" @tap="delimg(index)" ></uni-icons>
 										<image class="uni-uploader__img" :src="image" :data-src="image" @tap="previewImage"></image>
 									</view>
 								</block>
@@ -41,6 +58,10 @@
 			</view>
 
 		</view>
+		
+		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue"
+		 @onConfirm="onConfirm"></mpvue-city-picker>
+		 
 	</view>
 </template>
 <script>
@@ -54,16 +75,29 @@
 		['original'],
 		['compressed', 'original']
 	]
+	import uniIcons from "@/components/uni-icons/uni-icons.vue"
+	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import permision from "@/common/permission.js"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	import uploadImage from '@/common/ossutil/uploadFile.js';
 	export default {
 		components: {
 			uniList,
-			uniListItem
+			uniListItem,
+			mpvueCityPicker,
+			uniIcons
 		},
 		data() {
 			return {
+				cityPickerValue: [0, 0, 1],
+				region: {
+					label: "请点击选择地区",
+					value: [],
+					cityCode: ""
+				},
+				userdata: {},
+				themeColor: '#007AFF',
 				extraIcon1: {
 					color: '#007aff',
 					size: '22',
@@ -81,7 +115,58 @@
 				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 			}
 		},
+		created() {
+			this.userdata = getApp().globalData.userdata;
+			this.region.label = this.userdata.province + '-' + this.userdata.city + "-" + this.userdata.district;
+			this.imageList = this.userdata.images;
+			console.log(this.userdata)
+		},
 		methods: {
+			delimg(index) {
+				this.imageList.splice(index, 1);
+				this.userdata.images = this.imageList;
+				this.saveuser();
+			},
+ 			setaddress() {
+				this.$refs.mpvueCityPicker.show()
+			},
+			saveuser() {
+				this.api.home.modifyUser({
+					headImage:this.userdata.headImage,
+					mobilePhone:this.userdata.mobilePhone,
+					nickName: this.userdata.nickName,
+					year: this.userdata.year,
+					images: this.userdata.images,
+					province:this.userdata.province,
+					city:this.userdata.city,
+					district:this.userdata.district,
+					userId: this.userdata.userId,
+				})
+			},
+			onConfirm(e) {
+				this.region = e;
+				let list = e.label.split("-")
+				this.cityPickerValue = e.value;
+				this.api.home.modifyUser({
+					headImage: this.userdata.headImage,
+					mobilePhone: this.userdata.mobilePhone,
+					year:  this.userdata.year,
+					images: this.userdata.images,
+					nickName: this.userdata.nickName,
+					province: list[0],
+					city: list[1],
+					district:  list[2],
+					userId: this.userdata.userId,
+				}).then(res => {
+					this.userdata.province = list[0];
+					this.userdata.city = list[1];
+					this.userdata.district = list[2];
+					let userdata = uni.getStorageSync('userdata');
+					let newuserdata = Object.assign(userdata, this.userdata);
+					uni.setStorageSync('userdata', newuserdata);
+					getApp().globalData.userdata = newuserdata;
+				})
+			},
 			navTo(url) {
 				uni.navigateTo({
 					url
@@ -146,7 +231,40 @@
 					sizeType: sizeType[this.sizeTypeIndex],
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
+						
+						// this.imageList = this.imageList.concat(res.tempFilePaths);
+						var tempFilePaths = res.tempFilePaths;
+						//支持多图上传
+						for (var i = 0; i < res.tempFilePaths.length; i++) {
+							//显示消息提示框
+							uni.showLoading({
+							  mask: true
+							})
+							//上传图片
+							//图片路径可自行修改
+							uploadImage(res.tempFilePaths[i], 'images/',
+								result => {
+									this.imageList.push(result);
+									this.api.home.modifyUser({
+										headImage: this.headImage,
+										mobilePhone: this.userdata.mobilePhone,
+										years:  this.userdata.years,
+										images: this.imageList,
+										province:this.userdata.province,
+										city:this.userdata.city,
+										district:this.userdata.district,
+										userId: this.userdata.userId,
+										nickName: this.userdata.nickName,
+									}).then(res => {
+										let userdata = uni.getStorageSync('userdata');
+										let newuserdata = Object.assign(userdata, this.userdata);
+										uni.setStorageSync('userdata', newuserdata);
+										getApp().globalData.userdata = newuserdata;
+										uni.hideLoading();
+									})
+								}
+							)
+						}
 					},
 					fail: (err) => {
 						if (err['code'] && err.code !== 0 && this.sourceTypeIndex === 2) {

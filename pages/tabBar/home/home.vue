@@ -54,7 +54,7 @@
 							</view>
 							<text class="uni-ellipsis">{{ item.name }}</text>
 							<view class="box">
-								<text>{{ utils.timeTodate('m-d', item.createTime) }}</text>
+								<text>{{ utils.timeTodate('m-d', item.createTime)}}</text>
 								<text>{{ item.address }}</text>
 							</view>
 						</view>
@@ -130,54 +130,7 @@ export default {
 			utils,
 			bannerlist: [],
 			vipusers: [],
-			huowulist: [
-				{
-					"realseId": 5,
-					"images": [
-						"https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090"
-					],
-					"address": "长沙",
-					"distance": "0.0",
-					"star": 0,
-					"createTime": "2020-24-29 04:24:23",
-					"sellUserId": 2,
-					"outsidePrice": 20,
-					"bedrockPrice": 20,
-					"freight": 0.6,
-					"name": "废铁",
-					"classifyName": "废铁"
-				}, {
-					"realseId": 4,
-					"images": [
-						"https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090"
-					],
-					"address": "喜欢的话",
-					"distance": "0.0",
-					"star": 0,
-					"createTime": "2020-02-29 04:02:54",
-					"sellUserId": 2,
-					"outsidePrice": 100,
-					"bedrockPrice": 100,
-					"freight": 3,
-					"name": "铜",
-					"classifyName": "铜"
-				}, {
-					"realseId": 2,
-					"images": [
-						"https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090"
-					],
-					"address": "上海市",
-					"distance": "0.0",
-					"star": 0,
-					"createTime": "2020-38-27 04:38:25",
-					"sellUserId": 2,
-					"outsidePrice": 222,
-					"bedrockPrice": 222,
-					"freight": 6.66,
-					"name": "铁",
-					"classifyName": "废铁"
-				}
-			],
+			huowulist: [],
 			gonkaolist: [],
 			tabBars: [],
 			productList: [],
@@ -212,7 +165,8 @@ export default {
 		};
 	},
 	computed: {
-		...mapState(["userInfo","goodtypelist"])
+		...mapState(["userInfo","goodtypelist"]),
+	
 	},
 	onLoad() {
 		// this.api.home.getRealseSellInfo({
@@ -265,14 +219,25 @@ export default {
 			})
 		},
 		async loadData() {
+			await this.api.home.getRecoveryInfo({
+				data: {
+					userId: getApp().globalData.userdata.userId
+				}
+			}).then(res => {
+				console.log(res);
+				let userdata = uni.getStorageSync('userdata');
+				let newuserdata = Object.assign(userdata, res.data);
+				uni.setStorageSync('userdata', newuserdata);
+				getApp().globalData.userdata = newuserdata;
+			})
 			// 资讯tab
 			await this.api.home.getIndustryInformationClassify().then(res => {
 				this.tabBars = res.data;
 			})
 			// 省份
-			this.api.home.getProvinceList().then(res => {
-				this.setProvinceList(JSON.stringify(res.data));
-			})
+			// this.api.home.getProvinceList().then(res => {
+			// 	this.setProvinceList(JSON.stringify(res.data));
+			// })
 			// 签到
 			this.api.home.checkIn({
 				userId: getApp().globalData.userdata.userId
@@ -306,7 +271,7 @@ export default {
 				this.vipusers = res.data;
 			})
 			// 公告
-			 this.api.home.getNoticeList().then(res => {
+			this.api.home.getNoticeList().then(res => {
 				this.gonkaolist = res.data;
 			})
 			// 货物推荐
@@ -320,12 +285,17 @@ export default {
 							lng: ""+res.longitude,
 						}
 					}).then(res => {
-						console.log('货物')
-						console.log(res);
-						// this.huowulist = res.data;
+						res.data.forEach(item => {
+							let time = item.createTime.replace(' ', "T")
+							let datetime = new Date(time).getTime();
+							item.createTime = datetime;
+						})
+						this.huowulist = res.data;
 					})
 				},
-				fail: err => {}
+				fail: err => {
+					console.log(err)
+				}
 			});
 			this.getIndustryInformationList();
 		},
@@ -443,6 +413,7 @@ export default {
 				}
 				.uni-ellipsis {
 					padding: 20upx;
+					font-size: 24upx;
 				}
 				.name {
 					color: #303030;
@@ -453,7 +424,8 @@ export default {
 					display: flex;
 					flex: 1; 
 					justify-content: space-between;
-					padding: 0 20upx;
+					// padding: 0 20upx;
+					width: 300upx;
 				}
 				text {
 					color: #fff;

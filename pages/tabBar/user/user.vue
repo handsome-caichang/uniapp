@@ -4,10 +4,10 @@
 			<image class="bg" src="/static/img/user-bg.jpg"></image>
 			<view class="user-info-box">
 				<view class="portrait-box" @tap="navTo('/pages/user/userinfo/userinfo')">
-					<image class="portrait" :src="'/static/img/missing-face.png'"></image>
+					<image class="portrait" :src="userdata.headImage"></image>
 				</view>
 				<view class="info-box">
-					<text class="username">{{'小牛犊'}}</text>
+					<text class="username" style="color: #18C02C;">{{userdata.nickName}}</text>
 				</view>
 			</view>
 			<view class="vip-card-box">
@@ -100,6 +100,7 @@
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
+				userdata: {},
 				list1: [
 					{
 						name: '余额',
@@ -137,7 +138,7 @@
 					{
 						name: '财务报表',
 						icon: '/static/img/user/caiwu.png',
-						url: '/pages/report/report'
+						// url: '/pages/report/report'
 					},{
 						name: '余额宝',
 						icon: '/static/img/user/yuebao.png'
@@ -153,15 +154,21 @@
 						url: '/pages/tool/calc'
 					},{
 						name: '万年历',
-						icon: '/static/img/user/rili.png'
+						icon: '/static/img/user/rili.png',
+						url: '/pages/tool/calendar'
 					},{
 						name: '备忘录',
-						icon: '/static/img/user/beiwanglu.png'
+						icon: '/static/img/user/beiwanglu.png',
+						url: '/pages/tool/beiwang'
 					}
 				],
 			}
 		},
-		onLoad() {},
+		created() {
+			this.userdata = getApp().globalData.userdata;
+			console.log('user')
+			console.log(this.userdata)
+		},
 		onNavigationBarButtonTap(e) {
 			const index = e.index;
 			console.log(index)
@@ -185,15 +192,21 @@
 		},
 		methods: {
 			geren(item) {
-				this.navTo(item.url)
+				if (item.url) {
+					uni.navigateTo({
+						url: item.url
+					})
+				}else {
+					uni.showModal({
+						title: "提示",
+						content: item.name + '此功能暂未开发，敬请期待',
+						showCancel: false,
+					});
+				}
 			},
-			/**
-			 * 统一跳转接口,拦截未登录路由
-			 * navigator标签现在默认没有转场动画，所以用view
-			 */
 			navTo(url) {
 				uni.navigateTo({
-					url
+					url: url
 				})
 			},
 			coverTouchstart(e) {

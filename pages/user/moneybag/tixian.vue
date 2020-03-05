@@ -64,8 +64,18 @@
 					}
 				],
 				current: 0,
-				CashMoney: ""
+				CashMoney: 0
 			}
+		},
+		created() {
+			this.api.home.getCashMoney({
+				data: {
+					userId: getApp().globalData.userdata.userId
+				}
+			}).then(res => {
+				console.log(res)
+				this.CashMoney = res.data;
+			})
 		},
 		methods: {
 			radioChange(evt) {
@@ -78,8 +88,14 @@
 			},
 			chongzhi() {
 				if (this.bondnum) {
-					uni.navigateTo({
-						url: '/pages/other/tixiansuccess'
+					this.api.home.withdrawCash({
+						userId: getApp().globalData.userdata.userId,
+						money: this.bondnum,
+						alipayAccount: getApp().globalData.userdata.mobilePhone
+					}).then(res  => {
+						uni.navigateTo({
+							url: '/pages/other/tixiansuccess'
+						})
 					})
 				}
 			},

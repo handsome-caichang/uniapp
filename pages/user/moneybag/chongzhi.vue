@@ -81,8 +81,14 @@
 			},
 			chongzhi() {
 				if (this.bondnum) {
-					uni.navigateTo({
-						url: '/pages/other/chongzhisuccess'
+					this.api.home.balanceRecharge({
+						typeId: this.current,
+						userId: getApp().globalData.userdata.userId,
+						money: +this.bondnum
+					}).then(res => {
+						uni.navigateTo({
+							url: '/pages/other/chongzhisuccess'
+						})
 					})
 				}
 			}

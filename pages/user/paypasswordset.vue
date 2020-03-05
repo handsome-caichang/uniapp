@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="list-cell ">
-			<text class="cell-tit">旧密码</text>
+			<text class="cell-tit">旧密码（首次设置不需要）</text>
 			<input class="uni-input" type="password" :maxlength="18" v-model="oldpassword" placeholder="请输入密码" placeholder-class="p-active" />
 		</view>
 		<view class="list-cell ">
@@ -48,9 +48,10 @@
 						showCancel: false
 					});
 				} else {
-					this.api.home.setPassword({
+					this.api.home.setPayPassword({
 						userId: getApp().globalData.userdata.userId,
-						password: this.newpassword
+						oldPassword: this.oldpassword,
+						payPassword: this.newpassword
 					}).then(res => {
 						uni.showModal({
 							title: "提示",

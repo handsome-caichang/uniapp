@@ -85,11 +85,9 @@
 		methods: {
 			resultres(item) {
 				if (item.status === 4) {
+					getApp().globalData.examineres = item;
 					uni.navigateTo({
 						url: "/pages/customer/fabumanage/examineres",
-						query: {
-							id: item.value
-						}
 					})
 				}
 			},

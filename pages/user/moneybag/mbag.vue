@@ -39,7 +39,7 @@
 		},
 		data() {
 			return {
-				yue: "5623.00",
+				yue: 0,
 				showprice: false,
 			}
 		},
@@ -70,9 +70,12 @@
 			},
 			initdata() {
 				this.api.home.getWealth({
-					userId: getApp().globalData.userdata.userId,
+					data: {
+						userId: getApp().globalData.userdata.userId,
+					}
 				}).then(res => {
-					this.yue = res.wealth;
+					console.log(res);
+					this.yue = ""+res.data.wealth;
 				})
 			}
 		}

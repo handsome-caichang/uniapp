@@ -1,11 +1,12 @@
 <template>
 	<view class="uni-page-body">
 		<view class="content">
-			<view class="title">编号0000004订单发布审核结果</view>
-			<view class="contact">你的编号“0000004”提审时间</view>
-			<view class="contact">2019-12-05 订单发布审核未通过，原因如下：</view>
-			<view class="res">1、货物内容不符合规则:请核实货物详情后重新提交审核</view>
-			<view class="time">2019/12/14</view>
+			<view class="title">编号{{examineres.realseId}}订单发布审核结果</view>
+			<view class="contact">你的编号“{{examineres.realseId}}”提审时间</view>
+			<view class="contact">{{examineres.createTime}} </view>
+			<view class="contact">订单发布审核未通过，原因如下：</view>
+			<view class="res">{{examineres.failReason}}</view>
+			<view class="time">{{examineres.createTime}} </view>
 		</view>
 	</view>
 </template>
@@ -14,8 +15,12 @@
 	export default {
 		data() {
 			return {
+				examineres: {}
 			}
 		},
+		created() {
+			this.examineres = getApp().globalData.examineres
+		}
 	}
 </script>
 

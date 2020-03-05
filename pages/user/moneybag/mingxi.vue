@@ -7,10 +7,6 @@
 		</scroll-view>
 		<view class="uni-flex timefilter" :class="{'noin':activeindex!=0}">
 			<view class="time">
-				<!-- <text>本月</text> -->
-				<!-- <picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
-					<view class="uni-input">{{date}}</view>
-				</picker> -->
 				<picker @change="bindPickerChange" :value="timeindex" :range="array" range-key="name">
 					<view class="uni-input">{{array[timeindex].name}}</view>
 				</picker>
@@ -21,10 +17,26 @@
 				<view style="color: #999999;font-size: 22upx;">收入¥7789</view>
 			</view>
 		</view>
-		
 		<uni-list>
-			<uni-list-item v-for="item in list[timeindex+1]" :key="item.orderNo" :title="item.remark" :note="item.createTime" :showArrow="false" :showBadge="true" >
-				<view class="list-succ" :class="{'list-price': item.type==0,'list-succ': item.type == 1}" >
+			<!-- "billInfo": [{
+				"orderNo": "CSH202003051715484",
+				"createTime": "2020-03-05 05:15:49",
+				"count": 0,
+				"remark": "提现",
+				"type": 1,
+				"userId": "2"
+			}, {
+				"orderNo": "CSH202003051715453",
+				"createTime": "2020-03-05 05:15:45",
+				"count": 0,
+				"remark": "提现",
+				"type": 1,
+				"userId": "2"
+			}],
+			"time": "2020-3" -->
+			<uni-list-item v-for="item in list" :key="item.orderNo" :title="item.remark" :note="item.createTime" :showArrow="false"
+			 :showBadge="true">
+				<view class="list-succ" :class="{'list-price': item.type==0,'list-succ': item.type == 1}">
 					{{item.type==0?'+':'-'}}{{item.count}}
 				</view>
 			</uni-list-item>
@@ -51,19 +63,42 @@
 					'VIP'
 				],
 				activeindex: 0,
-				array: [
-					{name:'一月'},
-					{name:'二月'},
-					{name:'三月'},
-					{name:'四月'},
-					{name:'五月'},
-					{name:'六月'},
-					{name:'七月'},
-					{name:'八月'},
-					{name:'九月'},
-					{name:'十月'},
-					{name:'十一月'},
-					{name:'十二月'}
+				array: [{
+						name: '一月'
+					},
+					{
+						name: '二月'
+					},
+					{
+						name: '三月'
+					},
+					{
+						name: '四月'
+					},
+					{
+						name: '五月'
+					},
+					{
+						name: '六月'
+					},
+					{
+						name: '七月'
+					},
+					{
+						name: '八月'
+					},
+					{
+						name: '九月'
+					},
+					{
+						name: '十月'
+					},
+					{
+						name: '十一月'
+					},
+					{
+						name: '十二月'
+					}
 				],
 				timeindex: 0,
 				list: [],
@@ -82,22 +117,39 @@
 			},
 			getdata() {
 				this.list = [];
-				let userdata = uni.getStorageSync('userdata');
-				// console.log(userdata)
 				this.api.home.getBillList({
-					userId: userdata.userId,
-					countPerPage: 1000,
-					pageIndex: 1,
-					orderType: this.activeindex,
+					data: {
+						userId: getApp().globalData.userdata.userId,
+						countPerPage: 1000,
+						pageIndex: 1,
+						orderType: this.activeindex,
+					}
 				}).then(res => {
-					this.list = res.data;
+					console.log(res);
+					// this.list = res.data;
+					this.list = [{
+						"orderNo": "CSH202003051715484",
+						"createTime": "2020-03-05 05:15:49",
+						"count": 0,
+						"remark": "提现",
+						"type": 1,
+						"userId": "2"
+					}, {
+						"orderNo": "CSH202003051715453",
+						"createTime": "2020-03-05 05:15:45",
+						"count": 0,
+						"remark": "提现",
+						"type": 1,
+						"userId": "2"
+					}];
+
 				})
 			}
 			// mingxi
 		}
 	}
 </script>
-<style lang="scss" >
+<style lang="scss">
 	.mingxi-container {
 		.scroll-h {
 			padding: 0upx 30upx;
@@ -105,6 +157,7 @@
 			height: 80upx;
 			flex-direction: row;
 			white-space: nowrap;
+
 			.uni-tab-item {
 				display: inline-block;
 				flex-wrap: nowrap;
@@ -116,22 +169,26 @@
 				line-height: 48upx;
 				margin-right: 40upx;
 				border-radius: 8upx;
+
 				&.active {
 					background-color: $font-color-light;
 					color: $font-color-withe;
 				}
 			}
 		}
+
 		.timefilter {
-			background:rgba(231,231,231,1);
+			background: rgba(231, 231, 231, 1);
 			padding: 4upx 60upx;
 			justify-content: space-between;
 			align-items: center;
 			margin-bottom: 20upx;
+
 			&.noin {
 				padding-top: 16upx;
 				padding-bottom: 16upx;
 			}
+
 			.time {
 				padding: 0upx 10upx;
 				border-radius: 25upx;

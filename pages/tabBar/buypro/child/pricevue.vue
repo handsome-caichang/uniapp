@@ -14,15 +14,15 @@
 		</view>
 		
 		<view class="uni-flex" style="flex-wrap: wrap;">
-			<view class="_itemtype" :class="activeindex===index?'active':''" v-for="(item, index) in goodtypelist" :key="index" @tap="clickitem(item)" >
+			<view class="_itemtype" :class="activeindex==index?'active':''" v-for="(item, index) in goodtypelist" :key="index" @tap="clickitem(index)" >
 				{{item.name}}
 			</view>
 		</view>
 		
 		<view class="price-box">
-			<view class="uni-flex">
-				<text class="text">镇海区：</text>
-				<text class="price">38000~42000元/吨</text>
+			<view class="uni-flex" v-for="(item ,index) in pricelist" :key="index">
+				<text class="text">{{item.district}}：</text>
+				<text class="price">{{item.price}} 元/吨</text>
 			</view>
 		</view>
 		
@@ -44,10 +44,10 @@
 		},
 		data() {
 			return {
-				cityPickerValue: [0, 0, 1],
+				cityPickerValue: [0, 0, 0],
 				themeColor: '#007AFF',
 				activeindex: 0,
-				region:{label:"请点击选择地址",value:[],cityCode:""},
+				region:{label:"请点击选择地址",value:[],cityCode:"110101"},
 				pricelist: [],
 				list: []
 			}
@@ -61,7 +61,7 @@
 			getdata() {
 				this.api.home.searchPriceByArea({
 					classify: this.goodtypelist[this.activeindex].name,
-					cityId: "001"
+					cityId: this.region.cityCode
 				}).then(res => {
 					console.log(res);
 					this.pricelist = res.data;
@@ -71,15 +71,16 @@
 				this.activeindex = index;
 				this.getdata();
 			},
-			onCancel(e) {
-				console.log(e)
-			},
 			chooseCity() {
 				this.$refs.mpvueCityPicker.show()
 			},
 			onConfirm(e) {
+				console.log(e);
 				this.region = e;
+				// this.region.city = e.label.split('-');
+				// this.region.label = this.region.city[this.region.city.length-1]
 				this.cityPickerValue = e.value;
+				this.getdata();
 			},
 		}
 	}

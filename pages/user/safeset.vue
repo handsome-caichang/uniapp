@@ -7,7 +7,7 @@
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
-		<view class="list-cell border-bottom" @click="navTo('/pages/user/userinfo/userinfoset')" >
+		<view class="list-cell border-bottom" @click="navTo('/pages/user/paypasswordset')" >
 			<text class="cell-tit">修改支付密码</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>

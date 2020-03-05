@@ -28,6 +28,7 @@
 		['original'],
 	]
 	import permision from "@/common/permission.js"
+	import uploadImage from '@/common/ossutil/uploadFile.js';
 	export default {
 		components: {
 		},
@@ -37,6 +38,10 @@
 				sourceTypeIndex: 0,
 				imageList: [],
 			}
+		},
+		created() {
+			this.userdata = getApp().globalData.userdata;
+			this.imageList = [this.userdata.headImage]
 		},
 		methods: {
 			async checkPermission(code) {
@@ -75,7 +80,37 @@
 					sizeType: "compressed",
 					count: 1,
 					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
+						var tempFilePaths = res.tempFilePaths;
+						//支持多图上传
+						for (var i = 0; i < res.tempFilePaths.length; i++) {
+							//显示消息提示框
+							uni.showLoading({
+							  mask: true
+							})
+							//上传图片
+							//图片路径可自行修改
+							uploadImage(res.tempFilePaths[i], 'images/',
+								result => {
+									this.api.home.modifyUser({
+										headImage: result,
+										mobilePhone: this.userdata.mobilePhone,
+										years:  this.userdata.years,
+										images: this.userdata.images,
+										province:this.userdata.province,
+										city:this.userdata.city,
+										district:this.userdata.district,
+										userId: this.userdata.userId,
+									}).then(res => {
+										let userdata = uni.getStorageSync('userdata');
+										let newuserdata = Object.assign(userdata, this.userdata);
+										uni.setStorageSync('userdata', newuserdata);
+										getApp().globalData.userdata = newuserdata;
+										this.imageList = [result];
+										uni.hideLoading();
+									})
+								}
+							)
+						}
 					},
 					fail: (err) => {
 						if (err['code'] && err.code !== 0 && this.sourceTypeIndex === 2) {

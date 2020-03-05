@@ -3,7 +3,7 @@
 		<view class="header-box-sell">
 			<view class="addr" @tap="chooselocation">
 				<uni-icons type="location"></uni-icons>
-				{{ city }}
+				{{ region.label }}
 			</view>
 			<view class="input-box">
 				<input placeholder="默认关键字" placeholder-style="color:#c0c0c0;" @tap="toSearch()" />
@@ -82,12 +82,11 @@ export default {
 	data() {
 		return {
 			headerPosition: 'fixed',
-			city: '北京',
-			cityPickerValue: [0, 0, 1],
+			region:{label:"东城区",value:[],cityCode:"110101"},
+			cityPickerValue: [0, 0, 0],
 			tabIndex: 0,
 			productList: [],
 			showRight: false,
-			// goodtypelist: [], 
 			tablist: ['价格', '距离', '常用'],
 			activeindex: 0,
 			locationobj: {},
@@ -102,34 +101,46 @@ export default {
 	},
 	methods: {
 		onConfirm(e) {
-			this.city = e.label;
+			console.log(e)
+			this.region = e;
+			this.region.city = e.label.split('-');
+			this.region.label = this.region.city[this.region.city.length-1]
 			this.cityPickerValue = e.value;
+			this.getRealseGoodsList();
 		},
 		checkitem(item) {
 			item.isactive = !item.isactive;
+			this.goodtypelist.forEach(it => {
+				 if (it.name !== item.name) {
+					 it.isactive = false;
+				 }
+			})
 		},
 		changetab(index) {
 			this.activeindex = index;
-			// if (index == 2) {
-			// 	this.productList = [];
-			// } else {
-			// 	this.getmore();
-			// }
 			this.getRealseGoodsList();
 		},
 		closeDrawer() {
+			this.getRealseGoodsList();
 			this.showRight = false;
 		},
 		filtertap() {
 			this.showRight = true;
 		},
 		getRealseGoodsList() {
+			let classify = this.goodtypelist.filter(item => {
+				return item.isactive
+			});
+			console.log(classify)
+			let ifyst = classify[0]  ? classify[0].name : '';
 			this.api.home.getRealseGoodsList({
 				data: {
 					type: this.activeindex+1,
 					userId: getApp().globalData.userdata.userId,
 					lat: ""+this.locationobj.latitude,
 					longitude: ""+this.locationobj.longitude,
+					classify: ifyst,
+					cityCode: this.region.cityCode
 				}
 			}).then(res => {
 				console.log(res);

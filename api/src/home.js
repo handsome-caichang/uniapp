@@ -18,6 +18,24 @@ export default {
 			params
 		);
 	},
+	setPayPassword(params) {
+		return http.post(
+			'user/setPayPassword',
+			params
+		);
+	},
+	setPassword(params) {
+		return http.post(
+			'user/setPassword',
+			params
+		);
+	},
+	loginByPassword(params) {
+		return http.post(
+			'user/loginByPassword',
+			params
+		);
+	},
 	getAdvertList(params) {
 		return http.post(
 			'advert/getAdvertList',
@@ -69,6 +87,12 @@ export default {
 	getCashMoney(params) {
 		return http.get(
 			'wallet/getCashMoney',
+			params
+		);
+	},
+	withdrawCash(params) {
+		return http.post(
+			'wallet/withdrawCash',
 			params
 		);
 	},
@@ -303,6 +327,12 @@ export default {
 	cancelUrgentRecovery(params) {
 		return http.post(
 			'recovery/cancelUrgentRecovery',
+			params
+		);
+	},
+	balanceRecharge(params) {
+		return http.post(
+			'wallet/balanceRecharge',
 			params
 		);
 	},

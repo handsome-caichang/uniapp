@@ -87,6 +87,7 @@
 							<view class="uni-uploader__files">
 								<block v-for="(image,index) in imageList" :key="index">
 									<view class="uni-uploader__file">
+										<uni-icons type="close" size="20" color="#E7211A" class="sunui-img-removeicon clear-icon" @tap="delimg(index)" ></uni-icons>
 										<image class="uni-uploader__img" :src="image" :data-src="image" @tap="previewImage"></image>
 									</view>
 								</block>
@@ -133,6 +134,7 @@
 	import permision from "@/common/permission.js"
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
+	import uploadImage from '@/common/ossutil/uploadFile.js';
 	export default {
 		components: {
 			uniIcons,
@@ -171,6 +173,9 @@
 			...mapState(["goodtypelist"])
 		},
 		methods: {
+			delimg(index) {
+				this.imageList.splice(index, 1)
+			},
 			bindPickerChange: function(e) {
 				this.protypeindex = e.target.value;
 				this.protype.value = this.goodtypelist[this.protypeindex].name;
@@ -194,7 +199,7 @@
 					"userId": getApp().globalData.userdata.userId,
 					"linkName": this.contentname,
 					"tel": this.contentphone,
-					"images": "https://pics7.baidu.com/feed/4afbfbedab64034fd8eca38014dd3f370a551d33.jpeg?token=673a9750bdd0d599f65160ad02144a43&s=21D1A16E4A6A611559A53D9803005090",
+					"images": this.imageList.join(','),
 					"matchingNumber": +this.pipeinum,
 					"bedrockPrice": +this.price,
 					"outsidePrice": +this.price,
@@ -277,7 +282,23 @@
 					sizeType: sizeType[this.sizeTypeIndex],
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: (res) => {
-						this.imageList = this.imageList.concat(res.tempFilePaths);
+						// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+						var tempFilePaths = res.tempFilePaths;
+						//支持多图上传
+						for (var i = 0; i < res.tempFilePaths.length; i++) {
+							//显示消息提示框
+							uni.showLoading({
+							  mask: true
+							})
+							//上传图片
+							//图片路径可自行修改
+							uploadImage(res.tempFilePaths[i], 'images/',
+								result => {
+									this.imageList = this.imageList.concat([result]);
+									 uni.hideLoading();
+								}
+							)
+						}
 					},
 					fail: (err) => {
 						// #ifdef APP-PLUS
@@ -325,6 +346,7 @@
 					current: current,
 					urls: this.imageList
 				})
+				
 			},
 			onCancel(e) {
 				console.log(e)

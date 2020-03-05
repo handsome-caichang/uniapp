@@ -48,8 +48,8 @@ export default {
 		return formats[diffType].replace('%n%', diffValue);
 	},
 	timeTodate: (format, timestamp) => {
-		
-		var myDate = new Date();  
+
+		var myDate = new Date();
 		myDate.getYear(); //获取当前年份(2位)  
 		myDate.getFullYear(); //获取完整的年份(4位,1970-????)  
 		myDate.getMonth(); //获取当前月份(0-11,0代表1月)         // 所以获取当前月份是myDate.getMonth()+1;   
@@ -61,10 +61,10 @@ export default {
 		myDate.getSeconds(); //获取当前秒数(0-59)  
 		myDate.getMilliseconds(); //获取当前毫秒数(0-999)  
 		myDate.toLocaleDateString(); //获取当前日期  
-		var mytime=myDate.toLocaleTimeString(); //获取当前时间  
-		myDate.toLocaleString( ); //获取日期与时间  
+		var mytime = myDate.toLocaleTimeString(); //获取当前时间  
+		myDate.toLocaleString(); //获取日期与时间  
 
-		// 2019-10-01 23:08:35
+		// 2019-10-01 23:08:35  2020-02-29 04:02:54
 		var tmpDate = new Date(timestamp);
 		var seconds = tmpDate.getSeconds();
 		var minutes = ('0' + tmpDate.getMinutes()).substr(-2);
@@ -72,10 +72,34 @@ export default {
 		var days = ('0' + tmpDate.getDate()).substr(-2);
 		var months = ('0' + (tmpDate.getMonth() + 1)).substr(-2);
 		var years = tmpDate.getFullYear();
-		
-		var value = '自定义替换值';
+
+		var value = '';
 		// 输出格式为 .replace(被替换字符, 计算后值)
 
-		return format.replace('Y', years).replace('m', months).replace('d', days).replace('H', hours).replace('i', minutes).replace('s', seconds).replace('index', value);
-	}
+		return format.replace('Y', years).replace('m', months).replace('d', days).replace('H', hours).replace('i', minutes).replace(
+			's', seconds);
+	},
+	dataFormat: (fmt, value) => {
+		let getDate = new Date(value);
+		console.log(getDate)
+		let o = {
+			'M+': getDate.getMonth() + 1,
+			'd+': getDate.getDate(),
+			'h+': getDate.getHours(),
+			'm+': getDate.getMinutes(),
+			's+': getDate.getSeconds(),
+			'q+': Math.floor((getDate.getMonth() + 3) / 3),
+			'S': getDate.getMilliseconds()
+		};
+		console.log(o)
+		if (/(y+)/.test(fmt)) {
+			fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+		}
+		for (let k in o) {
+			if (new RegExp('(' + k + ')').test(fmt)) {
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+			}
+		}
+		return fmt;
+	},
 }

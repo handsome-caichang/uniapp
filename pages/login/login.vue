@@ -124,6 +124,7 @@ export default {
 						uni.reLaunch({
 							url: '/pages/tabBar/home/home'
 						});
+						uni.$emit('_updatehome');
 					}, rej => {
 						console.log(rej)
 						this.isRotate = false;

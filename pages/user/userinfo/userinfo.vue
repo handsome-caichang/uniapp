@@ -6,7 +6,7 @@
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="昵称" >
 				<view class="uni-flex">
-					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.nickName" maxlength="10" type="text" placeholder="用户昵称" />
+					<input class="uni-input" style="text-align: right;width:400upx" @blur="saveuser" v-model="userdata.nickName" maxlength="10" type="text" placeholder="用户昵称" />
 				</view>
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')" >
@@ -17,7 +17,7 @@
 					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="!userdata.isReal">未实名</text> 
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/phone.png" title="绑定手机号">
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/phone.png" title="绑定手机号" @tap="navTo('/pages/user/userinfo/setmobilephone')">
 				<text style="color: #575757;margin-right: 20upx;">{{userdata.mobilePhone}}</text>
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/diqu.png" title="地区" @tap="setaddress" >
@@ -116,12 +116,17 @@
 			}
 		},
 		created() {
-			this.userdata = getApp().globalData.userdata;
-			this.region.label = this.userdata.province + '-' + this.userdata.city + "-" + this.userdata.district;
-			this.imageList = this.userdata.images;
-			console.log(this.userdata)
+			this._updateuser();
+			uni.$on('_updatehome',function(data){
+				this._updateuser();
+			})
 		},
 		methods: {
+			_updateuser() {
+				this.userdata = getApp().globalData.userdata;
+				this.region.label = this.userdata.province + '-' + this.userdata.city + "-" + this.userdata.district;
+				this.imageList = this.userdata.images;
+			},
 			delimg(index) {
 				this.imageList.splice(index, 1);
 				this.userdata.images = this.imageList;

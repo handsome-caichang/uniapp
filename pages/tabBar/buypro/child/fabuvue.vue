@@ -1,6 +1,5 @@
 <template>
 	<view class="container-fabu">
-
 		<view class="form-box">
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">

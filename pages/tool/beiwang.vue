@@ -1,7 +1,7 @@
 <template>
 	<view class="uni-page-body">
 		<view class="uni-text" style="font-size: 32upx;color: #666;padding: 20upx;">
-			 <textarea @blur="bindTextAreaBlur" :focus="true" v-model="note" :selection-start="note.length" :selection-end="note.length" auto-height />
+			 <textarea @input="bindTextAreaBlur" :focus="true" v-model="note" :selection-start="note.length" :selection-end="note.length" auto-height />
 		</view>
 	</view>
 </template>

@@ -165,9 +165,10 @@
 			}
 		},
 		created() {
-			this.userdata = getApp().globalData.userdata;
-			console.log('user')
-			console.log(this.userdata)
+			this._updateuserhome();
+			uni.$on('_updatehome',function(data){
+				this._updateuserhome();
+			})
 		},
 		onNavigationBarButtonTap(e) {
 			const index = e.index;
@@ -191,6 +192,9 @@
 		computed: {
 		},
 		methods: {
+			_updateuserhome() {
+				this.userdata = getApp().globalData.userdata;
+			},
 			geren(item) {
 				if (item.url) {
 					uni.navigateTo({

@@ -1,9 +1,9 @@
 <template>
 	<view class="container">
-		<view class="list-cell m-t border-bottom" @click="navTo('/pages/user/userinfo/userinfo')" >
+		<view class="list-cell m-t border-bottom" @click="navTo('/pages/user/userinfo/setmobilephone')" >
 			<text class="cell-tit">手机号码</text>
 			<text class="cell-more">
-				<text>132******16</text>
+				<text>{{userdata.mobilePhone}}</text>
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
@@ -36,11 +36,13 @@
 		},
 		data() {
 			return {
-				
+				userdata: {}
 			};
 		},
+		created() {
+				this.userdata = getApp().globalData.userdata;
+		},
 		methods:{
-
 			navTo(url){
 				uni.navigateTo({
 					url

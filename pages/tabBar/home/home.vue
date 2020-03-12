@@ -173,9 +173,15 @@ export default {
 		// 	userId: getApp().globalData.userdata.userId
 		// }).then(res => {
 		// 	this.setuserInfo(res.data);
+		// })
+		this.loadData();
+		this.doGetLocation();
+	},
+	created() {
+		uni.$on('_updatehome',function(data){
 			this.loadData();
 			this.doGetLocation();
-		// })
+		})
 	},
 	onPageScroll(e) {
 		//兼容iOS端下拉时顶部漂移
@@ -335,19 +341,19 @@ export default {
 				success: res => {
 					uni.setStorageSync('_location', res);
 					let city = res.address.city.slice(0, res.address.city.length - 1);
-					// uni.request({
-					// 	url: 'https://www.tianqiapi.com/api/',
-					// 	data: {
-					// 		appid: '34831141',
-					// 		appsecret: 'xxRnF4E2',
-					// 		version: 'v6',
-					// 		city: city,
-					// 		vue: 1
-					// 	},
-					// 	success: rest => {
-					// 		this.tianqi = rest.data;
-					// 	}
-					// });
+					uni.request({
+						url: 'https://www.tianqiapi.com/api/',
+						data: {
+							appid: '34831141',
+							appsecret: 'xxRnF4E2',
+							version: 'v6',
+							city: city,
+							vue: 1
+						},
+						success: rest => {
+							this.tianqi = rest.data;
+						}
+					});
 				},
 				fail: err => {}
 			});

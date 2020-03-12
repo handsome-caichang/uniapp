@@ -37,6 +37,7 @@
 				sourceType: ['拍照', '相册'],
 				sourceTypeIndex: 0,
 				imageList: [],
+				userdata:{},
 			}
 		},
 		created() {
@@ -102,11 +103,14 @@
 										userId: this.userdata.userId,
 									}).then(res => {
 										let userdata = uni.getStorageSync('userdata');
+										 this.userdata.headImage = result;
 										let newuserdata = Object.assign(userdata, this.userdata);
 										uni.setStorageSync('userdata', newuserdata);
 										getApp().globalData.userdata = newuserdata;
 										this.imageList = [result];
 										uni.hideLoading();
+										uni.$emit('_updateuser');
+										uni.$emit('_updateuserhome');
 									})
 								}
 							)

@@ -2,7 +2,7 @@
 	<view class="uni-page-body calc-box-con">
 		<!--显示框-->
 		<view class="calc-box">
-			<input type="text" size="21" maxlength="21" v-model="inputShow.value" readonly="readonly">
+			<input type="text" size="21" class="input-box" maxlength="21" v-model="inputShow.value" readonly="readonly">
 			<view class="btn-list">
 				<view @click="clearValue()" class=" btn-30 btn-radius color-red clear-marginleft">C</view>
 				<view class=" btn-30 btn-radius color-blue">+/-</view>
@@ -114,17 +114,15 @@
 			display: inline-block;
 			.input-box {
 				margin: 0;
-				width: 187px;
-				padding: 9px 5px;
-				height: 14px;
-				border: 1px solid #e5e5e5;
-				border-radius: 3px;
-				-webkit-border-radius: 3px;
-				-moz-border-radius: 3px;
+				width: 520upx;
+				padding: 20upx 10upx;
+				height: 80upx;
+				// border: 1px solid #e5e5e5;
+				border-radius: 3upx;
 				background: #FFF;
 				text-align: right;
-				line-height: 14px;
-				font-size: 12px;
+				line-height: 56upx;
+				font-size: 48upx;
 				font-family: Verdana, Geneva, sans-serif;
 				color: #666;
 				outline: none;
@@ -132,19 +130,17 @@
 			}
 
 			.btn-list {
-				width: 200px;
+				width: 640upx;
 				overflow: hidden;
 			}
 
 			.btn-list .btn-radius {
 				border-radius: 2px;
-				-webkit-border-radius: 2px;
-				-moz-border-radius: 2px;
 				border: 1px solid #e5e5e5;
 				background: -webkit-gradient(linear, 0 0, 0 100%, from(#f7f7f7), to(#ebebeb));
 				background: -moz-linear-gradient(top, #f7f7f7, #ebebeb);
 				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f7f7f7, endColorstr=#ebebeb, grandientType=1);
-				line-height: 29px;
+				line-height: 120upx;
 				text-align: center;
 				text-shadow: 0px 1px 1px #FFF;
 				font-weight: bold;
@@ -153,7 +149,7 @@
 				float: left;
 				margin-left: 11px;
 				margin-top: 11px;
-				font-size: 12px;
+				font-size: 14px;
 				cursor: pointer;
 			}
 
@@ -166,7 +162,7 @@
 			}
 
 			.btn-list .font-14 {
-				font-size: 14px;
+				font-size: 18px;
 			}
 
 			.btn-list .color-red {
@@ -178,13 +174,13 @@
 			}
 
 			.btn-list .btn-30 {
-				width: 29px;
-				height: 29px;
+				width: 100upx;
+				height: 100upx;
 			}
 
 			.btn-list .btn-70 {
-				width: 70px;
-				height: 29px;
+				width: 225upx;
+				height: 100upx;
 			}
 		}
 	}

@@ -39,12 +39,11 @@
 
 		.header-box {
 			width: 100%;
-			padding: 0 4%;
+			padding: 0;
 			height: 100upx;
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
-
 			.item {
 				color: #212121;
 				font-size: 38upx;

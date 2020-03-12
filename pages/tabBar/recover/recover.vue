@@ -66,7 +66,9 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
-
+			/*  #ifdef  APP-PLUS  */
+			margin-top: var(--status-bar-height); //覆盖样式
+			/*  #endif  */
 			.item {
 				color: #212121;
 				font-size: 38upx;

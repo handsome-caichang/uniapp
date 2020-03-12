@@ -3,7 +3,7 @@
 		{
 			"path": "pages/tabBar/home/home",
 			"style": {  // 用于设置每个页面的状态栏、导航条、标题、窗口背景色等。页面中配置项会覆盖 globalStyle 中相同的配置项
-				// "navigationBarTextStyle":"black", // 导航栏标题颜色及状态栏前景颜色
+				"navigationBarTextStyle":"black", // 导航栏标题颜色及状态栏前景颜色
 				"app-plus": {
 					"titleNView": false //禁用原生导航栏
 					// "softinputNavBar":"none" // iOS软键盘上完成工具栏的显示模式，设置为 "none" 时关闭工具栏。
@@ -24,20 +24,18 @@
 		{
 			"path": "pages/tabBar/buypro/buypro",
 			"style": {
-				// "enablePullDownRefresh": true,
 				"navigationBarTextStyle":"black",
 				"app-plus": {
-					"titleNView": false //禁用原生导航栏
-					// "softinputNavBar":"none"
+					"titleNView": false, //禁用原生导航栏
+					"bounce":"none"
 				}
 			}
 		},{
 			"path": "pages/tabBar/recover/recover",
 			"style": {
 				"navigationBarTextStyle":"black",
-				"onReachBottomDistance":50,
 				"app-plus": {
-					"titleNView": false ,//禁用原生导航栏
+					"titleNView": false, //禁用原生导航栏
 					"bounce":"none"
 				}
 			}
@@ -318,6 +316,11 @@
 			"path": "pages/user/userinfo/setpassword",
 			"style": {
 				"navigationBarTitleText": "修改密码"
+			}
+		},{
+			"path": "pages/user/userinfo/setmobilephone",
+			"style": {
+				"navigationBarTitleText": "修改手机号码"
 			}
 		},{
 			"path": "pages/user/paypasswordset",

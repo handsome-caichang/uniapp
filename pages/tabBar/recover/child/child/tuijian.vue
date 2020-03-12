@@ -26,6 +26,10 @@
 				</view>
 			</view>
 		</view>
+		<view class="no-pro" v-if="!productList.length">
+			<icon type="warn" size="80" color="#F8B551"></icon>
+			<view class="text">暂无数据</view>
+		</view>
 	</view>
 </template>
 
@@ -55,8 +59,8 @@
 				this.api.home.goodsRecommend({
 					data: {
 						userId: getApp().globalData.userdata.userId,
-						lat: ""+res.latitude,
-						lng: ""+res.longitude,
+						lat: "" + res.latitude,
+						lng: "" + res.longitude,
 					}
 				}).then(res => {
 					console.log(res);
@@ -74,6 +78,19 @@
 	.tuijian-box {
 		margin: 0 -40upx;
 		padding-bottom: 20upx;
+
+		.no-pro {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			color: #767676;
+			margin-top: 100upx;
+
+			.text {
+				margin-top: 30upx;
+			}
+		}
 
 		.example-box {
 			margin-top: 20upx;
@@ -127,6 +144,7 @@
 				border-radius: 10upx;
 				padding: 0 10upx;
 				margin-right: 30upx;
+
 				&.noclick {
 					background-color: #AAAAAA;
 				}

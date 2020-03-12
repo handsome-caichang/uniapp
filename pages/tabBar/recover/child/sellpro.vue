@@ -1,5 +1,5 @@
 <template>
-	<view class="container-sell" style="padding: 0 20upx;">
+	<view class="box-container-sell" style="padding: 0 20upx;">
 		<view class="header-box-sell">
 			<view class="addr" @tap="chooselocation">
 				<uni-icons type="location"></uni-icons>
@@ -19,28 +19,27 @@
 			<view class="tablebox">
 				<view class="tableitem" v-for="(item, index) in tablist" :key="index" :class="activeindex == index ? 'active' : ''" @tap="changetab(index)">{{ item }}</view>
 			</view>
-
 			<view class="cont-box" style="margin-bottom: 20upx;" v-if="productList.length">
 				<view class="example-box" v-for="(item, index) in productList" :key="index" @tap="toGoods(item)">
 					<view class="uni-flex uni-row item-box">
 						<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
-							<image :src="item.img" style="width: 180rpx;height: 180rpx;"></image>
+							<image :src="item.image" style="width: 180rpx;height: 180rpx;"></image>
 						</view>
 						<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 60upx;">
-								<text style="color: #212121;font-weight: 500;font-size: 32upx;">张三</text>
-								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：2019/12/6</text>
+								<text style="color: #212121;font-weight: 500;font-size: 32upx;">{{item.name}}</text>
+								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{item.createTime}}</text>
 							</view>
 							<view class="uni-flex title" style="align-items: center;height: 40upx;">
-								<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">废铁</text>
-								<text class="price " style="width:350upx;font-size: 24upx;">2000-2150元/吨（预估运费40元/吨）</text>
+								<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">{{item.classifyName}}</text>
+								<text class="price " style="width:350upx;font-size: 24upx;">{{item.bedrockPrice}}-{{item.outsidePrice}}元/吨（预估运费{{item.freight}}元/吨）</text>
 							</view>
 							<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;margin-top: 10upx;">
-								宁波市镇海团桥菜场对面张三废品回收
+								{{item.address}}
 							</view>
 							<view class="uni-flex" style="justify-content: space-between;font-size: 20upx;color: #575757;">
 								<uni-rate class="rate" :size="12" :value="5" />
-								<view class="text">距我2.3km</view>
+								<view class="text">距我{{item.distance}}</view>
 							</view>
 						</view>
 					</view>
@@ -51,6 +50,10 @@
 				<icon type="warn" size="80" color="#F8B551"></icon>
 				<view class="text">您还没有常用回收站</view>
 				<view>快去搜索添加收藏吧</view>
+			</view>
+			<view class="no-pro" v-if="!productList.length && activeindex != 2">
+				<icon type="warn" size="80" color="#F8B551"></icon>
+				<view class="text">暂无数据</view>
 			</view>
 		</view>
 
@@ -178,14 +181,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.container-sell {
-	position: absolute;
-	top: 200upx;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	flex: 1;
-	height: 100%;
+.box-container-sell {
+	// position: absolute;
+	// top: 200upx;
+	// left: 0;
+	// right: 0;
+	// bottom: 0;
+	// flex: 1;
+	// height: 100%;
 	.no-pro {
 		display: flex;
 		flex-direction: column;
@@ -233,7 +236,7 @@ export default {
 		background-color: #fff;
 
 		.addr {
-			width: 120upx;
+			width: 160upx;
 			height: 60upx;
 			flex-shrink: 0;
 			display: flex;
@@ -292,14 +295,14 @@ export default {
 	}
 
 	.news {
-		position: absolute;
-		top: 100upx;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		z-index: 10;
-		flex: 1;
-		height: 100%;
+		// position: absolute;
+		// top: 100upx;
+		// bottom: 0;
+		// right: 0;
+		// left: 0;
+		// z-index: 10;
+		// flex: 1;
+		// height: 100%;
 		.tablebox {
 			padding: 0upx 20upx;
 			display: flex;

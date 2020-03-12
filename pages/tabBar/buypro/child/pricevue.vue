@@ -1,5 +1,5 @@
 <template>
-	<view class="buy-container-sell">
+	<view class="price-container-box">
 		<view class="uni-flex address-box">
 			<view class="nominal">
 				货物地址
@@ -86,7 +86,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.buy-container-sell {
+	.price-container-box {
 		padding: 40upx;
 		.point {
 			margin-top: 30upx;

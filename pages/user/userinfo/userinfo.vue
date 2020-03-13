@@ -14,6 +14,7 @@
 					<!-- <text style="color: #575757;margin-right: 20upx;">张三</text> -->
 					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 1">审核中</text>
 					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 2" >已实名</text>
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="userdata.isReal == 3" >认证失败</text>
 					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="!userdata.isReal">未实名</text> 
 				</view>
 			</uni-list-item>

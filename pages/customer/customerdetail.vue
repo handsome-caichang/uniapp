@@ -38,7 +38,7 @@
 		<view class="item">
 			更多展示
 		</view>
-		<view class="s-container">
+		<view class="s-container" v-if="detail.images">
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
 				<image class="img" v-for="(item,index) in detail.images.split(',')" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
 			</scroll-view>
@@ -221,6 +221,14 @@
 				}
 			},
 			popbtn() {
+				if (getApp().globalData.userdata.isReal !== 2) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
+						showCancel: false,
+					});
+					return;
+				}
 				this.api.home.getSellUserGoodsList({
 					data: {
 						userId: getApp().globalData.userdata.userId

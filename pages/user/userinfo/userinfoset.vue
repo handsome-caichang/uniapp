@@ -3,13 +3,14 @@
 			
 		<view class="user-content">
 			<view class="uni-flex">
-				<image src="../../../static/img/gongkao.png" class="headerimg" ></image>
+				<image :src="shiming.faceImage" class="headerimg" ></image>
 				<view class="text">
-					<view class="name">
-						王韩磊
+					<text v-if="!shiming.realName" style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> 
+					<view class="name" v-else>
+						{{shiming.realName}}
 					</view>
 					<view class="cardid">
-						4****************2
+						{{shiming.idNumber}}
 					</view>
 				</view>
 			</view>
@@ -18,7 +19,7 @@
 					<uni-icons type="checkbox-filled" color="#fff" ></uni-icons>
 					个人隐私信息安全保障中
 				</view>
-				<view class="right">
+				<view class="right" @tap="setpoint">
 					查看更多 >
 				</view>
 			</view>
@@ -26,9 +27,9 @@
 		
 		<uni-list>
 			<uni-list-item title="个人信息" note="完善身份信息，体验更多服务" @tap="navTo('/pages/user/userinfo/userinfopoint')" />
-			<uni-list-item title="证件照片" note="上传证件照片，提升信用积分" />
-			<uni-list-item title="人像照片" note="体验刷脸科技，享受更多服务" />
-			<uni-list-item title="身份验证" note="提升信用积分，增加匹配成功率" />
+			<!-- <uni-list-item title="证件照片" note="上传证件照片，提升信用积分" /> -->
+			<!-- <uni-list-item title="人像照片" note="体验刷脸科技，享受更多服务" /> -->
+			<!-- <uni-list-item title="身份验证" note="提升信用积分，增加匹配成功率" /> -->
 		</uni-list>
 		
 		<view class="uni-page-footer">
@@ -50,13 +51,26 @@
 		},
 		data() {
 			return {
-			
+				shiming: {
+					faceImage: "",
+					realName: "",
+					idNumber: ""
+				},
+				userdata: {}
 			}
+		},
+		created() {
+			this.userdata = getApp().globalData.userdata;
 		},
 		methods: {
 			navTo(url) {
 				uni.navigateTo({
 					url
+				})
+			},
+			setpoint() {
+				uni.navigateTo({
+					url: '/pages/user/userinfo/setuserinfopoint'
 				})
 			},
 		}

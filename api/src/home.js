@@ -24,6 +24,12 @@ export default {
 			params
 		);
 	},
+	userRealAuth(params) {
+		return http.post(
+			'user/userRealAuth',
+			params
+		);
+	},
 	setPassword(params) {
 		return http.post(
 			'user/setPassword',

@@ -332,11 +332,15 @@
 			"style": {
 				"navigationBarTitleText": "日历"
 			}
-		}
-	    ,{
+		},{
             "path" : "pages/tabBar/home/nothtmlvue/nothtmlvue",
             "style" : {
 				"navigationBarTitleText": ""
+			}
+        },{
+            "path" : "pages/user/userinfo/setuserinfopoint",
+            "style" : {
+				"navigationBarTitleText": "实名认证"
 			}
         }
     ],

@@ -335,10 +335,12 @@ export default {
 			}
 			return status;
 		},
-		async doGetLocation() {
+		doGetLocation() {
+			console.log(1)
 			uni.getLocation({
 				geocode: true,
 				success: res => {
+					console.log(res)
 					uni.setStorageSync('_location', res);
 					let city = res.address.city.slice(0, res.address.city.length - 1);
 					uni.request({
@@ -351,11 +353,14 @@ export default {
 							vue: 1
 						},
 						success: rest => {
+							console.log(rest)
 							this.tianqi = rest.data;
 						}
 					});
 				},
-				fail: err => {}
+				fail: err => {
+					console.log(err)
+				}
 			});
 		}
 	}

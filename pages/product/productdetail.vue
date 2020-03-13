@@ -199,6 +199,14 @@
 				console.log(this.items.filter(item=>item.checked)[0])
 			},
 			popbtn() {
+				if (getApp().globalData.userdata.isReal !== 2) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
+						showCancel: false,
+					});
+					return;
+				}
 				this.api.home.recoveryAddMatching({
 					realseId: this.productdetail.realseId,
 					userId: getApp().globalData.userdata.userId,

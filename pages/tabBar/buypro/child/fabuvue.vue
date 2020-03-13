@@ -181,6 +181,14 @@
 			},
 			// 
 			fabu() {
+				if (getApp().globalData.userdata.isReal !== 2) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
+						showCancel: false,
+					});
+					return;
+				}
 				let address = uni.getStorageSync('_location');
 				// console.log(address);
 				// "address": {
@@ -304,37 +312,6 @@
 						if (err['code'] && err.code !== 0 && this.sourceTypeIndex === 2) {
 							this.checkPermission(err.code);
 						}
-						// #endif
-						// #ifdef MP
-						uni.getSetting({
-							success: (res) => {
-								let authStatus = false;
-								switch (this.sourceTypeIndex) {
-									case 0:
-										authStatus = res.authSetting['scope.camera'];
-										break;
-									case 1:
-										authStatus = res.authSetting['scope.album'];
-										break;
-									case 2:
-										authStatus = res.authSetting['scope.album'] && res.authSetting['scope.camera'];
-										break;
-									default:
-										break;
-								}
-								if (!authStatus) {
-									uni.showModal({
-										title: '授权失败',
-										content: 'Hello uni-app需要从您的相机或相册获取图片，请在设置界面打开相关权限',
-										success: (res) => {
-											if (res.confirm) {
-												uni.openSetting()
-											}
-										}
-									})
-								}
-							}
-						})
 						// #endif
 					}
 				})

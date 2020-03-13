@@ -48,7 +48,7 @@
 <style lang="scss" scoped>
 	.header-box {
 		width: 100%;
-		padding: 0 4%;
+		padding: 0;
 		height: 100upx;
 		display: flex;
 		align-items: center;

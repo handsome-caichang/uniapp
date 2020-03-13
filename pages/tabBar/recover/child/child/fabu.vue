@@ -45,6 +45,14 @@
 				this.activeindex = index;
 			},
 			fabucur() {
+				if (getApp().globalData.userdata.isReal !== 2) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
+						showCancel: false,
+					});
+					return;
+				}
 				let address = uni.getStorageSync('_location');
 				this.api.home.realseRecovery({
 					classify: this.goodtypelist[this.activeindex].name,

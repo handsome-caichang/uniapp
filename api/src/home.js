@@ -36,6 +36,12 @@ export default {
 			params
 		);
 	},
+	getRealInfo(params) {
+		return http.get(
+			'user/getRealInfo',
+			params
+		);
+	},
 	loginByPassword(params) {
 		return http.post(
 			'user/loginByPassword',

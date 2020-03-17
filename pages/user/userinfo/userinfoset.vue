@@ -26,7 +26,7 @@
 		</view>
 		
 		<uni-list>
-			<uni-list-item title="个人信息" note="完善身份信息，体验更多服务" @tap="navTo('/pages/user/userinfo/userinfopoint')" />
+			<uni-list-item title="个人信息" note="完善身份信息，体验更多服务" @tap="navTo()" />
 			<!-- <uni-list-item title="证件照片" note="上传证件照片，提升信用积分" /> -->
 			<!-- <uni-list-item title="人像照片" note="体验刷脸科技，享受更多服务" /> -->
 			<!-- <uni-list-item title="身份验证" note="提升信用积分，增加匹配成功率" /> -->
@@ -61,12 +61,32 @@
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
+			this.api.home.getRealInfo({
+				data: {
+					userId: this.userdata.userId
+				}
+			}).then(res => {
+				this.shiming = res.data;
+			})
 		},
 		methods: {
-			navTo(url) {
-				uni.navigateTo({
-					url
-				})
+			navTo() {
+				if (this.shiming.idNumber) {
+					uni.navigateTo({
+						url:  '/pages/user/userinfo/userinfopoint'
+					})
+				}else {
+					let that = this;
+					uni.showModal({
+						title: "提示",
+						content: '暂未实名，是否前往实名认证',
+						success: (res) => {
+							if (res.confirm) {
+								that.setpoint();
+							}
+						}
+					});
+				}
 			},
 			setpoint() {
 				uni.navigateTo({

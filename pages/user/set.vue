@@ -21,6 +21,10 @@
 		<view class="list-cell log-out-btn" @click="toLogout">
 			<text class="cell-tit">退出登录</text>
 		</view>
+		
+		<view class="floor-list">
+			2019-2020&copy;宁波软媒信息技术有限公司 版权所有
+		</view>
 	</view>
 </template>
 
@@ -131,5 +135,12 @@
 		switch{
 			transform: translateX(16upx) scale(.84);
 		}
+	}
+	.floor-list {
+		position: fixed;
+		bottom: 50upx;
+		text-align: center;
+		padding: 0 25%;
+		font-size: 24upx;
 	}
 </style>

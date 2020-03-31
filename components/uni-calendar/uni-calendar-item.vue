@@ -85,7 +85,9 @@
 	}
 
 	.uni-calendar-item__weeks-box-text {
-		font-size: 28rpx;
+		font-size: 48rpx;
+		font-weight: 500;
+		line-height: 1;
 		color: #333;
 	}
 
@@ -123,11 +125,12 @@
 	}
 
 	.uni-calendar-item--isDay-text {
-		color: #007aff;
+		color: #09BB07;
 	}
 
 	.uni-calendar-item--isDay {
-		background-color: #007aff;
+		background-color: #09BB07;
+		border-radius: 20upx;
 		opacity: 0.8;
 		color: #fff;
 	}
@@ -138,13 +141,14 @@
 	}
 
 	.uni-calendar-item--checked {
-		background-color: #007aff;
+		background-color: #09BB07;
 		color: #fff;
 		opacity: 0.8;
+		border-radius: 20upx;
 	}
 
 	.uni-calendar-item--multiple {
-		background-color: #007aff;
+		background-color: #09BB07;
 		color: #fff;
 		opacity: 0.8;
 	}

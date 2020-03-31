@@ -1,6 +1,8 @@
 <template>
-	<view class="uni-page-body">
-		<view class="uni-text" style="font-size: 32upx;color: #666;padding: 20upx;">
+	<view>
+		<web-view src="http://yun.rili.cn/wnl/index.html" ></web-view>
+		<!-- -->
+		<!-- <view class="uni-text" style="font-size: 32upx;color: #666;padding: 20upx;">
 			 <uni-calendar 
 			    :insert="true"
 			    :lunar="true" 
@@ -8,26 +10,35 @@
 			    :end-date="'2090-12-30'"
 			    @change="change"
 			 ></uni-calendar>
-		</view>
+		</view> -->
 	</view>
 </template>
 
 <script>
-	import uniCalendar from '@/components/uni-calendar/uni-calendar.vue'
+	// import uniCalendar from '@/components/uni-calendar/uni-calendar.vue'
 	export default {
-	    components: {
-	        uniCalendar
-	    },
-	    data() {
-	        return {};
-	    },
-	    methods: {
-	        change(e) {
-	            console.log(e);
-	        }
-	    }
+	    // components: {
+	    //     uniCalendar
+	    // },
+	    // data() {
+	    //     return {};
+	    // },
+	    // methods: {
+	    //     change(e) {
+	    //         console.log(e);
+	    //     }
+	    // }
 	};
 </script>
 
-<style>
+<style lang="scss" >
+	// .uni-calendar__weeks-item {
+	// 	.uni-calendar-item__weeks-box-text {
+			
+	// 	}
+	// 	.uni-calendar-item--isDay{
+	// 		border-radius: 10upx;
+	// 		background-color: #09BB07;
+	// 	}
+	// }
 </style>

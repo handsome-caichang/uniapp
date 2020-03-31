@@ -330,7 +330,7 @@
 		},{
 			"path": "pages/tool/calendar",
 			"style": {
-				"navigationBarTitleText": "日历"
+				"navigationBarTitleText": "万年历"
 			}
 		},{
             "path" : "pages/tabBar/home/nothtmlvue/nothtmlvue",

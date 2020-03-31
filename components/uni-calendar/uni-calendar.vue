@@ -309,8 +309,9 @@
 	.uni-calendar__header-text {
 		text-align: center;
 		width: 100px;
-		font-size: 28rpx;
+		font-size: 38rpx;
 		color: #333;
+		font-weight: 500;
 	}
 
 	.uni-calendar__header-btn-box {
@@ -353,6 +354,7 @@
 	}
 
 	.uni-calendar__weeks-item {
+		margin-top: 10upx;
 		flex: 1;
 	}
 

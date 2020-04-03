@@ -53,13 +53,13 @@
 				items: [
 					{
 						value: 'CHN',
-						name: '支付宝支付',
+						name: '支付宝',
 						checked: 'true',
 						icon: '/static/img/pay/zhifubao.png',
 					},
 					{
 						value: 'JPN',
-						name: '银行卡支付',
+						name: '银行卡',
 						icon: '/static/img/pay/yinhanka.png',
 					}
 				],

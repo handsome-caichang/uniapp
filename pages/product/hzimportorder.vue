@@ -186,19 +186,19 @@
 						value: 'USA',
 						name: '余额支付'
 					},
-					{
-						value: 'CHN',
-						name: '支付宝支付',
-						checked: 'true'
-					},
+					// {
+					// 	value: 'CHN',
+					// 	name: '支付宝支付',
+					// 	checked: 'true'
+					// },
 					{
 						value: 'BRA',
 						name: '微信支付'
 					},
-					{
-						value: 'JPN',
-						name: '银行卡支付'
-					}
+					// {
+					// 	value: 'JPN',
+					// 	name: '银行卡支付'
+					// }
 				],
 				current: 0,
 				orderdetail: {},

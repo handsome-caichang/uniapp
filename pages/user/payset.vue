@@ -1,12 +1,12 @@
 <template>
 	<view class="container">
-		<view class="list-cell m-t border-bottom" @click="navTo('/pages/user/userinfo/userinfo')" >
+		<!-- <view class="list-cell m-t border-bottom" @click="navTo('/pages/user/userinfo/userinfo')" >
 			<text class="cell-tit">支付宝支付</text>
 			<text class="cell-more">
 				<text>13297088016</text>
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
-		</view>
+		</view> -->
 		<view class="list-cell border-bottom" @click="navTo('/pages/user/userinfo/userinfoset')" >
 			<text class="cell-tit">微信支付</text>
 			<text class="cell-more">
@@ -14,12 +14,12 @@
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
-		<view class="list-cell" @click="navTo('/pages/user/idcardset')" >
+		<!-- <view class="list-cell" @click="navTo('/pages/user/idcardset')" >
 			<text class="cell-tit">银行卡支付</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
-		</view>
+		</view> -->
 	</view>
 </template>
 

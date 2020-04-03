@@ -50,21 +50,21 @@
 					// 	icon: '/static/img/pay/yuebao.png',
 					// },
 					{
-						value: 'CHN',
-						name: '支付宝支付',
-						checked: 'true',
-						icon: '/static/img/pay/zhifubao.png',
-					},
+					// 	value: 'CHN',
+					// 	name: '支付宝支付',
+					// 	checked: 'true',
+					// 	icon: '/static/img/pay/zhifubao.png',
+					// },
 					{
 						value: 'BRA',
 						name: '微信支付',
 						icon: '/static/img/pay/weixin.png',
 					},
-					{
-						value: 'JPN',
-						name: '银行卡支付',
-						icon: '/static/img/pay/yinhanka.png',
-					}
+					// {
+					// 	value: 'JPN',
+					// 	name: '银行卡支付',
+					// 	icon: '/static/img/pay/yinhanka.png',
+					// }
 				],
 				current: 0
 			}

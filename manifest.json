@@ -20,7 +20,9 @@
         },
         /* 模块配置 */
         "modules" : {
-            "Maps" : {}
+            "Maps" : {},
+            "OAuth" : {},
+            "Payment" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -70,7 +72,20 @@
                         "appkey_android" : "129b47b743b16b2eb6e938b1fbdee7cf"
                     }
                 },
-                "ad" : {}
+                "ad" : {},
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wxffeec38fada09edd",
+                        "appsecret" : "0b8fc34e6db84134d9361281330b726b",
+                        "UniversalLinks" : ""
+                    }
+                },
+                "payment" : {
+                    "weixin" : {
+                        "appid" : "wxffeec38fada09edd",
+                        "UniversalLinks" : ""
+                    }
+                }
             },
             "icons" : {
                 "android" : {

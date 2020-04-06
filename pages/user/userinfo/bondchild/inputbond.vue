@@ -49,7 +49,7 @@
 					// 	name: '余额支付',
 					// 	icon: '/static/img/pay/yuebao.png',
 					// },
-					{
+					// {
 					// 	value: 'CHN',
 					// 	name: '支付宝支付',
 					// 	checked: 'true',

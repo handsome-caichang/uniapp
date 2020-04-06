@@ -67,8 +67,22 @@
 					// 	icon: '/static/img/pay/yinhanka.png',
 					// }
 				],
-				current: 0
+				current: 1
 			}
+		},
+		onLoad() {
+			var channel=null;  
+			plusReady();
+			// 1. 获取支付通道  
+			function plusReady(){ //uni-app中将此function里的代码放入vue页面的onLoad生命周期中  
+			    // 获取支付通道  
+			    plus.payment.getChannels(function(channels){  
+			        channel=channels;  
+					console.log(channels[1])
+			    },function(e){  
+			        alert("获取支付通道失败："+e.message);  
+			    });  
+			}  
 		},
 		methods: {
 			radioChange(evt) {
@@ -82,13 +96,25 @@
 			chongzhi() {
 				if (this.bondnum) {
 					this.api.home.balanceRecharge({
-						typeId: this.current,
+						typeId: 1,
 						userId: getApp().globalData.userdata.userId,
 						money: +this.bondnum
 					}).then(res => {
-						uni.navigateTo({
-							url: '/pages/other/chongzhisuccess'
-						})
+						console.log(res);
+						var orderString = res.data;
+						uni.requestPayment({
+						    provider: 'wxpay',
+						    orderInfo: orderString.data, //微信、支付宝订单数据
+						    success: function (res) {
+						        console.log('success:' + JSON.stringify(res));
+								uni.navigateTo({
+									url: '/pages/other/chongzhisuccess'
+								})
+						    },
+						    fail: function (err) {
+						        console.log('fail:' + JSON.stringify(err));
+						    }
+						});
 					})
 				}
 			}

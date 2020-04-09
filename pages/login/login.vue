@@ -120,11 +120,11 @@ export default {
 							position: 'bottom',
 							title: '登录成功'
 						});
+						uni.$emit('_updatehome');
 						uni.hideLoading();
 						uni.reLaunch({
 							url: '/pages/tabBar/home/home'
 						});
-						uni.$emit('_updatehome');
 					}, rej => {
 						console.log(rej)
 						this.isRotate = false;
@@ -148,6 +148,7 @@ export default {
 							position: 'bottom',
 							title: '登录成功'
 						});
+						uni.$emit('_updatehome');
 						uni.hideLoading();
 						uni.reLaunch({
 							url: '/pages/tabBar/home/home'
@@ -170,6 +171,7 @@ export default {
 							position: 'bottom',
 							title: '登录成功'
 						});
+						uni.$emit('_updatehome');
 						uni.hideLoading();
 						uni.reLaunch({
 							url: '/pages/tabBar/home/home'

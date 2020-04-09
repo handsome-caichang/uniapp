@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<view class="item">
-			从业年限：<text>{{detail.year}}年</text>
+			从业年限：<text>{{detail.years}}年</text>
 		</view>
 		<view class="item uni-flex"  style="align-items: center;" >
 			信誉评分：<uni-rate class="rate" size="14" :value="customerdata.star" /> <text class="btn" @tap="toRateDetail">了解详情</text>
@@ -40,7 +40,7 @@
 		</view>
 		<view class="s-container" v-if="detail.images">
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-				<image class="img" v-for="(item,index) in detail.images.split(',')" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
+				<image class="img" v-for="(item,index) in detail.images" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
 			</scroll-view>
 		</view>
 		
@@ -130,11 +130,8 @@
 				productlist: [],
 				currentindex: 0,
 				detail: {
-					// img: 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					// phone: '18602186762'
 				},
 				prolist: [
-					// 'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 				],
 				sourcetype: '',
 				customerdata: {},
@@ -225,6 +222,14 @@
 					uni.showModal({
 						title: "提示",
 						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
+						showCancel: false,
+					});
+					return;
+				}
+				if (getApp().globalData.userdata.type == 1) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要发布货物，请先前往我是货主->发布货物，进行货物发布',
 						showCancel: false,
 					});
 					return;

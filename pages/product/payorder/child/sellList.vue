@@ -19,7 +19,10 @@
 					</uni-list>
 				</view>
 			</view>
-
+			<view class="no-pro" v-if="!recordlist.length">
+				<icon type="warn" size="80" color="#F8B551"></icon>
+				<view class="text">暂无数据</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -50,8 +53,9 @@
 		},
 		methods: {
 			clickitem(item) {
+				getApp().globalData.orderdetail = item;
 				uni.navigateTo({
-					url: '/pages/product/payorder/hzpayorderdetail'
+					url: '/pages/product/hzimportorder'
 				})
 			}
 		},

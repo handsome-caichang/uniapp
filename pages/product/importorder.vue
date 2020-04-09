@@ -65,7 +65,7 @@
 						<text class="text bitian">货物数量</text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="numberleng" type="number" placeholder="请输入货物数量" />
+						<input class="uni-input" v-model="numberleng" @input="changeprice" type="number" placeholder="请输入货物数量" />
 					</view>
 				</view>
 			</view>
@@ -75,13 +75,13 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" maxlength="10" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum"  @input="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
 				可获得鼓励金 ：                             
-				<view class="price"> ¥500 </view>
+				<view class="price"> ¥{{priceguli}} </view>
 			</view>
 			<view class="lj-detail" >
 				<text class="lj-btn"  @tap="openrul">了解计算详情</text>
@@ -109,13 +109,13 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" maxlength="10" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" @input="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
 				可获得鼓励金 ：
-				<view class="price"> ¥500 </view>
+				<view class="price"> ¥{{priceguli}} </view>
 			</view>
 			<view class="lj-detail">
 				<text class="lj-btn"  @tap="openrul">了解计算详情</text>
@@ -163,15 +163,35 @@
 				current: 0,
 				orderdetail: {},
 				protypeindex: 0,
+				priceguli: '',
 			}
 		},
 		created() {
 			this.orderdetail =  getApp().globalData.orderdetail;
+			this.api.home.getMatchInfo({
+				data: {
+					matchId: this.orderdetail.matchId,
+					userId: getApp().globalData.userdata.userId,
+				}
+			}).then(res => {
+				this.orderdetail  = res.data;
+			})
 		},
 		computed: {
 			...mapState(["goodtypelist"])
 		},
 		methods: {
+			changeprice() {
+				if (this.isactive) {
+					if (this.numberleng <= 3) {
+						this.priceguli = (this.pipeinum * 0.015).toFixed(2) ;
+					} else {
+						this.priceguli = (this.pipeinum * 0.02).toFixed(2);
+					}
+				} else {
+					this.priceguli = (this.pipeinum * 0.025).toFixed(2);
+				}
+			},
 			bindPickerChange: function(e) {
 				this.protypeindex = e.target.value;
 				this.protype.value = this.goodtypelist[this.protypeindex].name;
@@ -185,9 +205,41 @@
 					count: +this.numberleng,
 					matchId: this.orderdetail.matchId
 				}).then(res => {
+					// this.api.home.payVipOrder({
+					// 	"orderNo": res.data,
+					// 	"userId": getApp().globalData.userdata.userId,
+					// 	"payType": this.current == 0 ? 2 : 1
+					// }).then(ret => {
+					// 	var orderString = ret.data;
+					// 	console.log(ret)
+					// 	uni.requestPayment({
+					// 	    provider: 'wxpay',
+					// 	    orderInfo: orderString, //微信、支付宝订单数据
+					// 	    success: function (res) {
+					// 			uni.showModal({
+					// 				title: "提示",
+					// 				content: '充值成功，请关闭APP后再次进入',
+					// 				showCancel: false,
+					// 			});
+					// 	    },
+					// 	    fail: function (err) {
+					// 	       uni.showModal({
+					// 	       	title: "提示",
+					// 	       	content: '支付失败',
+					// 	       	showCancel: false,
+					// 	       });
+					// 	    }
+					// 	});
+					// })
+					
+					// "orderNo":【订单编号, 字符串】,
+					// "userId":【用户编号，字符串】
+					// "payType":【支付类型 0：支付宝 1：微信，2.余额 整型】
+					
 					uni.navigateTo({
 						url: '/pages/other/successpgae'
 					})
+					
 				})
 			},
 			openrul() {
@@ -197,6 +249,7 @@
 			},
 			changepage(flag) {
 				this.isactive = flag;
+				this.changeprice();
 			},
 		}
 	}

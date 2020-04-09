@@ -71,18 +71,6 @@
 			}
 		},
 		onLoad() {
-			var channel=null;  
-			plusReady();
-			// 1. 获取支付通道  
-			function plusReady(){ //uni-app中将此function里的代码放入vue页面的onLoad生命周期中  
-			    // 获取支付通道  
-			    plus.payment.getChannels(function(channels){  
-			        channel=channels;  
-					console.log(channels[1])
-			    },function(e){  
-			        alert("获取支付通道失败："+e.message);  
-			    });  
-			}  
 		},
 		methods: {
 			radioChange(evt) {

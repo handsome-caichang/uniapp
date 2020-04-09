@@ -47,16 +47,17 @@
 			showyue: function () {
 				if (this.showprice) {
 					let str = '';
-					for (var i = 0; i < this.yue.length; i++) {
+					var test = this.yue / 100 + '';
+					for (var i = 0; i < test.length; i++) {
 						str += '*';
 					}
 					return str
 				}else {
-					return this.yue
+					return this.yue / 100
 				}
 			},
 		},
-		created() {
+		onShow() {
 			this.initdata();
 		},
 		methods: {

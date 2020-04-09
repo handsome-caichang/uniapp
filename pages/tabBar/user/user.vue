@@ -12,14 +12,20 @@
 			</view>
 			<view class="vip-card-box">
 				<image class="card-bg" src="/static/img/vip-card-bg.png" mode=""></image>
-				<view class="b-btn"  @tap="navTo('/pages/user/vipsend')">
+				<view class="b-btn"  @tap="navTo('/pages/user/vipsend')" v-if="userdata.isVip == 0">
 					立即开通
 				</view>
-				<view class="tit">
-					<text class="iconfont iconjiaoyi"></text>
-					Recovery Station会员
+				<view class="b-btn"  @tap="navTo('/pages/user/vipsend')" v-if="userdata.isVip == 1">
+					续费VIP
 				</view>
-				<text class="e-m">Recovery Station</text>
+				<view class="tit" style="margin-top: 20upx;margin-left: 20upx;" v-if="userdata.isVip == 0">
+					<text class="iconfont iconjiaoyi"></text>
+					Recovery Station  会员  
+				</view>
+				<view class="tit" style="margin-top: 20upx;margin-left: 20upx;" v-if="userdata.isVip == 1">
+					<text class="iconfont iconjiaoyi"></text>
+					Recovery Station {{userdata.vipLevel == 0 ? '黄金' : "钻石"}} 会员  
+				</view>
 			</view>
 		</view>
 

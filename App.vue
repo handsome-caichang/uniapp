@@ -8,6 +8,7 @@ export default {
 		customerdata: {},
 		productdetail: {},
 		orderdetail: {},
+		malldetail: {},
 		userlistmanage: {},
 		examineres: {}
 	},  

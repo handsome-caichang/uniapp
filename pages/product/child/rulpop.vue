@@ -9,7 +9,7 @@
 				<view class="right">
 					<view class="tab">
 						<text class="tab-item">3吨及以下</text>
-						<text class="tab-item">3成交金额x1.5%</text>
+						<text class="tab-item">成交金额x1.5%</text>
 					</view>
 					<view class="tab">
 						<text class="tab-item">3吨以上</text>

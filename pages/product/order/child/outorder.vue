@@ -8,6 +8,10 @@
 
 		<view class="listbox" style="margin-top: 20upx;">
 			<view v-if="activeindex === 0" class="tuijian-box">
+				<view class="no-pro" v-if="!productList.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="clickitem(item)">
 					<view class="uni-flex uni-row item-box">
 						<view class="text uni-flex" style="width: 160rpx;height: 130rpx;justify-content: center;align-items: center;">
@@ -38,6 +42,10 @@
 
 
 			<view class="shoudao" v-if="activeindex === 1">
+				<view class="no-pro" v-if="!jilulist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="uni-list">
 					<uni-list>
 						<!-- {
@@ -69,6 +77,10 @@
 			</view>
 
 			<view class="shoudao" v-if="activeindex === 2">
+				<view class="no-pro" v-if="!shoudaolist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="uni-list">
 					<uni-list>
 						<uni-list-item class="" :thumb="item.headImage" :note="'时间：'+item.createTime+'  '+item.address" v-for="(item,index) in shoudaolist"
@@ -87,6 +99,10 @@
 			</view>
 
 			<view class="shoudao" v-if="activeindex === 3">
+				<view class="no-pro" v-if="!successlist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="uni-list">
 					<uni-list>
 						<!--  "buyUserId":,【买家用户编号，字符串】

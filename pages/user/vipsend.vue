@@ -3,9 +3,9 @@
 
 		<view class="header-box">
 			<view class="uni-flex">
-				<image src="/static/img/goods/p1.jpg" class="img"></image>
+				<image  :src="userdata.headImage" class="img"></image>
 				<view class="name-box">
-					<text class="name">小牛犊</text>
+					<text class="name">{{userdata.name}}</text>
 					<text class="vip">黄金</text>
 				</view>
 			</view>
@@ -74,7 +74,7 @@
 				</view>
 				<view class="point">开通会员代表接受《会员服务协议》</view>
 			</view>
-			<view class="rightbtn">
+			<view class="rightbtn" @tap="sub">
 				确认支付
 			</view>
 		</view>
@@ -97,8 +97,10 @@
 			return {
 				isactive: true,
 				isactivesku: 2,
-				price: '368',
-				items: [{
+				price: '',
+				userdata: {},
+				items: [
+					{
 						value: 'USA',
 						name: '余额支付',
 						icon: '/static/img/pay/yuebao.png',
@@ -120,40 +122,78 @@
 					// 	icon: '/static/img/pay/yinhanka.png',
 					// }
 				],
-				current: 0
+				current: 0,
+				viplist: [],
 			}
 		},
 		computed: {
 
 		},
+		created() {
+			this.userdata = getApp().globalData.userdata;
+			this.api.home.walletgetVipList({
+				data: {
+					userId: this.userdata.userId
+				}
+			}).then(res => {
+				console.log(res)
+				this.viplist = res.data;
+				this.setvipprice();
+			})
+		},
 		methods: {
-			nto() {
-				uni.navigateTo({
-					url: '/pages/user/reputationrun'
+			setvipprice() {
+				var vipType = this.isactive ? 0 : 1;
+				var vipTime = this.isactivesku;
+				this.viplist.forEach(item => {
+					if (item.vipType == vipType && vipTime == item.vipType) {
+						this.price = item.price;
+					}
+				})
+			},
+			sub() {
+				this.api.home.submitVipOrder({
+					vipType: this.isactive ? 0 : 1,
+					timeType: this.current + 1,
+					userId: this.userdata.userId
+				}).then(res => {
+					console.log(res);
+					// "orderNo": "VIP202004071359001"
+					this.api.home.payVipOrder({
+						"orderNo": res.data.orderNo,
+						"userId": this.userdata.userId,
+						"payType": this.current == 0 ? 2 : 1
+					}).then(ret => {
+						var orderString = ret.data;
+						console.log(ret)
+						uni.requestPayment({
+						    provider: 'wxpay',
+						    orderInfo: orderString, //微信、支付宝订单数据
+						    success: function (res) {
+								uni.showModal({
+									title: "提示",
+									content: '充值成功，请关闭APP后再次进入',
+									showCancel: false,
+								});
+						    },
+						    fail: function (err) {
+						       uni.showModal({
+						       	title: "提示",
+						       	content: '支付失败',
+						       	showCancel: false,
+						       });
+						    }
+						});
+					})
 				})
 			},
 			changevip(flg) {
 				this.isactive = flg;
-				this.changeprice();
+				this.setvipprice();
 			},
 			changesuk(nu) {
 				this.isactivesku = nu;
-				this.changeprice();
-			},
-			changeprice() {
-				if (this.isactive) {
-					if (this.isactivesku == 2) {
-						this.price = '368';
-					}else {
-						this.price = '488';
-					}
-				}else {
-					if (this.isactivesku == 2) {
-						this.price = '398';
-					}else {
-						this.price = '536';
-					}
-				}
+				this.setvipprice();
 			},
 			radioChange(evt) {
 				for (let i = 0; i < this.items.length; i++) {

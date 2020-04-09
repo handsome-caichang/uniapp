@@ -1,5 +1,5 @@
 <template>
-	<view class="uni-page-body header-page-body">
+	<view class="uni-page-body">
 		<view class="status"  :style="{position:headerPosition}" ></view>
 		<view class="header-box">
 			<view class="item" :class="isactive?'active':''"  @tap="changepage(true)" >
@@ -14,7 +14,7 @@
 			<buy-pro ref="buypro" v-if="!isactive"></buy-pro>
 		</view>
 	</view>
-</template>
+</template>	
 <script>
 	import buyPro from "./child/buypro.vue"
 	import sellPro from "./child/sellpro.vue"
@@ -57,7 +57,7 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.header-page-body {
+	.uni-page-body {
 		height: 100%;
 		.header-box {
 			width: 100%;
@@ -73,7 +73,6 @@
 				color: #212121;
 				font-size: 38upx;
 				padding: 0 20upx;
-
 				&.active {
 					border-bottom: 4upx solid $font-color-light;
 				}

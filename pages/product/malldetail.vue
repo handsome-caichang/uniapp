@@ -3,9 +3,9 @@
 
 		<view class="carousel">
 			<swiper indicator-dots circular=true duration="400">
-				<swiper-item class="swiper-item" v-for="(item,index) in imgList" :key="index">
+				<swiper-item class="swiper-item" v-for="(item,index) in detail.images" :key="index">
 					<view class="image-wrapper">
-						<image :src="item.src" class="loaded" mode="aspectFill"></image>
+						<image :src="item" class="loaded" mode="aspectFill"></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -13,27 +13,27 @@
 		<view class="example-box">
 			<view class="uni-flex header-box">
 				<view class="uni-flex">
-					<image src="../../static/img/arc.png" class="headerimg"></image>
+					<image :src="detail.headImage" class="headerimg"></image>
 					<view class="name">
-						张三回收站
+						{{detail.name}}
 					</view>
-					<uni-rate class="rate" :size="12" :value="5" />
+					<uni-rate class="rate" :size="12" :value="detail.star" />
 				</view>
 				<view class="address">
-					宁波镇海
+					{{detail.address}}
 				</view>
 			</view>
 
 			<view class="content-box">
 				<view class="title">
-					<text>废铁</text>
-					<text class="price">2000-2150元/吨（预估运费40元/吨）</text>
+					<text>{{detail.classifyName}}</text>
+					<text class="price">{{detail.bedrockPrice-outsidePrice}}元/吨（预估运费{{detail.freight}}元/吨）</text>
 				</view>
 				<view class="uni-flex address">
 					<view class="text">
-						<view class="a">宁波市镇海团桥菜场对面张三废品回收</view>
+						<view class="a">{{detail.address}}</view>
 						<view class="b">
-							<uni-icons type="location-filled"></uni-icons> 距我直线2.9km，驾车约12分钟
+							<!-- <uni-icons type="location-filled"></uni-icons> 距我直线2.9km，驾车约12分钟 -->
 						</view>
 					</view>
 					<view class="iconbox">
@@ -57,7 +57,7 @@
 					<text>诚信经营</text>
 				</view>
 				<view class="time">
-					更新时间：2019/12/6
+					更新时间：{{detail.createTime}}
 				</view>
 			</view>
 
@@ -67,7 +67,7 @@
 				</view>
 				<view class="s-container">
 					<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-						<image class="img" v-for="(item,index) in prolist" :key="index" :src="item" mode="scaleToFill"></image>
+						<image class="img" v-for="(item,index) in detail.images" :key="index" :src="item" mode="scaleToFill"></image>
 					</scroll-view>
 				</view>
 			</view>
@@ -142,7 +142,9 @@
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
 					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
-				]
+				],
+				malldetail: {},
+				detail: {},
 			}
 		},
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
@@ -155,7 +157,21 @@
 				this.prolist.push('http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg');
 			}
 		},
+		created() {
+			this.malldetail = getApp().globalData.malldetail;
+			this.getdata();
+		},
 		methods: {
+			getdata() {
+				this.api.home.getRealseGoodsInfo({
+					data: {
+						userId: getApp().globalData.userdata.userId,
+						realseId: this.malldetail.realseId,
+					}
+				}).then(res => {
+					this.detail = res.data;
+				})
+			},
 			shouc() {
 				this.haveac = !this.haveac;
 			},

@@ -33,43 +33,6 @@
 		data() {
 			return {
 				recordlist: [
-					{
-						name: '宁波易鑫科技有限公司（王废铁）',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						status: 0,
-					},{
-						name: '宁波易鑫科技有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						status: 1,
-					},{
-						name: '宁波易鑫科技有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						status: 1,
-					},{
-						name: '宁波易鑫科技有限公司',
-						num: '3吨',
-						time: '2019/12/13',
-						address: '镇海',
-						img: '/static/img/missing-face.png',
-						type: '废铁',
-						cardid: 'NO.1111112',
-						status: 1,
-					}
 				]
 			}
 		},

@@ -10,7 +10,8 @@
 					从业年限：{{orderdetail.buyUserYear}}年
 				</view>
 				<view class="title pinfen">
-					信誉评分：<uni-rate class="rate" :size="12" :value="orderdetail.star" />
+					信誉评分：
+					<uni-rate class="rate" :size="12" :value="orderdetail.star" />
 				</view>
 				<view class="address">
 					<text style="margin-right: 20upx;">{{orderdetail.buyDistrict}}</text>
@@ -24,7 +25,7 @@
 					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
 				</view>
 				<view class="title">
-						{{orderdetail.buyUserName}}
+					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
 					{{orderdetail.createTime}}
@@ -64,7 +65,7 @@
 						<text class="text bitian">货物数量</text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="numberleng" type="number" placeholder="请输入货物数量" />
+						<input class="uni-input" v-model="numberleng" @input="changeprice" type="number" placeholder="请输入货物数量" />
 					</view>
 				</view>
 			</view>
@@ -74,19 +75,19 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" @input="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				需支付佣金：                         
-				<view class="price"> ¥500 </view>
+				可获得鼓励金 ：
+				<view class="price"> ¥{{priceguli}} </view>
 			</view>
-			<view class="lj-detail" >
-				<text class="lj-btn"  @tap="openrul">了解计算详情</text>
+			<view class="lj-detail">
+				<text class="lj-btn" @tap="openrul">了解计算详情</text>
 			</view>
 		</view>
-		<view class="pay-content"  v-if="!isactive">
+		<view class="pay-content" v-if="!isactive">
 			<view class="form-box uni-flex ">
 				<view class="item-box" style="margin-right: 60upx;">
 					<view class="uni-label-box">
@@ -99,7 +100,7 @@
 					</view>
 				</view>
 				<view class="item-box">
-					
+
 				</view>
 			</view>
 			<view class="form-box uni-flex ">
@@ -108,69 +109,57 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" @input="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				需支付佣金：                         
-				<view class="price"> ¥500 </view>
+				需要支付佣金 ：
+				<view class="price"> ¥{{priceguli}} </view>
 			</view>
 			<view class="lj-detail">
-				<text class="lj-btn"  @tap="openrul">了解计算详情</text>
+				<text class="lj-btn" @tap="openrul">了解计算详情</text>
 			</view>
 		</view>
-		
-		
-		<view style="padding-bottom: 100upx;">
-			<radio-group @change="radioChange">
-				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
-					<view style="display:flex;justify-content: center;">
-						<image style="width: 48upx;height: 48upx;margin-right: 20upx;" src="/static/img/gongkao.png"></image>
-						<text>{{item.name}}</text>
-					</view>
-					<view>
-						<radio color="#FFCC33" :value="item.value" :checked="index === current" />
-					</view>
-				</label>
-			</radio-group>
+
+		<view class="primary-btn" @tap="luru">
+			确认录入
 		</view>
-		
-		<view class="btnbox">
-			<view class="pri-box border-top">
-				<view class="sun">
-					总计：<text class="price">{{price}}元</text>
-				</view>
+
+		<uni-popup ref="showpay" type="bottom">
+			<view class="uni-pup">
+				<pay-pop @clickpay="clickpay" :price="priceguli"></pay-pop>
 			</view>
-			<view class="rightbtn" @tap="payclick">
-				确认支付
-			</view>
-		</view>
-		
-		<!-- 底部分享弹窗 -->
+		</uni-popup>
+
 		<uni-popup ref="showrul" type="center">
 			<view class="uni-pup">
 				<rul-pop></rul-pop>
 			</view>
 		</uni-popup>
-		
-		
+
+
 
 	</view>
 </template>
 
 <script>
+	import payPop from './order/child/paypop.vue'
 	import rulPop from './child/rulpop.vue'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
-	import { mapMutations,mapState } from 'vuex';
+	import {
+		mapMutations,
+		mapState
+	} from 'vuex';
 	export default {
 		components: {
 			uniRate,
 			uniIcons,
 			uniPopup,
-			rulPop
+			rulPop,
+			payPop
 		},
 		data() {
 			return {
@@ -181,40 +170,134 @@
 				},
 				numberleng: "",
 				pipeinum: "",
-				price: '368',
-				items: [{
-						value: 'USA',
-						name: '余额支付'
-					},
-					// {
-					// 	value: 'CHN',
-					// 	name: '支付宝支付',
-					// 	checked: 'true'
-					// },
-					{
-						value: 'BRA',
-						name: '微信支付'
-					},
-					// {
-					// 	value: 'JPN',
-					// 	name: '银行卡支付'
-					// }
-				],
 				current: 0,
 				orderdetail: {},
 				protypeindex: 0,
+				priceguli: '',
+				oserdat: {}
 			}
 		},
 		created() {
-			this.orderdetail =  getApp().globalData.orderdetail;
+			this.orderdetail = getApp().globalData.orderdetail;
+			this.api.home.getMatchInfo({
+				data: {
+					matchId: this.orderdetail.matchId,
+					userId: getApp().globalData.userdata.userId,
+				}
+			}).then(res => {
+				this.orderdetail = res.data;
+			})
 		},
 		computed: {
 			...mapState(["goodtypelist"])
 		},
 		methods: {
+			clickpay(e) {
+				console.log(e);
+				console.log(this.oserdat)
+				this.api.order.payMsgFee({
+					orderNo: this.oserdat.data,
+					userId: getApp().globalData.userdata.userId,
+					payType: e == 0 ? 2 : 1,
+				}).then(res => {
+					var orderString = res.data;
+					console.log(res)
+					this.orderdetail.sourcetype = 3;
+					getApp().globalData.productdetail = this.orderdetail;
+					uni.requestPayment({
+					    provider: 'wxpay',
+					    orderInfo: orderString.charge, //微信、支付宝订单数据
+					    success: function (res) {
+							uni.showModal({
+								title: "提示",
+								content: '支付成功',
+								showCancel: false,
+								success(res) {
+								  if (res.confirm) {
+									// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+									uni.navigateTo({
+										url: '/pages/product/productdetail'
+									})
+								  }
+								}
+							});
+					    },
+					    fail: function (err) {
+					       uni.showModal({
+					       	title: "提示",
+					       	content: '支付失败',
+					       	showCancel: false,
+					       });
+					    }
+					});
+					this.$nextTick(() => {
+						this.$refs.showpay.close();
+					});
+				})
+			},
+			changeprice() {
+				if (this.isactive) {
+					if (this.numberleng <= 3) {
+						this.priceguli = (this.pipeinum * 0.015).toFixed(2) ;
+					} else {
+						this.priceguli = (this.pipeinum * 0.02).toFixed(2);
+					}
+				} else {
+					this.priceguli = (this.pipeinum * 0.025).toFixed(2);
+				}
+			},
 			bindPickerChange: function(e) {
 				this.protypeindex = e.target.value;
 				this.protype.value = this.goodtypelist[this.protypeindex].name;
+			},
+			luru() {
+				this.api.order.buyUserWriteOrder({
+					userId: getApp().globalData.userdata.userId,
+					classify: this.protype.value,
+					money: +this.pipeinum,
+					type: this.isactive ? 1 : 2,
+					count: +this.numberleng,
+					matchId: this.orderdetail.matchId
+				}).then(res => {
+					console.log(res);
+					this.oserdat = res;
+					this.$nextTick(() => {
+						this.$refs.showpay.open();
+					})
+					// this.api.home.payVipOrder({
+					// 	"orderNo": res.data,
+					// 	"userId": getApp().globalData.userdata.userId,
+					// 	"payType": this.current == 0 ? 2 : 1
+					// }).then(ret => {
+					// 	var orderString = ret.data;
+					// 	console.log(ret)
+					// 	uni.requestPayment({
+					// 	    provider: 'wxpay',
+					// 	    orderInfo: orderString, //微信、支付宝订单数据
+					// 	    success: function (res) {
+					// 			uni.showModal({
+					// 				title: "提示",
+					// 				content: '充值成功，请关闭APP后再次进入',
+					// 				showCancel: false,
+					// 			});
+					// 	    },
+					// 	    fail: function (err) {
+					// 	       uni.showModal({
+					// 	       	title: "提示",
+					// 	       	content: '支付失败',
+					// 	       	showCancel: false,
+					// 	       });
+					// 	    }
+					// 	});
+					// })
+
+					// "orderNo":【订单编号, 字符串】,
+					// "userId":【用户编号，字符串】
+					// "payType":【支付类型 0：支付宝 1：微信，2.余额 整型】
+					// uni.navigateTo({
+					// 	url: '/pages/other/successpgae'
+					// })
+				})
 			},
 			openrul() {
 				this.$nextTick(() => {
@@ -223,29 +306,18 @@
 			},
 			changepage(flag) {
 				this.isactive = flag;
+				this.changeprice();
 			},
-			payclick() {
-				// uni.navigateTo({
-				// 	url: '/pages/customer/customerdetail'
-				// })
-			},
-			radioChange(evt) {
-				for (let i = 0; i < this.items.length; i++) {
-					if (this.items[i].value === evt.target.value) {
-						this.current = i;
-						break;
-					}
-				}
-			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.importorder {
-		.uni-list-cell::after{
+		.uni-list-cell::after {
 			height: 0;
 		}
+
 		.btnbox {
 			position: fixed;
 			bottom: 0;
@@ -255,42 +327,65 @@
 			justify-content: space-between;
 			align-items: center;
 			background-color: #eee;
+
 			.pri-box {
 				flex: 1;
 				padding-left: 50upx;
+
 				.sun {
 					height: 96upx;
 					line-height: 96upx;
 					font-size: 34upx;
 					font-weight: 500;
+
 					.price {
 						font-weight: bold;
 						color: #E5AD0D;
 					}
 				}
+
 				.point {
 					height: 40upx;
 					color: #767676;
 					font-size: 24upx;
 				}
 			}
+
 			.rightbtn {
-				width:244upx;
-				height:96upx;
+				width: 244upx;
+				height: 96upx;
 				line-height: 96upx;
-				background:linear-gradient(180deg,rgba(255,204,60,1) 0%,rgba(254,229,172,1) 100%);
+				background: linear-gradient(180deg, rgba(255, 204, 60, 1) 0%, rgba(254, 229, 172, 1) 100%);
 				text-align: center;
 				color: #83551F;
 				font-size: 28upx;
 			}
 		}
-		
+
+		.primary-btn {
+			margin: 0 auto;
+			margin-top: 150upx;
+			width: 50%;
+			height: 104upx;
+			line-height: 104upx;
+			padding-left: 14px;
+			padding-right: 14px;
+			font-size: 36upx;
+			text-align: center;
+			text-decoration: none;
+			border-radius: 5px;
+			overflow: hidden;
+			color: $font-color-withe;
+			background-color: $uni-bg-color-grey;
+		}
+
 		.text-class {
 			color: #212121;
 			font-size: 40upx;
 			font-weight: bold;
 			text-align: right;
 			margin-right: 60upx;
+
 			.price {
 				font-weight: bold;
 				font-size: 40upx;
@@ -298,6 +393,7 @@
 				color: #18C02C;
 			}
 		}
+
 		.header-box {
 			padding: 0 10%;
 			height: 100upx;
@@ -322,21 +418,25 @@
 				justify-content: flex-end;
 				margin-top: 10upx;
 				margin-right: 60upx;
+
 				.lj-btn {
-					padding:0upx 4upx;
+					padding: 0upx 4upx;
 					color: #1F96F7;
 					font-size: 28upx;
 					border: 1upx solid #1F96F7;
 					border-radius: 4upx;
 				}
 			}
-			.form-box{
+
+			.form-box {
 				padding: 0 60upx;
 				margin-top: 20upx;
 			}
+
 			.item-box {
 				margin-bottom: 12upx;
 				flex: 1;
+
 				.uni-label-box {
 					flex: 2;
 					display: flex;

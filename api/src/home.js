@@ -108,6 +108,18 @@ export default {
 			params
 		);
 	},
+	submitVipOrder(params) {
+		return http.post(
+			'wallet/submitVipOrder',
+			params
+		);
+	},
+	payVipOrder(params) {
+		return http.post(
+			'wallet/payVipOrder',
+			params
+		);
+	},
 	searchPriceByArea(params){
 		return http.get(
 			'goods/searchPriceByArea',
@@ -159,6 +171,18 @@ export default {
 	getVipList(params) {
 		return http.get(
 			'advert/getVipList',
+			params
+		);
+	},
+	walletgetVipList(params) {
+		return http.get(
+			'wallet/getVipList',
+			params
+		);
+	},
+	getMatchInfo(params) {
+		return http.get(
+			'realse/getMatchInfo',
 			params
 		);
 	},

@@ -134,7 +134,6 @@ export default {
 			let classify = this.goodtypelist.filter(item => {
 				return item.isactive
 			});
-			console.log(classify)
 			let ifyst = classify[0]  ? classify[0].name : '';
 			this.api.home.getRealseGoodsList({
 				data: {
@@ -146,7 +145,6 @@ export default {
 					cityCode: this.region.cityCode
 				}
 			}).then(res => {
-				console.log(res);
 				this.productList = res.data;
 			})
 		},
@@ -169,9 +167,9 @@ export default {
 		},
 		toSearch() {},
 		toGoods(item) {
-			let id = item.goods_id;
+			getApp().globalData.malldetail = item;
 			uni.navigateTo({
-				url: `/pages/product/malldetail?id=${id}`
+				url: `/pages/product/malldetail`
 			});
 		},
 		chooselocation() {
@@ -211,8 +209,7 @@ export default {
 		.filter {
 			// height: 100%;
 			flex-wrap: wrap;
-			padding: 100upx 10upx;
-
+			padding: 100upx 0upx 10upx;
 			.text {
 				text-align: center;
 				height: 50upx;

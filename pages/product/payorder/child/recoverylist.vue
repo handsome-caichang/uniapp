@@ -21,6 +21,10 @@
 				</uni-list>
 			</view>
 		</view>
+		<view class="no-pro" v-if="!recordlist.length">
+			<icon type="warn" size="80" color="#F8B551"></icon>
+			<view class="text">暂无数据</view>
+		</view>
 		<uni-popup ref="beizhushuru" type="center">
 			<view class="inputbox">
 				<view class="uni-textarea">
@@ -70,8 +74,9 @@
 		},
 		methods: {
 			clickitem(item) {
+				getApp().globalData.orderdetail = item;
 				uni.navigateTo({
-					url: '/pages/product/payorder/payorderdetail'
+					url: '/pages/product/importorder'
 				})
 			},
 			addRemk(item) {

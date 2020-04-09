@@ -43,17 +43,20 @@
 			<view class="error-btn" @tap="clearbtn">
 				取消匹配
 			</view>
+			<view class="primary-btn" @tap="customerto">
+				联系货主
+			</view>
 			<view class="primary-btn" @tap="jiaoyi">
 				开始交易
 			</view>
 		</view>
 	
 		<!-- 底部分享弹窗 -->
-		<uni-popup ref="showpay" type="bottom" @change="changepup">
+		<!-- <uni-popup ref="showpay" type="bottom" @change="changepup">
 			<view class="uni-pup">
 				<pay-pop @clickpay="clickpay"></pay-pop>
 			</view>
-		</uni-popup>
+		</uni-popup> -->
 	
 	</view>
 </template>
@@ -77,26 +80,37 @@
 			this.orderdetail = getApp().globalData.orderdetail;
 		},
 		methods: {
-			clickpay(e) {
-				console.log(e);
-				this.$nextTick(() => {
-					this.$refs.showpay.close();
-					setTimeout(() => {
-						 this.orderdetail.sourcetype = 3;
-						 getApp().globalData.productdetail = this.orderdetail;
-						uni.navigateTo({
-							url: '/pages/product/productdetail'
-						})
-					}, 300);
-				});
+			customerto() {
+				this.orderdetail.sourcetype = 0;
+				this.orderdetail.userId = this.orderdetail.buyUserId;
+				getApp().globalData.customerdata = this.orderdetail;
+				uni.navigateTo({
+					url: '/pages/customer/customerdetail'
+				})
 			},
+			// clickpay(e) {
+			// 	console.log(e);
+			// 	this.$nextTick(() => {
+			// 		this.$refs.showpay.close();
+			// 		setTimeout(() => {
+			// 			 this.orderdetail.sourcetype = 3;
+			// 			 getApp().globalData.productdetail = this.orderdetail;
+			// 			uni.navigateTo({
+			// 				url: '/pages/product/productdetail'
+			// 			})
+			// 		}, 300);
+			// 	});
+			// },
 			changepup(e) {
 				// console.log('是否打开:' + e.show)
 			},
 			jiaoyi() {
-				this.$nextTick(() => {
-					this.$refs.showpay.open();
+				uni.navigateTo({
+					url: '/pages/product/hzimportorder'
 				})
+				// this.$nextTick(() => {
+				// 	this.$refs.showpay.open();
+				// })
 				// uni.navigateTo({
 				// 	url: '/pages/customer/customerdetail'
 				// })
@@ -189,7 +203,8 @@
 			justify-content: space-between;
 			padding: 0 30upx;
 			.primary-btn {
-				width: 290upx;
+				margin-left: 20upx;
+				width: 260upx;
 				height: 104upx;
 				line-height: 104upx;
 				font-size: 38upx;

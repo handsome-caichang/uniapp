@@ -108,3 +108,14 @@
 	font-size: 34upx;
 	color: #E71F19;
 }
+.no-pro {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	color: #767676;
+	margin-top: 100upx;
+	.text {
+		margin-top: 30upx;
+	}
+}

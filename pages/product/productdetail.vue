@@ -282,7 +282,7 @@
 					justify-content: center;
 					align-items: center;
 					// flex-direction: column;
-					width: 40%;
+					width: 60%;
 					.uni-icons {
 						margin-left: 10upx;
 						// height: 60upx;

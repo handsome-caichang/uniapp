@@ -166,6 +166,7 @@
 			justify-content: space-between;
 			padding: 0 30upx;
 			.primary-btn {
+				margin-left: 20upx;
 				width: 230upx;
 				height: 104upx;
 				line-height: 104upx;

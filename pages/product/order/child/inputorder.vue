@@ -16,12 +16,20 @@
 						<uni-rate class="rate" :size="12" :value="item.star" />
 					</view>
 				</view>
+				<view class="no-pro" v-if="!huishoulist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="genghuanbtn" style="text-align: right;color:#1F96F7;margin-top: 20upx;margin-right: 40upx;">
 					<uni-icons type="loop" size="18" color="#1F96F7" style="margin-right:10upx"></uni-icons>
 					换一批
 				</view>
 			</view>
 			<view class="uni-list" v-if="activeindex === 1">
+				<view class="no-pro" v-if="!jilulist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="uni-list-item border-bottom" style="padding: 0 40upx;" v-for="(item, index) in jilulist" :key="index">
 					<view class="uni-flex">
 						<image :src="item.img" class="headerimg" style="margin-top: 20upx;"></image>
@@ -35,7 +43,7 @@
 								发布时间：<text>{{item.createTime}}</text> <text>{{item.sellDistrict}}</text>
 							</view>
 						</view>
-						<view class="btnbox" style="margin-top: 30upx;"  @tap="guanli(item, '/pages/product/order/applicationrecord')" >
+						<view class="btnbox" style="margin-top: 30upx;" @tap="guanli(item, '/pages/product/order/applicationrecord')">
 							<view style="color: #18C02C;border: 1upx solid #18C02C;padding: 2upx 20upx;border-radius: 20upx;">管理</view>
 						</view>
 					</view>
@@ -51,10 +59,14 @@
 			</view>
 
 			<view class="shoudao" v-if="activeindex === 2">
+				<view class="no-pro" v-if="!shoudaolist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="uni-list">
 					<uni-list>
 						<uni-list-item class="" :thumb="item.headerimg" :note="'申请时间：'+item.createTime" v-for="(item,index) in shoudaolist"
-						 :key="index"  @tap="sureMatching(item)" >
+						 :key="index" @tap="sureMatching(item)">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
 							</view>
@@ -67,12 +79,16 @@
 					</uni-list>
 				</view>
 			</view>
-			
+
 			<view class="shoudao" v-if="activeindex === 3">
+				<view class="no-pro" v-if="!successlist.length">
+					<icon type="warn" size="80" color="#F8B551"></icon>
+					<view class="text">暂无数据</view>
+				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'关闭时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in successlist"
-						 :key="index"  @tap="toorderdetail(item, '/pages/product/order/orderdetail')" >
+						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'关闭时间：'+item.createTime+'  '+item.sellDistrict"
+						 v-for="(item,index) in successlist" :key="index" @tap="toorderdetail(item, '/pages/product/order/orderdetail')">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}</text>
@@ -85,7 +101,9 @@
 					</uni-list>
 				</view>
 			</view>
-			
+
+
+
 		</view>
 	</view>
 </template>
@@ -132,9 +150,9 @@
 				this.activeindex = active;
 				if (this.activeindex == 1) {
 					this.getjilu();
-				}else if (this.activeindex == 2) {
+				} else if (this.activeindex == 2) {
 					this.getshoudao();
-				}else if (this.activeindex == 3) {
+				} else if (this.activeindex == 3) {
 					this.getMatchSuccessList();
 				}
 			},
@@ -174,7 +192,7 @@
 					this.successlist = res.data;
 				})
 			},
-			getshoudao(){
+			getshoudao() {
 				this.api.home.getReceivedMatchList({
 					data: {
 						userId: getApp().globalData.userdata.userId
@@ -198,7 +216,7 @@
 					url: `/pages/product/order/orderdetail`
 				});
 			},
-			guanli(item, url){
+			guanli(item, url) {
 				getApp().globalData.userlistmanage = item;
 				uni.navigateTo({
 					url,
@@ -216,17 +234,18 @@
 			border-radius: 50%;
 			margin-bottom: 10upx;
 		}
-		
+
 		.uni-list-item__container {
 			border-top: 0upx;
 		}
-		
+
 		.listbox {
 			.huishouren {
 				display: flex;
 				flex-wrap: wrap;
 				padding: 0 40upx;
 				justify-content: space-around;
+
 				.cusitem {
 					display: flex;
 					flex-direction: column;

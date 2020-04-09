@@ -16,7 +16,10 @@
 				</uni-list>
 			</view>
 		</view>
-		
+		<view class="no-pro" v-if="!recordlist.length">
+			<icon type="warn" size="80" color="#F8B551"></icon>
+			<view class="text">暂无数据</view>
+		</view>
 	</view>
 </template>
 <script>

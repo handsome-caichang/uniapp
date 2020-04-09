@@ -13,8 +13,8 @@
 				<uni-icons type="arrowdown" color="#999999" size="12"></uni-icons>
 			</view>
 			<view class="sun">
-				<view style="color: #999999;font-size: 22upx;" v-if="activeindex==0">支出¥3487</view>
-				<view style="color: #999999;font-size: 22upx;">收入¥7789</view>
+				<view style="color: #999999;font-size: 22upx;" v-if="activeindex==0">支出¥{{list.sumSpend}}</view>
+				<view style="color: #999999;font-size: 22upx;">收入¥{{list.sumIncome}}</view>
 			</view>
 		</view>
 		<uni-list>
@@ -34,7 +34,7 @@
 				"userId": "2"
 			}],
 			"time": "2020-3" -->
-			<uni-list-item v-for="item in list" :key="item.orderNo" :title="item.remark" :note="item.createTime" :showArrow="false"
+			<uni-list-item v-for="item in list.billInfo" :key="item.orderNo" :title="item.remark" :note="item.createTime" :showArrow="false"
 			 :showBadge="true">
 				<view class="list-succ" :class="{'list-price': item.type==0,'list-succ': item.type == 1}">
 					{{item.type==0?'+':'-'}}{{item.count}}
@@ -101,7 +101,12 @@
 					}
 				],
 				timeindex: 0,
-				list: [],
+				list: {
+					sumIncome: 0,
+					sumSpend: 0,
+					billInfo: []
+				},
+				alldata: [],
 			}
 		},
 		created() {
@@ -113,10 +118,24 @@
 				this.getdata();
 			},
 			bindPickerChange: function(e) {
-				this.timeindex = e.target.value
+				this.timeindex = e.target.value;
+				this.setdata();
+			},
+			setdata() {
+				this.list = {
+					sumIncome: 0,
+					sumSpend: 0,
+					billInfo: []
+				};
+				this.alldata.forEach(item=> {
+					console.log(item.time.split("-")[1])
+					console.log(this.timeindex + 1)
+					if( ( +this.timeindex + 1) == item.time.split("-")[1] ) {
+						this.list = item;
+					}
+				})
 			},
 			getdata() {
-				this.list = [];
 				this.api.home.getBillList({
 					data: {
 						userId: getApp().globalData.userdata.userId,
@@ -125,27 +144,11 @@
 						orderType: this.activeindex,
 					}
 				}).then(res => {
-					console.log(res);
-					// this.list = res.data;
-					this.list = [{
-						"orderNo": "CSH202003051715484",
-						"createTime": "2020-03-05 05:15:49",
-						"count": 0,
-						"remark": "提现",
-						"type": 1,
-						"userId": "2"
-					}, {
-						"orderNo": "CSH202003051715453",
-						"createTime": "2020-03-05 05:15:45",
-						"count": 0,
-						"remark": "提现",
-						"type": 1,
-						"userId": "2"
-					}];
-
+					console.log(res)
+					this.alldata = res.data;
+					this.setdata();
 				})
 			}
-			// mingxi
 		}
 	}
 </script>

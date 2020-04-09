@@ -10,7 +10,7 @@
 				</view>
 				<input type="number" class="input" v-model="bondnum" maxlength="12">
 			</view>
-			<view class="point" style="color:#575757;font-size: 24upx;">可用余额{{CashMoney}}元</view>
+			<view class="point" style="color:#575757;font-size: 24upx;">可用余额{{CashMoney / 100}}元</view>
 		</view>
 		<view class="input-container">
 			<view class="point">
@@ -28,6 +28,9 @@
 				</view>
 			</label>
 		</radio-group>
+		<view class="input-container">
+			<input type="text" v-model="phone" style="width: 500upx;height:80upx;line-height: 80upx;border: 1px solid #666;padding-left:40upx">
+		</view>
 
 		<view class="btnbox" :class="{'isded':!bondnum}" @tap="chongzhi" >
 			确认提现
@@ -50,17 +53,13 @@
 			return {
 				bondnum: '',
 				radiosvalue: '',
+				phone: '',
 				items: [
 					{
 						value: 'CHN',
 						name: '支付宝',
 						checked: 'true',
 						icon: '/static/img/pay/zhifubao.png',
-					},
-					{
-						value: 'JPN',
-						name: '银行卡',
-						icon: '/static/img/pay/yinhanka.png',
 					}
 				],
 				current: 0,
@@ -68,6 +67,7 @@
 			}
 		},
 		created() {
+			this.phone = getApp().globalData.userdata.mobilePhone;
 			this.api.home.getCashMoney({
 				data: {
 					userId: getApp().globalData.userdata.userId
@@ -91,7 +91,7 @@
 					this.api.home.withdrawCash({
 						userId: getApp().globalData.userdata.userId,
 						money: this.bondnum,
-						alipayAccount: getApp().globalData.userdata.mobilePhone
+						alipayAccount: this.phone
 					}).then(res  => {
 						uni.navigateTo({
 							url: '/pages/other/tixiansuccess'

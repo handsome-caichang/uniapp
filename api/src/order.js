@@ -30,5 +30,10 @@ export default {
 			params
 		);
 	},
-	
+	payMsgFee(params) {
+		return http.post(
+			'order/payMsgFee',
+			params
+		);
+	},
 }

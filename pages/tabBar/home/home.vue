@@ -276,6 +276,7 @@ export default {
 							let datetime = new Date(time).getTime();
 							item.createTime = datetime;
 						})
+						console.log(res)
 						this.huowulist = res.data;
 					})
 				},

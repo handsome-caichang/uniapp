@@ -8,12 +8,12 @@
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
-	<!-- 	<view class="list-cell  border-bottom" @click="navTo('/pages/user/payset')" >
+		<view class="list-cell  border-bottom" @click="navTo('/pages/user/payset')" >
 			<text class="cell-tit">收款方式</text>
 			<text class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
-		</view> -->
+		</view>
 		<view class="list-cell"  >
 			<text class="cell-tit">关于</text>
 			<text class="cell-more ">版本号 {{enableMinVersionCode}} </text>

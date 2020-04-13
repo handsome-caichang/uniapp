@@ -6,7 +6,7 @@
 			</view>
 			<view class="uni-flex uni-column" style="flex: 1;justify-content: center;">
 				<view class="text title" style="text-align: left;padding-top: 10rpx;">
-					{{detail.name}}
+					{{detail.nickName}}
 				</view>
 				<view class="address">
 					{{detail.province}}{{detail.city}}{{detail.district}}
@@ -157,14 +157,14 @@
 			headtap() {
 				uni.previewImage({
 					current: 0,
-					urls: [this.detail.img],
+					urls: [this.detail.headImage],
 					indicator: 'none'
 				})
 			},
 			listimgtap(current) {
 				uni.previewImage({
 					current: current,
-					urls: this.prolist,
+					urls: this.detail.images,
 				})
 			},
 			toRateDetail() {

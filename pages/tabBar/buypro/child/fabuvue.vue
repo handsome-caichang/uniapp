@@ -185,7 +185,16 @@
 					uni.showModal({
 						title: "提示",
 						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
-						showCancel: false,
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/userinfo/setuserinfopoint"
+								})
+							} else if (res.cancel) {
+								console.log('用户点击取消');
+							}
+						}
 					});
 					return;
 				}

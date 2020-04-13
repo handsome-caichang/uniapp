@@ -60,12 +60,17 @@
 		methods: {
 			getdata() {
 				this.api.home.searchPriceByArea({
-					classify: this.goodtypelist[this.activeindex].name,
-					cityId: this.region.cityCode
+					data: {
+						classify: this.goodtypelist[this.activeindex].name,
+						cityId: this.region.cityCode
+					}
 				}).then(res => {
 					console.log(res);
 					this.pricelist = res.data;
 				})
+			},
+			onCancel() {
+				
 			},
 			clickitem(index) {
 				this.activeindex = index;

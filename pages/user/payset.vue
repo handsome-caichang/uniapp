@@ -7,10 +7,10 @@
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view> -->
-		<view class="list-cell border-bottom" @click="navTo('/pages/user/userinfo/userinfoset')" >
+		<view class="list-cell border-bottom" @click="tologin" >
 			<text class="cell-tit">微信支付</text>
 			<text class="cell-more">
-				<text>小牛犊</text>
+				<text>{{hasLogin?'已绑定':'未绑定'}}</text>
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
@@ -25,45 +25,96 @@
 
 <script>
 	import {  
-	    mapMutations  
+	    mapMutations,
+		mapState
 	} from 'vuex';
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
+	var paysetCreate = null;
 	export default {
 		components: {
 			uniIcons,
 		},
 		data() {
 			return {
-				
 			};
 		},
+		computed: {
+			...mapState(['hasLogin','weixindata'])
+		},
+		onLoad() {
+			uni.getProvider({
+				service: 'oauth',
+				success: (result) => {
+					this.providerList = result.provider.map((value) => {
+						let providerName = '';
+						switch (value) {
+							case 'weixin':
+								providerName = '微信登录'
+								break;
+						}
+						return {
+							name: providerName,
+							id: value
+						}
+					});
+				},
+				fail: (error) => {
+					console.log('获取登录通道失败', error);
+				}
+			});
+		},
+		created() {
+			paysetCreate = this;
+		},
 		methods:{
-
-			navTo(url){
-				uni.navigateTo({
-					url
-				})
-				// this.$api.msg(`跳转到${url}`);
-			},
-			//退出登录
-			toLogout(){
-				uni.showModal({
-				    content: '确定要退出登录么',
-				    success: (e)=>{
-				    	if(e.confirm){
-				    		setTimeout(()=>{
-				    			uni.navigateBack();
-				    		}, 200)
-				    	}
-				    }
+			...mapMutations(['logintest','setWeixindata']),
+			tologin() {
+				var _that = this;
+				console.log(_that.api);
+				uni.login({
+					provider: 'weixin',
+					success: (res) => {
+						console.log('login success:', res);
+						// 更新保存在 store 中的登录状态
+						_that.logintest('weixin');
+						// 	"authResult": {
+						// 		"access_token": "32_ynr4NzZziYNjZQnE8c1h9I09YXBsPIlpg8R0BiRzm_DMaQsCtvMPrB8G9Vuoy76CtykgAegQe6h22TXvzLZ1ObxFPOwr3wqRTNlaN2ZVhGI",
+						// 		"code": "081U3nPT04hfR22HpNNT0DDgPT0U3nPa",
+						// 		"expires_in": 7200,
+						// 		"openid": "op6OAwk9bPPFby2XcKsUzjIRpPVA",
+						// 		"refresh_token": "32_HMhIXiLqG6asdDbdCXwjy6j-vXm_3XHN6ZmPZhw7RlUr4xgkYVA6gKfN1p1zdLSCQ6WA-sDt5YEOpZF3pf0AzIjICR8wUh9uTbUBrr0bCJ4",
+						// 		"scope": "snsapi_userinfo",
+						// 		"unionid": "opwAvt4uNEQ4RGc6oQPSCRf4dCU8"
+						// 	},
+						_that.setWeixindata(res.authResult);
+						_that.setweixin(res.authResult);
+					},
+					fail: (err) => {
+						console.log('login fail:', err);
+					}
 				});
 			},
-			//switch
-			switchChange(e){
-				let statusTip = e.detail.value ? '打开': '关闭';
-				this.$api.msg(`${statusTip}消息推送`);
+			setweixin(weixindata) {
+				this.api.home.setWeixinAccount({
+					userId: getApp().globalData.userdata.userId,
+					weixinAccount: weixindata.access_token,
+					weixinOpenId: weixindata.openid,
+					weixinName: weixindata.scope,
+				}).then(res => {
+					console.log(res)
+					uni.showModal({
+						showCancel: false,
+						content: '绑定成功',
+						title: "提示",
+					})
+				})
 			},
-
+		},
+		watch: {
+			"weixindata": (newdata, old) => {
+				console.log(newdata);
+				// paysetCreate.setweixin(newdata);
+			}
 		}
 	}
 </script>

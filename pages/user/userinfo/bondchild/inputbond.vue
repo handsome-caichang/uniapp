@@ -85,10 +85,24 @@
 						money: ""+this.bondnum,
 						typeId: this.current + 1,
 					}).then(res => {
-						uni.showToast({
-							title: "缴纳成功",
-							icon: "success"
-						})
+						uni.requestPayment({
+						    provider: 'wxpay',
+						    orderInfo: res.data, //微信、支付宝订单数据
+						    success: function (res) {
+								uni.showModal({
+									title: "提示",
+									content: '支付成功',
+									showCancel: false,
+								});
+						    },
+						    fail: function (err) {
+						       uni.showModal({
+						       	title: "提示",
+						       	content: '支付失败',
+						       	showCancel: false,
+						       });
+						    }
+						});
 					})
 				}
 			}

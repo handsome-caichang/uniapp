@@ -49,7 +49,7 @@
 		},
 		data() {
 			return {
-				uesr: {},
+				user: {},
 				uesrdata: {}
 			}
 		},

@@ -24,7 +24,7 @@
 				</view>
 				<view class="tit" style="margin-top: 20upx;margin-left: 20upx;" v-if="userdata.isVip == 1">
 					<text class="iconfont iconjiaoyi"></text>
-					Recovery Station {{userdata.vipLevel == 0 ? '黄金' : "钻石"}} 会员  
+					Recovery Station {{userdata.vipLevel == 0 ? '黄金' : (userdata.vipLevel == 1 ? "钻石" : '')}} 会员  
 				</view>
 			</view>
 		</view>

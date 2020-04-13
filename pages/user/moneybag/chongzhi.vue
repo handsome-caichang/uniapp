@@ -83,6 +83,7 @@
 			},
 			chongzhi() {
 				if (this.bondnum) {
+					console.log(11)
 					this.api.home.balanceRecharge({
 						typeId: 1,
 						userId: getApp().globalData.userdata.userId,

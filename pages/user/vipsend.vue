@@ -5,8 +5,8 @@
 			<view class="uni-flex">
 				<image  :src="userdata.headImage" class="img"></image>
 				<view class="name-box">
-					<text class="name">{{userdata.name}}</text>
-					<text class="vip">黄金</text>
+					<text class="name">{{userdata.nickName}}</text>
+					<text class="vip" v-if="userdata.isVip == 1 ">{{userdata.vipLevel == 0 ? '黄金' : (userdata.vipLevel == 1 ? '钻石':'')}}</text>
 				</view>
 			</view>
 			<view class="vip-point">
@@ -143,13 +143,18 @@
 		},
 		methods: {
 			setvipprice() {
-				var vipType = this.isactive ? 0 : 1;
+				// vipTime: 1
+				// price: 98
+				// vipType: 0
+				var vipType= this.isactive ? 0 : 1;
 				var vipTime = this.isactivesku;
-				this.viplist.forEach(item => {
-					if (item.vipType == vipType && vipTime == item.vipType) {
-						this.price = item.price;
+				this.price = '';
+				for (var i = 0; i < this.viplist.length; i++) {
+					if (this.viplist[i].vipType == vipType && this.viplist[i].vipTime == vipTime) {
+						this.price = this.viplist[i].price;
+						break;
 					}
-				})
+				}
 			},
 			sub() {
 				this.api.home.submitVipOrder({
@@ -166,24 +171,32 @@
 					}).then(ret => {
 						var orderString = ret.data;
 						console.log(ret)
-						uni.requestPayment({
-						    provider: 'wxpay',
-						    orderInfo: orderString, //微信、支付宝订单数据
-						    success: function (res) {
-								uni.showModal({
+						if (this.current == 0) {
+							uni.showModal({
+								title: "提示",
+								content: '支付成功，请关闭APP后再次进入',
+								showCancel: false,
+							});
+						}else {
+							uni.requestPayment({
+								provider: 'wxpay',
+								orderInfo: orderString, //微信、支付宝订单数据
+								success: function (res) {
+									uni.showModal({
+										title: "提示",
+										content: '充值成功，请关闭APP后再次进入',
+										showCancel: false,
+									});
+								},
+								fail: function (err) {
+								   uni.showModal({
 									title: "提示",
-									content: '充值成功，请关闭APP后再次进入',
+									content: '支付失败',
 									showCancel: false,
-								});
-						    },
-						    fail: function (err) {
-						       uni.showModal({
-						       	title: "提示",
-						       	content: '支付失败',
-						       	showCancel: false,
-						       });
-						    }
-						});
+								   });
+								}
+							});
+						}
 					})
 				})
 			},

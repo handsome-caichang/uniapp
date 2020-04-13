@@ -156,6 +156,9 @@ export default {
 		this.loadData();
 		this.doGetLocation();
 	},
+	onShow() {
+		this.loadData();
+	},
 	created() {
 		uni.$on('_updatehome',function(data){
 			this.loadData();
@@ -170,7 +173,6 @@ export default {
 			this.headerPosition = 'absolute';
 		}
 	},
-	onShow() {},
 	methods: {
 		...mapMutations(['setuserInfo', 'setProvinceList', "setgoodtypelist"]),
 		closeDrawer() {
@@ -209,7 +211,6 @@ export default {
 					userId: getApp().globalData.userdata.userId
 				}
 			}).then(res => {
-				console.log(res);
 				let userdata = uni.getStorageSync('userdata');
 				let newuserdata = Object.assign(userdata, res.data);
 				uni.setStorageSync('userdata', newuserdata);
@@ -252,7 +253,6 @@ export default {
 					pageIndex: 1
 				}
 			}).then(res => {
-				// console.log(res)
 				this.vipusers = res.data;
 			})
 			// 公告
@@ -263,7 +263,6 @@ export default {
 			uni.getLocation({
 				geocode: true,
 				success: res => {
-					console.log(res);
 					this.api.home.goodsRecommend({
 						data: {
 							userId: getApp().globalData.userdata.userId,
@@ -271,17 +270,16 @@ export default {
 							lng: ""+res.longitude,
 						}
 					}).then(res => {
+						console.log(res)
 						res.data.forEach(item => {
 							let time = item.createTime.replace(' ', "T")
 							let datetime = new Date(time).getTime();
 							item.createTime = datetime;
 						})
-						console.log(res)
 						this.huowulist = res.data;
 					})
 				},
 				fail: err => {
-					console.log(err)
 				}
 			});
 			this.getIndustryInformationList();
@@ -316,11 +314,9 @@ export default {
 			return status;
 		},
 		doGetLocation() {
-			console.log(1)
 			uni.getLocation({
 				geocode: true,
 				success: res => {
-					console.log(res)
 					uni.setStorageSync('_location', res);
 					let city = res.address.city.slice(0, res.address.city.length - 1);
 					uni.request({
@@ -333,13 +329,11 @@ export default {
 							vue: 1
 						},
 						success: rest => {
-							console.log(rest)
 							this.tianqi = rest.data;
 						}
 					});
 				},
 				fail: err => {
-					console.log(err)
 				}
 			});
 		}

@@ -10,7 +10,7 @@
 		</view>
 		
 		<view class="uni-flooter-box">
-			<view class="checked-box">
+			<view class="checked-box" v-if="userdata.vipLevel == 1">
 				<checkbox :checked="ischeck" color="#E7211A" />
 				<text style="color: #E7211A;">加急</text>
 			</view>
@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		
-		<view class="point-box">
+		<view class="point-box" v-if="userdata.isVip != 1">
 			<icon type="warn" size="20" ></icon>
 			<text style="margin-left: 10upx;">开通会员才能发布求购喔！钻石级别会员可加急</text>
 		</view>
@@ -34,11 +34,18 @@
 			return {
 				activeindex: 0,
 				ischeck: false,
-				btnactive: true, // 如果不是vip 不能发布
+				userdata: {},
+				btnactive: false, // 如果不是vip 不能发布
 			}
 		},
 		computed: {
 			...mapState(['goodtypelist'])
+		},
+		created(){
+			this.userdata = getApp().globalData.userdata;
+			if (this.userdata.isVip == 1 ) {
+				this.btnactive = true;
+			}
 		},
 		methods: {
 			clickitem(index) {
@@ -49,7 +56,31 @@
 					uni.showModal({
 						title: "提示",
 						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
-						showCancel: false,
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/userinfo/setuserinfopoint"
+								})
+							} else if (res.cancel) {
+								console.log('用户点击取消');
+							}
+						}
+					});
+					return;
+				}
+				if (!this.btnactive) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/vipsend"
+								})
+							}
+						}
 					});
 					return;
 				}
@@ -85,11 +116,15 @@
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
+			position: relative;
+			height: 100upx;
 			.checked-box {
 				padding-left: 20upx;
 			}
 			.btn {
-				margin-left: 50upx;
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
 				width:  332upx;
 				height: 100upx;
 				line-height: 100upx;

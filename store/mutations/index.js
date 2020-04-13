@@ -1,8 +1,4 @@
 export default {
-    login(state, userName) {
-        state.userName = userName || '新用户';
-        state.hasLogin = true;
-    },
     setlocation(state, userName) {
         state.location = location;
     },
@@ -18,5 +14,12 @@ export default {
 	},
 	setgoodtypelist(state, data) {
 		state.goodtypelist = data;
-	}
+	},
+	logintest(state, provider) {
+		state.hasLogin = true;
+		state.loginProvider = provider;
+	},
+	setWeixindata(state, weixindata) {
+		state.weixindata = weixindata
+	},
 }

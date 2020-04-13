@@ -80,7 +80,7 @@
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				可获得鼓励金 ：
+				需要支付佣金 ：
 				<view class="price"> ¥{{priceguli}} </view>
 			</view>
 			<view class="lj-detail">
@@ -100,7 +100,6 @@
 					</view>
 				</view>
 				<view class="item-box">
-
 				</view>
 			</view>
 			<view class="form-box uni-flex ">

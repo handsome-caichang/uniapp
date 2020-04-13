@@ -372,4 +372,10 @@ export default {
 			params
 		);
 	},
+	setWeixinAccount(params) {
+		return http.post(
+			'user/setWeixinAccount',
+			params
+		);
+	}
 }

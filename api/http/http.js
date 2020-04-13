@@ -55,6 +55,11 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
   }
   return response
 }, (response) => { // 请求错误做点什么
+	uni.showToast({
+	  	title: response.data.error,
+		icon:  'error',
+		position: 'bottom',
+	})
   return response
 })
 

@@ -2,22 +2,22 @@
 	<view class="uni-page-body">
 		<uni-list>
 			<uni-list-item title="姓名" :showArrow="false" :showBadge="true" >
-				<input class="uni-input" type="text" :maxlength="5" v-model="realName" placeholder="" placeholder-class="p-active" />
+				<input class="uni-input" type="text" :maxlength="5" v-model="realName" placeholder-class="p-active" />
 			</uni-list-item>
-			<uni-list-item title="手机号码"  :showArrow="false" :showBadge="true" >
-				<input class="uni-input" type="number" :maxlength="11" v-model="realMobilePhone" placeholder="" placeholder-class="p-active" />
+			<uni-list-item title="手机号码(实名绑定)"  :showArrow="false" :showBadge="true" >
+				<input class="uni-input" type="number" :maxlength="11" v-model="realMobilePhone" placeholder-class="p-active" />
 			</uni-list-item>
 			<uni-list-item title="证件类型"  :showArrow="false" :showBadge="true" >
 				<text style="color:#575757;">身份证</text>
 			</uni-list-item>
 			<uni-list-item title="证件号码"  :showArrow="false" :showBadge="true" >
-				<input class="uni-input" type="text" :maxlength="18" v-model="idNumber" placeholder="" placeholder-class="p-active" />
+				<input class="uni-input" type="text" :maxlength="18" v-model="idNumber" placeholder-class="p-active" />
 			</uni-list-item>
-			<uni-list-item title="证件有效期"  :showArrow="false" :showBadge="true" >
-				<input class="uni-input" type="text" :maxlength="10" v-model="idCardValidity" placeholder="" placeholder-class="p-active" />
+			<uni-list-item title="证件的有效期"  :showArrow="false" :showBadge="true" >
+				<input class="uni-input" type="text" :maxlength="10" v-model="idCardValidity" placeholder="1997" placeholder-class="p-active" />
 			</uni-list-item>
 			<uni-list-item title="车牌号"  :showArrow="false" :showBadge="true" >
-				<input class="uni-input" type="text" v-model="carCard" placeholder="" placeholder-class="p-active" />
+				<input class="uni-input" type="text" v-model="carCard" placeholder-class="p-active" />
 			</uni-list-item>
 		</uni-list>
 		<view class="viod" style="width: 100%;height: 18upx;background-color: #D3D3D3;"></view>
@@ -124,9 +124,29 @@
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
+			this.getdata();
 			this.realMobilePhone = this.userdata.mobilePhone;
 		},
 		methods: {
+			getdata() {
+				this.api.home.getRealInfo({
+					data: {
+						userId: this.userdata.userId
+					}
+				}).then(res => {
+					console.log(res);
+					if (res.data.idNumber) {
+						this.realName = res.data.realName;
+						this.carCard = res.data.carCard;
+						this.realMobilePhone = res.data.realMobilePhone;
+						this.idCardValidity = res.data.idCardValidity;
+						this.idNumber = res.data.idNumber;
+						this.idCardFront = res.data.idCardFront;
+						this.idCardBack = res.data.idCardBack;
+						this.faceImage = res.data.isDepositMoneyfaceImage;
+					}
+				})
+			},
 			fabu() {
 				this.api.home.userRealAuth({
 					userId: this.userdata.userId,

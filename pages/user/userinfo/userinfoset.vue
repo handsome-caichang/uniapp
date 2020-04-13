@@ -7,10 +7,10 @@
 				<view class="text">
 					<text v-if="!shiming.realName" style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> 
 					<view class="name" v-else>
-						{{shiming.realName}}
+						{{shiming.realName ? shiming.realName : ''}}
 					</view>
 					<view class="cardid">
-						{{shiming.idNumber}}
+						{{shiming.idNumber ? shiming.idNumber : ''}}
 					</view>
 				</view>
 			</view>
@@ -66,6 +66,22 @@
 					userId: this.userdata.userId
 				}
 			}).then(res => {
+				console.log(res);
+				// {
+				// 	"isSuccessful": 1,
+				// 	"data": {
+				// 		"realName": "徐君",
+				// 		"carCard": "123456",
+				// 		"realMobilePhone": "13486413332",
+				// 		"idCardValidity": "1986",
+				// 		"isDepositMoney": 0,
+				// 		"idNumber": "330211198603081018",
+				// 		"idCardFront": "https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660782906791.png",
+				// 		"idCardBack": "https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660783224898.png",
+				// 		"faceImage": ""
+				// 	},
+				// 	"error": "成功"
+				// }
 				this.shiming = res.data;
 			})
 		},

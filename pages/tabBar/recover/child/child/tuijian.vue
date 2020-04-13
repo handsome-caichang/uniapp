@@ -41,9 +41,14 @@
 				productList: [],
 				novip: true,
 				utils,
+				userdata: {}
 			}
 		},
 		created() {
+			this.userdata = getApp().globalData.userdata;
+			if (this.userdata.isVip == 1) {
+				this.novip = false;
+			}
 			this.getdata();
 		},
 		methods: {

@@ -28,6 +28,10 @@ const UIState = {
     // app是否启动完成
     appInited: false,
 
+	hasLogin: false,
+	loginProvider: "",
+	weixindata: null,
+
     // 控制app.vue页面里的'full-block'是否显示;
     // serverBlock: false,
 

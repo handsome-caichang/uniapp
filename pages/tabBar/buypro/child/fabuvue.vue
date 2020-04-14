@@ -31,7 +31,7 @@
 					<text class="text">售价</text>
 				</view>
 				<view class="input-box">
-					<input class="uni-input" v-model="price" type="number" placeholder="请输入货物售价（可预估）" />
+					<input class="uni-input" v-model="price" type="number" placeholder="请输入货物售价, 不输入则面议" />
 				</view>
 			</view>
 			<view class="uni-flex item-box">
@@ -41,8 +41,6 @@
 				</view>
 				<view class="input-box">
 					<input class="uni-input" v-model="address" type="text" placeholder="货物地址" />
-					<!-- <view class="input " :class="region.cityCode?'':'place'">{{region.label}}</view>
-					<uni-icons class="icon" type="arrowdown"></uni-icons> -->
 				</view>
 			</view>
 			<view class="uni-flex item-box">
@@ -79,7 +77,7 @@
 				<view class="uni-list-cell cell-pd">
 					<view class="uni-uploader">
 						<view class="uni-uploader-head">
-							<view class="uni-uploader-title bitian">上传图片</view>
+							<view class="uni-uploader-title">上传图片</view>
 							<view class="uni-uploader-info">{{imageList.length}}/9</view>
 						</view>
 						<view class="uni-uploader-body">
@@ -112,9 +110,6 @@
 			<text class="text">中途退出系统将不保留此次编辑</text>
 		</view>
 
-		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue"
-		 @onConfirm="onConfirm"></mpvue-city-picker>
-
 	</view>
 </template>
 
@@ -131,13 +126,11 @@
 	]
 	import { mapMutations,mapState } from 'vuex';
 	import permision from "@/common/permission.js"
-	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uploadImage from '@/common/ossutil/uploadFile.js';
 	export default {
 		components: {
 			uniIcons,
-			mpvueCityPicker
 		},
 		data() {
 			return {
@@ -149,11 +142,6 @@
 				protypeindex: 0,
 				array: [
 				],
-				region: {
-					label: "请点击选择地址",
-					value: [],
-					cityCode: ""
-				},
 				cityPickerValue: [0, 0, 1],
 				numberleng: "",
 				price: "",
@@ -170,6 +158,12 @@
 		},
 		computed: {
 			...mapState(["goodtypelist"])
+		},
+		created() {
+			let userdata = getApp().globalData.userdata;
+			if (userdata.province) {
+				this.address = userdata.province + userdata.city + userdata.district;
+			}
 		},
 		methods: {
 			delimg(index) {
@@ -332,16 +326,6 @@
 					urls: this.imageList
 				})
 				
-			},
-			onCancel(e) {
-				console.log(e)
-			},
-			chooseCity() {
-				this.$refs.mpvueCityPicker.show()
-			},
-			onConfirm(e) {
-				this.region = e;
-				this.cityPickerValue = e.value;
 			},
 		}
 	}

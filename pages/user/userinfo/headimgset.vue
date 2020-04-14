@@ -4,7 +4,7 @@
 			<view class="uni-uploader__input-box">
 				<view class="uni-uploader__input" v-if="imageList.length == 0" @tap="chooseImage(0)"></view>
 				<view class="imgbox" v-else>
-					<image class="imgbox" v-for="(item,index) in imageList" :key="index" :src="item" mode=""></image>
+					<image mode="aspectFit" class="imgbox" v-for="(item,index) in imageList" :key="index" :src="item" ></image>
 				</view>
 			</view>
 		</view>
@@ -101,6 +101,7 @@
 										city:this.userdata.city,
 										district:this.userdata.district,
 										userId: this.userdata.userId,
+										carCard: this.userdata.carCard,
 									}).then(res => {
 										let userdata = uni.getStorageSync('userdata');
 										 this.userdata.headImage = result;

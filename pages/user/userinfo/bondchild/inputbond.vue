@@ -14,7 +14,7 @@
 		<radio-group @change="radioChange">
 			<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 				<view style="display:flex;justify-content: center;">
-					<image style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
+					<image mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 					<text>{{item.name}}</text>
 				</view>
 				<view>
@@ -80,14 +80,21 @@
 			},
 			zhuanru() {
 				if (this.bondnum) {
+					let money = this.bondnum * 100;
+					console.log({
+						userId: getApp().globalData.userdata.userId,
+						money: ""+money,
+						typeId: this.current + 1
+					})
 					this.api.home.payDeposit({
 						userId: getApp().globalData.userdata.userId,
-						money: ""+this.bondnum,
+						money: ""+money,
 						typeId: this.current + 1,
 					}).then(res => {
+						console.log(res);
 						uni.requestPayment({
 						    provider: 'wxpay',
-						    orderInfo: res.data, //微信、支付宝订单数据
+						    orderInfo: res.data.data, //微信、支付宝订单数据
 						    success: function (res) {
 								uni.showModal({
 									title: "提示",

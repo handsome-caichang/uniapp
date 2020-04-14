@@ -33,6 +33,11 @@
 					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.years" maxlength="2" type="number" placeholder="请填写从业年限" />
 				</view>
 			</uni-list-item>
+			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="车牌号" >
+				<view class="uni-flex">
+					<input class="uni-input" style="text-align: right;" @blur="saveuser"  v-model="userdata.carCard" maxlength="2" type="number" placeholder="请填写车牌号" />
+				</view>
+			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" />
 			<uni-list-item :show-extra-icon="true" :showArrow="false"  thumb="/static/img/user/gengduo.png" title="更多展示" />
 		</uni-list>
@@ -125,7 +130,9 @@
 		methods: {
 			_updateuser() {
 				this.userdata = getApp().globalData.userdata;
-				this.region.label = this.userdata.province + '-' + this.userdata.city + "-" + this.userdata.district;
+				if(this.userdata.province) {
+					this.region.label = this.userdata.province + '-' + this.userdata.city + "-" + this.userdata.district;
+				}
 				this.imageList = this.userdata.images;
 			},
 			delimg(index) {
@@ -147,6 +154,7 @@
 					city:this.userdata.city,
 					district:this.userdata.district,
 					userId: this.userdata.userId,
+					carCard: this.userdata.carCard,
 				})
 			},
 			onConfirm(e) {
@@ -163,6 +171,7 @@
 					city: list[1],
 					district:  list[2],
 					userId: this.userdata.userId,
+					carCard: this.userdata.carCard,
 				}).then(res => {
 					this.userdata.province = list[0];
 					this.userdata.city = list[1];

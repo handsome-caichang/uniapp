@@ -1,8 +1,9 @@
 <template>
 	<view class="uni-page-body orderin">
 		<scroll-view class="scroll-h" :scroll-x="true" :show-scrollbar="false">
-			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="activeindex==index?'active':''" @tap="changetab(index)">
+			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 2 }" @tap="changetab(index)">
 				{{item}}
+				<text v-if="index == 2 && newleng" class="hongdiannum">{{newleng}}</text>
 			</view>
 		</scroll-view>
 
@@ -15,23 +16,24 @@
 				<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="clickitem(item)">
 					<view class="uni-flex uni-row item-box">
 						<view class="text uni-flex" style="width: 160rpx;height: 130rpx;justify-content: center;align-items: center;">
-							<image :src="item.img" style="width: 160rpx;height: 130rpx;"></image>
+							<image mode="aspectFit" :src="item.images[0]" style="width: 160rpx;height: 130rpx;"></image>
 						</view>
 						<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
 								<view style="color: #343434;font-weight: 500;font-size: 34upx;">{{item.classifyName}} | {{item.count}}吨</view>
-								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{utils.timeTodate('m-d', item.createTime)}}</text>
+								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{ utils.timeTodate('Y m-d', item.createTime) }}</text>
 							</view>
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
 								<view style="color: #212121;font-size: 28upx;">{{item.name}}</view>
-								<text class="detail-btn">查看详情</text>
+								<text class="detail-btn" :class="novip?'noclick':''">查看详情</text>
 							</view>
-							<!-- <view class="vipmore" v-if="novip"> :class="novip?'noclick':''"
+							<view class="vipmore" v-if="novip" > 
 								<icon type="warn" size="12"></icon>
 								<text style="margin-left: 10upx;">注册会员才能查看详情喔！</text>
-							</view> -->
+							</view>
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;">
-								<view class="price" style="font-size: 28upx;font-weight: 500;">{{item.bedrockPrice}}-{{item.outsidePrice}}</view>
+								<view class="price" style="font-size: 28upx;font-weight: 500;" v-if="item.bedrockPrice">{{item.bedrockPrice}}-{{item.outsidePrice}} 元</view>
+								<view class="price" style="font-size: 28upx;font-weight: 500;" v-else>价格面议</view>
 								<text class="time" style="color: #343434;font-size: 22upx;">{{item.address}}</text>
 							</view>
 
@@ -49,27 +51,27 @@
 				<view class="uni-list">
 					<uni-list>
 						<!-- {
-						"buyUserId": "1",
 						"payMsgMoneyStatus": 0,
-						"star": 0,
-						"createTime": "2020-34-03 12:34:11",
-						"buyUserName": "测试",
-						"headImage": "https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/null",
-						"buyDistrict": null,
-						"buyUserYear": 12,
-						"matchId": 2
+						"realseId": 5,
+						"createTime": "2020-03-04 07:19:51",
+						"sellDistrict": "岳麓区",
+						"sellUserId": "2",
+						"nickName": "遁去的一",
+						"count": 5,
+						"goodsName": "废铁",
+						"matchId": 8
 					}-->
-						<uni-list-item class="" :thumb="item.headImage" :showBadge="true" :showArrow="false" :note="'时间：'+item.createTime+'  '+item.buyDistrict"
+						<uni-list-item class="" :thumb="item.headImage" :showBadge="true" :showArrow="false" :note="'时间：'+item.createTime+'  '+item.sellDistrict"
 						 v-for="(item,index) in jilulist" :key="index">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.goodsName}}</text>
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}吨</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.nickName}}</text>
 							</view>
 							<view class="btn" style="">
-								<image src="/static/img/guanbi.png" mode="" style="width: 108upx;height:68upx"></image>
+								<image src="/static/img/guanbi.png" mode="aspectFit" style="width: 108upx;height:68upx"></image>
 							</view>
 						</uni-list-item>
 					</uni-list>
@@ -83,14 +85,14 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.headImage" :note="'时间：'+item.createTime+'  '+item.address" v-for="(item,index) in shoudaolist"
+						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :note="'时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in shoudaolist"
 						 :key="index" @tap="shoudaoclick(item)">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.goodsName}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}吨</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
-								<uni-rate class="rate" :size="12" :value="item.star" />
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.nickName}}</text>
 							</view>
 							<view class="btn" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
 						</uni-list-item>
@@ -105,27 +107,14 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<!--  "buyUserId":,【买家用户编号，字符串】
-     "buyUserName",【买家昵称，字符串】
-     "buyUserHeadImage",【买家头像，字符串】
-     "buyDistrict",【买家区域，字符串】
-     "buyUserYear",【买家年限，整形】
-     "matchId",【匹配编号，整形】
-     "createTime",【时间，时间戳】
-     "star",【买家星级，整型】
-     "sellUserId":,【卖家用户编号，字符串】
-     "sellUserName":,【卖家用户昵称，字符串】
-     "sellDistrict":,【卖家区域，字符串】
-     "count":,【货物数量，整型】
-     "name":,【货物名称，字符串】 -->
-						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'时间：'+item.createTime+'  '+item.buyDistrict" v-for="(item,index) in successlist"
+						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'申请时间：'+item.createTime" v-for="(item,index) in successlist"
 						 :key="index" @tap="nvto(item)">
 							<view slot="content" style="height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
+								<uni-rate class="rate" :size="12" :value="item.start" />
 							</view>
 							<view class="btn" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
@@ -150,12 +139,24 @@
 			uniListItem
 		},
 		created() {
+			this.userdata = getApp().globalData.userdata;
+			if (this.userdata.isVip == 1) {
+				this.novip = false;
+			}
 			// this.loadData();
 			this.gettuijian();
+			this.api.home.recoverygetNewReceivedMatchList({
+				data: {
+					userId:  getApp().globalData.userdata.userId,
+				}
+			}).then(res => {
+				this.newleng = res.data.length;
+			})
 		},
 		data() {
 			return {
 				utils,
+				userdata: {},
 				productList: [],
 				successlist: [],
 				shoudaolist: [],
@@ -168,7 +169,9 @@
 				jilulist: [
 				],
 				activeindex: 0,
-				huishoulist: []
+				newleng: 0,
+				huishoulist: [],
+				novip: true,
 			}
 		},
 		methods: {
@@ -185,7 +188,7 @@
 				}
 			},
 			getjilu() {
-				this.api.home.recoverygetReceivedMatchList({
+				this.api.home.recoverygetApplyMatchList({
 					data: {
 						userId: getApp().globalData.userdata.userId
 					}
@@ -196,7 +199,7 @@
 				})
 			},
 			getshoudao(){
-				this.api.home.recoverygetApplyMatchList({
+				this.api.home.recoverygetReceivedMatchList({
 					data: {
 						userId: getApp().globalData.userdata.userId
 					}
@@ -218,8 +221,11 @@
 								lng: ""+res.longitude,
 							}
 						}).then(res => {
-							console.log('tuij');
-							console.log(res);
+							res.data.forEach(item => {
+								let time = item.createTime.replace(' ', "T")
+								let datetime = new Date(time).getTime();
+								item.createTime = datetime;
+							})
 							this.productList = res.data;
 						})
 					},
@@ -238,6 +244,10 @@
 				})
 			},
 			clickitem(item) {
+				if (this.novip) {
+					return;
+				}
+				getApp().globalData.productdetail = item;
 				uni.navigateTo({
 					url: '/pages/product/productdetail'
 				})
@@ -397,6 +407,23 @@
 				&.active {
 					background-color: $font-color-light;
 					color: $font-color-withe;
+				}
+				&.hongdian {
+					position: relative;
+				}
+				.hongdiannum {
+					position: absolute;
+					border-radius: 50%;
+					top: -6upx;
+					right: -6upx;
+					background-color: #E7211A;
+					color: #fff;
+					font-size: 32upx;
+					width: 32upx;
+					height: 32upx;
+					line-height: 1;
+					text-align: center;
+					transform: scale(0.6);
 				}
 			}
 		}

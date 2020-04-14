@@ -4,7 +4,7 @@
 			<view class="uni-list">
 				<view class="uni-list-cell" v-for="(item,index) in recordlist" :key="index" @tap="nato(item)" >
 					<view class="uni-media-list">
-						<image class="uni-media-list-logo" :src="item.img"></image>
+						<image mode="aspectFit" class="uni-media-list-logo" :src="item.img"></image>
 						<view class="uni-media-list-body">
 							<view class="uni-media-list-text-top">{{item.name}}</view>
 							<view class="uni-media-list-text-top">{{item.type}}  <text>{{item.num}}</text></view>
@@ -12,8 +12,8 @@
 								交易时间： <text style="margin-right: 10upx;">2019/12/13</text> <text>镇海</text>
 								<text style="float: right;">NO.1111114</text>
 							</view>
-							<image src="/static/img/payery.png" class="payicon" v-if="item.status === 0" ></image>
-							<image src="/static/img/paysuc.png" class="payicon" v-if="item.status === 1" ></image>
+							<image mode="aspectFit" src="/static/img/payery.png" class="payicon" v-if="item.status === 0" ></image>
+							<image mode="aspectFit" src="/static/img/paysuc.png" class="payicon" v-if="item.status === 1" ></image>
 							<uni-icons type="arrowright" size="20" class="rowicon" v-if="item.status === 0" ></uni-icons>
 						</view>
 					</view>

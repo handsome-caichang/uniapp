@@ -5,7 +5,7 @@
 			<swiper indicator-dots circular=true duration="400">
 				<swiper-item class="swiper-item" v-for="(item,index) in detail.images" :key="index">
 					<view class="image-wrapper">
-						<image :src="item" class="loaded" mode="aspectFill"></image>
+						<image mode="aspectFit" :src="item" class="loaded" ></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -27,13 +27,13 @@
 			<view class="content-box">
 				<view class="title">
 					<text>{{detail.classifyName}}</text>
-					<text class="price">{{detail.bedrockPrice-outsidePrice}}元/吨（预估运费{{detail.freight}}元/吨）</text>
+					<text class="price">{{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨（预估运费{{detail.freight}}元/吨）</text>
 				</view>
 				<view class="uni-flex address">
 					<view class="text">
-						<view class="a">{{detail.address}}</view>
+						<view class="a">宁波市镇海团桥菜场对面张三废品回收{{detail.address}}</view>
 						<view class="b">
-							<!-- <uni-icons type="location-filled"></uni-icons> 距我直线2.9km，驾车约12分钟 -->
+							<uni-icons type="location-filled"></uni-icons> 距我直线2.9km，驾车约12分钟
 						</view>
 					</view>
 					<view class="iconbox">
@@ -67,7 +67,7 @@
 				</view>
 				<view class="s-container">
 					<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-						<image class="img" v-for="(item,index) in detail.images" :key="index" :src="item" mode="scaleToFill"></image>
+						<image mode="aspectFit" class="img" v-for="(item,index) in detail.images" :key="index" :src="item"></image>
 					</scroll-view>
 				</view>
 			</view>
@@ -159,6 +159,7 @@
 		},
 		created() {
 			this.malldetail = getApp().globalData.malldetail;
+			this.detail = getApp().globalData.malldetail;
 			this.getdata();
 		},
 		methods: {
@@ -183,6 +184,9 @@
 			},
 			call() {
 				// 直接拨打电话
+				uni.makePhoneCall({
+				    phoneNumber: '0574-5533-6130' //仅为示例
+				});
 			}
 		}
 	}

@@ -2,7 +2,7 @@
 	<view class="uni-page-body outbond">
 		<view class="uni-list-cell" hover-class="uni-list-cell-hover" v-for="(item,index) in list" :key="index">
 			<view class="uni-media-list">
-				<image class="uni-media-list-logo" :src="item.headImage"></image>
+				<image class="uni-media-list-logo" mode="aspectFit" :src="item.headImage"></image>
 				<view class="uni-media-list-body">
 					<view class="uni-media-list-text-top"> {{item.name}}</view>
 					<view class="uni-media-list-text-bottom uni-ellipsis">
@@ -14,7 +14,7 @@
 					<uni-icons type="arrowthinup" size="24"></uni-icons>
 					<uni-icons type="arrowthindown" size="24" ></uni-icons>
 					<uni-icons type="trash" size="24" @tap="del(item)" ></uni-icons>
-					<view class="checked-box" @tap="jiaji(item)" >
+					<view class="checked-box" @tap="jiaji(item)" v-if="isjiaji">
 						<checkbox :checked="item.urgent" color="#E7211A" />
 						<text style="color: #E7211A;">加急</text>
 					</view>
@@ -32,10 +32,16 @@
 		},
 		data() {
 			return {
-				list: []
+				list: [],
+				userdata: {},
+				isjiaji: false
 			}
 		},
 		created() {
+			this.userdata = getApp().globalData.userdata;
+			if (this.userdata.isVip == 1 &&  this.userdata.vipLevel == 1) {
+				this.isjiaji = true;
+			}
 			this.getdata();
 		},
 		methods: {

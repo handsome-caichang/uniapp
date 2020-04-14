@@ -6,6 +6,18 @@ export default {
 	// 			params: params
 	// 		});
 	// },
+	realsegetNewReceivedMatchList(params) {
+		return http.get(
+			'realse/getNewReceivedMatchList',
+			params
+		);
+	},
+	recoverygetNewReceivedMatchList(params ) {
+		return http.get(
+			'recovery/getNewReceivedMatchList',
+			params
+		);
+	},
 	sendVerificationCode(params) {
 		return http.post(
 			'user/sendVerificationCode',

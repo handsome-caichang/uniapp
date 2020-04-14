@@ -23,7 +23,7 @@
 				<view class="example-box" v-for="(item, index) in productList" :key="index" @tap="toGoods(item)">
 					<view class="uni-flex uni-row item-box">
 						<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
-							<image :src="item.image" style="width: 180rpx;height: 180rpx;"></image>
+							<image mode="aspectFit" :src="item.image" style="width: 180rpx;height: 180rpx;"></image>
 						</view>
 						<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 60upx;">
@@ -75,6 +75,9 @@ import uniIcons from '@/components/uni-icons/uni-icons.vue';
 import uniDrawer from '@/components/uni-drawer/uni-drawer.vue';
 import amap from '@/common/SDK/amap-wx.js';
 import { mapMutations,mapState } from 'vuex';
+import provinceData from '@/components/mpvue-citypicker/city-data/province.js';
+import cityData from '@/components/mpvue-citypicker/city-data/city.js';
+import areaData from '@/components/mpvue-citypicker/city-data/area.js';
 export default {
 	components: {
 		uniDrawer,
@@ -88,7 +91,33 @@ export default {
 			region:{label:"东城区",value:[],cityCode:"110101"},
 			cityPickerValue: [0, 0, 0],
 			tabIndex: 0,
-			productList: [],
+			productList: [
+				{
+					image: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660516001696.png',
+					images: ['https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660516001696.png'],
+					name: '张家回收站',
+					createTime: '2020/4/14',
+					classifyName: '废铁',
+					bedrockPrice: '2000',
+					outsidePrice: '3000',
+					freight: '40',
+					address: '宁波市镇海',
+					distance: '2.3km',
+					headImage: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158676446499037.png'
+				},{
+					image: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660814843654.png',
+					images: ['https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660814843654.png'],
+					name: '德思回收站',
+					createTime: '2020/4/14',
+					classifyName: '塑料',
+					bedrockPrice: '1000',
+					outsidePrice: '2000',
+					freight: '50',
+					address: '宁波市镇海',
+					distance: '5.9km',
+					headImage: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158676446499037.png'
+				},
+			],
 			showRight: false,
 			tablist: ['价格', '距离', '常用'],
 			activeindex: 0,
@@ -145,16 +174,50 @@ export default {
 					cityCode: this.region.cityCode
 				}
 			}).then(res => {
-				this.productList = res.data;
+				// this.productList = res.data;
 			})
 		},
 		async loadData() {
 			uni.getLocation({
 				geocode: true,
 				success: res => {
+					console.log(res);
+					var provinceindex = 0,cityindex =0,districtindex=0;
+					provinceData.forEach((item,index) => {
+						if (item.label == res.address.province) {
+							provinceindex = index;
+						}
+					})
+					cityData.forEach((item,index)=> {
+						if (index == provinceindex) {
+							item.forEach((it, y) => {
+								if (it.label == res.address.city) {
+									cityindex = y;
+								}
+							})
+						}
+					})
+					areaData.forEach((item,index)=> {
+						if (index == provinceindex) {
+							item.forEach((it, y) => {
+								if (cityindex == y) {
+									it.forEach((area, areaindex)=> {
+										if (area.label == res.address.district) {
+											districtindex = areaindex;
+											this.region = {
+												label: area.label,
+												value: [provinceindex, cityindex, areaindex],
+												cityCode: area.value
+											}
+											this.cityPickerValue =  [provinceindex, cityindex, areaindex];
+										}
+									})
+								}
+							})
+						}
+					})
 					this.locationobj = res;
 					uni.setStorageSync('_location', res);
-					this.city = res.address.city;
 					this.getRealseGoodsList();
 				},
 				fail: err => {}
@@ -231,14 +294,14 @@ export default {
 		display: flex;
 		align-items: center;
 		background-color: #fff;
-
+		font-size: 38upx;
 		.addr {
 			width: 160upx;
 			height: 60upx;
 			flex-shrink: 0;
 			display: flex;
 			align-items: center;
-			font-size: 28upx;
+			font-size: 38upx;
 
 			.uni-icons {
 				height: 60upx;
@@ -303,10 +366,10 @@ export default {
 		.tablebox {
 			padding: 0upx 20upx;
 			display: flex;
-
+			
 			.tableitem {
 				color: $font-color-light;
-				font-size: 28upx;
+				font-size: 36upx;
 				border: 2upx solid $font-color-light;
 				padding: 0 20upx;
 				height: 48upx;

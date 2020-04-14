@@ -1,8 +1,9 @@
 <template>
 	<view class="uni-page-body orderin">
 		<scroll-view class="scroll-h" :scroll-x="true" :show-scrollbar="false">
-			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="activeindex==index?'active':''" @tap="changetab(index)">
+			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 2 }" @tap="changetab(index)">
 				{{item}}
+				<text v-if="index == 2 && newleng" class="hongdiannum">{{newleng}}</text>
 			</view>
 		</scroll-view>
 
@@ -10,7 +11,7 @@
 			<view v-if="activeindex === 0">
 				<view class="huishouren">
 					<view class="cusitem" v-for="(item,index) in huishoulist" :key="index" @tap="nvtocustomer(item,1)">
-						<image :src="item.headImage" class="headerimg"></image>
+						<image mode="aspectFit" :src="item.headImage" class="headerimg"></image>
 						<view class="name">{{item.nickName}}</view>
 						<view class="point">从业{{item.year}}年</view>
 						<uni-rate class="rate" :size="12" :value="item.star" />
@@ -32,7 +33,7 @@
 				</view>
 				<view class="uni-list-item border-bottom" style="padding: 0 40upx;" v-for="(item, index) in jilulist" :key="index">
 					<view class="uni-flex">
-						<image :src="item.img" class="headerimg" style="margin-top: 20upx;"></image>
+						<image mode="aspectFit" :src="item.images ? item.images[0] : ''" class="headerimg" style="margin-top: 20upx;"></image>
 						<view class="content" style="margin-left:10upx;flex: 1">
 							<view class="title" style="font-size: 34upx;">{{item.nickName}}</view>
 							<view class="title" style="font-size: 34upx;">
@@ -40,7 +41,7 @@
 								<text style="margin-left: 20upx;">{{item.count}}吨</text>
 							</view>
 							<view style="color: #575757;font-size: 28upx;">
-								发布时间：<text>{{item.createTime}}</text> <text>{{item.sellDistrict}}</text>
+								发布时间：<text>{{ utils.timeTodate('Y m-d', item.createTime) }}</text> <text style="float: right;">{{item.sellDistrict}}</text>
 							</view>
 						</view>
 						<view class="btnbox" style="margin-top: 30upx;" @tap="guanli(item, '/pages/product/order/applicationrecord')">
@@ -87,7 +88,7 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'关闭时间：'+item.createTime+'  '+item.sellDistrict"
+						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'时间：'+item.createTime+'  '+item.sellDistrict"
 						 v-for="(item,index) in successlist" :key="index" @tap="toorderdetail(item, '/pages/product/order/orderdetail')">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
@@ -112,6 +113,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniList,
@@ -121,6 +123,7 @@
 		},
 		data() {
 			return {
+				utils,
 				successlist: [],
 				shoudaolist: [],
 				tablist: [
@@ -131,10 +134,18 @@
 				],
 				jilulist: [],
 				activeindex: 0,
-				huishoulist: []
+				huishoulist: [],
+				newleng: 1,
 			}
 		},
 		created() {
+			this.api.home.realsegetNewReceivedMatchList({
+				data: {
+					userId:  getApp().globalData.userdata.userId,
+				}
+			}).then(res => {
+				this.newleng = res.data.length;
+			})
 			this.gettuijian();
 		},
 		methods: {
@@ -165,8 +176,7 @@
 						pageIndex: 1,
 					}
 				}).then(res => {
-					console.log("回收人推荐");
-					console.log(res);
+					console.log(res)
 					this.huishoulist = res.data;
 				})
 			},
@@ -176,8 +186,11 @@
 						userId: getApp().globalData.userdata.userId
 					}
 				}).then(res => {
-					console.log("申请记录");
-					console.log(res);
+					res.data.forEach(item => {
+						let time = item.createTime.replace(' ', "T")
+						let datetime = new Date(time).getTime();
+						item.createTime = datetime;
+					})
 					this.jilulist = res.data;
 				})
 			},
@@ -187,8 +200,6 @@
 						userId: getApp().globalData.userdata.userId
 					}
 				}).then(res => {
-					console.log("匹配成功");
-					console.log(res);
 					this.successlist = res.data;
 				})
 			},
@@ -198,8 +209,6 @@
 						userId: getApp().globalData.userdata.userId
 					}
 				}).then(res => {
-					console.log("收到的申请");
-					console.log(res);
 					this.shoudaolist = res.data;
 				})
 			},
@@ -292,6 +301,23 @@
 				&.active {
 					background-color: $font-color-light;
 					color: $font-color-withe;
+				}
+				&.hongdian {
+					position: relative;
+				}
+				.hongdiannum {
+					position: absolute;
+					border-radius: 50%;
+					top: -6upx;
+					right: -6upx;
+					background-color: #E7211A;
+					color: #fff;
+					font-size: 32upx;
+					width: 32upx;
+					height: 32upx;
+					line-height: 1;
+					text-align: center;
+					transform: scale(0.6);
 				}
 			}
 		}

@@ -28,9 +28,6 @@
 				</view>
 			</label>
 		</radio-group>
-		<view class="input-container">
-			<input type="text" v-model="phone" style="width: 500upx;height:80upx;line-height: 80upx;border: 1px solid #666;padding-left:40upx">
-		</view>
 
 		<view class="btnbox" :class="{'isded':!bondnum}" @tap="chongzhi" >
 			确认提现
@@ -56,11 +53,16 @@
 				phone: '',
 				items: [
 					{
-						value: 'CHN',
-						name: '支付宝',
-						checked: 'true',
-						icon: '/static/img/pay/zhifubao.png',
+						value: 'BRA',
+						name: '微信',
+						icon: '/static/img/pay/weixin.png',
 					}
+					// {
+					// 	value: 'CHN',
+					// 	name: '支付宝',
+					// 	checked: 'true',
+					// 	icon: '/static/img/pay/zhifubao.png',
+					// }
 				],
 				current: 0,
 				CashMoney: 0
@@ -91,7 +93,6 @@
 					this.api.home.withdrawCash({
 						userId: getApp().globalData.userdata.userId,
 						money: this.bondnum,
-						alipayAccount: this.phone
 					}).then(res  => {
 						uni.navigateTo({
 							url: '/pages/other/tixiansuccess'

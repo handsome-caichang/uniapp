@@ -57,7 +57,7 @@
 			<radio-group @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 					<view style="display:flex;justify-content: center;">
-						<image style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
+						<image  mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 						<text>{{item.name}}</text>
 					</view>
 					<view>
@@ -341,18 +341,18 @@
 
 			.name-box {
 				color: #fff;
-				width: 120upx;
+				width: 600upx;
 				margin-left: 10upx;
-				line-height: 1;
 				.name {
-					font-size: 38upx;
+					font-size: 32upx;
 					font-weight: 500;
-					text-align: center;
+					text-align: left;
+					display: block;
 				}
-
 				.vip {
-					font-size: 34upx;
+					font-size: 38upx;
 					text-align: center;
+					color: $font-color-light;
 				}
 			}
 

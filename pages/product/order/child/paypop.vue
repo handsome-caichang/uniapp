@@ -14,7 +14,7 @@
 			<radio-group @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 					<view style="display:flex;justify-content: center;">
-						<image style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
+						<image mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 						<text>{{item.name}}</text>
 					</view>
 					<view>

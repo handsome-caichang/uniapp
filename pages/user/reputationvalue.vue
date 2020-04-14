@@ -1,16 +1,11 @@
 <template>
 	<view class="uni-page-body">
-
 		<view class="header-box">
-			
-			<image src="/static/img/goods/p1.jpg" class="img"></image>
+			<image :src="userdata.headImage" class="img"></image>
 			<view class="uni-flex pinfen">
 				<uni-rate class="rate" :size="12" :value="5" />
 				<text class="list-succ">3.15分</text>
 			</view>
-			
-			<image class="xingyu" src="/static/img/goods/p10.jpg"></image>
-			
 		</view>
 		<uni-list>
 			<uni-list-item title="个人资料" :showArrow="false" :showBadge="true">
@@ -27,8 +22,8 @@
 			</uni-list-item>
 		</uni-list>
 
-		<view class="uni-page-footer" @tap="nto">
-			评定方法 | 联系客服
+		<view class="uni-page-footer">
+			<view style="display: inline-block;" @tap="nto">评定方法</view><view style="display: inline-block;">    |    </view><view  style="display: inline-block;" @tap="dianhua">联系客服</view>
 		</view>
 
 	</view>
@@ -47,15 +42,22 @@
 		},
 		data() {
 			return {
+				userdata: {}
 			}
 		},
-		computed: {
-		
+		created() {
+			this.userdata = getApp().globalData.userdata;
+			console.log(this.userdata);
 		},
 		methods: {
 			nto() {
 				uni.navigateTo({
 					url: '/pages/user/reputationrun'
+				})
+			},
+			dianhua() {
+				uni.makePhoneCall({
+					 phoneNumber: '0574-5533-6130' //仅为示例
 				})
 			}
 		}

@@ -4,7 +4,7 @@
 			<view class="uni-list">
 				<view class="uni-list-item" style="padding: 0 40upx;" >
 					<view class="uni-flex">
-						<image :src="detail.img" class="headerimg" style="margin-top: 20upx;"></image>
+						<image :src="detail.img" mode="aspectFit" class="headerimg" style="margin-top: 20upx;"></image>
 						<view class="content" style="margin-left:10upx;flex: 1">
 							<view class="title" style="font-size: 34upx;">{{detail.nickName}}</view>
 							<view class="title" style="font-size: 34upx;">
@@ -24,7 +24,7 @@
 			<view class="huishouren" style="padding: 0upx;">
 				<view class="cusitem" v-for="(user,index) in detail.userList" :key="index">
 					<uni-icons type="close" size="12" color="#E7211A" class="clear-icon" v-if="guanlishow" @tap="clearuser(user,index)" ></uni-icons>
-					<image :src="user.headImage" class="headerimg"></image>
+					<image mode="aspectFit" :src="user.headImage" class="headerimg"></image>
 					<view class="name">{{user.nickName}}</view>
 					<view class="point">从业{{user.years}}年</view>
 					<uni-rate class="rate" :size="12" :value="user.star" />

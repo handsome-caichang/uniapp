@@ -3,16 +3,16 @@
 
 		<view class="list-cell border-bottom" @click="navTo('/pages/user/safeset')" >
 			<text class="cell-tit">安全设置</text>
-			<text class="cell-more">
+			<view class="cell-more">
 				<text style="color:#575757 ;">手机号、密码</text>
 				<uni-icons class="icon" type="arrowright"></uni-icons>
-			</text>
+			</view>
 		</view>
 		<view class="list-cell  border-bottom" @click="navTo('/pages/user/payset')" >
 			<text class="cell-tit">收款方式</text>
-			<text class="cell-more">
+			<view class="cell-more">
 				<uni-icons class="icon" type="arrowright"></uni-icons>
-			</text>
+			</view>
 		</view>
 		<view class="list-cell"  >
 			<text class="cell-tit">关于</text>

@@ -22,12 +22,12 @@
 			<uni-list-item title="证件号码"  :showArrow="false" :showBadge="true" >
 				<text style="color:#575757;">{{user.idNumber}}</text>
 			</uni-list-item>
-			<uni-list-item title="证件有效期"  :showArrow="false" :showBadge="true" >
+		<!-- 	<uni-list-item title="证件有效期"  :showArrow="false" :showBadge="true" >
 				<text style="color:#575757;">{{user.idCardValidity}}</text>
-			</uni-list-item>
-			<uni-list-item title="车牌号"  :showArrow="false" :showBadge="true" >
+			</uni-list-item> -->
+		<!-- 	<uni-list-item title="车牌号"  :showArrow="false" :showBadge="true" >
 				<text style="color:#575757;">{{user.carCard}}</text>
-			</uni-list-item>
+			</uni-list-item> -->
 		</uni-list>
 		
 		

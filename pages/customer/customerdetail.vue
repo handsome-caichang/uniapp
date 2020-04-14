@@ -2,7 +2,7 @@
 	<view class="detail">
 		<view class="uni-flex uni-row item">
 			<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;" @tap="headtap">
-				<image :src="detail.headImage" style="width: 150rpx;height: 150rpx;"></image>
+				<image :src="detail.headImage" mode="aspectFit" style="width: 150rpx;height: 150rpx;"></image>
 			</view>
 			<view class="uni-flex uni-column" style="flex: 1;justify-content: center;">
 				<view class="text title" style="text-align: left;padding-top: 10rpx;">
@@ -11,18 +11,11 @@
 				<view class="address">
 					{{detail.province}}{{detail.city}}{{detail.district}}
 				</view>
-				<view>
+				<view style="font-size: 34upx;">
 					可收货物：
 				</view>
 				<view class="uni-flex uni-row listbox">
 					<view class="pro-type-item" v-for="(item,index) in detail.recoverys" :key="index" >{{item}}</view>
-					<!-- <view class="pro-type-item">飞天<text class="jiaji">(加急)</text>
-					</view>
-					<view class="pro-type-item">飞天</view>
-					<view class="pro-type-item">飞天</view>
-					<view class="pro-type-item">飞天</view>
-					<view class="pro-type-item">飞天</view> -->
-					<!-- <view class="pro-type-item">飞天</view> -->
 				</view>
 			</view>
 		</view>
@@ -33,14 +26,14 @@
 			信誉评分：<uni-rate class="rate" size="14" :value="customerdata.star" /> <text class="btn" @tap="toRateDetail">了解详情</text>
 		</view>
 		<view class="item">
-			保证金缴纳：<text>{{detail.depositMoney}}元</text>
+			保证金缴纳：<text>{{detail.depositMoney?detail.depositMoney:0}}元</text>
 		</view>
 		<view class="item">
 			更多展示
 		</view>
 		<view class="s-container" v-if="detail.images">
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-				<image class="img" v-for="(item,index) in detail.images" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
+				<image class="img" v-for="(item,index) in detail.images" :key="index" :src="item" mode="aspectFit" @tap="listimgtap(index)"></image>
 			</scroll-view>
 		</view>
 		
@@ -154,6 +147,7 @@
 		},
 		methods: {
 			//  f
+			
 			headtap() {
 				uni.previewImage({
 					current: 0,
@@ -387,6 +381,7 @@
 		}
 		.item {
 			color: $font-color-dark;
+			font-size: 32upx;
 			.btn {
 				padding: 0 20upx;
 				border-radius: 10upx;
@@ -395,16 +390,18 @@
 				border: 1upx solid #007aff;
 			}
 			.title {
-				font-size: 36upx;
+				font-size: 38upx;
 			}
 			.address {
 				text-indent: 20upx;
+				font-size: 34upx;
 			}
 			.listbox {
 				flex-wrap: wrap;
 				.pro-type-item {
 					margin-top: 20upx;
 					margin-right: 20upx;
+					font-size: 32upx;
 				}
 			}
 		}

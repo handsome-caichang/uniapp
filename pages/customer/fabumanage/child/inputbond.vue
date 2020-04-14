@@ -8,7 +8,7 @@
 						<checkbox :value="item.realseId" :checked="item.checked" />
 					</view>
 					<view class="uni-media-list" @tap="resultres(item)">
-						<image class="uni-media-list-logo" :src="item.headImage"></image>
+						<image mode="aspectFit" class="uni-media-list-logo" :src="item.headImage"></image>
 						<view class="uni-media-list-body">
 							<view class="uni-media-list-text-top">{{item.name}}</view>
 							<view class="uni-media-list-text-bottom uni-ellipsis">发布时间：{{item.createTime}} {{item.district}}</view>

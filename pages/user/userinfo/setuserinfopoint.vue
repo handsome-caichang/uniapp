@@ -13,19 +13,19 @@
 			<uni-list-item title="证件号码"  :showArrow="false" :showBadge="true" >
 				<input class="uni-input" type="text" :maxlength="18" v-model="idNumber" placeholder-class="p-active" />
 			</uni-list-item>
-			<uni-list-item title="证件的有效期"  :showArrow="false" :showBadge="true" >
+		<!-- 	<uni-list-item title="证件的有效期"  :showArrow="false" :showBadge="true" >
 				<input class="uni-input" type="text" :maxlength="10" v-model="idCardValidity" placeholder="1997" placeholder-class="p-active" />
-			</uni-list-item>
-			<uni-list-item title="车牌号"  :showArrow="false" :showBadge="true" >
+			</uni-list-item> -->
+			<!-- <uni-list-item title="车牌号"  :showArrow="false" :showBadge="true" >
 				<input class="uni-input" type="text" v-model="carCard" placeholder-class="p-active" />
-			</uni-list-item>
+			</uni-list-item> -->
 		</uni-list>
 		<view class="viod" style="width: 100%;height: 18upx;background-color: #D3D3D3;"></view>
 		<view class="uni-list list-pd">
 			<view class="uni-list-cell cell-pd">
 				<view class="uni-uploader">
 					<view class="uni-uploader-head">
-						<view class="uni-uploader-title bitian">身份证正面</view>
+						<view class="uni-uploader-title ">身份证正面</view>
 					</view>
 					<view class="uni-uploader-body">
 						<view class="uni-uploader__files">
@@ -44,7 +44,7 @@
 			<view class="uni-list-cell cell-pd">
 				<view class="uni-uploader">
 					<view class="uni-uploader-head">
-						<view class="uni-uploader-title bitian">身份证反面</view>
+						<view class="uni-uploader-title ">身份证反面</view>
 					</view>
 					<view class="uni-uploader-body">
 						<view class="uni-uploader__files">
@@ -59,7 +59,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="uni-list list-pd">
+		<!-- <view class="uni-list list-pd">
 			<view class="uni-list-cell cell-pd">
 				<view class="uni-uploader">
 					<view class="uni-uploader-head">
@@ -77,7 +77,7 @@
 					</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="fo-box">
 			<view class="primary-btn" @tap="fabu">
 				确认

@@ -13,7 +13,7 @@
 					indicator-color="#FFFFFF"
 				>
 					<block v-for="(item, index) in bannerlist" :key="index">
-						<swiper-item class="swiper-wrapper" @tap="previewImage(item.url)"><image :src="item.image" mode="widthFix"></image></swiper-item>
+						<swiper-item class="swiper-wrapper" @tap="previewImage(item.url)"><image :src="item.image" mode="aspectFit"></image></swiper-item>
 					</block>
 				</swiper>
 			</view>
@@ -36,7 +36,8 @@
 							<image class="img" :src="item.headImage" mode="aspectFill"></image>
 							<text class="name">{{ item.nickName }}</text>
 							<text class="name">从业{{ item.years }}年</text>
-							<uni-rate class="rate" :value="item.star" />
+							<text class="name">保证金：{{ item.depositMoney ? item.depositMoney : 0}}</text>
+							<uni-rate class="rate" :size="32" :value="item.star" />
 						</view>
 					</swiper-item>
 				</block>
@@ -48,11 +49,11 @@
 				<block v-for="(item, index) in huowulist" :key="index">
 					<swiper-item class="swiper-item-width">
 						<view class="pro-box" @click="navToDetailPagepro(item, index)">
-							<view class="box">
+							<view class="box" >
 								<text>{{ item.classifyName }}</text>
 								<text>{{ item.count }}吨</text>
 							</view>
-							<text class="uni-ellipsis">{{ item.name }}</text>
+							<text class="uni-ellipsis" style="font-size: 32upx;">{{ item.name }}</text>
 							<view class="box">
 								<text>{{ utils.timeTodate('m-d', item.createTime)}}</text>
 								<text>{{ item.address }}</text>
@@ -189,10 +190,14 @@ export default {
 			});
 		},
 		previewImage(url) {
-			getApp().globalData.webviewlink = url;
-			uni.navigateTo({
-				url: '/pages/webviewpage/webviewpage'
-			});
+			// 不正确的也不跳转
+			var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\/])+$/;
+			if (url && reg.test(url)) {
+				getApp().globalData.webviewlink = url;
+				uni.navigateTo({
+					url: '/pages/webviewpage/webviewpage'
+				});
+			}
 		},
 		getIndustryInformationList() {
 			this.api.home.getIndustryInformationList({
@@ -259,10 +264,28 @@ export default {
 			this.api.home.getNoticeList().then(res => {
 				this.gonkaolist = res.data;
 			})
+			// "latitude": 28.22329671223958,
+			// "longitude": 112.8799093967014,
+			// this.api.home.goodsRecommend({
+			// 	data: {
+			// 		userId: getApp().globalData.userdata.userId,
+			// 		lat: "28.22329671223958",
+			// 		lng: "112.8799093967014",
+			// 	}
+			// }).then(res => {
+			// 	console.log(res);
+			// 	res.data.forEach(item => {
+			// 		let time = item.createTime.replace(' ', "T")
+			// 		let datetime = new Date(time).getTime();
+			// 		item.createTime = datetime;
+			// 	})
+			// 	this.huowulist = res.data;
+			// })
 			// 货物推荐
 			uni.getLocation({
 				geocode: true,
 				success: res => {
+					console.log(res)
 					this.api.home.goodsRecommend({
 						data: {
 							userId: getApp().globalData.userdata.userId,
@@ -270,7 +293,7 @@ export default {
 							lng: ""+res.longitude,
 						}
 					}).then(res => {
-						console.log(res)
+						console.log(res);
 						res.data.forEach(item => {
 							let time = item.createTime.replace(' ', "T")
 							let datetime = new Date(time).getTime();
@@ -343,10 +366,15 @@ export default {
 <style lang="scss" scoped>
 .index-content {
 	overflow: hidden;
+	.index-banner {
+		uni-swiper {
+			height: 580upx !important;
+		}
+	}
 	.vipuser {
 		margin-top: 10upx;
 		uni-swiper {
-			height: 200upx !important;
+			height: 220upx !important;
 		}
 		.swiper-item-width {
 			width: 220upx !important;
@@ -358,7 +386,7 @@ export default {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-
+				line-height: 1;
 				.img {
 					border-radius: 50%;
 					width: 100upx;
@@ -367,7 +395,7 @@ export default {
 
 				.name {
 					color: #303030;
-					font-size: 24upx;
+					font-size: 28upx;
 					height: 30upx;
 				}
 			}
@@ -382,10 +410,12 @@ export default {
 			width: 340upx !important;
 			border-radius: 10upx;
 			.pro-box {
-				width: 300upx;
+				width: 260upx;
 				background-color: #18c02c;
 				border-radius: 10upx;
 				padding: 10upx;
+				padding-left: 20upx;
+				padding-right: 20upx;
 				margin-right: 20upx;
 				font-size: $font-sm + 2upx;
 				color: $font-color-withe;
@@ -408,10 +438,8 @@ export default {
 				}
 				.box {
 					display: flex;
-					flex: 1; 
 					justify-content: space-between;
-					// padding: 0 20upx;
-					width: 300upx;
+					width: 230upx;
 				}
 				text {
 					color: #fff;

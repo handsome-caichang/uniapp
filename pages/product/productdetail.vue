@@ -2,32 +2,29 @@
 	<view class="detail">
 		<view class="uni-flex uni-row item">
 			<view class="text uni-flex" style="width: 230rpx;height: 230rpx;justify-content: center;align-items: center;">
-				<image :src="detail.img" style="width: 210rpx;height: 210rpx;" @tap="headtap"></image>
+				<image :src="prolist[0]" mode="aspectFit" style="width: 210rpx;height: 210rpx;" @tap="headtap"></image>
 			</view>
 			<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 30upx;">
 				<view class="text title" style="text-align: left;padding-top: 10rpx;color: #212121;">
-					{{detail.classifyName}} 
-					<text>{{detail.count}}吨</text>
+					{{detail.classifyName}}    <text>{{detail.count}}吨</text>
 				</view>
-				<view class="price">{{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨</view>
+				<view class="price" v-if="detail.bedrockPrice">{{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨</view>
+				<view class="price" v-if="!detail.bedrockPrice">面议</view>
 				<view style="color: #212121;">{{detail.name}}</view>
 				<view class="uni-flex" style="justify-content:space-between;color: #575757;">
-					<text>{{utils.timeTodate('m-d', detail.createTime)}}</text>
+					<text>{{detail.createTime}}</text>
 					<text>{{detail.address}}</text>
 				</view>
 			</view>
 		</view>
 		<!-- v-if="productdetail.sourcetype == 3" -->
-		<view class="text-box" >
+		<view class="text-box" v-if="productdetail.sourcetype == 3" >
 			<view class="uni-text">
-				联系人：
+				联系人：{{customercont.nickName}}
 			</view>
-			<view class="uni-text">
-				联系电话：
-			</view>
-			<view class="uni-text" @tap="gotomap" v-if="productdetail.sourcetype == 3" >
+			<!-- <view class="uni-text" @tap="gotomap" v-if="productdetail.sourcetype == 3" >
 				详细地址：
-			</view>
+			</view> -->
 		</view>
 		
 		<view class="item" style="margin-top: 30upx;color: #212121;font-size: 36upx;">
@@ -35,7 +32,7 @@
 		</view>
 		<view class="s-container">
 			<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-				<image class="img" v-for="(item,index) in prolist" :key="index" :src="item" mode="scaleToFill" @tap="listimgtap(index)"></image>
+				<image class="img" v-for="(item,index) in prolist" :key="index" :src="item" mode="aspectFit" @tap="listimgtap(index)"></image>
 			</scroll-view>
 		</view>
 		<!-- 首页进来，实名认证  -->
@@ -75,6 +72,7 @@
 		data() {
 			return {
 				utils,
+				times: '',
 				items: [
 				],
 				detail: {
@@ -82,6 +80,7 @@
 				prolist: [
 				],
 				productdetail: {},
+				customercont: {},
 			}
 		},
 		created() {
@@ -92,11 +91,23 @@
 					userId: getApp().globalData.userdata.userId
 				}
 			}).then(res => {
-				console.log(res);
 				this.detail = res.data;
+				this.prolist = this.detail.images;
 			})
+			if (this.productdetail.sourcetype == 3) {
+				this.getcustomercont();
+			}
 		},
 		methods: {
+			getcustomercont() {
+				this.api.home.getSellUserContact({
+					data: {
+						
+					}
+				}).then(res => {
+					this.customercont = res.data;
+				})
+			},
 			gotomap() {
 				var url = "";
 				let latitude = 28.226670107377178;
@@ -155,13 +166,13 @@
 			},
 			dianhua() {
 				uni.makePhoneCall({
-					 phoneNumber: '114' //仅为示例
+					 phoneNumber: this.customercont.mobilePhone //仅为示例
 				})
 			},
 			headtap() {
 				uni.previewImage({
 					current: 0,
-					urls: [this.detail.img],
+					urls: [this.detail.headImage],
 					indicator: 'none'
 				})
 			},

@@ -11,7 +11,7 @@
 						{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					{{orderdetail.createTime}}
+					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}
 				</view>
 				<view class="address">
 					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
@@ -80,7 +80,7 @@
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				可获得鼓励金 ：                             
+				获取鼓励金 ：                             
 				<view class="price"> ¥{{priceguli}} </view>
 			</view>
 			<view class="lj-detail" >
@@ -114,7 +114,7 @@
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
-				可获得鼓励金 ：
+				获取鼓励金 ：
 				<view class="price"> ¥{{priceguli}} </view>
 			</view>
 			<view class="lj-detail">
@@ -144,6 +144,7 @@
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
 	import { mapMutations,mapState } from 'vuex';
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniRate,
@@ -153,6 +154,7 @@
 		},
 		data() {
 			return {
+				utils,
 				isactive: true,
 				protype: {
 					label: "请选择货物类别",
@@ -175,6 +177,9 @@
 				}
 			}).then(res => {
 				this.orderdetail  = res.data;
+				let time = this.orderdetail.createTime.replace(' ', "T")
+				let datetime = new Date(time).getTime();
+				this.orderdetail.createTime = datetime;
 			})
 		},
 		computed: {

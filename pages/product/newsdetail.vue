@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="banner" auto-focus>
-			<image class="banner-img" :src="banner.image_url"></image>
+			<image mode="aspectFit" class="banner-img" :src="banner.image_url"></image>
 			<view class="title-area">
 				<text class="title-text">{{banner.title}}</text>
 			</view>

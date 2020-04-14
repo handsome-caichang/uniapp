@@ -7,24 +7,24 @@
 		
 		<view class="uni-flex content">
 			<view class="right">
-				<image src="/static/img/goods/p8.jpg" class="headerimg" ></image>
+				<image mode="aspectFit" src="/static/img/goods/p8.jpg" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
-					<text>{{orderdetail.sellUserName}}</text>
+					<text>{{orderdetail.name}}</text>
 					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
 				</view>
 				<view class="title">
 					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					{{orderdetail.createTime}}
+					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}
 				</view>
 				<view class="address">
 					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
 				</view>
 			</view>
-			<image class="jiaoyiimg" src="/static/img/jiaoyi.png" ></image>
+			<image mode="aspectFit" class="jiaoyiimg" src="/static/img/jiaoyi.png" ></image>
 			<view class="left">
-				<image :src="orderdetail.buyUserHeadImage" class="headerimg" ></image>
+				<image mode="aspectFit" :src="orderdetail.buyUserHeadImage" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
 					{{orderdetail.buyUserName}}
 				</view>
@@ -57,6 +57,7 @@
 
 <script>
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniRate
@@ -64,10 +65,12 @@
 		data() {
 			return {
 				orderdetail: {},
+				utils,
 			}
 		},
 		created() {
 			this.orderdetail = getApp().globalData.orderdetail;
+			console.log(this.orderdetail)
 		},
 		methods: {
 			jiaoyi() {

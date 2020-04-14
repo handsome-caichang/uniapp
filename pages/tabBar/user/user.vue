@@ -42,7 +42,7 @@
 				</view>
 				<view class="c-list-box">
 					<view class="c-list-item" v-for="(item, index) in list1 " :key="index" @tap="geren(item)" >
-						<image :src="item.icon" class="img-icon" ></image>
+						<image mode="aspectFit" :src="item.icon" class="img-icon" ></image>
 						<text class="text">{{item.name}}</text>
 					</view>
 				</view>
@@ -178,7 +178,6 @@
 		},
 		onNavigationBarButtonTap(e) {
 			const index = e.index;
-			console.log(index)
 			if (index === 0) {
 				uni.navigateTo({
 					url: '/pages/user/set'

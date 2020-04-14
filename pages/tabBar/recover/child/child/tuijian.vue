@@ -3,7 +3,7 @@
 		<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="clickitem(item)">
 			<view class="uni-flex uni-row item-box">
 				<view class="text uni-flex" style="width: 160rpx;height: 130rpx;justify-content: center;align-items: center;">
-					<image :src="item.img" style="width: 160rpx;height: 130rpx;"></image>
+					<image :src="item.images[0]" style="width: 160rpx;height: 130rpx;"></image>
 				</view>
 				<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
@@ -19,7 +19,8 @@
 						<text style="margin-left: 10upx;">注册会员才能查看详情喔！</text>
 					</view>
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;">
-						<view class="price" style="font-size: 28upx;font-weight: 500;">{{item.bedrockPrice}}-{{item.outsidePrice}}</view>
+						<view class="price" style="font-size: 28upx;font-weight: 500;" v-if="item.bedrockPrice">{{item.bedrockPrice}}-{{item.outsidePrice}}元</view>
+						<view class="price" style="font-size: 28upx;font-weight: 500;" v-else>价格面议</view>
 						<text class="time" style="color: #343434;font-size: 22upx;">{{item.address}}</text>
 					</view>
 
@@ -53,6 +54,9 @@
 		},
 		methods: {
 			clickitem(item) {
+				if (this.novip) {
+					return;
+				}
 				item.sourcetype = 1;
 				getApp().globalData.productdetail = item;
 				uni.navigateTo({

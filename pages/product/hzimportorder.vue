@@ -193,46 +193,56 @@
 		methods: {
 			clickpay(e) {
 				console.log(e);
-				console.log(this.oserdat)
-				this.api.order.payMsgFee({
-					orderNo: this.oserdat.data,
+				this.api.order.buyUserWriteOrder({
 					userId: getApp().globalData.userdata.userId,
-					payType: e == 0 ? 2 : 1,
+					classify: this.protype.value,
+					money: +this.pipeinum,
+					type: this.isactive ? 1 : 2,
+					count: +this.numberleng,
+					matchId: this.orderdetail.matchId
 				}).then(res => {
-					var orderString = res.data;
-					console.log(res)
-					this.orderdetail.sourcetype = 3;
-					getApp().globalData.productdetail = this.orderdetail;
-					uni.requestPayment({
-					    provider: 'wxpay',
-					    orderInfo: orderString.charge, //微信、支付宝订单数据
-					    success: function (res) {
-							uni.showModal({
-								title: "提示",
-								content: '支付成功',
-								showCancel: false,
-								success(res) {
-								  if (res.confirm) {
-									// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-									uni.navigateTo({
-										url: '/pages/product/productdetail'
-									})
-								  }
-								}
-							});
-					    },
-					    fail: function (err) {
-					       uni.showModal({
-					       	title: "提示",
-					       	content: '支付失败',
-					       	showCancel: false,
-					       });
-					    }
-					});
-					this.$nextTick(() => {
-						this.$refs.showpay.close();
-					});
+					
 				})
+				// console.log(this.oserdat)
+				// this.api.order.payMsgFee({
+				// 	orderNo: this.oserdat.data,
+				// 	userId: getApp().globalData.userdata.userId,
+				// 	payType: e == 0 ? 2 : 1,
+				// }).then(res => {
+				// 	var orderString = res.data;
+				// 	console.log(res)
+				// 	this.orderdetail.sourcetype = 3;
+				// 	getApp().globalData.productdetail = this.orderdetail;
+				// 	this.orderdetail.orderNo = this.oserdat.data;
+				// 	uni.requestPayment({
+				// 	    provider: 'wxpay',
+				// 	    orderInfo: orderString.charge, //微信、支付宝订单数据
+				// 	    success: function (res) {
+				// 			uni.showModal({
+				// 				title: "提示",
+				// 				content: '支付成功',
+				// 				showCancel: false,
+				// 				success(res) {
+				// 				  if (res.confirm) {
+				// 					uni.navigateTo({
+				// 						url: '/pages/product/productdetail'
+				// 					})
+				// 				  }
+				// 				}
+				// 			});
+				// 	    },
+				// 	    fail: function (err) {
+				// 	       uni.showModal({
+				// 	       	title: "提示",
+				// 	       	content: '支付失败',
+				// 	       	showCancel: false,
+				// 	       });
+				// 	    }
+				// 	});
+				// 	this.$nextTick(() => {
+				// 		this.$refs.showpay.close();
+				// 	});
+				// })
 			},
 			changeprice() {
 				if (this.isactive) {
@@ -250,19 +260,22 @@
 				this.protype.value = this.goodtypelist[this.protypeindex].name;
 			},
 			luru() {
-				this.api.order.buyUserWriteOrder({
-					userId: getApp().globalData.userdata.userId,
-					classify: this.protype.value,
-					money: +this.pipeinum,
-					type: this.isactive ? 1 : 2,
-					count: +this.numberleng,
-					matchId: this.orderdetail.matchId
-				}).then(res => {
-					console.log(res);
-					this.oserdat = res;
-					this.$nextTick(() => {
-						this.$refs.showpay.open();
-					})
+				this.$nextTick(() => {
+					this.$refs.showpay.open();
+				})
+				// this.api.order.buyUserWriteOrder({
+				// 	userId: getApp().globalData.userdata.userId,
+				// 	classify: this.protype.value,
+				// 	money: +this.pipeinum,
+				// 	type: this.isactive ? 1 : 2,
+				// 	count: +this.numberleng,
+				// 	matchId: this.orderdetail.matchId
+				// }).then(res => {
+					// console.log(res);
+					// this.oserdat = res;
+					// this.$nextTick(() => {
+					// 	this.$refs.showpay.open();
+					// })
 					// this.api.home.payVipOrder({
 					// 	"orderNo": res.data,
 					// 	"userId": getApp().globalData.userdata.userId,
@@ -296,7 +309,7 @@
 					// uni.navigateTo({
 					// 	url: '/pages/other/successpgae'
 					// })
-				})
+				// })
 			},
 			openrul() {
 				this.$nextTick(() => {

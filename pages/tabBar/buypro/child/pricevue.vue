@@ -22,7 +22,7 @@
 		<view class="price-box">
 			<view class="uni-flex" v-for="(item ,index) in pricelist" :key="index">
 				<text class="text">{{item.district}}：</text>
-				<text class="price">{{item.price}} 元/吨</text>
+				<text class="price">{{item.lowPrice}}-{{item.highPrice}}元/吨</text>
 			</view>
 		</view>
 		
@@ -59,6 +59,7 @@
 		},
 		methods: {
 			getdata() {
+				// 3302
 				this.api.home.searchPriceByArea({
 					data: {
 						classify: this.goodtypelist[this.activeindex].name,

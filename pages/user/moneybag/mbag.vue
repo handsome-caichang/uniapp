@@ -2,7 +2,6 @@
 	<view class="uni-page-body">
 		
 		<view class="header-box">
-			<image src="/static/img/goods/p1.jpg" class="img" ></image>
 			<view class="price-box">
 				<text>{{showyue}}</text>
 				<text style="font-size: 34upx;">元</text>
@@ -92,19 +91,14 @@
 			background:linear-gradient(180deg,rgba(24,192,44,1) 0%,rgba(127,234,139,1) 100%);
 			padding: 40upx 100upx;
 			margin-bottom: 24upx;
-			.img {
-				height: 142upx;
-				width: 142upx;
-				margin-right: 8upx;
-			}
 			.price-box {
 				color: #FFFFFF;
-				font-size: 56upx;
+				font-size: 140upx;
 			}
 			.iconfont {
 				margin-left: 20upx;
 				color: #fff;
-				font-size: 48upx;
+				font-size: 80upx;
 			}
 		}
 		.uni-page-footer{

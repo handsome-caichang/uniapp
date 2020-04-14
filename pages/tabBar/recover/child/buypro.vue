@@ -1,15 +1,15 @@
 <template>
 	<view class="container">
 		<view class="vip-box">
-			<view class="uni-flex" style="justify-content: space-around;">
+			<view class="uni-flex" style="justify-content: space-around;"  @tap="tovipsend">
 				<view class="userbox">
 					<image :src="headerimg" class="img" ></image>
-					<view class="kaitong" v-if="!isvip" @tap="tovipsend">
+					<view class="kaitong" v-if="!isvip">
 						立即开通会员
 					</view>
 				</view>
 				<view class="viptext">
-					VIP
+					VIP  <view class="viptext" style="color: #09BB07;display: inline-block;">{{vipLevel}}</view>
 				</view>
 			</view>
 			
@@ -45,12 +45,18 @@
 		data() {
 			return {
 				headerimg: '/static/img/user-bg.jpg',
-				isvip:false,
+				isvip: false,
 				isactive: true,
+				vipLevel: '',
+				userdata: {}
 			}
 		},
-		computed: {
-			
+		created() {
+			this.userdata = getApp().globalData.userdata;
+			if (this.userdata.isVip == 1) {
+				this.isvip = true;
+				this.vipLevel = this.userdata.vipLevel === 0 ? '黄金' : ( this.userdata.vipLevel === 1 ? '钻石' : '' );
+			}
 		},
 		methods: {
 			changepage(flag) {

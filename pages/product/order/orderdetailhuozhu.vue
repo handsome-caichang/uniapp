@@ -7,7 +7,7 @@
 		
 		<view class="uni-flex content">
 			<view class="left">
-				<image :src="orderdetail.buyUserHeadImage" class="headerimg" ></image>
+				<image mode="aspectFit" :src="orderdetail.buyUserHeadImage" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
 					{{orderdetail.buyUserName}}
 				</view>
@@ -21,9 +21,9 @@
 					<text style="margin-right: 20upx;">{{orderdetail.buyDistrict}}</text>
 				</view>
 			</view>
-			<image class="jiaoyiimg" src="/static/img/jiaoyi.png" ></image>
+			<image mode="aspectFit" class="jiaoyiimg" src="/static/img/jiaoyi.png" ></image>
 			<view class="right">
-				<image src="/static/img/goods/p8.jpg" class="headerimg" ></image>
+				<image mode="aspectFit" src="/static/img/goods/p8.jpg" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
 					<text>{{orderdetail.sellUserName}}</text>
 					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
@@ -32,7 +32,7 @@
 					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					{{orderdetail.createTime}}
+					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}
 				</view>
 				<view class="address">
 					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
@@ -43,21 +43,18 @@
 			<view class="error-btn" @tap="clearbtn">
 				取消匹配
 			</view>
-			<view class="primary-btn" @tap="customerto">
+			<view class="primary-btn" @tap="jiaoyi">
 				联系货主
 			</view>
-			<view class="primary-btn" @tap="jiaoyi">
-				开始交易
+			<view class="primary-btn" @tap="luru">
+				录入订单
 			</view>
 		</view>
-	
-		<!-- 底部分享弹窗 -->
-		<!-- <uni-popup ref="showpay" type="bottom" @change="changepup">
+		<uni-popup ref="showpay" type="bottom" @change="changepup">
 			<view class="uni-pup">
-				<pay-pop @clickpay="clickpay"></pay-pop>
+				<pay-pop @clickpay="clickpay" :price="30" ></pay-pop>
 			</view>
-		</uni-popup> -->
-	
+		</uni-popup>
 	</view>
 </template>
 
@@ -65,6 +62,7 @@
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
 	import payPop from './child/paypop.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniRate,
@@ -73,47 +71,54 @@
 		},
 		data() {
 			return {
+				utils,
 				orderdetail: {},
 			}
 		},
 		created() {
 			this.orderdetail = getApp().globalData.orderdetail;
+			let time = this.orderdetail.createTime.replace(' ', "T")
+			let datetime = new Date(time).getTime();
+			this.orderdetail.createTime = datetime;
 		},
 		methods: {
 			customerto() {
-				this.orderdetail.sourcetype = 0;
-				this.orderdetail.userId = this.orderdetail.buyUserId;
-				getApp().globalData.customerdata = this.orderdetail;
-				uni.navigateTo({
-					url: '/pages/customer/customerdetail'
-				})
-			},
-			// clickpay(e) {
-			// 	console.log(e);
-			// 	this.$nextTick(() => {
-			// 		this.$refs.showpay.close();
-			// 		setTimeout(() => {
-			// 			 this.orderdetail.sourcetype = 3;
-			// 			 getApp().globalData.productdetail = this.orderdetail;
-			// 			uni.navigateTo({
-			// 				url: '/pages/product/productdetail'
-			// 			})
-			// 		}, 300);
-			// 	});
-			// },
-			changepup(e) {
-				// console.log('是否打开:' + e.show)
-			},
-			jiaoyi() {
-				uni.navigateTo({
-					url: '/pages/product/hzimportorder'
-				})
-				// this.$nextTick(() => {
-				// 	this.$refs.showpay.open();
-				// })
+				this.clickpay();
+				// this.orderdetail.sourcetype = 0;
+				// this.orderdetail.userId = this.orderdetail.buyUserId;
+				// getApp().globalData.customerdata = this.orderdetail;
 				// uni.navigateTo({
 				// 	url: '/pages/customer/customerdetail'
 				// })
+			},
+			clickpay(e) {
+				console.log(e);
+				this.$nextTick(() => {
+					this.$refs.showpay.close();
+					
+					
+					// setTimeout(() => {
+					// 	this.orderdetail.sourcetype = 3;
+					// 	getApp().globalData.productdetail = this.orderdetail;
+					// 	uni.navigateTo({
+					// 		url: '/pages/product/productdetail'
+					// 	})
+					// }, 300);
+					
+				});
+			},
+			changepup(e) {
+				// console.log('是否打开:' + e.show)
+			},
+			luru() {
+				uni.navigateTo({
+					url: '/pages/product/hzimportorder'
+				})
+			},
+			jiaoyi() {
+				this.$nextTick(() => {
+					this.$refs.showpay.open();
+				})
 			},
 			clearbtn() {
 				uni.showModal({

@@ -36,4 +36,10 @@ export default {
 			params
 		);
 	},
+	getSellUserContact() {
+		return http.get(
+			'order/getSellUserContact',
+			params
+		);
+	},
 }

@@ -177,9 +177,11 @@
 				}
 			}).then(res => {
 				this.orderdetail = Object.assign(this.orderdetail, res.data);
-				let time = this.orderdetail.createTime.replace(' ', "T")
-				let datetime = new Date(time).getTime();
-				this.orderdetail.createTime = datetime;
+				if ( typeof this.orderdetail.createTime !== 'number') {
+					let time = this.orderdetail.createTime.replace(' ', "T")
+					let datetime = new Date(time).getTime();
+					this.orderdetail.createTime = datetime;
+				}
 			})
 		},
 		computed: {
@@ -205,7 +207,7 @@
 				this.api.order.sellUserWriteOrder({
 					userId: getApp().globalData.userdata.userId,
 					classify: this.protype.value,
-					money: +this.pipeinum,
+					money: this.pipeinum * 10000,
 					type: this.isactive ? 1 : 2,
 					count: +this.numberleng,
 					matchId: this.orderdetail.matchId

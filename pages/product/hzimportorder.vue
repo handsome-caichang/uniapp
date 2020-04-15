@@ -28,7 +28,7 @@
 					{{orderdetail.buyUserName}}
 				</view>
 				<view class="title">
-					{{orderdetail.createTime}}
+					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}
 				</view>
 				<view class="address">
 					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
@@ -148,6 +148,7 @@
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	import {
 		mapMutations,
 		mapState
@@ -162,6 +163,7 @@
 		},
 		data() {
 			return {
+				utils,
 				isactive: true,
 				protype: {
 					label: "请选择货物类别",
@@ -185,6 +187,11 @@
 				}
 			}).then(res => {
 				this.orderdetail = Object.assign(this.orderdetail, res.data);
+				if ( typeof this.orderdetail.createTime !== 'number') {
+					let time = this.orderdetail.createTime.replace(' ', "T")
+					let datetime = new Date(time).getTime();
+					this.orderdetail.createTime = datetime;
+				}
 			})
 		},
 		computed: {
@@ -200,7 +207,7 @@
 				this.api.order.buyUserWriteOrder({
 					userId: getApp().globalData.userdata.userId,
 					classify: this.protype.value,
-					money: +this.pipeinum,
+					money: this.pipeinum * 10000,
 					type: this.isactive ? 1 : 2,
 					count: +this.numberleng,
 					matchId: this.orderdetail.matchId,

@@ -61,7 +61,7 @@
 						"goodsName": "废铁",
 						"matchId": 8
 					}-->
-						<uni-list-item class="" :thumb="item.headImage" :showBadge="true" :showArrow="false" :note="'时间：'+item.createTime+'  '+item.sellDistrict"
+						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :showBadge="true" :showArrow="false" :note="'申请时间：'+item.createTime+'  '+item.sellDistrict"
 						 v-for="(item,index) in jilulist" :key="index">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.goodsName}}</text>
@@ -85,7 +85,7 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :note="'时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in shoudaolist"
+						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :note="'收到时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in shoudaolist"
 						 :key="index" @tap="shoudaoclick(item)">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.goodsName}}</text>
@@ -107,14 +107,14 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'申请时间：'+item.createTime" v-for="(item,index) in successlist"
+						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :note="'匹配时间：'+item.createTime" v-for="(item,index) in successlist"
 						 :key="index" @tap="nvto(item)">
 							<view slot="content" style="height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}顿</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
-								<uni-rate class="rate" :size="12" :value="item.start" />
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.sellUserName}}</text>
 							</view>
 							<view class="btn" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
@@ -247,20 +247,20 @@
 				if (this.novip) {
 					return;
 				}
-				getApp().globalData.productdetail = item;
+				getApp().globalData.productdetail =  Object.assign({}, item);
 				uni.navigateTo({
 					url: '/pages/product/productdetail'
 				})
 			},
 			shoudaoclick(item) {
 				item.sourcetype = 2;
-				getApp().globalData.productdetail = item;
+				getApp().globalData.productdetail = Object.assign({}, item);
 				uni.navigateTo({
 					url: `/pages/product/productdetail`
 				});
 			},
 			nvto(item) {
-				getApp().globalData.orderdetail = item;
+				getApp().globalData.orderdetail = Object.assign({}, item);
 				uni.navigateTo({
 					url: '/pages/product/order/orderdetailhuozhu'
 				})

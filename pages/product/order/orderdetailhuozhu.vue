@@ -104,7 +104,7 @@
 				}).then(ret => { 
 					if (ret.data.charge) {
 						this.orderdetail.sourcetype = 3;
-						getApp().globalData.productdetail = this.orderdetail;
+						getApp().globalData.productdetail = Object.assign({}, this.orderdetail);
 						uni.requestPayment({
 							provider: 'wxpay',
 							orderInfo: ret.data.charge, //微信、支付宝订单数据
@@ -137,6 +137,7 @@
 				// console.log('是否打开:' + e.show)
 			},
 			luru() {
+				getApp().globalData.orderdetail = Object.assign({}, this.orderdetail);
 				uni.navigateTo({
 					url: '/pages/product/hzimportorder'
 				})

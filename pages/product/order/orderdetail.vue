@@ -70,18 +70,23 @@
 		},
 		created() {
 			this.orderdetail = getApp().globalData.orderdetail;
-			console.log(this.orderdetail)
+			if ( typeof this.orderdetail.createTime !== 'number') {
+				let time = this.orderdetail.createTime.replace(' ', "T")
+				let datetime = new Date(time).getTime();
+				this.orderdetail.createTime = datetime;
+			}
 		},
 		methods: {
 			jiaoyi() {
 				this.orderdetail.sourcetype = 0;
 				this.orderdetail.userId = this.orderdetail.buyUserId;
-				getApp().globalData.customerdata = this.orderdetail;
+				getApp().globalData.customerdata = Object.assign({}, this.orderdetail);
 				uni.navigateTo({
 					url: '/pages/customer/customerdetail'
 				})
 			},
 			luru(){
+				getApp().globalData.orderdetail = Object.assign({}, this.orderdetail);
 				uni.navigateTo({
 					url: '/pages/product/importorder'
 				})

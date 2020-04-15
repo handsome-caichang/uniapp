@@ -66,7 +66,7 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.headerimg" :note="'申请时间：'+item.createTime" v-for="(item,index) in shoudaolist"
+						<uni-list-item class="" :thumb="item.headImage" :note="'申请时间：'+item.createTime" v-for="(item,index) in shoudaolist"
 						 :key="index" @tap="sureMatching(item)">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
@@ -91,11 +91,11 @@
 						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'时间：'+item.createTime+'  '+item.sellDistrict"
 						 v-for="(item,index) in successlist" :key="index" @tap="toorderdetail(item, '/pages/product/order/orderdetail')">
 							<view slot="content" style="height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
+								<uni-rate class="rate" :size="12" :value="item.start" />
 							</view>
 							<view class="btn" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
@@ -214,19 +214,19 @@
 			},
 			sureMatching(item) {
 				item.sourcetype = 2;
-				getApp().globalData.customerdata = item;
+				getApp().globalData.customerdata = Object.assign({}, item);;
 				uni.navigateTo({
 					url: `/pages/customer/customerdetail`
 				});
 			},
 			toorderdetail(item) {
-				getApp().globalData.orderdetail = item;
+				getApp().globalData.orderdetail = Object.assign({}, item);;
 				uni.navigateTo({
 					url: `/pages/product/order/orderdetail`
 				});
 			},
 			guanli(item, url) {
-				getApp().globalData.userlistmanage = item;
+				getApp().globalData.userlistmanage =  Object.assign({}, item);;
 				uni.navigateTo({
 					url,
 				})

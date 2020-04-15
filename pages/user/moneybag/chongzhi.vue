@@ -87,7 +87,7 @@
 					this.api.home.balanceRecharge({
 						typeId: 1,
 						userId: getApp().globalData.userdata.userId,
-						money: +this.bondnum
+						money: this.bondnum * 10000
 					}).then(res => {
 						console.log(res);
 						var orderString = res.data;

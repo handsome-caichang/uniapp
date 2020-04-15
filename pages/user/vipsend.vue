@@ -32,7 +32,7 @@
 				</view> -->
 			</view>
 			<view class="listcon">
-				<view class="listhuanj" v-if="isactive">
+				<view class="listhuanj" v-if="currentindex==0">
 					<view class="hjitem">&bull; 发布5种求购信息</view>
 					<view class="hjitem">&bull; 平台推荐3吨及以下货物</view>
 					<view class="hjitem">&bull; 获得优先匹配权</view>
@@ -46,16 +46,16 @@
 					<view class="hjitem">&bull; 可加急求购</view>
 				</view>
 			</view>
-			<!-- <view class="list-sku">
-				<view class="sku-item" :class="{'active': isactivesku==1}" @tap="changesuk(1)">3个月</view>
-				<view class="sku-item" :class="{'active': isactivesku==2}" @tap="changesuk(2)">6个月</view>
-				<view class="sku-item" :class="{'active': isactivesku==3}" @tap="changesuk(3)" >1年</view>
-			</view> -->
+			<view class="list-sku">
+				<view class="sku-item" v-for="(item,index) in chuildlist" :class="{'active': childindex==index}" @tap="changesuk(index)">
+					{{item.time}}个月
+				</view>
+			</view>
 		</view>
 	
 	
-		<view class="uni-list">
-			<radio-group @change="radioChange">
+		<view class="uni-list" >
+			<radio-group  @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 					<view style="display:flex;justify-content: center;">
 						<image  mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
@@ -111,7 +111,10 @@
 					},
 				],
 				viplist: [],
+				chuildlist: [],
 				currentindex: 0,
+				childindex: 0,
+				current: 0,
 			}
 		},
 		computed: {
@@ -125,17 +128,28 @@
 			})
 		},
 		methods: {
+			radioChange(evt) {
+				for (let i = 0; i < this.items.length; i++) {
+					if (this.items[i].value === evt.target.value) {
+						this.current = i;
+						break;
+					}
+				}
+			},
+			changesuk(childindex) {
+				this.childindex = childindex;
+				this.price = this.chuildlist[this.childindex].money;
+			},
 			sub() {
 				this.api.home.submitVipOrder({
-					vipId: this.viplist[this.currentindex].mainVipId,
+					vipId: this.chuildlist[this.childindex].vipId,
 					userId: this.userdata.userId
 				}).then(res => {
 					console.log(res);
-					// "orderNo": "VIP202004071359001"
 					this.api.home.payVipOrder({
 						"orderNo": res.data.orderNo,
 						"userId": this.userdata.userId,
-						"payType": this.current == 0 ? 2 : 1
+						"payType": this.current === 0 ? 2 : 1
 					}).then(ret => {
 						var orderString = ret.data;
 						console.log(ret)
@@ -170,7 +184,14 @@
 			},
 			changevip(index) {
 				this.currentindex = index;
-				this.price = this.viplist[this.currentindex].price;
+				this.api.home.getSubVipList({
+					data: {
+						mainVipId: this.viplist[this.currentindex].mainVipId
+					}
+				}).then(res => {
+					this.chuildlist = res.data;
+					this.changesuk(0);
+				})
 			},
 		}
 	}

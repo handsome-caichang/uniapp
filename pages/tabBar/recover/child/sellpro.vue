@@ -230,10 +230,10 @@ export default {
 		},
 		toSearch() {},
 		toGoods(item) {
-			getApp().globalData.malldetail = item;
-			uni.navigateTo({
-				url: `/pages/product/malldetail`
-			});
+			// getApp().globalData.malldetail = item;
+			// uni.navigateTo({
+			// 	url: `/pages/product/malldetail`
+			// });
 		},
 		chooselocation() {
 			this.$refs.mpvueCityPicker.show();

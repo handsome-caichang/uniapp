@@ -56,7 +56,7 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
   return response
 }, (response) => { // 请求错误做点什么
 	uni.showToast({
-	  	title: response.data.message,
+	  	title: '服务繁忙，请稍后再试！',
 		icon:  'none',
 		position: 'bottom',
 	})

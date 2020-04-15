@@ -164,14 +164,14 @@
 		},
 		methods: {
 			getdata() {
-				this.api.home.getRealseGoodsInfo({
-					data: {
-						userId: getApp().globalData.userdata.userId,
-						realseId: this.malldetail.realseId,
-					}
-				}).then(res => {
-					this.detail = res.data;
-				})
+				// this.api.home.getRealseGoodsInfo({
+				// 	data: {
+				// 		userId: getApp().globalData.userdata.userId,
+				// 		realseId: this.malldetail.realseId,
+				// 	}
+				// }).then(res => {
+				// 	this.detail = res.data;
+				// })
 			},
 			shouc() {
 				this.haveac = !this.haveac;

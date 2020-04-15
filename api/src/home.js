@@ -6,6 +6,12 @@ export default {
 	// 			params: params
 	// 		});
 	// },
+	getSubVipList(params) {
+		return http.get(
+			'wallet/getSubVipList',
+			params
+		);
+	},
 	realsegetNewReceivedMatchList(params) {
 		return http.get(
 			'realse/getNewReceivedMatchList',

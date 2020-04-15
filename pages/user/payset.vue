@@ -10,7 +10,7 @@
 		<view class="list-cell border-bottom" @click="tologin" >
 			<text class="cell-tit">微信支付</text>
 			<text class="cell-more">
-				<text>{{hasLogin?'已绑定':'未绑定'}}</text>
+				<text>{{isbandingweixin?'已绑定':'未绑定'}}</text>
 				<uni-icons class="icon" type="arrowright"></uni-icons>
 			</text>
 		</view>
@@ -36,6 +36,7 @@
 		},
 		data() {
 			return {
+				isbandingweixin: false
 			};
 		},
 		computed: {
@@ -65,6 +66,7 @@
 		},
 		created() {
 			paysetCreate = this;
+			this.isbandingweixin =  getApp().globalData.userdata.isbandingweixin;
 		},
 		methods:{
 			...mapMutations(['logintest','setWeixindata']),
@@ -101,7 +103,11 @@
 					weixinOpenId: weixindata.openid,
 					weixinName: weixindata.scope,
 				}).then(res => {
-					console.log(res)
+					console.log(res);
+					let userdata = getApp().globalData.userdata;
+					userdata.isbandingweixin = true;
+					getApp().globalData.userdata = userdata;
+					this.isbandingweixin = true;
 					uni.showModal({
 						showCancel: false,
 						content: '绑定成功',

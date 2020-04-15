@@ -52,7 +52,7 @@
 		</view>
 		<uni-popup ref="showpay" type="bottom" @change="changepup">
 			<view class="uni-pup">
-				<pay-pop @clickpay="clickpay" :price="30" ></pay-pop>
+				<pay-pop @clickpay="clickpay" :price='30' ></pay-pop>
 			</view>
 		</uni-popup>
 	</view>
@@ -77,9 +77,11 @@
 		},
 		created() {
 			this.orderdetail = getApp().globalData.orderdetail;
-			let time = this.orderdetail.createTime.replace(' ', "T")
-			let datetime = new Date(time).getTime();
-			this.orderdetail.createTime = datetime;
+			if ( typeof this.orderdetail.createTime !== 'number') {
+				let time = this.orderdetail.createTime.replace(' ', "T")
+				let datetime = new Date(time).getTime();
+				this.orderdetail.createTime = datetime;
+			}
 		},
 		methods: {
 			customerto() {
@@ -92,20 +94,44 @@
 				// })
 			},
 			clickpay(e) {
-				console.log(e);
 				this.$nextTick(() => {
 					this.$refs.showpay.close();
-					
-					
-					// setTimeout(() => {
-					// 	this.orderdetail.sourcetype = 3;
-					// 	getApp().globalData.productdetail = this.orderdetail;
-					// 	uni.navigateTo({
-					// 		url: '/pages/product/productdetail'
-					// 	})
-					// }, 300);
-					
 				});
+				this.api.order.payMsgFee({
+					"matchId": this.orderdetail.matchId,
+					"userId": getApp().globalData.userdata.userId,
+					"payType": e+1
+				}).then(ret => { 
+					if (ret.data.charge) {
+						this.orderdetail.sourcetype = 3;
+						getApp().globalData.productdetail = this.orderdetail;
+						uni.requestPayment({
+							provider: 'wxpay',
+							orderInfo: ret.data.charge, //微信、支付宝订单数据
+							success: function (res) {
+								uni.showModal({
+									title: "提示",
+									content: '支付成功',
+									showCancel: false,
+									success(res) {
+									  if (res.confirm) {
+										uni.navigateTo({
+											url: '/pages/product/productdetail'
+										})
+									  }
+									}
+								});
+							},
+							fail: function (err) {
+							   uni.showModal({
+								title: "提示",
+								content: '支付失败',
+								showCancel: false,
+							   });
+							}
+						});
+					}
+				})
 			},
 			changepup(e) {
 				// console.log('是否打开:' + e.show)

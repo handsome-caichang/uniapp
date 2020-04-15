@@ -93,18 +93,20 @@
 			}).then(res => {
 				this.detail = res.data;
 				this.prolist = this.detail.images;
+				if (this.productdetail.sourcetype == 3) {
+					this.getcustomercont();
+				}
 			})
-			if (this.productdetail.sourcetype == 3) {
-				this.getcustomercont();
-			}
 		},
 		methods: {
 			getcustomercont() {
-				this.api.home.getSellUserContact({
+				this.api.order.getSellUserContact({
 					data: {
-						
+						matchId: this.productdetail.matchId,
+						userId: getApp().globalData.userdata.userId
 					}
 				}).then(res => {
+					console.log(res);
 					this.customercont = res.data;
 				})
 			},

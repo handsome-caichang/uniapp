@@ -389,5 +389,11 @@ export default {
 			'user/setWeixinAccount',
 			params
 		);
+	},
+	getMainVipList(params) {
+		return http.get(
+			'wallet/getMainVipList',
+			params
+		);
 	}
 }

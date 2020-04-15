@@ -38,7 +38,7 @@
 					<input class="uni-input" style="text-align: right;" @blur="saveuser"  v-model="userdata.carCard" maxlength="2" type="number" placeholder="请填写车牌号" />
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" />
+			<!-- <uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" /> -->
 			<uni-list-item :show-extra-icon="true" :showArrow="false"  thumb="/static/img/user/gengduo.png" title="更多展示" />
 		</uni-list>
 		<view class="img-box">

@@ -61,15 +61,15 @@
 			return {
 				items: [
 					{
-						value: 'USA',
-						name: '余额支付',
-						icon: '/static/img/pay/yuebao.png',
-					},
-					{
 						value: 'BRA',
 						name: '微信支付',
 						icon: '/static/img/pay/weixin.png',
 					},
+					{
+						value: 'USA',
+						name: '余额支付',
+						icon: '/static/img/pay/yuebao.png',
+					}
 				],
 				current: 0
 			}

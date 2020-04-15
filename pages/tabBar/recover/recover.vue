@@ -3,7 +3,7 @@
 		<view class="status"  :style="{position:headerPosition}" ></view>
 		<view class="header-box">
 			<view class="item" :class="isactive?'active':''"  @tap="changepage(true)" >
-				我要卖货
+				回收站
 			</view>
 			<view class="item" :class="!isactive?'active':''"  @tap="changepage(false)" >
 				我要买货

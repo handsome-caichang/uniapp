@@ -21,12 +21,15 @@
 		
 		<view class="vip-content">
 			<view class="typelist">
-				<view class="item" :class="{'active': isactive}" @tap="changevip(true)">
+				<view class="item" v-for="(item,index) in viplist" :class="{'active': index == currentindex}" @tap="changevip(index)">
+					{{item.name}}
+				</view>
+				<!-- <view class="item" :class="{'active': isactive}" @tap="changevip(true)">
 					黄金VIP
 				</view>
 				<view class="item" :class="{'active': !isactive}" @tap="changevip(false)">
 					钻石VIP
-				</view>
+				</view> -->
 			</view>
 			<view class="listcon">
 				<view class="listhuanj" v-if="isactive">
@@ -43,13 +46,11 @@
 					<view class="hjitem">&bull; 可加急求购</view>
 				</view>
 			</view>
-			
-			<view class="list-sku">
+			<!-- <view class="list-sku">
 				<view class="sku-item" :class="{'active': isactivesku==1}" @tap="changesuk(1)">3个月</view>
 				<view class="sku-item" :class="{'active': isactivesku==2}" @tap="changesuk(2)">6个月</view>
 				<view class="sku-item" :class="{'active': isactivesku==3}" @tap="changesuk(3)" >1年</view>
-			</view>
-			
+			</view> -->
 		</view>
 	
 	
@@ -95,35 +96,22 @@
 		},
 		data() {
 			return {
-				isactive: true,
-				isactivesku: 2,
-				price: '',
 				userdata: {},
+				price: '',
 				items: [
 					{
 						value: 'USA',
 						name: '余额支付',
 						icon: '/static/img/pay/yuebao.png',
 					},
-					// {
-					// 	value: 'CHN',
-					// 	name: '支付宝支付',
-					// 	checked: 'true',
-					// 	icon: '/static/img/pay/zhifubao.png',
-					// },
 					{
 						value: 'BRA',
 						name: '微信支付',
 						icon: '/static/img/pay/weixin.png',
 					},
-					// {
-					// 	value: 'JPN',
-					// 	name: '银行卡支付',
-					// 	icon: '/static/img/pay/yinhanka.png',
-					// }
 				],
-				current: 0,
 				viplist: [],
+				currentindex: 0,
 			}
 		},
 		computed: {
@@ -131,35 +119,15 @@
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
-			this.api.home.walletgetVipList({
-				data: {
-					userId: this.userdata.userId
-				}
-			}).then(res => {
-				console.log(res)
+			this.api.home.getMainVipList().then(res => {
 				this.viplist = res.data;
-				this.setvipprice();
+				this.changevip(this.currentindex);
 			})
 		},
 		methods: {
-			setvipprice() {
-				// vipTime: 1
-				// price: 98
-				// vipType: 0
-				var vipType= this.isactive ? 0 : 1;
-				var vipTime = this.isactivesku;
-				this.price = '';
-				for (var i = 0; i < this.viplist.length; i++) {
-					if (this.viplist[i].vipType == vipType && this.viplist[i].vipTime == vipTime) {
-						this.price = this.viplist[i].price;
-						break;
-					}
-				}
-			},
 			sub() {
 				this.api.home.submitVipOrder({
-					vipType: this.isactive ? 0 : 1,
-					timeType: this.current + 1,
+					vipId: this.viplist[this.currentindex].mainVipId,
 					userId: this.userdata.userId
 				}).then(res => {
 					console.log(res);
@@ -200,22 +168,10 @@
 					})
 				})
 			},
-			changevip(flg) {
-				this.isactive = flg;
-				this.setvipprice();
+			changevip(index) {
+				this.currentindex = index;
+				this.price = this.viplist[this.currentindex].price;
 			},
-			changesuk(nu) {
-				this.isactivesku = nu;
-				this.setvipprice();
-			},
-			radioChange(evt) {
-				for (let i = 0; i < this.items.length; i++) {
-					if (this.items[i].value === evt.target.value) {
-						this.current = i;
-						break;
-					}
-				}
-			}
 		}
 	}
 </script>

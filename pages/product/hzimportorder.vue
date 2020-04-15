@@ -184,7 +184,7 @@
 					userId: getApp().globalData.userdata.userId,
 				}
 			}).then(res => {
-				this.orderdetail = res.data;
+				this.orderdetail = Object.assign(this.orderdetail, res.data);
 			})
 		},
 		computed: {
@@ -193,15 +193,56 @@
 		methods: {
 			clickpay(e) {
 				console.log(e);
+				// e+1
+				this.$nextTick(() => {
+					this.$refs.showpay.close();
+				});
 				this.api.order.buyUserWriteOrder({
 					userId: getApp().globalData.userdata.userId,
 					classify: this.protype.value,
 					money: +this.pipeinum,
 					type: this.isactive ? 1 : 2,
 					count: +this.numberleng,
-					matchId: this.orderdetail.matchId
+					matchId: this.orderdetail.matchId,
+					payType: e+1
 				}).then(res => {
-					
+					console.log(res);
+					// orderNo
+					// charge
+					this.orderdetail.sourcetype = 3;
+					this.orderdetail.orderNo = res.data;
+					getApp().globalData.productdetail = this.orderdetail;
+					if (e == 1) {
+						uni.navigateTo({
+							url: '/pages/product/productdetail'
+						})
+					}else {
+						uni.requestPayment({
+							provider: 'wxpay',
+							orderInfo: res.data.charge, //微信、支付宝订单数据
+							success: function (res) {
+								uni.showModal({
+									title: "提示",
+									content: '支付成功',
+									showCancel: false,
+									success(res) {
+									  if (res.confirm) {
+										uni.navigateTo({
+											url: '/pages/product/productdetail'
+										})
+									  }
+									}
+								});
+							},
+							fail: function (err) {
+							   uni.showModal({
+								title: "提示",
+								content: '支付失败',
+								showCancel: false,
+							   });
+							}
+						});
+					}
 				})
 				// console.log(this.oserdat)
 				// this.api.order.payMsgFee({

@@ -76,7 +76,7 @@
 			clickitem(item) {
 				getApp().globalData.orderdetail = item;
 				uni.navigateTo({
-					url: '/pages/product/importorder'
+					url: '/pages/product/hzimportorder'
 				})
 			},
 			addRemk(item) {

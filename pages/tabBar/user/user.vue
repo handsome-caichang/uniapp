@@ -117,12 +117,13 @@
 						icon: '/static/img/user/xinyu.png',
 						url: '/pages/user/reputationvalue'
 					},{
-						name: '废品帮VIP',
+						name: 'VIP',
 						icon: '/static/img/user/VIP.png',
 						url: '/pages/user/vipsend'
 					},{
-						name: '我的成就',
-						icon: '/static/img/user/chengjiu.png'
+						name: '缴纳保证金',
+						icon: '/static/img/user/baozhenjin.png',
+						url: '/pages/user/userinfo/userbond'
 					},{
 						name: '我的发布',
 						icon: '/static/img/user/fabu.png',

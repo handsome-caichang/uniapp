@@ -55,7 +55,7 @@
 			clickitem(item) {
 				getApp().globalData.orderdetail = item;
 				uni.navigateTo({
-					url: '/pages/product/hzimportorder'
+					url: '/pages/product/importorder'
 				})
 			}
 		},

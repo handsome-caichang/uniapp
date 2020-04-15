@@ -176,7 +176,7 @@
 					userId: getApp().globalData.userdata.userId,
 				}
 			}).then(res => {
-				this.orderdetail  = res.data;
+				this.orderdetail = Object.assign(this.orderdetail, res.data);
 				let time = this.orderdetail.createTime.replace(' ', "T")
 				let datetime = new Date(time).getTime();
 				this.orderdetail.createTime = datetime;
@@ -210,41 +210,9 @@
 					count: +this.numberleng,
 					matchId: this.orderdetail.matchId
 				}).then(res => {
-					// this.api.home.payVipOrder({
-					// 	"orderNo": res.data,
-					// 	"userId": getApp().globalData.userdata.userId,
-					// 	"payType": this.current == 0 ? 2 : 1
-					// }).then(ret => {
-					// 	var orderString = ret.data;
-					// 	console.log(ret)
-					// 	uni.requestPayment({
-					// 	    provider: 'wxpay',
-					// 	    orderInfo: orderString, //微信、支付宝订单数据
-					// 	    success: function (res) {
-					// 			uni.showModal({
-					// 				title: "提示",
-					// 				content: '充值成功，请关闭APP后再次进入',
-					// 				showCancel: false,
-					// 			});
-					// 	    },
-					// 	    fail: function (err) {
-					// 	       uni.showModal({
-					// 	       	title: "提示",
-					// 	       	content: '支付失败',
-					// 	       	showCancel: false,
-					// 	       });
-					// 	    }
-					// 	});
-					// })
-					
-					// "orderNo":【订单编号, 字符串】,
-					// "userId":【用户编号，字符串】
-					// "payType":【支付类型 0：支付宝 1：微信，2.余额 整型】
-					
 					uni.navigateTo({
 						url: '/pages/other/successpgae'
 					})
-					
 				})
 			},
 			openrul() {

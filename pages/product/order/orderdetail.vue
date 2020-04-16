@@ -92,21 +92,25 @@
 				})
 			},
 			clearbtn() {
+				let that = this;
 				uni.showModal({
 					title: '确认取消匹配吗？',
 					content: '取消后此匹配将不存在',
 					confirmText: '我再想想',
 					cancelText: '确认取消',
 					success: function(res) {
-						if (res.confirm) {
-							this.api.home.cancelMatching({
+						if (!res.confirm) {
+							that.api.home.cancelMatching({
 								userId: getApp().globalData.userdata.userId,
-								matchId: this.customerdata.matchId
+								matchId: that.orderdetail.matchId
 							}).then(res => {
 								uni.showModal({
 									title: "提示",
 									content: '取消成功',
 									showCancel: false,
+									success() {
+										uni.navigateBack();
+									}
 								});
 							})
 						} else if (res.cancel) {

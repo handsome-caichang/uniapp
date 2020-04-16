@@ -75,7 +75,9 @@
 								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
 								<uni-rate class="rate" :size="12" :value="item.start" />
 							</view>
-							<view class="btn" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
+							<view class="btn" v-if="item.status == 0" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
+							<view class="btn" v-if="item.status == 1" style="color: #fff;background-color: #575757;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已同意</view>
+							<view class="btn"  v-if="item.status == 99" style="color: #fff;background-color: #DD524D;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已拒绝</view>
 						</uni-list-item>
 					</uni-list>
 				</view>
@@ -97,7 +99,8 @@
 								<text style="font-size: 34upx;margin-right: 20upx;">从业{{item.buyUserYear}}年</text>
 								<uni-rate class="rate" :size="12" :value="item.start" />
 							</view>
-							<view class="btn" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
+							<view class="btn" v-if="item.status == 99" style="color: #DD524D;font-size: 34upx;margin-right: 20upx;">匹配关闭</view>
+							<view class="btn"  v-if="item.status == 0 || item.status == 1" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
 					</uni-list>
 				</view>
@@ -149,6 +152,9 @@
 			this.gettuijian();
 		},
 		methods: {
+			updatedata() {
+				this.changetab(this.activeindex);
+			},
 			nvtocustomer(item, sourcetype, parent) {
 				item.sourcetype = sourcetype;
 				item.matchId = parent ? parent.matchId : '';
@@ -213,11 +219,13 @@
 				})
 			},
 			sureMatching(item) {
-				item.sourcetype = 2;
-				getApp().globalData.customerdata = Object.assign({}, item);;
-				uni.navigateTo({
-					url: `/pages/customer/customerdetail`
-				});
+				if (item.status == 0) {
+					item.sourcetype = 2;
+					getApp().globalData.customerdata = Object.assign({}, item);;
+					uni.navigateTo({
+						url: `/pages/customer/customerdetail`
+					});
+				}
 			},
 			toorderdetail(item) {
 				getApp().globalData.orderdetail = Object.assign({}, item);;

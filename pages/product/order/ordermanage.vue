@@ -27,6 +27,17 @@
 				isactive: true,
 			}
 		},
+		onShow() {
+			if (this.isactive) {
+				this.$nextTick(function(){
+					this.$refs.sellpro.updatedata();
+				})
+			}else {
+				this.$nextTick(function(){
+					this.$refs.buypro.updatedata();
+				})
+			}
+		},
 		methods: {
 			changepage(flag) {
 				this.isactive = flag;

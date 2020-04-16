@@ -61,7 +61,7 @@
 						"goodsName": "废铁",
 						"matchId": 8
 					}-->
-						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :showBadge="true" :showArrow="false" :note="'申请时间：'+item.createTime+'  '+item.sellDistrict"
+						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :showBadge="true" :showArrow="false" :note="'申请时间：'+ utils.timeTodate('Y m-d', item.createTime)+'  '+item.sellDistrict"
 						 v-for="(item,index) in jilulist" :key="index">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.goodsName}}</text>
@@ -70,8 +70,10 @@
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.nickName}}</text>
 							</view>
-							<view class="btn" style="">
-								<image src="/static/img/guanbi.png" mode="aspectFit" style="width: 108upx;height:68upx"></image>
+							<view class="btn">
+								<view class="btn" v-if="item.status == 99" style="color: #DD524D;font-size: 34upx;margin-right: 20upx;">匹配关闭</view>
+								<view class="btn"  v-if=" item.status == 1" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
+								<view class="btn"  v-if=" item.status == 0" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配中</view>
 							</view>
 						</uni-list-item>
 					</uni-list>
@@ -85,7 +87,7 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :note="'收到时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in shoudaolist"
+						<uni-list-item class="" :thumb="item.images?item.images[0]:''" :note="'收到时间：'+utils.timeTodate('Y m-d', item.createTime)+'  '+item.sellDistrict" v-for="(item,index) in shoudaolist"
 						 :key="index" @tap="shoudaoclick(item)">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.goodsName}}</text>
@@ -94,7 +96,9 @@
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.nickName}}</text>
 							</view>
-							<view class="btn" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
+							<view class="btn" v-if="item.status == 0" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
+							<view class="btn" v-if="item.status == 1" style="color: #fff;background-color: #575757;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已同意</view>
+							<view class="btn"  v-if="item.status == 99" style="color: #fff;background-color: #DD524D;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已拒绝</view>
 						</uni-list-item>
 					</uni-list>
 				</view>
@@ -116,7 +120,8 @@
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.sellUserName}}</text>
 							</view>
-							<view class="btn" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
+							<view class="btn" v-if="item.status == 99" style="color: #DD524D;font-size: 34upx;margin-right: 20upx;">匹配关闭</view>
+							<view class="btn"  v-if="item.status == 0 || item.status == 1" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
 					</uni-list>
 				</view>
@@ -175,6 +180,9 @@
 			}
 		},
 		methods: {
+			updatedata() {
+				this.changetab(this.activeindex)
+			},
 			changetab(active) {
 				this.activeindex = active;
 				if (this.activeindex == 0) {
@@ -206,6 +214,11 @@
 				}).then(res => {
 					console.log("收到的申请");
 					console.log(res);
+					res.data.forEach(item => {
+						let time = item.createTime.replace(' ', "T")
+						let datetime = new Date(time).getTime();
+						item.createTime = datetime;
+					})
 					this.shoudaolist = res.data;
 				})
 			},
@@ -253,11 +266,13 @@
 				})
 			},
 			shoudaoclick(item) {
-				item.sourcetype = 2;
-				getApp().globalData.productdetail = Object.assign({}, item);
-				uni.navigateTo({
-					url: `/pages/product/productdetail`
-				});
+				if(item.status == 0) {
+					item.sourcetype = 2;
+					getApp().globalData.productdetail = Object.assign({}, item);
+					uni.navigateTo({
+						url: `/pages/product/productdetail`
+					});
+				}
 			},
 			nvto(item) {
 				getApp().globalData.orderdetail = Object.assign({}, item);

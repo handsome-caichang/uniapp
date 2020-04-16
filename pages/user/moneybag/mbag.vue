@@ -46,13 +46,13 @@
 			showyue: function () {
 				if (this.showprice) {
 					let str = '';
-					var test = this.yue + '';
+					var test = this.yue / 100 + '';
 					for (var i = 0; i < test.length; i++) {
 						str += '*';
 					}
 					return str
 				}else {
-					return this.yue 
+					return this.yue / 100
 				}
 			},
 		},

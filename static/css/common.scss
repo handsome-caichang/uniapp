@@ -119,3 +119,11 @@
 		margin-top: 30upx;
 	}
 }
+
+.uni-line-text {
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	width: 100%;
+	text-align: center;
+}

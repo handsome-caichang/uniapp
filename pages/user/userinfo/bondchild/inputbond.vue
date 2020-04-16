@@ -80,7 +80,7 @@
 			},
 			zhuanru() {
 				if (this.bondnum) {
-					let money = this.bondnum * 10000;
+					let money = this.bondnum * 100;
 					this.api.home.payDeposit({
 						userId: getApp().globalData.userdata.userId,
 						money: ""+money,

@@ -8,7 +8,7 @@
 				<view class="icon-box">
 					￥
 				</view>
-				<input type="number" class="input" v-model="bondnum" maxlength="12">
+				<input type="number" class="input" v-model="bondnum" maxlength="12" placeholder="请输入100的整倍数" >
 			</view>
 		</view>
 		<view class="input-container">
@@ -87,7 +87,7 @@
 					this.api.home.balanceRecharge({
 						typeId: 1,
 						userId: getApp().globalData.userdata.userId,
-						money: this.bondnum * 10000
+						money: this.bondnum * 100
 					}).then(res => {
 						console.log(res);
 						var orderString = res.data;

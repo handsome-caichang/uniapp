@@ -10,8 +10,8 @@
 		</view>
 		
 		<view class="uni-flooter-box">
-			<view class="checked-box" v-if="userdata.vipLevel == 1">
-				<checkbox :checked="ischeck" color="#E7211A" />
+			<view class="checked-box" >
+				<checkbox :checked="ischeck" color="#E7211A" :disabled="userdata.vipLevel != 1" />
 				<text style="color: #E7211A;">加急</text>
 			</view>
 			<view class="btn" :class="btnactive?'active':''" @tap="fabucur" >

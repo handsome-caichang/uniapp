@@ -207,7 +207,7 @@
 				this.api.order.buyUserWriteOrder({
 					userId: getApp().globalData.userdata.userId,
 					classify: this.protype.value,
-					money: this.pipeinum * 10000,
+					money: this.pipeinum * 100,
 					type: this.isactive ? 1 : 2,
 					count: +this.numberleng,
 					matchId: this.orderdetail.matchId,

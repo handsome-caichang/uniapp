@@ -36,7 +36,7 @@
 							<image class="img" :src="item.headImage" mode="aspectFill"></image>
 							<text class="name">{{ item.nickName }}</text>
 							<text class="name">从业{{ item.years }}年</text>
-							<text class="name">保证金：{{ item.depositMoney ? item.depositMoney : 0}}</text>
+							<text class="name uni-line-text">保证金：{{ item.depositMoney ? item.depositMoney/100 : 0}}</text>
 							<uni-rate class="rate" :size="32" :value="item.star" />
 						</view>
 					</swiper-item>
@@ -264,8 +264,6 @@ export default {
 			this.api.home.getNoticeList().then(res => {
 				this.gonkaolist = res.data;
 			})
-			// "latitude": 28.22329671223958,
-			// "longitude": 112.8799093967014,
 			// this.api.home.goodsRecommend({
 			// 	data: {
 			// 		userId: getApp().globalData.userdata.userId,

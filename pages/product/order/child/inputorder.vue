@@ -44,8 +44,11 @@
 								发布时间：<text>{{ utils.timeTodate('Y m-d', item.createTime) }}</text> <text style="float: right;">{{item.sellDistrict}}</text>
 							</view>
 						</view>
-						<view class="btnbox" style="margin-top: 30upx;" @tap="guanli(item, '/pages/product/order/applicationrecord')">
+						<view class="btnbox" style="margin-top: 30upx;" v-if="item.status == 0 || item.status == 1" @tap="guanli(item, '/pages/product/order/applicationrecord')">
 							<view style="color: #18C02C;border: 1upx solid #18C02C;padding: 2upx 20upx;border-radius: 20upx;">管理</view>
+						</view>
+						<view class="btnbox" style="margin-top: 30upx;" v-if="item.status == 99 " >
+							<view class="btn" style="color: #DD524D;font-size: 34upx;margin-right: 20upx;">匹配关闭</view>
 						</view>
 					</view>
 					<view class="huishouren" style="padding: 0upx;">

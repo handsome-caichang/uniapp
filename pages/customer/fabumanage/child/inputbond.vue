@@ -3,20 +3,21 @@
 
 		<view class="content-box">
 			<checkbox-group @change="checkboxChange">
-				<label class="uni-list-cell" v-for="item in items" :key="item.realseId">
-					<view v-if="showguanli" style="width: 60upx;margin-left: 10upx;">
-						<checkbox :value="item.realseId" :checked="item.checked" />
+				<label class="uni-list-cell" v-for="item in items" :key="item.orderNoo">
+					<view v-if="showguanli && item.status !=  99" style="width: 60upx;margin-left: 10upx;">
+						<checkbox :value="item.orderNoo+''" :checked="item.checked" />
 					</view>
 					<view class="uni-media-list" @tap="resultres(item)">
-						<image mode="aspectFit" class="uni-media-list-logo" :src="item.headImage"></image>
+						<image mode="aspectFit" class="uni-media-list-logo" :src="item.images ? item.images[0] : ''"></image>
 						<view class="uni-media-list-body">
 							<view class="uni-media-list-text-top">{{item.name}}</view>
-							<view class="uni-media-list-text-bottom uni-ellipsis">发布时间：{{item.createTime}} {{item.district}}</view>
+							<view class="uni-media-list-text-top">{{item.nickName}}</view>
+							<view class="uni-media-list-text-bottom uni-ellipsis">发布时间：{{ utils.timeTodate('Y m-d', item.createTime)}} {{item.district}}</view>
 						</view>
 						<view>
 							<view class="list-succ" :class="{ 'class1': item.status == 1,'class2': item.status == 2,'class3': item.status == 3,'class4': item.status == 4} ">
 								<!-- // 【//0：待处理 1：审核中 2：带匹配 3：匹配成功    4:审核失败 5：已取消 -->
-								{{ item.status == 1 ? '审核中' : (item.status == 2 ? '待匹配' : ( item.status == 3 ? '交易中' :  (item.status ==  4 ? '审核失败' : (item.status ==  5 ? '已取消' : ''))))}}
+								{{ item.status == 1 ? '审核中' : (item.status == 2 ? '待匹配' : ( item.status == 3 ? '交易中' :  (item.status ==  4 ? '审核失败' : (item.status ==  99 ? '已取消' : ''))))}}
 							</view>
 							<view class="number-id">
 								NO.{{item.realseId}}
@@ -54,6 +55,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniList,
@@ -62,27 +64,35 @@
 		},
 		data() {
 			return {
+				utils,
 				showguanli: false,
-				items: []
+				items: [],
+				checkedlist: [],
 			}
 		},
 		created() {
-			this.api.home.getRealseList({
-				data: {
-					userId: getApp().globalData.userdata.userId,
-					countPerPage: 2000,
-					pageIndex: 1
-				}
-			}).then(res => {
-				console.log("我的发布");
-				console.log(res);
-				res.data.forEach(item => {
-					this.$set(item, 'checked', false)
-				})
-				this.items = res.data;
-			})
+			this.getdata();
 		},
 		methods: {
+			getdata() {
+				this.api.home.getRealseList({
+					data: {
+						userId: getApp().globalData.userdata.userId,
+						countPerPage: 2000,
+						pageIndex: 1
+					}
+				}).then(res => {
+					res.data.forEach(item => {
+						this.$set(item, 'checked', false);
+						if ( typeof item.createTime !== 'number') {
+							let time = item.createTime.replace(' ', "T")
+							let datetime = new Date(time).getTime();
+							item.createTime = datetime;
+						}
+					})
+					this.items = res.data;
+				})
+			},
 			resultres(item) {
 				if (item.status === 4) {
 					getApp().globalData.examineres = item;
@@ -98,26 +108,18 @@
 					content: '取消后将不可恢复',
 					success: (res) => {
 						if (res.confirm) {
-							console.log({
-								data: that.items
-							})
-							let list = [];
-							that.items.forEach(item => {
-								if (item.checked) {
-									list.push(item);
-								}
-							})
-							console.log(list)
-							if (list[0]) {
+							console.log(that.checkedlist)
+							if (that.checkedlist.length) {
 								that.api.home.cancelRealse({
 									userId: getApp().globalData.userdata.userId,
-									orderNo: '' + list[0].realseId
+									orderNo: that.checkedlist
 								}).then(res => {
 									uni.showModal({
 										title: "提示",
 										content: '取消成功',
 										showCancel: false,
 									});
+									that.getdata();
 								})
 							}
 						}
@@ -133,17 +135,9 @@
 				}
 			},
 			checkboxChange(e) {
-				var values = [e.detail.realseId];
-				for (var i = 0, lenI = this.items.length; i < lenI; ++i) {
-					if (values.includes(this.items[i].realseId)) {
-						this.items[i].checked = true;
-					} else {
-						this.items[i].checked = false;
-					}
-				}
+				this.checkedlist = e.detail.value;
 			},
 			checkboxChangeall(e) {
-				console.log(e)
 				let values = e.detail.value;
 				if (values.length) {
 					this.items.forEach(item => {
@@ -164,7 +158,9 @@
 		.uni-media-list {
 			justify-content: space-between;
 		}
-
+		.uni-media-list-body {
+			height: auto;
+		}
 		.guanlibtn {
 			position: fixed;
 			bottom: 0;
@@ -176,7 +172,7 @@
 			height: 98upx;
 			padding: 0 20upx;
 			background-color: #eee;
-
+			z-index: 9;
 			.btn-box {
 				display: flex;
 

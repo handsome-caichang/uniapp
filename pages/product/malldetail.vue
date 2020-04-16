@@ -5,7 +5,7 @@
 			<swiper indicator-dots circular=true duration="400">
 				<swiper-item class="swiper-item" v-for="(item,index) in detail.images" :key="index">
 					<view class="image-wrapper">
-						<image mode="aspectFit" :src="item" class="loaded" ></image>
+						<image mode="aspectFit" @tap="listimgtap(index)" :src="item" class="loaded" ></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -67,7 +67,7 @@
 				</view>
 				<view class="s-container">
 					<scroll-view class="scroll-view_H" scroll-x="true" scroll-left="120">
-						<image mode="aspectFit" class="img" v-for="(item,index) in detail.images" :key="index" :src="item"></image>
+						<image mode="aspectFit" class="img" v-for="(item,index) in detail.images" @tap="listimgtap(index)" :key="index" :src="item"></image>
 					</scroll-view>
 				</view>
 			</view>
@@ -178,8 +178,14 @@
 			},
 			nvto(index) {
 				// item
-				uni.navigateTo({
-					url: `/pages/product/malldetail?id=${index}`
+				// uni.navigateTo({
+				// 	url: `/pages/product/malldetail?id=${index}`
+				// })
+			},
+			listimgtap(current) {
+				uni.previewImage({
+					current: current,
+					urls: this.detail.images,
 				})
 			},
 			call() {

@@ -5,15 +5,15 @@
 		</view>
 		<view class="input-container">
 			<view class="point">
-				转出金额（元）
+				转出金额（元）, 已缴纳保证金：{{userdata.depositMoney / 100}} 元
 			</view>
 			<view class="input-box">
 				<view class="icon-box">
 					￥
 				</view>
 				<input type="number" class="input" v-model="bondnum" placeholder="请输入100的整倍数" maxlength="12" >
-				<view class="all" style="color: #18C02C;">
-					全部
+				<view class="all" style="color: #18C02C;" @tap="all">
+					全部 
 				</view>
 			</view>
 		</view>
@@ -36,14 +36,21 @@
 		data() {
 			return {
 				bondnum: '',
+				userdata: {}
 			}
 		},
+		created() {
+			this.userdata = getApp().globalData.userdata;
+		},
 		methods: {
+			all() {
+				this.bondnum = this.userdata.depositMoney;
+			},
 			zhuanchu() {
 				if (this.bondnum) {
 					this.api.home.depositToMoney({
 						userId: getApp().globalData.userdata.userId,
-						money: Number(this.bondnum)
+						money: this.bondnum * 100
 					}).then(res => {
 						uni.showToast({
 							title: "转出成功",

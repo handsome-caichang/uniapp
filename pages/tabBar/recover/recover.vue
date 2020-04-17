@@ -6,7 +6,7 @@
 				回收站
 			</view>
 			<view class="item" :class="!isactive?'active':''"  @tap="changepage(false)" >
-				我要买货
+				我是回收人
 			</view>
 		</view>
 		<view class="container">

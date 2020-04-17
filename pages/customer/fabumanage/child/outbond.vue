@@ -11,10 +11,10 @@
 					</view>
 				</view>
 				<view class="option-box">
-					<uni-icons type="arrowthinup" size="24"></uni-icons>
-					<uni-icons type="arrowthindown" size="24" ></uni-icons>
+					<!-- <uni-icons type="arrowthinup" size="24"></uni-icons> -->
+					<!-- <uni-icons type="arrowthindown" size="24" ></uni-icons> -->
 					<uni-icons type="trash" size="24" @tap="del(item)" ></uni-icons>
-					<view class="checked-box" @tap="jiaji(item)" v-if="isjiaji">
+					<view class="checked-box" @tap="jiaji(item)" >
 						<checkbox :checked="item.urgent" color="#E7211A" />
 						<text style="color: #E7211A;">加急</text>
 					</view>
@@ -53,7 +53,10 @@
 						pageIndex: 1
 					}
 				}).then(res=>{
-					this.list = res.data
+					res.data.forEach(item=> {
+						item.urgent = item.urgent == 1 ? true : false;
+					})
+					this.list = res.data;
 				})
 			},
 			del(item) {
@@ -65,7 +68,7 @@
 				})
 			},
 			jiaji(item) {
-				if (item.urgent) {
+				if (!item.urgent) {
 					this.api.home.urgentRecovery({
 						userId: getApp().globalData.userdata.userId,
 						id: item.recoveryId

@@ -4,7 +4,7 @@
 			<view class="uni-list">
 				<view class="uni-list-item" style="padding: 0 40upx;" >
 					<view class="uni-flex">
-						<image :src="detail.img" mode="aspectFit" class="headerimg" style="margin-top: 20upx;"></image>
+						<image :src="detail.images ? detail.images[0] : ''" mode="aspectFit" class="headerimg" style="margin-top: 20upx;"></image>
 						<view class="content" style="margin-left:10upx;flex: 1">
 							<view class="title" style="font-size: 34upx;">{{detail.nickName}}</view>
 							<view class="title" style="font-size: 34upx;">
@@ -12,7 +12,7 @@
 								<text style="margin-left: 20upx;">{{detail.count}}</text>
 							</view>
 							<view style="color: #575757;font-size: 28upx;">
-								发布时间：<text>{{detail.createTime}}</text> <text>{{detail.sellDistrict}}</text>
+								发布时间：<text>{{ utils.timeTodate('Y m-d', detail.createTime) }}</text> <text style="margin-left: 30upx;">{{detail.sellDistrict}}</text>
 							</view>
 						</view>
 						<view class="btnbox" style="margin-top: 30upx;" @tap="showguanli" >
@@ -23,7 +23,7 @@
 			</view>
 			<view class="huishouren" style="padding: 0upx;">
 				<view class="cusitem" v-for="(user,index) in detail.userList" :key="index">
-					<uni-icons type="close" size="12" color="#E7211A" class="clear-icon" v-if="guanlishow" @tap="clearuser(user,index)" ></uni-icons>
+					<uni-icons type="close" size="24" color="#E7211A" class="clear-icon" v-if="guanlishow" @tap="clearuser(user,index)" ></uni-icons>
 					<image mode="aspectFit" :src="user.headImage" class="headerimg"></image>
 					<view class="name">{{user.nickName}}</view>
 					<view class="point">从业{{user.years}}年</view>
@@ -38,6 +38,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniList,
@@ -47,6 +48,7 @@
 		},
 		data() {
 			return {
+				utils,
 				guanlishow: false,
 				detail: {
 				},
@@ -81,8 +83,8 @@
 <style scoped lang="scss">
 	.orderin {
 		.headerimg {
-			width: 60upx;
-			height: 60upx;
+			width: 80upx;
+			height: 80upx;
 			border-radius: 50%;
 			margin-bottom: 10upx;
 		}
@@ -112,21 +114,24 @@
 					.clear-icon {
 						position: absolute;
 						top: 0upx;
-						right: 10upx;
-						height: 50upx;
-						width: 50upx;
+						right: 0upx;
+						// height: 50upx;
+						// width: 50upx;
 					}
 					.name {
 						color: #303030;
-						font-size: 22upx;
-						height: 28upx;
+						font-size: 32upx;
+						height: 28upx;					
+						line-height: 1;
 					}
 
 					.point {
 						height: 38upx;
 						color: #303030;
-						font-size: 22upx;
+						font-size: 32upx;
 						margin-bottom: 10upx;
+						margin-top: 10upx;
+						line-height: 1;
 					}
 				}
 			}

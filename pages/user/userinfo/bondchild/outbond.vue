@@ -41,6 +41,13 @@
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
+			this.api.home.getRecoveryInfo({
+				data: {
+					userId: this.userdata.userId
+				}
+			}).then(res => {
+				this.userdata = res.data;
+			})
 		},
 		methods: {
 			all() {

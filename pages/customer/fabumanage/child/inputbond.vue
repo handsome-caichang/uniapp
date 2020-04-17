@@ -112,7 +112,7 @@
 							if (that.checkedlist.length) {
 								that.api.home.cancelRealse({
 									userId: getApp().globalData.userdata.userId,
-									orderNo: that.checkedlist
+									orderNos: that.checkedlist
 								}).then(res => {
 									uni.showModal({
 										title: "提示",

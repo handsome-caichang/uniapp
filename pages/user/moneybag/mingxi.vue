@@ -13,8 +13,8 @@
 				<uni-icons type="arrowdown" color="#999999" size="12"></uni-icons>
 			</view>
 			<view class="sun">
-				<view style="color: #999999;font-size: 22upx;" v-if="activeindex==0">支出¥{{list.sumSpend}}</view>
-				<view style="color: #999999;font-size: 22upx;">收入¥{{list.sumIncome}}</view>
+				<view style="color: #999999;font-size: 22upx;">支出¥{{list.sumSpend/100}}元</view>
+				<view style="color: #999999;font-size: 22upx;">收入¥{{list.sumIncome/100}}元</view>
 			</view>
 		</view>
 		<uni-list>
@@ -37,7 +37,7 @@
 			<uni-list-item v-for="item in list.billInfo" :key="item.orderNo" :title="item.remark" :note="item.createTime" :showArrow="false"
 			 :showBadge="true">
 				<view class="list-succ" :class="{'list-price': item.type==0,'list-succ': item.type == 1}">
-					{{item.type==0?'+':'-'}}{{item.count}}
+					{{item.type==0?'+':'-'}}{{item.count/100}} 元 
 				</view>
 			</uni-list-item>
 		</uni-list>
@@ -110,6 +110,8 @@
 			}
 		},
 		created() {
+			let datetime = new Date();
+			this.timeindex = datetime.getMonth();
 			this.getdata();
 		},
 		methods: {

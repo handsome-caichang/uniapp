@@ -8,7 +8,7 @@
 		</scroll-view>
 
 		<view class="listbox" style="margin-top: 20upx;">
-			<view v-if="activeindex === 0" class="tuijian-box">
+		<!-- 	<view v-if="activeindex === 0" class="tuijian-box">
 				<view class="no-pro" v-if="!productList.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -40,10 +40,9 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 
-
-			<view class="shoudao" v-if="activeindex === 1">
+			<view class="shoudao" v-if="activeindex === 0">
 				<view class="no-pro" v-if="!jilulist.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -80,7 +79,7 @@
 				</view>
 			</view>
 
-			<view class="shoudao" v-if="activeindex === 2">
+			<view class="shoudao" v-if="activeindex === 1">
 				<view class="no-pro" v-if="!shoudaolist.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -104,7 +103,7 @@
 				</view>
 			</view>
 
-			<view class="shoudao" v-if="activeindex === 3">
+			<view class="shoudao" v-if="activeindex === 2">
 				<view class="no-pro" v-if="!successlist.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -115,7 +114,7 @@
 						 :key="index" @tap="nvto(item)">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.name}}</text>
-								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}顿</text>
+								<text style="font-size: 34upx;margin-right: 20upx;">{{item.count}}吨</text>
 							</view>
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.sellUserName}}</text>
@@ -166,7 +165,7 @@
 				successlist: [],
 				shoudaolist: [],
 				tablist: [
-					'货物推荐',
+					// '货物推荐',
 					'申请记录',
 					'收到申请',
 					'匹配成功',
@@ -185,13 +184,14 @@
 			},
 			changetab(active) {
 				this.activeindex = active;
-				if (this.activeindex == 0) {
+				let curindex = this.activeindex+1;
+				if (curindex == 0) {
 					this.gettuijian();
-				}else if (this.activeindex == 1) {
+				}else if (curindex == 1) {
 					this.getjilu();
-				}else if (this.activeindex == 2) {
+				}else if (curindex == 2) {
 					this.getshoudao();
-				}else if (this.activeindex == 3) {
+				}else if (curindex == 3) {
 					this.getsuccesslist();
 				}
 			},

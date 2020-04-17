@@ -27,12 +27,12 @@
 						</view>
 						<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 60upx;">
-								<text style="color: #212121;font-weight: 500;font-size: 32upx;">{{item.name}}</text>
+								<text style="color: #212121;font-weight: 500;font-size: 32upx;">{{userdata.isVip == 1?item.name:'***'}}</text>
 								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{item.createTime}}</text>
 							</view>
 							<view class="uni-flex title" style="align-items: center;height: 40upx;">
 								<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">{{item.classifyName}}</text>
-								<text class="price " style="width:350upx;font-size: 24upx;">{{item.bedrockPrice}}-{{item.outsidePrice}}元/吨（预估运费{{item.freight}}元/吨）</text>
+								<text class="price " style="width:350upx;font-size: 24upx;" v-if="userdata.isVip == 1" >{{item.bedrockPrice}}-{{item.outsidePrice}}元/吨（预估运费{{item.freight}}元/吨）</text>
 							</view>
 							<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;margin-top: 10upx;">
 								{{item.address}}
@@ -122,10 +122,12 @@ export default {
 			tablist: ['价格', '距离', '常用'],
 			activeindex: 0,
 			locationobj: {},
+			userdata: {},
 		};
 	},
 	created() {
 		// this.getlocation();
+		this.userdata = getApp().globalData.userdata;
 		this.loadData();
 	},
 	computed: {

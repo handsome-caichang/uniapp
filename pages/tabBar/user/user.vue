@@ -1,16 +1,36 @@
 <template>
 	<view class="container">
 		<view class="user-section">
-			<image class="bg" src="/static/img/user-bg.jpg"></image>
-			<view class="user-info-box">
+			<!-- <image class="bg" src="/static/img/user-bg.jpg"></image> -->
+			<!-- <view class="user-info-box">
 				<view class="portrait-box" @tap="navTo('/pages/user/userinfo/userinfo')">
 					<image class="portrait" :src="userdata.headImage"></image>
 				</view>
 				<view class="info-box">
 					<text class="username" style="color: #18C02C;">{{userdata.nickName}}</text>
 				</view>
+			</view> -->
+			<view class="vip-box">
+				<view class="uni-flex"    @tap="navTo('/pages/user/vipsend')">
+					<view class="userbox">
+						<image :src="userdata.headImage" class="img" ></image>
+						<view class="info-box" style="margin-left: 40upx;">
+							<text class="username" style="color: #18C02C;font-size: 36upx;">{{userdata.nickName}}</text>
+						</view>
+						<view class="kaitong" style="position: absolute;right: 20upx;top: 60%;" v-if="userdata.isVip == 0">
+							立即开通会员
+						</view>
+					</view>
+					<view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 60%;" >
+						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 0 ? '黄金' : (userdata.vipLevel == 1 ? "钻石" : '')}} 会员  </view>
+					</view>
+				</view>
+				
+			<!-- 	<view class="uni-flex" style="font-size: 28upx;color: #FEFEFE;margin-top: 20upx;">
+					货物推荐 &bull; 首页展示 &bull; 发布求购
+				</view> -->
 			</view>
-			<view class="vip-card-box">
+			<!-- <view class="vip-card-box">
 				<image class="card-bg" src="/static/img/vip-card-bg.png" mode=""></image>
 				<view class="b-btn"  @tap="navTo('/pages/user/vipsend')" v-if="userdata.isVip == 0">
 					立即开通
@@ -26,7 +46,7 @@
 					<text class="iconfont iconjiaoyi"></text>
 					Recovery Station {{userdata.vipLevel == 0 ? '黄金' : (userdata.vipLevel == 1 ? "钻石" : '')}} 会员  
 				</view>
-			</view>
+			</view> -->
 		</view>
 
 		<view class="cover-container" :style="[{
@@ -34,7 +54,7 @@
 				transition: coverTransition
 			}]"
 		 @touchstart="coverTouchstart" @touchmove="coverTouchmove" @touchend="coverTouchend">
-			<image class="arc" src="/static/img/arc.png"></image>
+			<!-- <image class="arc" src="/static/img/arc.png"></image> -->
 			
 			<view class="border-bottom c-item">
 				<view class="c-title">
@@ -270,12 +290,37 @@
 		background: #fff;
 		border-radius: 10upx;
 	}
-
+	.vip-box {
+		border-radius: 10upx;
+		.userbox {
+			display: flex;
+			align-items: center;
+			.img {
+				border-radius: 50%;
+				width: 100upx;
+				height: 100upx;
+			}
+			.kaitong {
+				color: #FEFEFE;
+				font-size: 28upx;
+				padding: 0 10upx;
+				border-radius: 6upx;
+				background-color: #AAAAAA;
+				margin-left: 20upx;
+			}
+		}
+		.viptext {
+			margin-left: 10upx;
+			font-size: 100upx;
+			color: #FEFEFE;
+			line-height: 50px;
+		}
+	}
 	.user-section {
-		height: 520upx;
-		padding: 100upx 30upx 0;
+		/* height: 520upx; */
+		padding: 180upx 30upx 50upx;
 		position: relative;
-
+		background:linear-gradient(128deg,rgba(255,204,60,1) 0%,rgba(254,229,172,1) 100%);
 		.bg {
 			position: absolute;
 			left: 0;
@@ -361,7 +406,6 @@
 	}
 
 	.cover-container {
-		margin-top: -150upx;
 		position: relative;
 		background: #f5f5f5;
 		padding-bottom: 20upx;

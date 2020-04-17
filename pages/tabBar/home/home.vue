@@ -53,10 +53,10 @@
 								<text>{{ item.classifyName }}</text>
 								<text>{{ item.count }}吨</text>
 							</view>
-							<text class="uni-ellipsis" style="font-size: 32upx;">{{ item.name }}</text>
-							<view class="box">
+							<text class="uni-ellipsis" style="font-size: 32upx;">{{ item.nickName }}</text>
+							<view class="box" style="display: flex;">
 								<text>{{ utils.timeTodate('m-d', item.createTime)}}</text>
-								<text>{{ item.address }}</text>
+								<text class="uni-ellipsis" style="width: 90upx;text-align: right;font-size: 28upx;padding: 0;">{{ item.address }}</text>
 							</view>
 						</view>
 					</swiper-item>
@@ -283,7 +283,6 @@ export default {
 			uni.getLocation({
 				geocode: true,
 				success: res => {
-					console.log(res)
 					this.api.home.goodsRecommend({
 						data: {
 							userId: getApp().globalData.userdata.userId,

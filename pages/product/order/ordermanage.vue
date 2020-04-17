@@ -2,10 +2,10 @@
 	<view class="uni-page-body">
 		<view class="header-box">
 			<view class="item" :class="isactive?'active':''"  @tap="changepage(true)" >
-				我要卖货
+				我是货主
 			</view>
 			<view class="item" :class="!isactive?'active':''"  @tap="changepage(false)" >
-				我要买货
+				我要回收人
 			</view>
 		</view>
 		<view class="container">

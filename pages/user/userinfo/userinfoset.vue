@@ -3,7 +3,7 @@
 			
 		<view class="user-content">
 			<view class="uni-flex">
-				<image :src="shiming.faceImage" class="headerimg" ></image>
+				<image :src="userdata.headImage" class="headerimg" ></image>
 				<view class="text">
 					<text v-if="!shiming.realName" style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> 
 					<view class="name" v-else>
@@ -82,6 +82,9 @@
 				// 	},
 				// 	"error": "成功"
 				// }
+				if (res.data.idNumber) {
+					res.data.idNumber = res.data.idNumber.substr(0, 5) + "********" + res.data.idNumber.substr(14)
+				}
 				this.shiming = res.data;
 			})
 		},
@@ -124,6 +127,7 @@
 				width: 100upx;
 				height: 100upx;
 				margin-right: 10upx;
+				border-radius: 50%;
 			}
 			.text {
 				color: #fff;

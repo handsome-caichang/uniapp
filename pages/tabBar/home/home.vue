@@ -67,7 +67,7 @@
 		<view class="border-top border-bottom notice-box">
 			<image class="img" src="/static/img/gongkao.png"></image>
 			<view class="content-box">
-				<swiper class="swiper" :autoplay="true" :vertical="true" :circular="true" :display-multiple-items="2" :interval="3000" :duration="1000">
+				<swiper class="swiper" :autoplay="true" :vertical="true" :circular="true" :display-multiple-items="1" :interval="3000" :duration="1000">
 					<block v-for="(item, index) in gonkaolist" :key="index">
 						<swiper-item>
 							<view class="swiper-item uni-ellipsis">{{ item.content }}</view>
@@ -148,22 +148,27 @@ export default {
 		...mapState(["userInfo","goodtypelist"]),
 	
 	},
-	onLoad() {
+	// onLoad() {
 		// this.api.home.getRealseSellInfo({
 		// 	userId: getApp().globalData.userdata.userId
 		// }).then(res => {
 		// 	this.setuserInfo(res.data);
 		// })
-		this.loadData();
-		this.doGetLocation();
-	},
+		
+	// 	this.doGetLocation();
+	// 	if (!getApp().globalData.userdata.userId) {
+	// 		this.loadData();
+	// 	}
+	// },
 	onShow() {
-		this.loadData();
+		if (this.loadData) {
+			this.loadData();
+		}
 	},
 	created() {
+		this.doGetLocation();
 		uni.$on('_updatehome',function(data){
 			this.loadData();
-			this.doGetLocation();
 		})
 	},
 	onPageScroll(e) {
@@ -211,6 +216,9 @@ export default {
 			})
 		},
 		async loadData() {
+			if (!getApp().globalData.userdata.userId) { 
+				return
+			}
 			await this.api.home.getRecoveryInfo({
 				data: {
 					userId: getApp().globalData.userdata.userId
@@ -222,7 +230,7 @@ export default {
 				getApp().globalData.userdata = newuserdata;
 			})
 			// 资讯tab
-			await this.api.home.getIndustryInformationClassify().then(res => {
+			this.api.home.getIndustryInformationClassify().then(res => {
 				this.tabBars = res.data;
 			})
 			// 省份
@@ -269,6 +277,7 @@ export default {
 			// 		userId: getApp().globalData.userdata.userId,
 			// 		lat: "28.22329671223958",
 			// 		lng: "112.8799093967014",
+			// 		type: 0,
 			// 	}
 			// }).then(res => {
 			// 	console.log(res);
@@ -288,9 +297,9 @@ export default {
 							userId: getApp().globalData.userdata.userId,
 							lat: ""+res.latitude,
 							lng: ""+res.longitude,
+							type: 0,
 						}
 					}).then(res => {
-						console.log(res);
 						res.data.forEach(item => {
 							let time = item.createTime.replace(' ', "T")
 							let datetime = new Date(time).getTime();
@@ -467,11 +476,11 @@ export default {
 
 		.content-box {
 			flex: 1;
-			height: 40upx;
 			.swiper-item {
-				height: 40upx;
+				height: 80upx;
+				line-height: 80upx;
 				color: #575757;
-				font-size: 24upx;
+				font-size: 40upx;
 			}
 		}
 	}

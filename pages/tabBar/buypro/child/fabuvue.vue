@@ -66,13 +66,22 @@
 					<image class="img-icon" src="/static/img/huozhu/pipeishu.png"></image>
 					<text class="text">允许匹配数</text>
 				</view>
-				<!-- 下拉框 5 15 20 -->
 				<view class="input-box">
-					<input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="如不输入，系统默认无限量" />
+					<picker @change="bindPickerChanges"  style="width: 100%;" :value="protypepipindex" :range="piplist" range-key="name">
+						<view class="uni-input">{{protypepip.value ? protypepip.value : protypepip.label }}</view>
+					</picker>
+					<!-- <input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="如不输入，系统默认无限量" /> -->
 				</view>
 			</view>
-
-
+			<view class="uni-flex item-box">
+				<view class="uni-label-box">
+					<image class="img-icon" src="/static/img/huozhu/pipeishu.png"></image>
+					<text class="text">备注</text>
+				</view>
+				<view class="input-box">
+					<input class="uni-input" v-model="remark" type="text" placeholder="请输入" />
+				</view>
+			</view>
 			<view class="uni-list list-pd">
 				<view class="uni-list-cell cell-pd">
 					<view class="uni-uploader">
@@ -139,6 +148,22 @@
 					label: "请选择货物类别",
 					value: "",
 				},
+				protypepip: {
+					label: "请选择",
+					value: "不限",
+				},
+				piplist: [
+					{
+						name: '不限'
+					},{
+						name: '1'
+					},{
+						name: '5'
+					},{
+						name: '10'
+					}
+				],
+				protypepipindex: 0,
 				protypeindex: 0,
 				array: [
 				],
@@ -153,7 +178,8 @@
 				sourceTypeIndex: 2,
 				imageList: [],
 				countIndex: 8,
-				count: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+				count: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+				remark: '',
 			}
 		},
 		computed: {
@@ -169,9 +195,13 @@
 			delimg(index) {
 				this.imageList.splice(index, 1)
 			},
-			bindPickerChange: function(e) {
+			bindPickerChange(e) {
 				this.protypeindex = e.target.value;
 				this.protype.value = this.goodtypelist[this.protypeindex].name;
+			},
+			bindPickerChanges(e) {
+				this.protypepipindex = e.target.value;
+				this.protypepip.value = this.piplist[this.protypepipindex].name;
 			},
 			// 
 			fabu() {
@@ -213,6 +243,7 @@
 					"matchingNumber": +this.pipeinum,
 					"bedrockPrice": +this.price,
 					"outsidePrice": +this.price,
+					"remark": this.remark,
 					province: address.address.province,
 					city: address.address.city,
 					district: address.address.district,

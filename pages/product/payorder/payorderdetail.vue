@@ -1,22 +1,37 @@
 <template>
-	<view class="uni-page-body">
-		<view class="payorderdetail">
-			<view class="uni-list">
-				<view class="uni-list-cell" v-for="(item,index) in recordlist" :key="index" @tap="nato(item)" >
-					<view class="uni-media-list">
-						<image class="uni-media-list-logo" :src="item.img"></image>
-						<view class="uni-media-list-body">
-							<view class="uni-media-list-text-top">{{item.name}}</view>
-							<view class="uni-media-list-text-top">{{item.type}}  <text>{{item.num}}</text></view>
-							<view class="uni-media-list-text-bottom uni-ellipsis">
-								交易时间： <text style="margin-right: 10upx;">2019/12/13</text> <text>镇海</text>
-								<text style="float: right;">NO.1111114</text>
-							</view>
-							<image src="/static/img/payery.png" class="payicon" v-if="item.status === 0" ></image>
-							<image src="/static/img/paysuc.png" class="payicon" v-if="item.status === 1" ></image>
-							<uni-icons type="arrowright" size="20" class="rowicon" v-if="item.status === 0" ></uni-icons>
-						</view>
-					</view>
+	<view class="uni-page-body payorderdetail">
+		<view class="uni-flex content">
+			<view class="left">
+				<image :src="orderdetail.buyUserHeadImage" class="headerimg"></image>
+				<view class="title" style="font-weight: 500;">
+					{{orderdetail.buyUserName}}
+				</view>
+				<view class="title">
+					从业年限：{{orderdetail.buyUserYear}}年
+				</view>
+				<view class="title pinfen">
+					信誉评分：
+					<uni-rate class="rate" :size="12" :value="orderdetail.star" />
+				</view>
+				<view class="address">
+					<text style="margin-right: 20upx;">{{orderdetail.buyDistrict}}</text>
+				</view>
+			</view>
+			<image class="jiaoyiimg" src="/static/img/jiaoyi.png"></image>
+			<view class="right">
+				<image src="/static/img/goods/p8.jpg" class="headerimg"></image>
+				<view class="title" style="font-weight: 500;">
+					<text>{{orderdetail.sellUserName}}</text>
+					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
+				</view>
+				<view class="title">
+					{{orderdetail.buyUserName}}
+				</view>
+				<view class="title">
+					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}
+				</view>
+				<view class="address">
+					<text style="margin-right: 20upx;">{{orderdetail.sellDistrict}}</text>
 				</view>
 			</view>
 		</view>
@@ -32,41 +47,61 @@
 		},
 		data() {
 			return {
-				recordlist: []
+				orderdetail: {},
 			}
 		},
 		methods: {
-			nato(item) {
-				uni.navigateTo({
-					url: '/pages/product/importorder'
-				})
-			}
 		},
 	}
 </script>
 
 <style scoped lang="scss">
 	.payorderdetail {
-		margin-top: 20upx;
-		.uni-media-list-body {
-			position: relative;
-		}
-		.uni-media-list-logo{
-			width: 48upx;
-			height: 48upx;
-		}
-		.uni-media-list-body {
-			height: auto;
-		}
-		.payicon{
-			position: absolute;
-			right: 168upx;
-			width: 108upx;
-			height: 86upx;
-		}
-		.rowicon{
-			position: absolute;
-			right: 0upx;
+		
+		.content {
+			padding: 0 20upx;
+			justify-content: center;
+			align-items: center;
+		
+			.jiaoyiimg {
+				width: 80upx;
+				height: 40upx;
+			}
+		
+			.left,
+			.right {
+				flex: 1;
+				width: 298upx;
+				height: 371upx;
+				border-radius: 12upx;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				border: 1upx solid #717171;
+		
+				.headerimg {
+					height: 150upx;
+					width: 150upx;
+					border-radius: 50%;
+				}
+		
+				.title {
+					height: 46upx;
+					font-size: 34upx;
+				}
+		
+				.pinfen {
+					display: flex;
+					align-items: center;
+				}
+		
+				.address {
+					width: 100%;
+					color: #575757;
+					text-align: right;
+				}
+			}
 		}
 	}
 </style>

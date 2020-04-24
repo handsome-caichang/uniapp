@@ -99,6 +99,11 @@
 					uni.navigateTo({
 						url: "/pages/customer/fabumanage/examineres",
 					})
+				}else {
+					getApp().globalData.examineres = productdetail;
+					uni.navigateTo({
+						url: "/pages/product/productdetail",
+					})
 				}
 			},
 			closeord() {

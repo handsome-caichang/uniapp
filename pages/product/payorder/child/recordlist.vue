@@ -3,8 +3,8 @@
 		<view class="shoudao">
 			<view class="uni-list">
 				<uni-list>
-					<uni-list-item :thumb="item.headerimg" :showBadge="true" :showArrow="false" :note="'交易时间：'+item.createTime+'  '+item.district"
-					 v-for="(item,index) in recordlist" :key="index">
+					<uni-list-item :thumb="item.headerimg" :showBadge="true" :showArrow="false" :note="'交易时间：'+utils.timeTodate('Y m-d', item.createTime)+'  '+item.district"
+					 v-for="(item,index) in recordlist" :key="index" @tap="gotodetail(item)" >
 						<view slot="content" style="height: 50upx;">
 							<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
 						</view>
@@ -25,6 +25,7 @@
 <script>
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniList,
@@ -33,6 +34,7 @@
 		created() {},
 		data() {
 			return {
+				utils,
 				recordlist: []
 			}
 		},
@@ -45,10 +47,21 @@
 				}
 			}).then(res => {
 				console.log(res);
+				res.data.forEach(item => {
+					let time = item.createTime.replace(' ', "T")
+					let datetime = new Date(time).getTime();
+					item.createTime = datetime;
+				})
 				this.recordlist = res.data;
 			})
 		},
 		methods: {
+			gotodetail(item) {
+				getApp().globalData.payorderdetail = item;
+				uni.navigateTo({
+					url: '../payorderdetail'
+				})
+			}
 		},
 	}
 </script>

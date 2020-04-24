@@ -26,7 +26,7 @@
 			信誉评分：<uni-rate class="rate" size="14" :value="customerdata.star" /> <text class="btn" @tap="toRateDetail">了解详情</text>
 		</view>
 		<view class="item">
-			保证金缴纳：<text>{{detail.depositMoney?detail.depositMoney:0}}元</text>
+			保证金缴纳：<text>{{detail.depositMoney?detail.depositMoney/100:0}}元</text>
 		</view>
 		<view class="item">
 			更多展示

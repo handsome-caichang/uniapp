@@ -6,7 +6,7 @@
 				{{ region.label }}
 			</view>
 			<view class="input-box">
-				<input placeholder="默认关键字" placeholder-style="color:#c0c0c0;" @tap="toSearch()" />
+				<input placeholder="默认关键字" v-model="keywork" placeholder-style="color:#c0c0c0;" @tap="toSearch()" />
 				<uni-icons class="icon" type="search"></uni-icons>
 			</view>
 			<view class="icon-btn" @tap="filtertap">
@@ -27,25 +27,25 @@
 						</view>
 						<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 							<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 60upx;">
-								<text style="color: #212121;font-weight: 500;font-size: 32upx;">{{userdata.isVip == 1?item.name:'***'}}</text>
-								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{item.createTime}}</text>
+								<text style="color: #212121;font-weight: 500;font-size: 32upx;">{{userdata.isVip == 1?item.name:'****'}}</text>
+								<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{ utils.timeTodate('m-d', item.createTime)}}</text>
 							</view>
 							<view class="uni-flex title" style="align-items: center;height: 40upx;">
 								<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">{{item.classifyName}}</text>
-								<text class="price " style="width:350upx;font-size: 24upx;" v-if="userdata.isVip == 1" >{{item.bedrockPrice}}-{{item.outsidePrice}}元/吨（预估运费{{item.freight}}元/吨）</text>
+								<!-- <text class="price " style="width:350upx;font-size: 24upx;" v-if="userdata.isVip == 1" >{{item.bedrockPrice}}-{{item.outsidePrice}}元/吨（预估运费{{item.freight}}元/吨）</text> -->
+							</view>
+							<view class="uni-flex" style="justify-content: space-between;font-size: 20upx;color: #575757;">
+								<uni-rate class="rate" :size="12" :value="item.star" />
+								<view class="text">距我{{item.distance}}km</view>
+								<view class="text">{{item.city}}{{item.district}}</view>
 							</view>
 							<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;margin-top: 10upx;">
 								{{item.address}}
-							</view>
-							<view class="uni-flex" style="justify-content: space-between;font-size: 20upx;color: #575757;">
-								<uni-rate class="rate" :size="12" :value="5" />
-								<view class="text">距我{{item.distance}}</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-
 			<view class="no-pro" v-if="!productList.length && activeindex == 2">
 				<icon type="warn" size="80" color="#F8B551"></icon>
 				<view class="text">您还没有常用回收站</view>
@@ -78,6 +78,7 @@ import { mapMutations,mapState } from 'vuex';
 import provinceData from '@/components/mpvue-citypicker/city-data/province.js';
 import cityData from '@/components/mpvue-citypicker/city-data/city.js';
 import areaData from '@/components/mpvue-citypicker/city-data/area.js';
+import utils from '@/components/shoyu-date/utils.filter.js';
 export default {
 	components: {
 		uniDrawer,
@@ -87,46 +88,23 @@ export default {
 	},
 	data() {
 		return {
+			utils,
 			headerPosition: 'fixed',
 			region:{label:"东城区",value:[],cityCode:"110101"},
 			cityPickerValue: [0, 0, 0],
 			tabIndex: 0,
-			productList: [
-				{
-					image: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660516001696.png',
-					images: ['https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660516001696.png'],
-					name: '张家回收站',
-					createTime: '2020/4/14',
-					classifyName: '废铁',
-					bedrockPrice: '2000',
-					outsidePrice: '3000',
-					freight: '40',
-					address: '宁波市镇海',
-					distance: '2.3km',
-					headImage: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158676446499037.png'
-				},{
-					image: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660814843654.png',
-					images: ['https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158660814843654.png'],
-					name: '德思回收站',
-					createTime: '2020/4/14',
-					classifyName: '塑料',
-					bedrockPrice: '1000',
-					outsidePrice: '2000',
-					freight: '50',
-					address: '宁波市镇海',
-					distance: '5.9km',
-					headImage: 'https://nb-fpb.oss-cn-hangzhou.aliyuncs.com/images/158676446499037.png'
-				},
-			],
+			productList: [],
 			showRight: false,
 			tablist: ['价格', '距离', '常用'],
 			activeindex: 0,
 			locationobj: {},
 			userdata: {},
+			keywork: '',
 		};
 	},
 	created() {
 		// this.getlocation();
+		this.locationobj = uni.getStorageSync('_location');
 		this.userdata = getApp().globalData.userdata;
 		this.loadData();
 	},
@@ -162,22 +140,36 @@ export default {
 			this.showRight = true;
 		},
 		getRealseGoodsList() {
-			let classify = this.goodtypelist.filter(item => {
-				return item.isactive
-			});
-			let ifyst = classify[0]  ? classify[0].name : '';
-			this.api.home.getRealseGoodsList({
-				data: {
-					type: this.activeindex+1,
-					userId: getApp().globalData.userdata.userId,
-					lat: ""+this.locationobj.latitude,
-					longitude: ""+this.locationobj.longitude,
-					classify: ifyst,
-					cityCode: this.region.cityCode
-				}
-			}).then(res => {
-				// this.productList = res.data;
-			})
+			if (this.activeindex==2) {
+				this.getshouchanglist();
+			}else {
+				let classify = this.goodtypelist.filter(item => {
+					return item.isactive
+				});
+				let ifyst = classify[0]  ? classify[0].name : '';
+				this.api.home.getRecycleBinList({
+					data: {
+						type: this.activeindex+1,
+						userId: getApp().globalData.userdata.userId,
+						lat: ""+this.locationobj.latitude,
+						lng: ""+this.locationobj.longitude,
+						// lat: "28.22329671223958",
+						// lng: "112.8799093967014",
+						classify: ifyst,
+						keyWork: this.keywork,
+						cityCode: this.region.cityCode
+					}
+				}).then(res => {
+					res.data.forEach(item => {
+						if (typeof item.createTime == 'string') {
+							let time = item.createTime.replace(' ', "T")
+							let datetime = new Date(time).getTime();
+							item.createTime = datetime;
+						}
+					})
+					this.productList = res.data;
+				})
+			}
 		},
 		async loadData() {
 			uni.getLocation({
@@ -230,15 +222,54 @@ export default {
 				this.$set(this.tabLists[i], 'isactive', false);
 			}
 		},
-		toSearch() {},
+		toSearch() {
+			this.getRealseGoodsList();
+		},
 		toGoods(item) {
-			getApp().globalData.malldetail = item;
-			uni.navigateTo({
-				url: `/pages/product/malldetail`
-			});
+			// this.userdata.isVip == 1
+			if (true) {
+				getApp().globalData.malldetail = item;
+				uni.navigateTo({
+					url: `/pages/product/malldetail`
+				});
+			}else {
+				uni.showModal({
+					title: "提示",
+					content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
+					success: function (res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							uni.navigateTo({
+								url: "/pages/user/vipsend"
+							})
+						}
+					}
+				});
+			}
 		},
 		chooselocation() {
 			this.$refs.mpvueCityPicker.show();
+		},
+		getshouchanglist() {
+			this.api.home.getCollectRecycleBinList({
+				data: {
+					userId: getApp().globalData.userdata.userId,
+					lat: ""+this.locationobj.latitude,
+					lng: ""+this.locationobj.longitude,
+					// lat: "28.22329671223958",
+					// lng: "112.8799093967014",
+				}
+			}).then(res => {
+				res.data.forEach(item => {
+					item.isCollect = 1;
+					if (typeof item.createTime == 'string') {
+						let time = item.createTime.replace(' ', "T")
+						let datetime = new Date(time).getTime();
+						item.createTime = datetime;
+					}
+				})
+				this.productList = res.data;
+			})
 		}
 	}
 };

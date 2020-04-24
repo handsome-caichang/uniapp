@@ -3,7 +3,7 @@
 		<view class="vip-box">
 			<view class="uni-flex" style="justify-content: space-around;"  @tap="tovipsend">
 				<view class="userbox">
-					<image :src="headerimg" class="img" ></image>
+					<image :src="userdata.headImage" class="img" ></image>
 					<view class="kaitong" v-if="!isvip">
 						立即开通会员
 					</view>

@@ -55,6 +55,15 @@
 			},
 			zhuanchu() {
 				if (this.bondnum) {
+					let test = this.bondnum / 100 ;
+					if (Math.floor(test) !== test) {
+						uni.showModal({
+							title: "提示",
+							content: '请输入100的整倍数',
+							showCancel: false,
+						});
+						return;
+					}
 					this.api.home.depositToMoney({
 						userId: getApp().globalData.userdata.userId,
 						money: this.bondnum * 100

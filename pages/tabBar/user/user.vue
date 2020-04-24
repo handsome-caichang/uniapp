@@ -11,13 +11,13 @@
 				</view>
 			</view> -->
 			<view class="vip-box">
-				<view class="uni-flex"    @tap="navTo('/pages/user/vipsend')">
+				<view class="uni-flex"   >
 					<view class="userbox">
-						<image :src="userdata.headImage" class="img" ></image>
+						<image :src="userdata.headImage" class="img" @tap="navTo('/pages/user/userinfo/userinfo')" ></image>
 						<view class="info-box" style="margin-left: 40upx;">
 							<text class="username" style="color: #18C02C;font-size: 36upx;">{{userdata.nickName}}</text>
 						</view>
-						<view class="kaitong" style="position: absolute;right: 20upx;top: 60%;" v-if="userdata.isVip == 0">
+						<view class="kaitong" style="position: absolute;right: 20upx;top: 60%;" v-if="userdata.isVip == 0"  @tap="navTo('/pages/user/vipsend')" >
 							立即开通会员
 						</view>
 					</view>
@@ -49,13 +49,8 @@
 			</view> -->
 		</view>
 
-		<view class="cover-container" :style="[{
-				transform: coverTransform,
-				transition: coverTransition
-			}]"
-		 @touchstart="coverTouchstart" @touchmove="coverTouchmove" @touchend="coverTouchend">
+		<view class="cover-container">
 			<!-- <image class="arc" src="/static/img/arc.png"></image> -->
-			
 			<view class="border-bottom c-item">
 				<view class="c-title">
 					个人中心 
@@ -102,7 +97,7 @@
 			</view>
 			
 			<view class="fo-box" style="margin-top: 20upx;text-align: center;">
-				<text class="text" style="color: #1F96F7;">意见反馈 | 联系客服</text>
+				<text class="text" style="color: #1F96F7;" @tap="dianhua">意见反馈 | 联系客服</text>
 			</view>
 			
 		</view>
@@ -115,17 +110,11 @@
 	import {
 		mapState
 	} from 'vuex';
-	let startY = 0,
-		moveY = 0,
-		pageAtTop = true;
 	export default {
 		components: {
 		},
 		data() {
 			return {
-				coverTransform: 'translateY(0px)',
-				coverTransition: '0s',
-				moving: false,
 				userdata: {},
 				list1: [
 					{
@@ -152,11 +141,11 @@
 				],
 				list2: [
 					{
-						name: '匹配订单管理',
+						name: '匹配管理',
 						icon: '/static/img/user/dingdan.png',
 						url: '/pages/product/order/ordermanage'
 					},{
-						name: '交易订单管理',
+						name: '交易管理',
 						icon: '/static/img/user/jiaoyi.png',
 						url: '/pages/product/payorder/payordermanage'
 					}
@@ -218,6 +207,11 @@
 		computed: {
 		},
 		methods: {
+			dianhua() {
+				uni.makePhoneCall({
+					 phoneNumber: '0574-5533-6130' //仅为示例
+				})
+			},
 			_updateuserhome() {
 				this.userdata = getApp().globalData.userdata;
 			},
@@ -239,39 +233,6 @@
 					url: url
 				})
 			},
-			coverTouchstart(e) {
-				if (pageAtTop === false) {
-					return;
-				}
-				this.coverTransition = 'transform .1s linear';
-				startY = e.touches[0].clientY;
-			},
-			coverTouchmove(e) {
-				moveY = e.touches[0].clientY;
-				let moveDistance = moveY - startY;
-				if (moveDistance < 0) {
-					this.moving = false;
-					return;
-				}
-				this.moving = true;
-				if (moveDistance >= 80 && moveDistance < 100) {
-					moveDistance = 80;
-				}
-
-				if (moveDistance > 0 && moveDistance <= 80) {
-					this.coverTransform = `translateY(${moveDistance}px)`;
-				}
-			},
-			coverTouchend() {
-				if (this.moving === false) {
-					return;
-				}
-				this.moving = false;
-				this.coverTransition = 'transform 0.3s cubic-bezier(.21,1.93,.53,.64)';
-				this.coverTransform = 'translateY(0px)';
-			}
-			
-			
 		}
 	}
 </script>

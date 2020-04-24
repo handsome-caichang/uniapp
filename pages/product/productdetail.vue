@@ -17,6 +17,14 @@
 				</view>
 			</view>
 		</view>
+		<view class="text-box">
+			<view class="uni-text">
+				备注：{{detail.remark}}
+			</view>
+			<!-- <view class="uni-text" @tap="gotomap" v-if="productdetail.sourcetype == 3" >
+				详细地址：
+			</view> -->
+		</view>
 		<!-- v-if="productdetail.sourcetype == 3" -->
 		<view class="text-box" v-if="productdetail.sourcetype == 3" >
 			<view class="uni-text">
@@ -43,6 +51,11 @@
 			</view>
 		</view>
 		
+		<view class="uni-page-footer" v-if="productdetail.sourcetype == 1" >
+			<uni-icons type="info-filled" class="icon" style="margin-right: 10upx;"></uni-icons>
+			此货物信息由货主自主编辑发布至平台，平台仅为其提供展示服务，平台审核，尽量保证其准确性，回收人慎重辨别该货物信息真实性，因此信息造成的损失责任自负，平台对此不承担责任。
+		</view>
+		
 		<view class="towbtn"  v-if="productdetail.sourcetype == 2">
 			<view class="error-btn" @tap="clearbtn">
 				拒绝
@@ -58,6 +71,9 @@
 				<text>联系回收人</text>
 			</view>
 		</view>
+	
+		
+	
 	
 	</view>
 </template>
@@ -220,6 +236,21 @@
 					});
 					return;
 				}
+				if (getApp().globalData.userdata.isVip != 1) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/vipsend"
+								})
+							}
+						}
+					});
+					return;
+				}
 				this.api.home.recoveryAddMatching({
 					realseId: this.productdetail.realseId,
 					userId: getApp().globalData.userdata.userId,
@@ -240,6 +271,16 @@
 	.detail {
 		overflow: hidden;
 		padding: 0 20upx;
+		.uni-page-footer{
+			position: fixed;
+			bottom: 50upx;
+			left: 0upx;
+			right: 0upx;
+			text-align: center;
+			color: #666;
+			font-size: 22upx;
+			padding: 0 80upx;
+		}
 		.scroll-box{
 			height: 800upx;
 		}

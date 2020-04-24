@@ -42,7 +42,7 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
   //   return response.data
   // }
   if (response.data.isSuccessful !== 1) {
-	  console.log(response.data.error)
+	  console.log(response)
 	  uni.showToast({
 	  	title: response.data.error,
 		icon:  'none',

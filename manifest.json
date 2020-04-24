@@ -62,7 +62,8 @@
                     "NSPhotoLibraryAddUsageDescription" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。",
                     "NSCameraUsageDescription" : "应用保存运行状态等信息，需要获取读写手机摄像头拍照（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
                 },
-                "idfa" : false
+                "idfa" : false,
+                "urlschemewhitelist" : [ "viewMap" ]
             },
             /* SDK配置 */
             "sdkConfigs" : {

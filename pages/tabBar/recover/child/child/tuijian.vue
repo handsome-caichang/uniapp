@@ -1,5 +1,8 @@
 <template>
 	<view class="tuijian-box">
+		<view>
+			
+		</view>
 		<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="clickitem(item)">
 			<view class="uni-flex uni-row item-box">
 				<view class="text uni-flex" style="width: 160rpx;height: 130rpx;justify-content: center;align-items: center;">
@@ -55,6 +58,18 @@
 		methods: {
 			clickitem(item) {
 				if (this.novip) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/vipsend"
+								})
+							}
+						}
+					});
 					return;
 				}
 				item.sourcetype = 1;
@@ -70,6 +85,7 @@
 						userId: getApp().globalData.userdata.userId,
 						lat: "" + res.latitude,
 						lng: "" + res.longitude,
+						type: 1,
 					}
 				}).then(res => {
 					console.log(res);

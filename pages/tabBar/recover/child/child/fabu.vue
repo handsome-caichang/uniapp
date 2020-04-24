@@ -23,6 +23,11 @@
 			<icon type="warn" size="20" ></icon>
 			<text style="margin-left: 10upx;">开通会员才能发布求购喔！钻石级别会员可加急</text>
 		</view>
+		<view class="uni-page-footer">
+			<uni-icons type="info-filled" class="icon" style="margin-right: 10upx;"></uni-icons>
+			用户发布求购信息，平台将推荐相应货物，提高匹配效率。
+		</view>
+	
 		
 	</view>
 </template>
@@ -52,38 +57,38 @@
 				this.activeindex = index;
 			},
 			fabucur() {
-				// if (getApp().globalData.userdata.isReal !== 2) {
-				// 	uni.showModal({
-				// 		title: "提示",
-				// 		content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
-				// 		success: function (res) {
-				// 			if (res.confirm) {
-				// 				console.log('用户点击确定');
-				// 				uni.navigateTo({
-				// 					url: "/pages/user/userinfo/setuserinfopoint"
-				// 				})
-				// 			} else if (res.cancel) {
-				// 				console.log('用户点击取消');
-				// 			}
-				// 		}
-				// 	});
-				// 	return;
-				// }
-				// if (!this.btnactive) {
-				// 	uni.showModal({
-				// 		title: "提示",
-				// 		content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
-				// 		success: function (res) {
-				// 			if (res.confirm) {
-				// 				console.log('用户点击确定');
-				// 				uni.navigateTo({
-				// 					url: "/pages/user/vipsend"
-				// 				})
-				// 			}
-				// 		}
-				// 	});
-				// 	return;
-				// }
+				if (getApp().globalData.userdata.isReal !== 2) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/userinfo/setuserinfopoint"
+								})
+							} else if (res.cancel) {
+								console.log('用户点击取消');
+							}
+						}
+					});
+					return;
+				}
+				if (!this.btnactive) {
+					uni.showModal({
+						title: "提示",
+						content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
+						success: function (res) {
+							if (res.confirm) {
+								console.log('用户点击确定');
+								uni.navigateTo({
+									url: "/pages/user/vipsend"
+								})
+							}
+						}
+					});
+					return;
+				}
 				let address = uni.getStorageSync('_location');
 				this.api.home.realseRecovery({
 					classify: this.goodtypelist[this.activeindex].name,
@@ -108,6 +113,16 @@
 
 <style lang="scss" scoped>
 	.container-box {
+		.uni-page-footer{
+			position: fixed;
+			bottom: 100upx;
+			left: 0upx;
+			right: 0upx;
+			text-align: center;
+			color: #666;
+			font-size: 22upx;
+			padding: 0 100upx;
+		}
 		.item-box {
 			flex-wrap: wrap;
 		}

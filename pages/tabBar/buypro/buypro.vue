@@ -3,14 +3,15 @@
 		<view class="status"  :style="{position:headerPosition}" ></view>
 		<view class="header-box">
 			<view class="item" :class="isactive?'active':''"  @tap="changepage(true)" >
-				价格查询
+				回收人推荐
 			</view>
 			<view class="item" :class="!isactive?'active':''"  @tap="changepage(false)" >
 				发布货物
 			</view>
 		</view>
 		<view class="container">
-			<price-vue ref="sellpro" v-if="isactive"></price-vue>
+			<hui-vue v-if="isactive" ></hui-vue>
+			<!-- <price-vue ref="sellpro" v-if="isactive"></price-vue> -->
 			<!-- 需要实名 -->
 			<fabu-vue ref="buypro" v-if="!isactive"></fabu-vue>
 		</view>
@@ -18,11 +19,15 @@
 </template>
 <script>
 	import fabuVue from "./child/fabuvue.vue"
-	import priceVue from "./child/pricevue.vue"
+	import huiVue from "./child/huishourentuijian.vue"
+	// import priceVue from "./child/pricevue.vue"
+	// import tuiVue from "../recover/child/child/tuijian.vue"
 	export default {
 		components: {
-			priceVue,
-			fabuVue
+			// priceVue,
+			fabuVue,
+			huiVue,
+			// tuiVue
 		},
 		onPageScroll(e) {
 			//兼容iOS端下拉时顶部漂移

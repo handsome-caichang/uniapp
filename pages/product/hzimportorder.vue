@@ -251,56 +251,32 @@
 						});
 					}
 				})
-				// console.log(this.oserdat)
-				// this.api.order.payMsgFee({
-				// 	orderNo: this.oserdat.data,
-				// 	userId: getApp().globalData.userdata.userId,
-				// 	payType: e == 0 ? 2 : 1,
-				// }).then(res => {
-				// 	var orderString = res.data;
-				// 	console.log(res)
-				// 	this.orderdetail.sourcetype = 3;
-				// 	getApp().globalData.productdetail = this.orderdetail;
-				// 	this.orderdetail.orderNo = this.oserdat.data;
-				// 	uni.requestPayment({
-				// 	    provider: 'wxpay',
-				// 	    orderInfo: orderString.charge, //微信、支付宝订单数据
-				// 	    success: function (res) {
-				// 			uni.showModal({
-				// 				title: "提示",
-				// 				content: '支付成功',
-				// 				showCancel: false,
-				// 				success(res) {
-				// 				  if (res.confirm) {
-				// 					uni.navigateTo({
-				// 						url: '/pages/product/productdetail'
-				// 					})
-				// 				  }
-				// 				}
-				// 			});
-				// 	    },
-				// 	    fail: function (err) {
-				// 	       uni.showModal({
-				// 	       	title: "提示",
-				// 	       	content: '支付失败',
-				// 	       	showCancel: false,
-				// 	       });
-				// 	    }
-				// 	});
-				// 	this.$nextTick(() => {
-				// 		this.$refs.showpay.close();
-				// 	});
-				// })
 			},
 			changeprice() {
+				if (!this.pipeinum || !this.numberleng) {
+					return;
+				}
 				if (this.isactive) {
-					if (this.numberleng <= 3) {
-						this.priceguli = (this.pipeinum * 0.015).toFixed(2) ;
-					} else {
-						this.priceguli = (this.pipeinum * 0.02).toFixed(2);
-					}
+					this.api.order.calCommission({
+						data: {
+							money: this.pipeinum,
+							count: this.numberleng,
+							type: 1,
+						}
+					}).then(res => {
+						console.log(res);
+						this.priceguli = res.data;
+					})
 				} else {
-					this.priceguli = (this.pipeinum * 0.025).toFixed(2);
+					this.api.order.calCommission({
+						data: {
+							money: this.pipeinum,
+							count: this.numberleng,
+							type: 2,
+						}
+					}).then(res => {
+						this.priceguli = res.data;
+					})
 				}
 			},
 			bindPickerChange: function(e) {
@@ -311,53 +287,7 @@
 				this.$nextTick(() => {
 					this.$refs.showpay.open();
 				})
-				// this.api.order.buyUserWriteOrder({
-				// 	userId: getApp().globalData.userdata.userId,
-				// 	classify: this.protype.value,
-				// 	money: +this.pipeinum,
-				// 	type: this.isactive ? 1 : 2,
-				// 	count: +this.numberleng,
-				// 	matchId: this.orderdetail.matchId
-				// }).then(res => {
-					// console.log(res);
-					// this.oserdat = res;
-					// this.$nextTick(() => {
-					// 	this.$refs.showpay.open();
-					// })
-					// this.api.home.payVipOrder({
-					// 	"orderNo": res.data,
-					// 	"userId": getApp().globalData.userdata.userId,
-					// 	"payType": this.current == 0 ? 2 : 1
-					// }).then(ret => {
-					// 	var orderString = ret.data;
-					// 	console.log(ret)
-					// 	uni.requestPayment({
-					// 	    provider: 'wxpay',
-					// 	    orderInfo: orderString, //微信、支付宝订单数据
-					// 	    success: function (res) {
-					// 			uni.showModal({
-					// 				title: "提示",
-					// 				content: '充值成功，请关闭APP后再次进入',
-					// 				showCancel: false,
-					// 			});
-					// 	    },
-					// 	    fail: function (err) {
-					// 	       uni.showModal({
-					// 	       	title: "提示",
-					// 	       	content: '支付失败',
-					// 	       	showCancel: false,
-					// 	       });
-					// 	    }
-					// 	});
-					// })
-
-					// "orderNo":【订单编号, 字符串】,
-					// "userId":【用户编号，字符串】
-					// "payType":【支付类型 0：支付宝 1：微信，2.余额 整型】
-					// uni.navigateTo({
-					// 	url: '/pages/other/successpgae'
-					// })
-				// })
+				
 			},
 			openrul() {
 				this.$nextTick(() => {

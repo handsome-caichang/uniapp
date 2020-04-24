@@ -31,5 +31,6 @@
 			text-align: center;
 			color: #767676;
 		}
+		
 	}
 </style>

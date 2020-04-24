@@ -5,7 +5,7 @@
 				我是货主
 			</view>
 			<view class="item" :class="!isactive?'active':''"  @tap="changepage(false)" >
-				我要回收人
+				我是回收人
 			</view>
 		</view>
 		<view class="container">

@@ -20,7 +20,7 @@
 				<input class="uni-input" type="text" v-model="carCard" placeholder-class="p-active" />
 			</uni-list-item> -->
 		</uni-list>
-		<view class="viod" style="width: 100%;height: 18upx;background-color: #D3D3D3;"></view>
+		<!-- <view class="viod" style="width: 100%;height: 18upx;background-color: #D3D3D3;"></view> -->
 		<view class="uni-list list-pd">
 			<view class="uni-list-cell cell-pd">
 				<view class="uni-uploader">
@@ -38,10 +38,6 @@
 						</view>
 					</view>
 				</view>
-			</view>
-		</view>
-		<view class="uni-list list-pd">
-			<view class="uni-list-cell cell-pd">
 				<view class="uni-uploader">
 					<view class="uni-uploader-head">
 						<view class="uni-uploader-title ">身份证反面</view>
@@ -59,6 +55,25 @@
 				</view>
 			</view>
 		</view>
+		<!-- <view class="uni-list list-pd">
+			<view class="uni-list-cell cell-pd">
+				<view class="uni-uploader">
+					<view class="uni-uploader-head">
+						<view class="uni-uploader-title ">身份证反面</view>
+					</view>
+					<view class="uni-uploader-body">
+						<view class="uni-uploader__files">
+							<view class="uni-uploader__file" v-if="idCardBack"  @tap="chooseImage('idCardBack')">
+								<image class="uni-uploader__img" :src="idCardBack" :data-src="idCardBack"></image>
+							</view>
+							<view class="uni-uploader__input-box"  v-if="!idCardBack" >
+								<view class="uni-uploader__input" @tap="chooseImage('idCardBack')"></view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view> -->
 		<!-- <view class="uni-list list-pd">
 			<view class="uni-list-cell cell-pd">
 				<view class="uni-uploader">
@@ -243,8 +258,23 @@
 			border: 1upx solid $border-color-base;
 			text-align: right;
 		}
+		.list-pd.uni-list:before{
+			height: 0;
+		}
+		.list-pd.uni-list:after{
+			height: 0;
+		}
+		.uni-image>img {
+			border-radius: 20upx;
+		}
 		.uni-uploader {
 			padding: 20upx;
+		}
+		.uni-uploader-head {
+			justify-content: center;
+		}
+		.uni-uploader__files {
+			justify-content: center;
 		}
 		.uni-page-footer{
 			position: fixed;
@@ -258,10 +288,13 @@
 				margin-right: 10upx
 			}
 		}
+		.uni-input {
+			border-radius: 10upx;
+		}
 		.fo-box {
 			display: flex;
 			justify-content: center;
-			margin-top: 20upx;
+			margin-top: 100upx;
 			margin-bottom: 20upx;
 			.primary-btn {
 				width: 326upx;

@@ -143,7 +143,7 @@
 						userId: getApp().globalData.userdata.userId,
 						countPerPage: 1000,
 						pageIndex: 1,
-						orderType: this.activeindex,
+						orderType: this.activeindex - 1,
 					}
 				}).then(res => {
 					console.log(res)

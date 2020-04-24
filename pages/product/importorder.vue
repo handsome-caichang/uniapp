@@ -189,15 +189,40 @@
 		},
 		methods: {
 			changeprice() {
-				if (this.isactive) {
-					if (this.numberleng <= 3) {
-						this.priceguli = (this.pipeinum * 0.015).toFixed(2) ;
-					} else {
-						this.priceguli = (this.pipeinum * 0.02).toFixed(2);
-					}
-				} else {
-					this.priceguli = (this.pipeinum * 0.025).toFixed(2);
+				if (!this.pipeinum || !this.numberleng) {
+					return;
 				}
+				if (this.isactive) {
+					this.api.order.calEncourage({
+						data: {
+							money: this.pipeinum,
+							count: this.numberleng,
+							type: 1,
+						}
+					}).then(res => {
+						console.log(res);
+						this.priceguli = res.data;
+					})
+				} else {
+					this.api.order.calEncourage({
+						data: {
+							money: this.pipeinum,
+							count: this.numberleng,
+							type: 2,
+						}
+					}).then(res => {
+						this.priceguli = res.data;
+					})
+				}
+				// if (this.isactive) {
+				// 	if (this.numberleng <= 3) {
+				// 		this.priceguli = (this.pipeinum * 0.015).toFixed(2) ;
+				// 	} else {
+				// 		this.priceguli = (this.pipeinum * 0.02).toFixed(2);
+				// 	}
+				// } else {
+				// 	this.priceguli = (this.pipeinum * 0.025).toFixed(2);
+				// }
 			},
 			bindPickerChange: function(e) {
 				this.protypeindex = e.target.value;

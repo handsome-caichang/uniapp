@@ -1,14 +1,14 @@
 <template>
 	<view class="uni-page-body orderin">
 		<scroll-view class="scroll-h" :scroll-x="true" :show-scrollbar="false">
-			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 2 }" @tap="changetab(index)">
+			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 1 }" @tap="changetab(index)">
 				{{item}}
-				<text v-if="index == 2 && newleng" class="hongdiannum">{{newleng}}</text>
+				<text v-if="index == 1 && newleng" class="hongdiannum">{{newleng}}</text>
 			</view>
 		</scroll-view>
 
 		<view class="listbox" style="margin-top: 20upx;">
-			<view v-if="activeindex === 0">
+			<!-- <view v-if="activeindex === 0">
 				<view class="huishouren">
 					<view class="cusitem" v-for="(item,index) in huishoulist" :key="index" @tap="nvtocustomer(item,1)">
 						<image mode="aspectFit" :src="item.headImage" class="headerimg"></image>
@@ -25,8 +25,8 @@
 					<uni-icons type="loop" size="18" color="#1F96F7" style="margin-right:10upx"></uni-icons>
 					换一批
 				</view>
-			</view>
-			<view class="uni-list" v-if="activeindex === 1">
+			</view> -->
+			<view class="uni-list" v-if="activeindex === 0">
 				<view class="no-pro" v-if="!jilulist.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -62,7 +62,7 @@
 				</view>
 			</view>
 
-			<view class="shoudao" v-if="activeindex === 2">
+			<view class="shoudao" v-if="activeindex === 1">
 				<view class="no-pro" v-if="!shoudaolist.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -86,7 +86,7 @@
 				</view>
 			</view>
 
-			<view class="shoudao" v-if="activeindex === 3">
+			<view class="shoudao" v-if="activeindex === 2">
 				<view class="no-pro" v-if="!successlist.length">
 					<icon type="warn" size="80" color="#F8B551"></icon>
 					<view class="text">暂无数据</view>
@@ -133,7 +133,6 @@
 				successlist: [],
 				shoudaolist: [],
 				tablist: [
-					'回收人推荐',
 					'申请记录',
 					'收到申请',
 					'匹配成功',
@@ -152,7 +151,7 @@
 			}).then(res => {
 				this.newleng = res.data.length;
 			})
-			this.gettuijian();
+			this.getjilu();
 		},
 		methods: {
 			updatedata() {
@@ -168,11 +167,12 @@
 			},
 			changetab(active) {
 				this.activeindex = active;
-				if (this.activeindex == 1) {
+				let curindex = this.activeindex + 1;
+				if (curindex == 1) {
 					this.getjilu();
-				} else if (this.activeindex == 2) {
+				} else if (curindex == 2) {
 					this.getshoudao();
-				} else if (this.activeindex == 3) {
+				} else if (curindex == 3) {
 					this.getMatchSuccessList();
 				}
 			},

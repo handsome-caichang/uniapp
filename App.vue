@@ -10,7 +10,8 @@ export default {
 		orderdetail: {},
 		malldetail: {},
 		userlistmanage: {},
-		examineres: {}
+		examineres: {},
+		payorderdetail: {},
 	},  
 	created() {
 		// #ifdef APP-PLUS

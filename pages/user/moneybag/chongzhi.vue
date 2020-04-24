@@ -8,7 +8,7 @@
 				<view class="icon-box">
 					￥
 				</view>
-				<input type="number" class="input" v-model="bondnum" maxlength="12" placeholder="请输入100的整倍数" >
+				<input type="number" class="input" v-model="bondnum" maxlength="12" placeholder="请输入" >
 			</view>
 		</view>
 		<view class="input-container">

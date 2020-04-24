@@ -6,6 +6,42 @@ export default {
 	// 			params: params
 	// 		});
 	// },
+	getCollectRecycleBinList(params) {
+		return http.get(
+			'user/getCollectRecycleBinList',
+			params
+		);
+	},
+	cancelCollectRecycleBin(params) {
+		return http.post(
+			'user/cancelCollectRecycleBin',
+			params
+		);
+	},
+	collectRecycleBin(params ) {
+		return http.post(
+			'user/collectRecycleBin',
+			params
+		);
+	},
+	getRecycleBinList(params) {
+		return http.get(
+			'user/getRecycleBinList',
+			params
+		);
+	},
+	getRecycleBinGoodsList(params) {
+		return http.get(
+			'user/getRecycleBinGoodsList',
+			params
+		);
+	},
+	getNewSingleNoticeList(params) {
+		return http.get(
+			'advert/getNewSingleNoticeList',
+			params
+		);
+	},
 	getSubVipList(params) {
 		return http.get(
 			'wallet/getSubVipList',

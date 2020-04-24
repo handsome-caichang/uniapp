@@ -13,30 +13,31 @@
 		<view class="example-box">
 			<view class="uni-flex header-box">
 				<view class="uni-flex">
-					<image :src="detail.headImage" class="headerimg"></image>
-					<view class="name">
+					<image :src="detail.image" class="headerimg"></image>
+					<view class="name" style="font-weight: 500;">
 						{{detail.name}}
 					</view>
 					<uni-rate class="rate" :size="12" :value="detail.star" />
 				</view>
 				<view class="address">
-					{{detail.address}}
+					{{detail.city}}{{detail.district}}
 				</view>
 			</view>
 
 			<view class="content-box">
 				<view class="title">
-					<text>{{detail.classifyName}}</text>
-					<text class="price">{{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨（预估运费{{detail.freight}}元/吨）</text>
+					<text class="name" style="font-weight: 500;">{{detail.classify}}</text>
+					<!-- <text class="price">面议</text> -->
+					<!-- {{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨（预估运费{{detail.freight}}元/吨） -->
 				</view>
-				<view class="uni-flex address">
+				<view class="uni-flex address" style="align-items: center;">
 					<view class="text">
-						<view class="a">宁波市镇海团桥菜场对面张三废品回收{{detail.address}}</view>
+						<view class="a">{{detail.address}}</view>
 						<view class="b">
-							<uni-icons type="location-filled"></uni-icons> 距我直线2.9km，驾车约12分钟
+							<uni-icons type="location-filled"></uni-icons> 距我直线{{detail.distance}}km
 						</view>
 					</view>
-					<view class="iconbox">
+					<view class="iconbox" style="line-height: 1;" @tap="gotomap">
 						<uni-icons type="paperplane" color="#1F96F7" size="32"></uni-icons>
 					</view>
 				</view>
@@ -47,17 +48,11 @@
 			</view>
 
 			<view class="fo-box">
-				<view class="item">
-					<text>诚信经营</text>
-				</view>
-				<view class="item">
-					<text>诚信经营</text>
-				</view>
-				<view class="item">
-					<text>诚信经营</text>
+				<view class="item" v-for="(item,index) in detail.label" :key="index" >
+					<text>{{item}}</text>
 				</view>
 				<view class="time">
-					更新时间：{{detail.createTime}}
+					更新时间：{{utils.timeTodate( 'Y m-d H:i', detail.createTime)}}
 				</view>
 			</view>
 
@@ -75,32 +70,41 @@
 		</view>
 		<view class="example-box detailbox" style="border: none;">
 			<view class="title" style="#212121">
-				其他商品
+				可回收货物
 			</view>
 		</view>
-
 		<view class="cont-box" style="margin-bottom: 120upx;">
-			<view class="example-box" v-for="(item,index) in prolist" :key="index" @tap="nvto(index, item)">
+			<view class="example-box" v-for="(item,index) in huowulist" :key="index">
 				<view class="uni-flex uni-row item-box">
 					<view class="text uni-flex" style="width: 180rpx;height: 180rpx;justify-content: center;align-items: center;">
-						<image :src="item" style="width: 180rpx;height: 180rpx;"></image>
+						<image :src="item.image" mode="aspectFit" style="width: 180rpx;height: 180rpx;"></image>
 					</view>
 					<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 20upx;">
 						<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
-							<text style="color: #212121;font-weight: 500;font-size: 32upx;">张三</text>
-							<text class="time" style="color: #575757;font-size: 20upx;">更新时间：2019/12/6</text>
+							<text style="color: #212121;font-weight: 500;font-size: 32upx;">{{detail.name}}</text>
+							<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{item.createTime}}</text>
 						</view>
 						<view class="uni-flex title" style="align-items: center;height: 40upx;">
-							<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">废铁</text>
-							<text class="price uni-ellipsis" style="width:350upx;font-size: 24upx;">2000-2150元/吨（预估运费40元/吨）</text>
+							<text style="width:80upx;color: #212121;font-weight: 500;font-size: 28upx;">{{item.classify}}</text>
+							<text class="price uni-ellipsis" style="width:350upx;font-size: 24upx;">{{item.lowPrice}}-{{item.highPrice}}元/吨</text>
 						</view>
-						<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;">
+						<text class="price uni-ellipsis" style="width:350upx;font-size: 24upx;">（预估运费{{item.freight}}元/吨）</text>
+						<!-- <view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;">
 							宁波市镇海团桥菜场对面张三废品回收
 						</view>
-						<uni-rate class="rate" :size="12" :value="5" />
+						<uni-rate class="rate" :size="12" :value="5" /> -->
 					</view>
 				</view>
 			</view>
+			
+			<view class="no-pro" v-if="!huowulist.length">
+				<icon type="warn" size="80" color="#F8B551"></icon>
+				<view class="text">暂无数据</view>
+			</view>
+		</view>
+		<view class="uni-page-footer">
+			<uni-icons type="info-filled" class="icon" style="margin-right: 10upx;"></uni-icons>
+			此信息资料由该回收站提供，平台仅为其编辑上传，提供展示服务；报价的真实性、准确性等均由该回收站负责。
 		</view>
 		<view class="goods-carts">
 			<view class="container-box">
@@ -122,6 +126,7 @@
 	import uniRate from '@/components/uni-rate/uni-rate.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniGoodsNav from '@/components/uni-goods-nav/uni-goods-nav.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniRate,
@@ -132,55 +137,86 @@
 			return {
 				haveac: false,
 				lefttext: '收藏',
-				imgList: [{
-					src: 'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg',
-					src: 'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg'
-				}],
+				utils,
 				prolist: [
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg',
-					'http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg'
 				],
-				malldetail: {},
 				detail: {},
-			}
-		},
-		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
-		onReachBottom() {
-			let len = this.prolist.length;
-			if (len >= 25) {
-				return false;
-			}
-			for (let i = 1; i <= 10; i++) {
-				this.prolist.push('http://img001.hc360.cn/y5/M00/1B/45/wKhQUVYFE0uEZ7zVAAAAAMj3H1w418.jpg');
+				huowulist: [],
 			}
 		},
 		created() {
-			this.malldetail = getApp().globalData.malldetail;
 			this.detail = getApp().globalData.malldetail;
+			if (this.detail.isCollect == 1) {
+				this.haveac = true;
+			}else {
+				this.haveac = false;
+			}
 			this.getdata();
 		},
 		methods: {
 			getdata() {
-				// this.api.home.getRealseGoodsInfo({
-				// 	data: {
-				// 		userId: getApp().globalData.userdata.userId,
-				// 		realseId: this.malldetail.realseId,
-				// 	}
-				// }).then(res => {
-				// 	this.detail = res.data;
-				// })
+				this.api.home.getRecycleBinGoodsList({
+					data: {
+						recycleBinId: this.detail.recycleBinId,
+					}
+				}).then(res => {
+					console.log(res);
+					this.huowulist = res.data;
+				})
+			},
+			gotomap() {
+				let latitude = this.detail.lat;
+				let longitude = this.detail.lng;
+				let sourceApplication = encodeURIComponent(this.detail.name);
+				let address = encodeURIComponent(this.detail.address);
+				if (plus.os.name=="Android") {
+					var hasBaiduMap = plus.runtime.isApplicationExist({pname:'com.baidu.BaiduMap',action:'baidumap://'});
+					var url = `androidamap://viewMap?sourceApplication=${address}&poiname=${sourceApplication}&lat=${latitude}&lon=${longitude}&dev=0`;
+					plus.runtime.openURL(urlAmap);
+				} else{
+					// iOS上获取本机是否安装了百度高德地图，需要在manifest里配置，在manifest.json文件app-plus->distribute->apple->urlschemewhitelist节点下添加（如urlschemewhitelist:["iosamap","baidumap"]）
+					// plus.nativeUI.actionSheet({title:"选择地图应用",cancel:"取消",buttons:[{title:"高德地图"}]}, function(e){
+					// 	console.log("e.index: " + e.index);
+					// 	switch (e.index){
+					// 		case 1:
+					// 			url = `http://maps.apple.com/?q=%e6%95%b0%e5%ad%97%e5%a4%a9%e5%a0%82&ll=${latitude},${longitude}&spn=0.008766,0.019441`;
+					// 			break;
+					// 		case 2:
+					// 			url = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&src=Hello%20uni-app";
+					// 			break;
+					// 		case 3:
+					// 			let url = `iosamap://viewMap?sourceApplication=Hello%20uni-app&poiname=DCloud&lat=${latitude}&lon=${longitude}&dev=0`;
+					// 			break;
+					// 		default:
+					// 		break;
+					// 	}	
+						// if(url!="") {
+					plus.runtime.openURL( `iosamap://viewMap?sourceApplication=${address}&poiname=${sourceApplication}&lat=${latitude}&lon=${longitude}&dev=0`, function( e ) {
+						plus.nativeUI.alert(e.message);
+					});
+						// }
+					// })
+					// })
+				}
 			},
 			shouc() {
-				this.haveac = !this.haveac;
-			},
-			nvto(index) {
-				// item
-				// uni.navigateTo({
-				// 	url: `/pages/product/malldetail?id=${index}`
-				// })
+				if (this.haveac) {
+					this.api.home.cancelCollectRecycleBin({
+						userId: getApp().globalData.userdata.userId,
+						recycleBinId: this.detail.recycleBinId,
+					}).then(res => {
+						this.haveac = !this.haveac;
+						this.detail.isCollect = 0;
+					})
+				}else {
+					this.api.home.collectRecycleBin({
+						userId: getApp().globalData.userdata.userId,
+						recycleBinId: this.detail.recycleBinId,
+					}).then(res => {
+						this.haveac = !this.haveac;
+						this.detail.isCollect = 1;
+					})
+				}
 			},
 			listimgtap(current) {
 				uni.previewImage({
@@ -189,17 +225,35 @@
 				})
 			},
 			call() {
-				// 直接拨打电话
 				uni.makePhoneCall({
-				    phoneNumber: '0574-5533-6130' //仅为示例
+				    phoneNumber: this.detail.tel 
 				});
-			}
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.uni-page-body {
+		.uni-page-footer{
+			margin: 50upx auto 100upx;
+			text-align: center;
+			color: #666;
+			font-size: 22upx;
+			padding: 0 80upx;
+		}
+		.no-pro {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			color: #767676;
+			margin-top: 100upx;
+		
+			.text {
+				margin-top: 30upx;
+			}
+		}
 		.goods-carts {
 			/* #ifndef APP-NVUE */
 			display: flex;
@@ -214,7 +268,6 @@
 				height: 100upx;
 				width: 100%;
 				display: flex;
-
 				.left-box,
 				.right-box {
 					flex: 1;
@@ -264,11 +317,10 @@
 
 		.fo-box {
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
 			height: 50upx;
 			.item {
-				width: 100upx;
 				height: 50upx;
 				line-height: 50upx;
 				padding: 0 10upx;

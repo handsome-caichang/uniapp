@@ -148,7 +148,7 @@
 				this.novip = false;
 			}
 			// this.loadData();
-			this.gettuijian();
+			this.getjilu();
 			this.api.home.recoverygetNewReceivedMatchList({
 				data: {
 					userId:  getApp().globalData.userdata.userId,
@@ -232,6 +232,7 @@
 								userId: getApp().globalData.userdata.userId,
 								lat: ""+res.latitude,
 								lng: ""+res.longitude,
+								type: 1,
 							}
 						}).then(res => {
 							res.data.forEach(item => {

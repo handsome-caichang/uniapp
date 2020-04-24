@@ -42,4 +42,16 @@ export default {
 			params
 		);
 	},
+	calCommission(params) {
+		return http.get(
+			'order/calCommission',
+			params
+		);
+	},
+	calEncourage(params) {
+		return http.get(
+			'order/calEncourage',
+			params
+		);
+	},
 }

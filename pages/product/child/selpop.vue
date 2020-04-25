@@ -1,6 +1,6 @@
 <template>
 	<view class="pop-box">
-		<view class="text-box">佣金计算规则</view>
+		<view class="text-box">鼓励金计算规则</view>
 		<view class="rul-box">
 			<view class="tab-box">
 				<view class="rul-set">
@@ -9,18 +9,18 @@
 				<view class="right">
 					<view class="tab">
 						<text class="tab-item">3吨及以下（含3吨）</text>
-						<text class="tab-item">货物交易额x2.4%</text>
+						<text class="tab-item">货物交易额x0.8%</text>
 					</view>
 					<view class="tab">
 						<text class="tab-item">3吨以上</text>
-						<text class="tab-item">货物交易额x2.2%</text>
+						<text class="tab-item">货物交易额x1%</text>
 					</view>
 				</view>
 			</view>
 			<view class="guzhi">
 				<text class="left">估值</text>
 				<view class="right">
-					货物交易额x2.4%
+					货物成交金额x1%
 				</view>
 			</view>
 		</view>

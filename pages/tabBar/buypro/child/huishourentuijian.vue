@@ -11,9 +11,9 @@
 					</view>
 					<view class="uni-flex title" style="align-items: center;height: 40upx;">
 						<text style="color: #212121;font-weight: 500;font-size: 28upx;margin-right: 60upx;">从业{{item.year}}年</text>
+						<text style="color: #212121;font-weight: 500;font-size: 28upx;margin-right: 60upx;">保证金：{{ item.depositMoney ? item.depositMoney/100 : 0}}</text>
 					</view>
 					<view class="address uni-ellipsis" style="width: 100%;font-size: 20upx;margin-bottom: 10upx;margin-top: 10upx;">
-						<!-- 保证金：{{ item.depositMoney ? item.depositMoney/100 : 0}} -->
 						<uni-rate class="rate" :size="12" :value="item.star" />
 					</view>
 				</view>

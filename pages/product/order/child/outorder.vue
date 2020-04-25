@@ -1,9 +1,9 @@
 <template>
 	<view class="uni-page-body orderin">
 		<scroll-view class="scroll-h" :scroll-x="true" :show-scrollbar="false">
-			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 2 }" @tap="changetab(index)">
+			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 1 }" @tap="changetab(index)">
 				{{item}}
-				<text v-if="index == 2 && newleng" class="hongdiannum">{{newleng}}</text>
+				<text v-if="index == 1 && newleng" class="hongdiannum">{{newleng}}</text>
 			</view>
 		</scroll-view>
 
@@ -203,6 +203,11 @@
 				}).then(res => {
 					console.log("申请记录");
 					console.log(res);
+					res.data.forEach(item => {
+						let time = item.createTime.replace(' ', "T")
+						let datetime = new Date(time).getTime();
+						item.createTime = datetime;
+					})
 					this.jilulist = res.data;
 				})
 			},

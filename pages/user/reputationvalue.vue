@@ -3,8 +3,8 @@
 		<view class="header-box">
 			<image :src="userdata.headImage" class="img"></image>
 			<view class="uni-flex pinfen">
-				<uni-rate class="rate" :size="12" :value="5" />
-				<text class="list-succ">3.15分</text>
+				<uni-rate class="rate" :size="12" :value="2" />
+				<text class="list-succ" style="margin-left: 20upx;">3.15分</text>
 			</view>
 		</view>
 		<uni-list>

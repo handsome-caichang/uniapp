@@ -3,7 +3,7 @@
 			<view class="shoudao" >
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item :thumb="item.img" :showBadge="true" :showArrow="false" :note="'最近交易：'+item.createTime+'  '+item.district" v-for="(item,index) in recordlist"
+						<uni-list-item :thumb="item.img" :showBadge="true" :showArrow="false" :note="'最近交易：'+utils.timeTodate('Y m-d', item.createTime)+'  '+item.district" v-for="(item,index) in recordlist"
 						 :key="index" @tap="clickitem(item)" >
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
@@ -29,6 +29,7 @@
 <script>
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniList,
@@ -43,12 +44,18 @@
 				}
 			}).then(res => {
 				console.log(res);
+				res.data.forEach(item => {
+					let time = item.createTime.replace(' ', "T")
+					let datetime = new Date(time).getTime();
+					item.createTime = datetime;
+				})
 				this.recordlist = res.data;
 			})
 		},
 		data() {
 			return {
-				recordlist: []
+				recordlist: [],
+				utils,
 			}
 		},
 		methods: {

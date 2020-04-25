@@ -2,13 +2,13 @@
 	<view class="importorder">
 		<view class="uni-flex content">
 			<view class="right">
-				<image src="/static/img/goods/p8.jpg" class="headerimg"></image>
+				<image :src="orderdetail.sellUserHeadImage" class="headerimg"></image>
 				<view class="title" style="font-weight: 500;">
-					<text>{{orderdetail.sellUserName}}</text>
+					<text>{{orderdetail.name}}</text>
 					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
 				</view>
 				<view class="title">
-						{{orderdetail.buyUserName}}
+						{{orderdetail.sellUserName}}
 				</view>
 				<view class="title">
 					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}
@@ -62,7 +62,7 @@
 				</view>
 				<view class="item-box">
 					<view class="uni-label-box">
-						<text class="text bitian">货物数量</text>
+						<text class="text bitian">货物数量（千克）</text>
 					</view>
 					<view class="input-box">
 						<input class="uni-input" v-model="numberleng" @input="changeprice" type="number" placeholder="请输入货物数量" />
@@ -139,7 +139,7 @@
 </template>
 
 <script>
-	import rulPop from './child/rulpop.vue'
+	import rulPop from './child/selpop.vue'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uniRate from '@/components/uni-rate/uni-rate.vue'

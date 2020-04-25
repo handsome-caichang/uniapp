@@ -52,7 +52,6 @@
 					let newuserdata = Object.assign(userdata, this.userdata);
 					uni.setStorageSync('userdata', newuserdata);
 					getApp().globalData.userdata = newuserdata;
-					uni.$emit('_updateuser');
 					uni.$emit('_updateuserhome');
 				})
 			}

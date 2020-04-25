@@ -8,9 +8,13 @@
 						<view slot="content" style="height: 50upx;">
 							<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
 						</view>
-						<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
+						<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;position: relative;">
 							<text style="margin-right: 20upx;">{{item.goodsName}}</text>
 							<text style="margin-right: 20upx;">{{item.count}}</text>
+							<view class="statusimg">
+								<image v-if="item.status==1" src="/static/paysuc.png" mode="aspectFit"></image>
+								<image v-if="item.status==0"  src="/static/img/payery.png" mode="aspectFit"></image>
+							</view>
 						</view>
 					</uni-list-item>
 				</uni-list>
@@ -59,7 +63,7 @@
 			gotodetail(item) {
 				getApp().globalData.payorderdetail = item;
 				uni.navigateTo({
-					url: '../payorderdetail'
+					url: '/pages/product/payorder/payorderdetail'
 				})
 			}
 		},
@@ -67,5 +71,15 @@
 </script>
 
 <style scoped lang="scss">
-	.orderin {}
+	.orderin {
+		.statusimg {
+			position: absolute;
+			top: 0%;
+			right: 10%;
+			image {
+				width: 100upx;
+				height: 100upx;
+			}
+		}
+	}
 </style>

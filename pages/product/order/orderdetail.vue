@@ -7,13 +7,13 @@
 		
 		<view class="uni-flex content">
 			<view class="right">
-				<image mode="aspectFit" src="/static/img/goods/p8.jpg" class="headerimg" ></image>
+				<image mode="aspectFit" :src="orderdetail.sellUserHeadImage" class="headerimg" ></image>
 				<view class="title" style="font-weight: 500;">
 					<text>{{orderdetail.name}}</text>
 					<text style="margin-left: 10upx;">{{orderdetail.count}}吨</text>
 				</view>
 				<view class="title">
-					{{orderdetail.buyUserName}}
+					{{orderdetail.sellUserName}}
 				</view>
 				<view class="title">
 					{{ utils.timeTodate('Y m-d', orderdetail.createTime)}}

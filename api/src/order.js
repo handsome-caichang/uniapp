@@ -54,4 +54,11 @@ export default {
 			params
 		);
 	},
+	getOrderInfo(params) {
+		return http.get(
+			'order/getOrderInfo',
+			params
+		);
+	},
+	
 }

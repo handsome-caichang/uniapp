@@ -118,7 +118,6 @@
 			}
 		},
 		computed: {
-
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
@@ -156,17 +155,19 @@
 						if (this.current == 0) {
 							uni.showModal({
 								title: "提示",
-								content: '支付成功，请关闭APP后再次进入',
+								content: '支付成功，如有延迟，请退出APP后重新进入',
 								showCancel: false,
 							});
+							uni.$emit('_updatehome');
 						}else {
 							uni.requestPayment({
 								provider: 'wxpay',
 								orderInfo: orderString, //微信、支付宝订单数据
 								success: function (res) {
+									uni.$emit('_updatehome');
 									uni.showModal({
 										title: "提示",
-										content: '充值成功，请关闭APP后再次进入',
+										content: '支付成功，如有延迟，请退出APP后重新进入',
 										showCancel: false,
 									});
 								},

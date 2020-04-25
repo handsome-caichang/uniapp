@@ -22,7 +22,7 @@
 						</view>
 					</view>
 					<view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 60%;" >
-						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 0 ? '黄金' : (userdata.vipLevel == 1 ? "钻石" : '')}} 会员  </view>
+						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 1 ? '黄金' : (userdata.vipLevel == 2 ? "钻石" : '')}} 会员  </view>
 					</view>
 				</view>
 				
@@ -182,8 +182,9 @@
 		},
 		created() {
 			this._updateuserhome();
-			uni.$on('_updatehome',function(data){
-				this._updateuserhome();
+			var userthis = this;
+			uni.$on('_updateuserhome',function(data){
+				userthis._updateuserhome();
 			})
 		},
 		onNavigationBarButtonTap(e) {

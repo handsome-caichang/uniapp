@@ -110,7 +110,6 @@
 										getApp().globalData.userdata = newuserdata;
 										this.imageList = [result];
 										uni.hideLoading();
-										uni.$emit('_updateuser');
 										uni.$emit('_updateuserhome');
 									})
 								}

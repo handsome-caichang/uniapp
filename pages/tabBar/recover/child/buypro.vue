@@ -55,7 +55,7 @@
 			this.userdata = getApp().globalData.userdata;
 			if (this.userdata.isVip == 1) {
 				this.isvip = true;
-				this.vipLevel = this.userdata.vipLevel === 0 ? '黄金' : ( this.userdata.vipLevel === 1 ? '钻石' : '' );
+				this.vipLevel = this.userdata.vipLevel === 1 ? '黄金' : ( this.userdata.vipLevel === 2 ? '钻石' : '' );
 			}
 		},
 		methods: {

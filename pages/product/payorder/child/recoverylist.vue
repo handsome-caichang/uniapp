@@ -3,7 +3,7 @@
 		<view class="shoudao">
 			<view class="uni-list">
 				<uni-list>
-					<uni-list-item :thumb="item.headerimg" :showBadge="true" :showArrow="false" :note="'最近交易：'+item.createTime+'  '+item.district"
+					<uni-list-item :thumb="item.headerimg" :showBadge="true" :showArrow="false" :note="'最近交易：'+utils.timeTodate('Y m-d', item.createTime)+'  '+item.district"
 					 v-for="(item,index) in recordlist" :key="index">
 						<view slot="content" style="height: 50upx;">
 							<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
@@ -16,7 +16,6 @@
 						<view @tap="clickitem(item)" style="background-color: #18C02C;color: #fff;padding: 4upx 8upx;border-radius: 10upx;">
 							再次交易
 						</view>
-						<uni-badge class="uni-badge-right-top" :text="item.count" type="error" />
 					</uni-list-item>
 				</uni-list>
 			</view>
@@ -47,6 +46,7 @@
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
 	import uniBadge from '@/components/uni-badge/uni-badge.vue'
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 			uniList,
@@ -63,13 +63,19 @@
 				}
 			}).then(res => {
 				console.log(res);
+				res.data.forEach(item => {
+					let time = item.createTime.replace(' ', "T")
+					let datetime = new Date(time).getTime();
+					item.createTime = datetime;
+				})
 				this.recordlist = res.data;
 			})
 		},
 		data() {
 			return {
 				remak: '',
-				recordlist: []
+				recordlist: [],
+				utils,
 			}
 		},
 		methods: {

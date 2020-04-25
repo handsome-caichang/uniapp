@@ -97,13 +97,14 @@
 				],
 				productdetail: {},
 				customercont: {},
+				orderdetail: {},
 			}
 		},
 		created() {
 			this.productdetail = getApp().globalData.productdetail;
 			this.api.home.getRealseGoodsInfo({
 				data: {
-					realseId:this.productdetail.realseId,
+					realseId: this.productdetail.realseId,
 					userId: getApp().globalData.userdata.userId
 				}
 			}).then(res => {

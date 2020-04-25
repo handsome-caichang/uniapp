@@ -167,8 +167,9 @@ export default {
 	},
 	created() {
 		this.doGetLocation();
+		var homethis = this;
 		uni.$on('_updatehome',function(data){
-			this.loadData();
+			homethis.loadData();
 		})
 	},
 	onPageScroll(e) {
@@ -228,9 +229,10 @@ export default {
 				let newuserdata = Object.assign(userdata, res.data);
 				uni.setStorageSync('userdata', newuserdata);
 				getApp().globalData.userdata = newuserdata;
+				uni.$emit('_updateuser');
 			})
 			// 资讯tab
-			this.api.home.getIndustryInformationClassify().then(res => {
+			await this.api.home.getIndustryInformationClassify().then(res => {
 				this.tabBars = res.data;
 			})
 			// 省份
@@ -385,6 +387,7 @@ export default {
 		.swiper-item-width {
 			width: 220upx !important;
 			.floor-item {
+				
 				width: 220upx;
 				margin-right: 20upx;
 				font-size: $font-sm + 2upx;
@@ -416,6 +419,7 @@ export default {
 			width: 340upx !important;
 			border-radius: 10upx;
 			.pro-box {
+				min-height: 160upx;
 				width: 260upx;
 				background-color: #18c02c;
 				border-radius: 10upx;

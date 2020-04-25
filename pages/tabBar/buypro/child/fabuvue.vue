@@ -223,15 +223,56 @@
 					return;
 				}
 				let address = uni.getStorageSync('_location');
-				// console.log(address);
-				// "address": {
-				// 	"city": "长沙市",
-				// 	"district": "岳麓区",
-				// 	"poiName": "保利林语社区公园",
-				// 	"province": "湖南省",
-				// 	"street": "桐梓坡西路",
-				// 	"streetNum": "316号"
-				// },
+				
+				if (!this.protype.value) {
+					uni.showModal({
+						title: "提示",
+						content: '请选择货物类别',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.numberleng) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入货物数量',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.address) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入货物地址',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.contentname) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入联系人称呼',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.contentphone) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入联系方式',
+						showCancel: false,
+					});
+					return;
+				}
+				let reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+				if (!reg.test(this.contentphone)) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入正确的联系方式',
+						showCancel: false,
+					});
+					return;
+				}
 				this.api.home.realseGoods({
 					classify: this.protype.value,
 					count: +this.numberleng,

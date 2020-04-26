@@ -6,7 +6,7 @@
 				支付金额（元）
 			</view>
 			<view class="price-box ">
-				¥ <text>{{price}}</text>
+				¥ <text>{{price / 100}}</text>
 			</view>
 		</view>
 	
@@ -32,7 +32,7 @@
 		<view class="btnbox">
 			<view class="pri-box border-top">
 				<view class="sun">
-					总计：<text class="price">{{price}}元</text>
+					总计：<text class="price">{{price / 100}}元</text>
 				</view>
 			</view>
 			<view class="rightbtn" @tap="clickpage">

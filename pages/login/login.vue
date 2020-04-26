@@ -6,7 +6,7 @@
 				<text>登录注册表示同意</text>
 				<text class="navigate">隐私政策</text>
 				<text>及</text>
-				<text class="navigate">平台使用协议</text>
+				<text class="navigate" @tap="goxieyi">平台使用协议</text>
 			</view>
 		</view>
 		<!-- 切换登录方式 -->
@@ -60,6 +60,11 @@ export default {
 				this.isShow = true;
 				this.wangjimima = false;
 			}
+		},
+		goxieyi() {
+			uni.navigateTo({
+				url: "/pages/login/xieyi"
+			})
 		},
 		login() {
 			//登录

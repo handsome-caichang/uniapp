@@ -42,6 +42,12 @@ export default {
 			params
 		);
 	},
+	getBuyUserContact(params) {
+		return http.get(
+			'order/getBuyUserContact',
+			params
+		);
+	},
 	calCommission(params) {
 		return http.get(
 			'order/calCommission',

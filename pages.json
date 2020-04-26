@@ -343,6 +343,10 @@
 				"navigationBarTitleText": "实名认证"
 			}
         }
+        ,{
+            "path" : "pages/login/xieyi",
+            "style" : {}
+        }
     ],
 	"globalStyle": { // 文档 https://uniapp.dcloud.io/collocation/pages?id=globalstyle
 		"navigationBarBackgroundColor": "#fff", // 导航栏背景颜色（同状态栏背景色）

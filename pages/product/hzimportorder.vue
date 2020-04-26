@@ -65,7 +65,7 @@
 						<text class="text bitian">货物数量（千克）</text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="numberleng" @input="changeprice" type="number" placeholder="请输入货物数量" />
+						<input class="uni-input" v-model="numberleng" @blur="changeprice" type="number" placeholder="请输入货物数量" />
 					</view>
 				</view>
 			</view>
@@ -75,13 +75,13 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" @input="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" @blur="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
 				需要支付佣金 ：
-				<view class="price"> ¥{{priceguli}} </view>
+				<view class="price"> ¥{{priceguli / 100}} </view>
 			</view>
 			<view class="lj-detail">
 				<text class="lj-btn" @tap="openrul">了解计算详情</text>
@@ -108,13 +108,13 @@
 						<text class="text bitian"> 成交金额 </text>
 					</view>
 					<view class="input-box">
-						<input class="uni-input" v-model="pipeinum" @input="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
+						<input class="uni-input" v-model="pipeinum" @blur="changeprice" maxlength="10" type="number" placeholder="请输入成交金额" />
 					</view>
 				</view>
 			</view>
 			<view class="text-class" style="display: flex;align-items: center;justify-content: flex-end;">
 				需要支付佣金 ：
-				<view class="price"> ¥{{priceguli}} </view>
+				<view class="price"> ¥{{priceguli / 100}} </view>
 			</view>
 			<view class="lj-detail">
 				<text class="lj-btn" @tap="openrul">了解计算详情</text>
@@ -253,10 +253,11 @@
 				})
 			},
 			changeprice() {
-				if (!this.pipeinum || !this.numberleng) {
-					return;
-				}
+				
 				if (this.isactive) {
+					if (!this.pipeinum || !this.numberleng) {
+						return;
+					}
 					this.api.order.calCommission({
 						data: {
 							money: this.pipeinum * 100,
@@ -268,6 +269,9 @@
 						this.priceguli = res.data;
 					})
 				} else {
+					if (!this.pipeinum) {
+						return;
+					}
 					this.api.order.calCommission({
 						data: {
 							money: this.pipeinum * 100,
@@ -275,6 +279,7 @@
 							type: 2,
 						}
 					}).then(res => {
+						console.log(res);
 						this.priceguli = res.data;
 					})
 				}

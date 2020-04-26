@@ -143,11 +143,23 @@
 				})
 			},
 			jiaoyi() {
-				this.orderdetail.sourcetype = 3;
-				getApp().globalData.productdetail = Object.assign({}, this.orderdetail);
-				uni.navigateTo({
-					url: '/pages/product/productdetail'
+				this.api.order.getSellUserContact({
+					data: {
+						matchId: this.orderdetail.matchId,
+						userId: getApp().globalData.userdata.userId
+					}
+				}).then(res => {
+					console.log(res);
+					uni.makePhoneCall({
+						 phoneNumber: res.data.mobilePhone //仅为示例
+					})
+					// this.customercont = res.data;
 				})
+				// this.orderdetail.sourcetype = 3;
+				// getApp().globalData.productdetail = Object.assign({}, this.orderdetail);
+				// uni.navigateTo({
+				// 	url: '/pages/product/productdetail'
+				// })
 				// this.$nextTick(() => {
 				// 	this.$refs.showpay.open();
 				// })

@@ -153,60 +153,6 @@
 				})
 			},
 			gotomap() {
-				var url = "";
-				let latitude = 28.226670107377178;
-				let longitude = 112.87434613749419;
-				if (plus.os.name=="Android") {
-					var hasBaiduMap = plus.runtime.isApplicationExist({pname:'com.baidu.BaiduMap',action:'baidumap://'});
-					var hasAmap = plus.runtime.isApplicationExist({pname:'com.autonavi.minimap',action:'androidamap://'});
-					var urlBaiduMap = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&src=Hello%20uni-app";
-					var urlAmap = "androidamap://viewMap?sourceApplication=Hello%20uni-app&poiname=DCloud&lat=39.9631018208&lon=116.3406135236&dev=0"
-					if (hasAmap && hasBaiduMap) {
-						plus.nativeUI.actionSheet({title:"选择地图应用",cancel:"取消",buttons:[{title:"百度地图"},{title:"高德地图"}]}, function(e){
-							switch (e.index){
-								case 1:
-									plus.runtime.openURL(urlBaiduMap);
-									break;
-								case 2:
-									plus.runtime.openURL(urlAmap);
-									break;
-							}
-						})
-					}
-					else if (hasAmap) {
-						plus.runtime.openURL(urlAmap);
-					}
-					else if (hasBaiduMap) {
-						plus.runtime.openURL(urlBaiduMap);
-					}
-					else{
-						url = "geo:39.96310,116.340698?q=%e6%95%b0%e5%ad%97%e5%a4%a9%e5%a0%82";
-						plus.runtime.openURL(url); //如果是国外应用，应该优先使用这个，会启动google地图。这个接口不能统一坐标系，进入百度地图时会有偏差
-					}
-				} else{
-					// iOS上获取本机是否安装了百度高德地图，需要在manifest里配置，在manifest.json文件app-plus->distribute->apple->urlschemewhitelist节点下添加（如urlschemewhitelist:["iosamap","baidumap"]）
-					// plus.nativeUI.actionSheet({title:"选择地图应用",cancel:"取消",buttons:[{title:"高德地图"}]}, function(e){
-					// 	console.log("e.index: " + e.index);
-					// 	switch (e.index){
-					// 		case 1:
-					// 			url = `http://maps.apple.com/?q=%e6%95%b0%e5%ad%97%e5%a4%a9%e5%a0%82&ll=${latitude},${longitude}&spn=0.008766,0.019441`;
-					// 			break;
-					// 		case 2:
-					// 			url = "baidumap://map/marker?location=39.968789,116.347247&title=DCloud&src=Hello%20uni-app";
-					// 			break;
-					// 		case 3:
-								// let url = `iosamap://viewMap?sourceApplication=Hello%20uni-app&poiname=DCloud&lat=${latitude}&lon=${longitude}&dev=0`;
-						// 		break;
-						// 	default:
-						// 		break;
-						// }
-					// if (url!="") {
-						plus.runtime.openURL( `iosamap://viewMap?sourceApplication=uniapp &lat=${latitude}&lon=${longitude}&dev=0`, function( e ) {
-							plus.nativeUI.alert("本机未安装指定的地图应用");
-						});
-					// }
-					// })
-				}
 			},
 			dianhua() {
 				uni.makePhoneCall({

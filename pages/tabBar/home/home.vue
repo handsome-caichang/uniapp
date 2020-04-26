@@ -53,7 +53,7 @@
 								<text>{{ item.classifyName }}</text>
 								<text>{{ item.count }}吨</text>
 							</view>
-							<text class="uni-ellipsis" style="font-size: 32upx;">{{ item.nickName }}</text>
+							<text class="uni-ellipsis" style="font-size: 32upx;">{{ hidenickname(item.nickName) }}</text>
 							<view class="box" style="display: flex;">
 								<text>{{ utils.timeTodate('m-d', item.createTime)}}</text>
 								<text class="uni-ellipsis" style="width: 90upx;text-align: right;font-size: 28upx;padding: 0;">{{ item.address }}</text>
@@ -185,6 +185,19 @@ export default {
 		closeDrawer() {
 			this.showqiandao = false;
 		},
+		hidenickname(name) {
+			let testname = "";
+			if (name.length <= 4) {
+				testname = name.substr(0, 1) + "***";
+			}else {
+				let guolv = "";
+				for (var i = 0; i < name.length - 2; i++) {
+					guolv += "*";
+				}
+				testname = name.substr(0, 1) + guolv + name.substr(name.length-1);
+			}
+			return testname;
+		},
 		ontabtap(tap, index) {
 			this.tabIndex = index;
 			this.getIndustryInformationList();
@@ -302,6 +315,7 @@ export default {
 							type: 0,
 						}
 					}).then(res => {
+						console.log(res)
 						res.data.forEach(item => {
 							let time = item.createTime.replace(' ', "T")
 							let datetime = new Date(time).getTime();

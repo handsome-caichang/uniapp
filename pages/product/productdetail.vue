@@ -6,14 +6,20 @@
 			</view>
 			<view class="uni-flex uni-column" style="flex: 1;justify-content: center;margin-left: 30upx;">
 				<view class="text title" style="text-align: left;padding-top: 10rpx;color: #212121;">
-					{{detail.classifyName}}    <text>{{detail.count}}吨</text>
+					类别：{{detail.classifyName}}  
 				</view>
-				<view class="price" v-if="detail.bedrockPrice">{{detail.bedrockPrice}}-{{detail.outsidePrice}}元/吨</view>
-				<view class="price" v-if="!detail.bedrockPrice">面议</view>
-				<view style="color: #212121;">{{detail.name}}</view>
-				<view class="uni-flex" style="justify-content:space-between;color: #575757;">
-					<text>{{detail.createTime}}</text>
-					<text>{{detail.address}}</text>
+				<view class="text title" style="text-align: left;padding-top: 10rpx;color: #212121;">
+					 <text>数量：{{detail.count}}吨</text> 
+				</view>
+				<view class="price" v-if="detail.bedrockPrice">价格：{{detail.bedrockPrice}}元/吨</view>
+				<view class="price" v-if="!detail.bedrockPrice">价格：面议</view>
+				<!-- <view style="color: #212121;" v-if="detail.nickName">称呼1：{{ hidenickname(detail.nickName) }}</view> -->
+				<view style="color: #212121;" v-if="productdetail.nickName">称呼：{{ hidenickname(productdetail.nickName) }}</view>
+				<view class="uni-flex" style="color: #212121;">
+					<text>时间：{{detail.createTime}}</text>
+				</view>
+				<view class="uni-flex" style="color: #212121;">
+					<text>地址：{{detail.address}}</text>
 				</view>
 			</view>
 		</view>
@@ -108,6 +114,7 @@
 					userId: getApp().globalData.userdata.userId
 				}
 			}).then(res => {
+				console.log(res);
 				this.detail = res.data;
 				this.prolist = this.detail.images;
 				if (this.productdetail.sourcetype == 3) {
@@ -116,6 +123,24 @@
 			})
 		},
 		methods: {
+			hidenickname(names) {
+				console.log(names);
+				let testname = "";
+				if (names.length <= 4) {
+					let guolv = "";
+					for (var i = 0; i < names.length - 1; i++) {
+						guolv += "*";
+					}
+					testname = names.substr(0, 1) + guolv;
+				}else {
+					let guolv = "";
+					for (var i = 0; i < names.length - 2; i++) {
+						guolv += "*";
+					}
+					testname = names.substr(0, 1) + guolv + names.substr(names.length-1);
+				}
+				return testname ? testname : '';
+			},
 			getcustomercont() {
 				this.api.order.getSellUserContact({
 					data: {

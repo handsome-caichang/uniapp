@@ -195,7 +195,7 @@
 				if (this.isactive) {
 					this.api.order.calEncourage({
 						data: {
-							money: this.pipeinum,
+							money: this.pipeinum * 100,
 							count: this.numberleng,
 							type: 1,
 						}
@@ -206,7 +206,7 @@
 				} else {
 					this.api.order.calEncourage({
 						data: {
-							money: this.pipeinum,
+							money: this.pipeinum * 100,
 							count: this.numberleng,
 							type: 2,
 						}

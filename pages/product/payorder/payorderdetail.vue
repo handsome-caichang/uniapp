@@ -35,17 +35,17 @@
 				交易时间：{{ utils.timeTodate('Y m-d', ordetail.createTime)}}
 			</view>
 			<view class="title">
-				买家录入金额：{{ orderdetail.buyMoney}} 元
+				买家录入金额：{{ orderdetail.buyMoney / 100}} 元
 			</view>
 			<view class="title">
-				卖家录入金额：{{ orderdetail.sellMoney}} 元
+				卖家录入金额：{{ orderdetail.sellMoney / 100}} 元
 			</view>
-			<view class="title">
+			<!-- <view class="title">
 				可获取鼓励金：{{orderdetail.giveEncourageMoney}} 元
 			</view>
 			<view class="title">
 				{{orderdetail.isPayCommission == 1 ? '已' : '未'}}支付佣金： {{orderdetail.payCommissionMoney}} 元
-			</view>
+			</view> -->
 			<!--  -->
 		</view>
 	</view>

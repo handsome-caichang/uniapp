@@ -137,7 +137,7 @@
 			},
 			changesuk(childindex) {
 				this.childindex = childindex;
-				this.price = this.chuildlist[this.childindex].money;
+				this.price = this.chuildlist[this.childindex].money / 100;
 			},
 			sub() {
 				this.api.home.submitVipOrder({

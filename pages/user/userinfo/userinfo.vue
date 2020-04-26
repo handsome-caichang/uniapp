@@ -35,7 +35,7 @@
 			</uni-list-item>
 			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="车牌号" >
 				<view class="uni-flex">
-					<input class="uni-input" style="text-align: right;" @blur="saveuser"  v-model="userdata.carCard" maxlength="2" type="number" placeholder="请填写车牌号" />
+					<input class="uni-input" style="text-align: right;" @blur="saveuser"  v-model="userdata.carCard" maxlength="10" type="text" placeholder="请填写车牌号" />
 				</view>
 			</uni-list-item>
 			<!-- <uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" /> -->
@@ -155,6 +155,8 @@
 					district:this.userdata.district,
 					userId: this.userdata.userId,
 					carCard: this.userdata.carCard,
+				}).then(res => {
+					console.log(res);
 				})
 			},
 			onConfirm(e) {

@@ -259,7 +259,7 @@
 				if (this.isactive) {
 					this.api.order.calCommission({
 						data: {
-							money: this.pipeinum,
+							money: this.pipeinum * 100,
 							count: this.numberleng,
 							type: 1,
 						}
@@ -270,7 +270,7 @@
 				} else {
 					this.api.order.calCommission({
 						data: {
-							money: this.pipeinum,
+							money: this.pipeinum * 100,
 							count: this.numberleng,
 							type: 2,
 						}

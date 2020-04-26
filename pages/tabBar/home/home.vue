@@ -241,6 +241,7 @@ export default {
 				let userdata = uni.getStorageSync('userdata');
 				let newuserdata = Object.assign(userdata, res.data);
 				uni.setStorageSync('userdata', newuserdata);
+				console.log(newuserdata)
 				getApp().globalData.userdata = newuserdata;
 				uni.$emit('_updateuser');
 			})

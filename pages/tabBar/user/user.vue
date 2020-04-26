@@ -10,8 +10,8 @@
 					<text class="username" style="color: #18C02C;">{{userdata.nickName}}</text>
 				</view>
 			</view> -->
-			<view class="vip-box">
-				<view class="uni-flex"   >
+			<view class="vip-box" >
+				<view class="uni-flex" style="position: relative;"  >
 					<view class="userbox">
 						<image :src="userdata.headImage" class="img" @tap="navTo('/pages/user/userinfo/userinfo')" ></image>
 						<view class="info-box" style="margin-left: 40upx;">
@@ -21,11 +21,12 @@
 							立即开通会员
 						</view>
 					</view>
-					<view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 60%;" >
-						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 1 ? '黄金' : (userdata.vipLevel == 2 ? "钻石" : '')}} 会员  </view>
+					<view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 0%;" >						
+						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 2 ? '黄金' : (userdata.vipLevel == 3 ? "钻石" : '')}} 会员  </view>
 					</view>
+						
 				</view>
-				
+				<text class="viptime" v-if="userdata.isVip == 1" style="display:block;color: #575757;margin-top:20upx;text-align: right;">VIP有效期：{{utils.timeTodate('Y m-d', userdata.vipTime)}}</text>
 			<!-- 	<view class="uni-flex" style="font-size: 28upx;color: #FEFEFE;margin-top: 20upx;">
 					货物推荐 &bull; 首页展示 &bull; 发布求购
 				</view> -->
@@ -110,11 +111,13 @@
 	import {
 		mapState
 	} from 'vuex';
+	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
 		components: {
 		},
 		data() {
 			return {
+				utils,
 				userdata: {},
 				list1: [
 					{
@@ -215,6 +218,9 @@
 			},
 			_updateuserhome() {
 				this.userdata = getApp().globalData.userdata;
+				// this.userdata
+				let time = this.userdata.vipTime.replace(' ', "T")
+				this.userdata.vipTime = new Date(time).getTime();
 			},
 			geren(item) {
 				if (item.url) {
@@ -280,7 +286,7 @@
 	}
 	.user-section {
 		/* height: 520upx; */
-		padding: 180upx 30upx 50upx;
+		padding: 180upx 30upx 30upx;
 		position: relative;
 		background:linear-gradient(128deg,rgba(255,204,60,1) 0%,rgba(254,229,172,1) 100%);
 		.bg {

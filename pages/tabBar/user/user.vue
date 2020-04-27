@@ -17,12 +17,13 @@
 						<view class="info-box" style="margin-left: 40upx;">
 							<text class="username" style="color: #18C02C;font-size: 36upx;">{{userdata.nickName}}</text>
 						</view>
-						<view class="kaitong" style="position: absolute;right: 20upx;top: 60%;" v-if="userdata.isVip == 0"  @tap="navTo('/pages/user/vipsend')" >
+						<view class="kaitong" style="position: absolute;right: 20upx;top: 25%;" v-if="userdata.isVip == 0"  @tap="navTo('/pages/user/vipsend')" >
 							立即开通会员
 						</view>
 					</view>
 					<view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 0%;" >						
-						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 2 ? '黄金' : (userdata.vipLevel == 3 ? "钻石" : '')}} 会员  </view>
+						<!-- VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 2 ? '黄金' : (userdata.vipLevel == 3 ? "钻石" : '')}} 会员  </view> -->
+						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipName}}  </view>
 					</view>
 						
 				</view>
@@ -219,8 +220,10 @@
 			_updateuserhome() {
 				this.userdata = getApp().globalData.userdata;
 				// this.userdata
-				let time = this.userdata.vipTime.replace(' ', "T")
-				this.userdata.vipTime = new Date(time).getTime();
+				if (this.userdata.vipTime && typeof this.userdata.vipTime !== 'number') {
+					let time = this.userdata.vipTime.replace(' ', "T");
+					this.userdata.vipTime = new Date(time).getTime();
+				}
 			},
 			geren(item) {
 				if (item.url) {

@@ -11,7 +11,7 @@
 		
 		<view class="uni-flooter-box">
 			<view class="checked-box" >
-				<checkbox :checked="ischeck" color="#E7211A" :disabled="userdata.vipLevel != 3" />
+				<checkbox :checked="ischeck" color="#E7211A" :disabled="userdata.vipName != '钻石'" />
 				<text style="color: #E7211A;">加急</text>
 			</view>
 			<view class="btn" :class="btnactive?'active':''" @tap="fabucur" >
@@ -33,8 +33,12 @@
 </template>
 
 <script>
+	import uniIcons from '@/components/uni-icons/uni-icons.vue';
 	import { mapMutations,mapState } from 'vuex';
 	export default {
+		components: {
+			uniIcons
+		},
 		data() {
 			return {
 				activeindex: 0,

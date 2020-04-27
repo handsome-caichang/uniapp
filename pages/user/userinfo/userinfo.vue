@@ -148,7 +148,7 @@
 					headImage:this.userdata.headImage,
 					mobilePhone:this.userdata.mobilePhone,
 					nickName: this.userdata.nickName,
-					year: this.userdata.year,
+					years: this.userdata.years,
 					images: this.userdata.images,
 					province:this.userdata.province,
 					city:this.userdata.city,
@@ -166,7 +166,7 @@
 				this.api.home.modifyUser({
 					headImage: this.userdata.headImage,
 					mobilePhone: this.userdata.mobilePhone,
-					year:  this.userdata.year,
+					years:  this.userdata.year,
 					images: this.userdata.images,
 					nickName: this.userdata.nickName,
 					province: list[0],

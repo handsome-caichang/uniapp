@@ -300,7 +300,7 @@
 			}
 		}
 		.btn-container {
-			margin-top: 200upx;
+			margin-top: 50upx;
 			&.contact {
 				.primary-btn {
 					height: 100upx;

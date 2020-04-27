@@ -12,7 +12,7 @@
 							<text style="margin-right: 20upx;">{{item.goodsName}}</text>
 							<text style="margin-right: 20upx;">{{item.count}}</text>
 							<view class="statusimg">
-								<image v-if="item.status==1" src="/static/paysuc.png" mode="aspectFit"></image>
+								<image v-if="item.status==1" src="/static/img/paysuc.png" mode="aspectFit"></image>
 								<image v-if="item.status==0"  src="/static/img/payery.png" mode="aspectFit"></image>
 							</view>
 						</view>

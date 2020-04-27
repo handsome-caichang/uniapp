@@ -11,7 +11,7 @@
 		
 		<view class="uni-flooter-box">
 			<view class="checked-box" >
-				<checkbox :checked="ischeck" color="#E7211A" :disabled="userdata.vipName != '钻石'" />
+				<checkbox :checked="ischeck" color="#E7211A"/>
 				<text style="color: #E7211A;">加急</text>
 			</view>
 			<view class="btn" :class="btnactive?'active':''" @tap="fabucur" >

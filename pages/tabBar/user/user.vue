@@ -184,12 +184,8 @@
 				],
 			}
 		},
-		created() {
+		onShow() {
 			this._updateuserhome();
-			var userthis = this;
-			uni.$on('_updateuserhome',function(data){
-				userthis._updateuserhome();
-			})
 		},
 		onNavigationBarButtonTap(e) {
 			const index = e.index;

@@ -13,9 +13,9 @@
 						<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 							<text style="margin-right: 20upx;">交易种类：{{item.goodsName}}</text>
 						</view>
-						<view @tap="clickitem(item)" style="background-color: #18C02C;color: #fff;padding: 4upx 8upx;border-radius: 10upx;">
+					<!-- 	<view @tap="clickitem(item)" style="background-color: #18C02C;color: #fff;padding: 4upx 8upx;border-radius: 10upx;">
 							再次交易
-						</view>
+						</view> -->
 					</uni-list-item>
 				</uni-list>
 			</view>

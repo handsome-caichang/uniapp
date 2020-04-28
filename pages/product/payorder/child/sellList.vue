@@ -4,7 +4,7 @@
 				<view class="uni-list">
 					<uni-list>
 						<uni-list-item :thumb="item.img" :showBadge="true" :showArrow="false" :note="'最近交易：'+utils.timeTodate('Y m-d', item.createTime)+'  '+item.district" v-for="(item,index) in recordlist"
-						 :key="index" @tap="clickitem(item)" >
+						 :key="index">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
 								<text style="padding:2upx 4upx;font-size: 16upx;border: 1upx solid #AAAAAA;color: #575757;border-radius: 10upx;">备注</text>
@@ -12,9 +12,9 @@
 							<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 								<text style="margin-right: 20upx;">交易种类：{{item.goodsName}}</text>
 							</view>
-							<view style="background-color: #18C02C;color: #fff;padding: 4upx 8upx;border-radius: 10upx;">
+							<!-- <view style="background-color: #18C02C;color: #fff;padding: 4upx 8upx;border-radius: 10upx;">
 								再次交易
-							</view>
+							</view> -->
 						</uni-list-item>
 					</uni-list>
 				</view>

@@ -74,7 +74,7 @@
 		<view class="btn-container contact" v-if="productdetail.sourcetype == 3">
 			<view class="primary-btn" @tap="dianhua">
 				<uni-icons type="phone" size="18" color="#fff" ></uni-icons>
-				<text>联系回收人</text>
+				<text>联系货主</text>
 			</view>
 		</view>
 	

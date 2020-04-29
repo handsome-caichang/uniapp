@@ -7,8 +7,7 @@
 					 v-for="(item,index) in recordlist" :key="index">
 						<view slot="content" style="height: 50upx;">
 							<text style="font-size: 34upx;margin-right: 20upx;">{{item.userName}}</text>
-							<text style="padding:2upx 4upx;font-size: 22upx;border: 1upx solid #AAAAAA;color: #575757;border-radius: 10upx;"
-							 @tap="addRemk(item)">备注</text>
+							<!-- <text style="padding:2upx 4upx;font-size: 22upx;border: 1upx solid #AAAAAA;color: #575757;border-radius: 10upx;" @tap="addRemk(item)">备注</text> -->
 						</view>
 						<view slot="content_end" class="uni-flex" style="align-items: center;height: 50upx;">
 							<text style="margin-right: 20upx;">交易种类：{{item.goodsName}}</text>

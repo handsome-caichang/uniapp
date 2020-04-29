@@ -89,6 +89,13 @@
 					}
 				}).then(res => {
 					console.log(res);
+					res.data.forEach(item => {
+						if (typeof item.createTime == 'string') {
+							let time = item.createTime.replace(' ', "T")
+							let datetime = new Date(time).getTime();
+							item.createTime = datetime;
+						}
+					})
 					this.productList = res.data;
 				})
 			},

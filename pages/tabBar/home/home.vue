@@ -99,7 +99,7 @@
 					</view>
 					<view class="uni-flex uni-column" style="flex: 1;padding-right:30upx">
 						<view class="text title" style="text-align: left;padding-top: 10upx;">{{product.title}}</view>
-						<view class="text point" style="text-align: left;padding-left: 20upx;padding-top: 1urpx;text-overflow:ellipsis;" v-html="product.content">
+						<view class="text point" style="text-align: left;padding-left: 20upx;padding-top: 1urpx;text-overflow:ellipsis;overflow: hidden;" v-html="product.content">
 							<!-- {{product.content}} -->
 						</view>
 					</view>
@@ -669,7 +669,7 @@ export default {
 			text-indent: 48upx;
 			font-size: 20upx;
 			color: #575757;
-			height: 40upx;
+			height: 128upx;
 			text-overflow:ellipsis;
 		}
 	}

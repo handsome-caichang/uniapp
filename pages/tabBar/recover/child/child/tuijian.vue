@@ -57,21 +57,21 @@
 		},
 		methods: {
 			clickitem(item) {
-				if (this.novip) {
-					uni.showModal({
-						title: "提示",
-						content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
-						success: function (res) {
-							if (res.confirm) {
-								console.log('用户点击确定');
-								uni.navigateTo({
-									url: "/pages/user/vipsend"
-								})
-							}
-						}
-					});
-					return;
-				}
+				// if (this.novip) {
+				// 	uni.showModal({
+				// 		title: "提示",
+				// 		content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
+				// 		success: function (res) {
+				// 			if (res.confirm) {
+				// 				console.log('用户点击确定');
+				// 				uni.navigateTo({
+				// 					url: "/pages/user/vipsend"
+				// 				})
+				// 			}
+				// 		}
+				// 	});
+				// 	return;
+				// }
 				item.sourcetype = 1;
 				getApp().globalData.productdetail = item;
 				uni.navigateTo({

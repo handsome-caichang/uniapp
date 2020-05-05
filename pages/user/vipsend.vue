@@ -126,6 +126,8 @@
 				this.changevip(this.currentindex);
 			})
 		},
+		onLoad() {
+		},
 		methods: {
 			radioChange(evt) {
 				for (let i = 0; i < this.items.length; i++) {

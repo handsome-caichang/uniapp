@@ -17,17 +17,17 @@
 						<view class="info-box" style="margin-left: 40upx;">
 							<text class="username" style="color: #18C02C;font-size: 36upx;">{{userdata.nickName}}</text>
 						</view>
-						<view class="kaitong" style="position: absolute;right: 20upx;top: 25%;" v-if="userdata.isVip == 0"  @tap="navTo('/pages/user/vipsend')" >
+						<!-- <view class="kaitong" style="position: absolute;right: 20upx;top: 25%;" v-if="userdata.isVip == 0"  @tap="navTo('/pages/user/vipsend')" >
 							立即开通会员
-						</view>
+						</view> -->
 					</view>
-					<view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 0%;" >						
+					<!-- <view class="viptext"   v-if="userdata.isVip == 1" style="position: absolute;right: 20upx;top: 0%;" >						 -->
 						<!-- VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipLevel == 2 ? '黄金' : (userdata.vipLevel == 3 ? "钻石" : '')}} 会员  </view> -->
-						VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipName}}  </view>
-					</view>
+						<!-- VIP  <view class="viptext" style="color: #09BB07;display: inline-block;font-size: 40upx;"> {{userdata.vipName}}  </view> -->
+					<!-- </view> -->
 						
 				</view>
-				<text class="viptime" v-if="userdata.isVip == 1" style="display:block;color: #575757;margin-top:20upx;text-align: right;">VIP有效期：{{utils.timeTodate('Y m-d', userdata.vipTime)}}</text>
+				<!-- <text class="viptime" v-if="userdata.isVip == 1" style="display:block;color: #575757;margin-top:20upx;text-align: right;">VIP有效期：{{utils.timeTodate('Y m-d', userdata.vipTime)}}</text> -->
 			<!-- 	<view class="uni-flex" style="font-size: 28upx;color: #FEFEFE;margin-top: 20upx;">
 					货物推荐 &bull; 首页展示 &bull; 发布求购
 				</view> -->
@@ -129,11 +129,13 @@
 						name: '信誉值',
 						icon: '/static/img/user/xinyu.png',
 						url: '/pages/user/reputationvalue'
-					},{
-						name: 'VIP',
-						icon: '/static/img/user/VIP.png',
-						url: '/pages/user/vipsend'
-					},{
+					},
+					// {
+					// 	name: 'VIP',
+					// 	icon: '/static/img/user/VIP.png',
+					// 	url: '/pages/user/vipsend'
+					// },
+					{
 						name: '缴纳保证金',
 						icon: '/static/img/user/baozhenjin.png',
 						url: '/pages/user/userinfo/userbond'

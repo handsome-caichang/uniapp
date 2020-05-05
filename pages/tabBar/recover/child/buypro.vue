@@ -4,13 +4,13 @@
 			<view class="uni-flex" style="justify-content: space-around;"  @tap="tovipsend">
 				<view class="userbox">
 					<image :src="userdata.headImage" class="img" ></image>
-					<view class="kaitong" v-if="!isvip">
+					<!-- <view class="kaitong" v-if="!isvip">
 						立即开通会员
-					</view>
+					</view> -->
 				</view>
-				<view class="viptext">
+				<!-- <view class="viptext">
 					VIP  <view class="viptext" style="color: #09BB07;display: inline-block;">{{vipLevel}}</view>
-				</view>
+				</view> -->
 			</view>
 			
 			<view class="uni-flex" style="font-size: 28upx;color: #FEFEFE;margin-top: 20upx;">
@@ -71,9 +71,9 @@
 				}
 			},
 			tovipsend() {
-				uni.navigateTo({
-					url: "/pages/user/vipsend"
-				})
+				// uni.navigateTo({
+				// 	url: "/pages/user/vipsend"
+				// })
 			}
 		}
 	}

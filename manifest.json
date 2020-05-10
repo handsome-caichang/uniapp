@@ -81,7 +81,8 @@
                     "weixin" : {
                         "appid" : "wxffeec38fada09edd",
                         "UniversalLinks" : "https://demo.dcloud.net.cn/ulink/"
-                    }
+                    },
+                    "appleiap" : {}
                 }
             },
             "icons" : {

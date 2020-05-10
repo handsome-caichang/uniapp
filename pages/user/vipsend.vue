@@ -56,7 +56,7 @@
 	
 		<view class="uni-list" >
 			<radio-group  @change="radioChange">
-				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
+				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in paylists" :key="item.value">
 					<view style="display:flex;justify-content: center;">
 						<image  mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 						<text>{{item.name}}</text>
@@ -75,7 +75,7 @@
 				</view>
 				<view class="point">开通会员代表接受《会员服务协议》</view>
 			</view>
-			<view class="rightbtn" @tap="sub">
+			<view class="rightbtn" @tap="subvip">
 				确认支付
 			</view>
 		</view>
@@ -87,6 +87,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+	var iapChannel,neigoulist;
 	export default {
 		components: {
 			uniList,
@@ -110,23 +111,103 @@
 						icon: '/static/img/pay/weixin.png',
 					},
 				],
+				playlist: [
+					{
+						value: 'USA',
+						name: '苹果支付',
+						icon: '/static/img/pay/applelogo.png',
+					},
+				],
+				paylists: [],
 				viplist: [],
 				chuildlist: [],
 				currentindex: 0,
 				childindex: 0,
 				current: 0,
+				isandroid: false,
 			}
 		},
 		computed: {
 		},
 		created() {
+			if (plus.os.name == 'Android') {
+				 this.isandroid = true;
+				 this.paylists = this.items;
+			}else {
+				this.paylists = this.playlist;
+				 this.isandroid = false;
+			}
 			this.userdata = getApp().globalData.userdata;
 			this.api.home.getMainVipList().then(res => {
 				this.viplist = res.data;
 				this.changevip(this.currentindex);
 			})
 		},
+		onLoad() {
+				  // } else if (plus.os.name == 'iOS') {  
+			var IAPOrders = ['zuanshiVIP', 'huangjinVIP'];  
+			// var IAPOrders = ['io.dcloud.payTest1', 'io.dcloud.payTest2'];
+			// 获取支付通道  
+			if (plus.os.name == 'iOS') {
+				plus.payment.getChannels(function(channels) {  
+					channels.forEach(item => {
+						if (item.id == 'appleiap'){ 
+							iapChannel = item;
+							item.requestOrder(['zuanshiVIP', 'huangjinVIP'], function(event) {
+								console.log(event);
+								neigoulist = event;
+								// for (var index in event) {   
+								// 	var OrderItem = event[index];  
+								// 	console.log(OrderItem);
+								// 	console.log("Title:" + OrderItem.title + "Price:" + OrderItem.price + "Description:" + OrderItem.description + "ProductID:" + OrderItem.productid);  
+								// }  
+							}, function(errormsg) {  
+								console.log(errormsg)
+								console.log("11111：" + errormsg.message);  
+							});  
+						}
+					})
+				}, function(e) {  
+					console.log("2222222：" + e.message);  
+				});  
+			}
+			// document.addEventListener('plusready', plusReady, false); //uni-app不需要此代码  
+		},
 		methods: {
+			subvip() {
+				if (this.isandroid) {
+					this.sub()
+				}else {
+					console.log(neigoulist);
+					uni.showLoading({
+						title: '支付中'
+					});
+					this.pay(neigoulist[this.currentindex].productid)
+				}
+			},
+			pay(id) {
+				var _that = this;
+				plus.payment.request(iapChannel, {  
+					"productid": id,  
+					"username": getApp().globalData.userdata.username,  
+					quantity: 1,
+				}, function(result) { 
+					console.log(result)
+					uni.hideLoading();
+					plus.nativeUI.alert('支付成功', null, null, '关闭');
+					_that.api.home.setUserVip({
+						userId: getApp().globalData.userdata.userId,
+						productid: result.payment.productid,
+					}).then(res => {
+						plus.nativeUI.alert('vip开通成功', null, null, '关闭');
+						uni.$emit('_updatehome');
+					})
+				}, function(e) {  
+					console.log(e)
+					uni.hideLoading();
+					plus.nativeUI.alert("支付失败", null, null, '关闭');  
+				});  
+			},
 			radioChange(evt) {
 				for (let i = 0; i < this.items.length; i++) {
 					if (this.items[i].value === evt.target.value) {
@@ -137,7 +218,15 @@
 			},
 			changesuk(childindex) {
 				this.childindex = childindex;
-				this.price = this.chuildlist[this.childindex].money / 100;
+				if (this.isandroid) {
+					 this.price = this.chuildlist[this.childindex].money / 100;
+				}else {
+					if (this.currentindex == 0) {
+						this.price = neigoulist[this.currentindex].price;
+					}else {
+						this.price = neigoulist[this.currentindex].price;
+					} 
+				}
 			},
 			sub() {
 				this.api.home.submitVipOrder({

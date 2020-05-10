@@ -437,5 +437,11 @@ export default {
 			'wallet/getMainVipList',
 			params
 		);
+	},
+	setUserVip(params) {
+		return http.post(
+			'user/setUserVip',
+			params
+		);
 	}
 }

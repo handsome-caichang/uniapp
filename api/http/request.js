@@ -123,9 +123,14 @@ export default class Request {
       // #ifdef APP-PLUS
       options.sslVerify = options.sslVerify === undefined ? this.config.sslVerify : options.sslVerify
       // #endif
+	  // #ifdef APP-PLUS
+	  uni.showLoading({
+	  	title: '加载中'
+	  });
+	  // #endif
       return new Promise((resolve, reject) => {
         let next = true
-
+		uni.hideLoading();
         let handleRe = {}
         options.complete = (response) => {
           response.config = handleRe

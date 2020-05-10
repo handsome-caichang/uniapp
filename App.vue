@@ -21,9 +21,9 @@ export default {
 	onLaunch: function() {
 		let userdata = uni.getStorageSync('userdata');
 		if (!userdata) {
-			uni.reLaunch({
-				url: '/pages/login/login'
-			})
+			// uni.reLaunch({
+			// 	url: '/pages/login/login'
+			// })
 		}else {
 			// this.api.home.getRecoveryInfo({
 			// 	userId: userdata.userId

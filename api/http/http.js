@@ -31,6 +31,7 @@ http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
     cancel('token 不存在') // 接收一个参数，会传给catch((err) => {}) err.errMsg === 'token 不存在'
   }
   */
+ 
   return config
 })
 
@@ -55,6 +56,7 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
   }
   return response
 }, (response) => { // 请求错误做点什么
+	console.log(response)
 	uni.showToast({
 	  	title: '服务繁忙，请稍后再试！',
 		icon:  'none',

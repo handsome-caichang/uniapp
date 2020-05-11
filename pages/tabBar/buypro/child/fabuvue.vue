@@ -75,7 +75,7 @@
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
-					<image class="img-icon" src="/static/img/huozhu/pipeishu.png"></image>
+					<image class="img-icon" src="/static/img/huozhu/beizhu.jpg"></image>
 					<text class="text">备注</text>
 				</view>
 				<view class="input-box">
@@ -84,9 +84,9 @@
 			</view>
 			<view class="uni-list list-pd">
 				<view class="uni-list-cell cell-pd">
-					<view class="uni-uploader">
+					<view class="uni-uploader ">
 						<view class="uni-uploader-head">
-							<view class="uni-uploader-title">上传图片</view>
+							<view class="uni-uploader-title bitian">上传图片</view>
 							<view class="uni-uploader-info">{{imageList.length}}/9</view>
 						</view>
 						<view class="uni-uploader-body">
@@ -269,6 +269,14 @@
 					uni.showModal({
 						title: "提示",
 						content: '请输入正确的联系方式',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.imageList.length) {
+					uni.showModal({
+						title: "提示",
+						content: '请上传货物图片',
 						showCancel: false,
 					});
 					return;

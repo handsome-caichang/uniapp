@@ -163,6 +163,63 @@
 				})
 			},
 			fabu() {
+				if (!this.realName) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入姓名',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.idNumber) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入身份证',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.realMobilePhone) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入手机号码',
+						showCancel: false,
+					});
+					return;
+				}
+				let reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+				if (!reg.test(this.realMobilePhone)) {
+					uni.showModal({
+						title: "提示",
+						content: '请输入正确的手机号码',
+						showCancel: false,
+					});
+					return;
+				}
+				// if (!this.idCardValidity) {
+				// 	uni.showModal({
+				// 		title: "提示",
+				// 		content: '请输入身份证有效期',
+				// 		showCancel: false,
+				// 	});
+				// 	return;
+				// }
+				if (!this.idCardFront) {
+					uni.showModal({
+						title: "提示",
+						content: '请上传身份证正面',
+						showCancel: false,
+					});
+					return;
+				}
+				if (!this.idCardBack) {
+					uni.showModal({
+						title: "提示",
+						content: '请上传身份证反面',
+						showCancel: false,
+					});
+					return;
+				}
 				this.api.home.userRealAuth({
 					userId: this.userdata.userId,
 					realName: this.realName,

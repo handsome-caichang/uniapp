@@ -65,8 +65,7 @@
 
 		</view>
 		
-		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue"
-		 @onConfirm="onConfirm"></mpvue-city-picker>
+		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue" @onConfirm="onConfirm"></mpvue-city-picker>
 		 
 	</view>
 </template>

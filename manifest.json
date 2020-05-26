@@ -2,7 +2,7 @@
     "name" : "废品帮",
     "appid" : "__UNI__EA893EF",
     "description" : "一个回收平台",
-    "versionName" : "0.0.2",
+    "versionName" : "1.0.2",
     "versionCode" : 1,
     "transformPx" : false,
     /* 5+App特有相关 */
@@ -21,7 +21,8 @@
         /* 模块配置 */
         "modules" : {
             "Maps" : {},
-            "Payment" : {}
+            "Payment" : {},
+            "Push" : {}
         },
         /* 应用发布信息 */
         "distribute" : {
@@ -57,9 +58,9 @@
             /* ios打包配置 */
             "ios" : {
                 "privacyDescription" : {
-                    "NSPhotoLibraryUsageDescription" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。",
-                    "NSPhotoLibraryAddUsageDescription" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。",
-                    "NSCameraUsageDescription" : "应用保存运行状态等信息，需要获取读写手机摄像头拍照（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。",
+                    "NSPhotoLibraryUsageDescription" : "是否允许 废品帮 获取你的相册 ，以便提供上传货物图片用户头像等服务。",
+                    "NSPhotoLibraryAddUsageDescription" : "是否允许 废品帮 获取你的相册 ，以便提供上传货物图片用户头像等服务。",
+                    "NSCameraUsageDescription" : "是否允许 废品帮 获取你的相册 ，以便提供上传货物图片用户头像等服务。",
                     "NSLocationAlwaysUsageDescription" : "是否允许 废品帮 获取你的地理位置 ，以便提供货物以及回收人匹配服务。",
                     "NSLocationWhenInUseUsageDescription" : "是否允许 废品帮 获取你的地理位置 ，以便提供货物以及回收人匹配服务。",
                     "NSLocationAlwaysAndWhenInUseUsageDescription" : "是否允许 废品帮 获取你的地理位置 ，以便提供货物以及回收人匹配服务。"
@@ -83,6 +84,9 @@
                         "UniversalLinks" : "https://demo.dcloud.net.cn/ulink/"
                     },
                     "appleiap" : {}
+                },
+                "push" : {
+                    "unipush" : {}
                 }
             },
             "icons" : {

@@ -53,7 +53,7 @@
 			</view>
 			<view class="no-pro" v-if="!productList.length && activeindex != 2">
 				<icon type="warn" size="80" color="#F8B551"></icon>
-				<view class="text">暂无数据</view>
+				<view class="text">此地区暂无数据</view>
 			</view>
 		</view>
 
@@ -157,7 +157,7 @@ export default {
 						// lng: "112.8799093967014",
 						classify: ifyst,
 						keyWork: this.keywork,
-						cityCode: this.region.cityCode
+						districtId: this.region.cityCode
 					}
 				}).then(res => {
 					res.data.forEach(item => {
@@ -167,6 +167,7 @@ export default {
 							item.createTime = datetime;
 						}
 					})
+					console.log(res.data);
 					this.productList = res.data;
 				})
 			}

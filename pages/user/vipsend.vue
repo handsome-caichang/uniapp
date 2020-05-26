@@ -54,7 +54,7 @@
 		</view>
 	
 	
-		<view class="uni-list" >
+		<view class="uni-list" v-if="isandroid">
 			<radio-group  @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in paylists" :key="item.value">
 					<view style="display:flex;justify-content: center;">
@@ -114,7 +114,7 @@
 				playlist: [
 					{
 						value: 'USA',
-						name: '苹果支付',
+						name: 'Apple pay',
 						icon: '/static/img/pay/applelogo.png',
 					},
 				],
@@ -145,7 +145,8 @@
 		},
 		onLoad() {
 				  // } else if (plus.os.name == 'iOS') {  
-			var IAPOrders = ['zuanshiVIP', 'huangjinVIP'];  
+			var IAPOrders = ['zuanshiVIPs', 'huangjinVIPs'];  
+			var _self = this;
 			// var IAPOrders = ['io.dcloud.payTest1', 'io.dcloud.payTest2'];
 			// 获取支付通道  
 			if (plus.os.name == 'iOS') {
@@ -153,9 +154,10 @@
 					channels.forEach(item => {
 						if (item.id == 'appleiap'){ 
 							iapChannel = item;
-							item.requestOrder(['zuanshiVIP', 'huangjinVIP'], function(event) {
+							item.requestOrder(['zuanshiVIPs', 'huangjinVIPs'], function(event) {
 								console.log(event);
 								neigoulist = event;
+								_self.changesuk(0);
 								// for (var index in event) {   
 								// 	var OrderItem = event[index];  
 								// 	console.log(OrderItem);

@@ -148,13 +148,13 @@ export default {
 		...mapState(["userInfo","goodtypelist"]),
 	
 	},
-	// onLoad() {
+	onLoad() {
 		// this.api.home.getRealseSellInfo({
 		// 	userId: getApp().globalData.userdata.userId
 		// }).then(res => {
 		// 	this.setuserInfo(res.data);
 		// })
-		
+	},
 	// 	this.doGetLocation();
 	// 	if (!getApp().globalData.userdata.userId) {
 	// 		this.loadData();
@@ -230,19 +230,20 @@ export default {
 			})
 		},
 		async loadData() {
-			if (!getApp().globalData.userdata.userId) { 
+			const app = getApp({allowDefault: true});
+			if (!app.globalData.userdata.userId) { 
 				return
 			}
 			await this.api.home.getRecoveryInfo({
 				data: {
-					userId: getApp().globalData.userdata.userId
+					userId: app.globalData.userdata.userId
 				}
 			}).then(res => {
 				let userdata = uni.getStorageSync('userdata');
 				let newuserdata = Object.assign(userdata, res.data);
 				uni.setStorageSync('userdata', newuserdata);
 				console.log(newuserdata)
-				getApp().globalData.userdata = newuserdata;
+				app.globalData.userdata = newuserdata;
 				uni.$emit('_updateuser');
 			})
 			// 资讯tab
@@ -255,7 +256,7 @@ export default {
 			// })
 			// 签到
 			this.api.home.checkIn({
-				userId: getApp().globalData.userdata.userId
+				userId: app.globalData.userdata.userId
 			}).then(res => {
 				if (res.data.status == "0") {
 					this.$nextTick(() => {
@@ -290,7 +291,7 @@ export default {
 			})
 			// this.api.home.goodsRecommend({
 			// 	data: {
-			// 		userId: getApp().globalData.userdata.userId,
+			// 		userId: app.globalData.userdata.userId,
 			// 		lat: "28.22329671223958",
 			// 		lng: "112.8799093967014",
 			// 		type: 0,
@@ -310,7 +311,7 @@ export default {
 				success: res => {
 					this.api.home.goodsRecommend({
 						data: {
-							userId: getApp().globalData.userdata.userId,
+							userId: app.globalData.userdata.userId,
 							lat: ""+res.latitude,
 							lng: ""+res.longitude,
 							type: 0,

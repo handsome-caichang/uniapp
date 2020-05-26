@@ -16,9 +16,23 @@ export default {
 	created() {
 		// #ifdef APP-PLUS
 		plus.navigator.closeSplashscreen(); 
+		const _handlePush = function(message) {
+			console.log(message)
+		};
+		plus.push.addEventListener('click', function(message) {
+			// plus.nativeUI.toast('push click');
+			_handlePush(message);
+		});
+		plus.push.addEventListener('receive', function(message) {
+			// plus.nativeUI.toast('push receive');
+			_handlePush(message);
+		});
 		// #endif 
 	},
 	onLaunch: function() {
+		// #ifdef APP-PLUS
+		
+		// #endif
 		let userdata = uni.getStorageSync('userdata');
 		if (!userdata) {
 			uni.reLaunch({

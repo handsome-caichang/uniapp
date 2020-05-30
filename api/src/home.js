@@ -18,6 +18,12 @@ export default {
 			params
 		);
 	},
+	userBindCid(params ) {
+		return http.post(
+			'user/userBindCid',
+			params
+		);
+	},
 	collectRecycleBin(params ) {
 		return http.post(
 			'user/collectRecycleBin',

@@ -30,9 +30,6 @@ export default {
 		// #endif 
 	},
 	onLaunch: function() {
-		// #ifdef APP-PLUS
-		
-		// #endif
 		let userdata = uni.getStorageSync('userdata');
 		if (!userdata) {
 			uni.reLaunch({

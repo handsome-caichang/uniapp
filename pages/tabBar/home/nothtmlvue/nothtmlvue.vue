@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="nothtmlvue">
 		<view v-html="content"></view>
 	</view>
 </template>
@@ -12,7 +12,7 @@
 			}
 		},
 		onLoad(options) {
-			
+
 		},
 		created() {
 			console.log(uni.getStorageSync("_notContent"))
@@ -21,5 +21,15 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.nothtmlvue {
+		font-size: 24upx;
+		max-width: 100%;
+		overflow-x: hidden;
+		padding: 20upx;
+
+		img {
+			width: 100%;
+		}
+	}
 </style>

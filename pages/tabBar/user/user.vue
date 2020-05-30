@@ -75,7 +75,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="border-bottom c-item">
+			<!-- <view class="border-bottom c-item">
 				<view class="c-title">
 					财务管理  
 				</view>
@@ -85,7 +85,7 @@
 						<text class="text">{{item.name}}</text>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="c-item">
 				<view class="c-title">
 					工具 
@@ -154,19 +154,19 @@
 						url: '/pages/product/payorder/payordermanage'
 					}
 				],
-				list3: [
-					{
-						name: '财务报表',
-						icon: '/static/img/user/caiwu.png',
-						// url: '/pages/report/report'
-					},{
-						name: '余额宝',
-						icon: '/static/img/user/yuebao.png'
-					},{
-						name: '卡包',
-						icon: '/static/img/user/kabao.png'
-					}
-				],
+				// list3: [
+				// 	{
+				// 		name: '财务报表',
+				// 		icon: '/static/img/user/caiwu.png',
+				// 		// url: '/pages/report/report'
+				// 	},{
+				// 		name: '余额宝',
+				// 		icon: '/static/img/user/yuebao.png'
+				// 	},{
+				// 		name: '卡包',
+				// 		icon: '/static/img/user/kabao.png'
+				// 	}
+				// ],
 				list4: [
 					{
 						name: '计算器',

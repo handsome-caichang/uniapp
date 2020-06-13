@@ -9,12 +9,6 @@
 				<picker @change="bindPickerChange" :value="protypeindex" :range="goodtypelist" range-key="name">
 					<view class="uni-input">{{protype.value ? protype.value : protype.label }}</view>
 				</picker>
-				<!-- <view class="input-box" @tap="selectprotype"> -->
-					<!-- <view class="input" :class="protype.value?'':'place'">
-						{{protype.value ? protype.value : protype.label }}
-					</view>
-					<uni-icons class="icon" type="arrowdown"></uni-icons> -->
-				<!-- </view> -->
 			</view>
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">

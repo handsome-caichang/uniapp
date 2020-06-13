@@ -1,8 +1,16 @@
 <template>
 	<view class="tuijian-box">
-		<view style="width: 100%;text-align: center;height: 80upx;font-size: 48upx;color: #212121;" @tap="chooselocation">
+		<view style="width: 100%;text-align: center;height: 80upx;font-size: 40upx;color: #212121;display: flex;justify-content: space-around;align-items: center;"
+		 @tap="chooselocation">
 			<text style="float: left;">地区：</text>
 			<text> {{ region.label }}</text>
+		</view>
+		<view style="width: 100%;text-align: center;height: 80upx;font-size: 40upx;color: #212121;display: flex;justify-content: space-around;align-items: center;"
+		 @tap="chooselocation">
+			<text style="float: left;">货物类别：</text>
+			<picker @change="bindPickerChange" :value="protypeindex" :range="goodtypelist" range-key="name">
+				<view class="uni-input" style="font-size: 40upx;color: #212121;">{{protype.value ? protype.value : protype.label }}</view>
+			</picker>
 		</view>
 		<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="clickitem(item)">
 			<view class="uni-flex uni-row item-box">
@@ -40,6 +48,9 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
 	import provinceData from '@/components/mpvue-citypicker/city-data/province.js';
 	import cityData from '@/components/mpvue-citypicker/city-data/city.js';
@@ -60,8 +71,16 @@
 				productList: [],
 				novip: true,
 				utils,
-				userdata: {}
+				userdata: {},
+				protypeindex: 0,
+				protype: {
+					label: "请点击选择货物类别",
+					value: "",
+				},
 			}
+		},
+		computed: {
+			...mapState(["goodtypelist"])
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
@@ -116,6 +135,10 @@
 			});
 		},
 		methods: {
+			bindPickerChange(e) {
+				this.protypeindex = e.target.value;
+				this.protype.value = this.goodtypelist[this.protypeindex].name;
+			},
 			chooselocation() {
 				this.$refs.mpvueCityPicker.show();
 			},
@@ -157,6 +180,7 @@
 						lng: "" + res.longitude,
 						district: this.region.label,
 						cityCode: this.region.cityCode,
+						classify: this.protype.value,
 						type: 1,
 					}
 				}).then(res => {

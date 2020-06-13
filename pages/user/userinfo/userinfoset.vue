@@ -1,9 +1,5 @@
 <template>
 	<view class="uni-page-body">
-		<view class="uni-flex" @tap="selectAddress">
-			<text style="color: #575757;margin-right: 20upx;">地区选择</text>
-			<text style="color: #575757;margin-right: 20upx;">{{region.label}}</text>
-		</view>
 		<view class="user-content">
 			<view class="uni-flex">
 				<image :src="userdata.headImage" class="headerimg" ></image>

@@ -14,9 +14,18 @@
 		</view>
 		<view class="input-container">
 			<view class="point">
+				支付密码
+			</view>
+			<view class="input-box">
+				<input type="password" class="input" v-model="payPassword">
+			</view>
+		</view>
+		<view class="input-container">
+			<view class="point">
 				提现至
 			</view>
 		</view>
+
 		<radio-group @change="radioChange">
 			<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in items" :key="item.value">
 				<view style="display:flex;justify-content: center;">
@@ -29,7 +38,7 @@
 			</label>
 		</radio-group>
 
-		<view class="btnbox" :class="{'isded':!bondnum}" @tap="chongzhi" >
+		<view class="btnbox" :class="{'isded':!bondnum}" @tap="chongzhi">
 			确认提现
 		</view>
 
@@ -51,8 +60,7 @@
 				bondnum: '',
 				radiosvalue: '',
 				phone: '',
-				items: [
-					{
+				items: [{
 						value: 'BRA',
 						name: '微信',
 						icon: '/static/img/pay/weixin.png',
@@ -65,7 +73,8 @@
 					// }
 				],
 				current: 0,
-				CashMoney: 0
+				CashMoney: 0,
+				payPassword: '',
 			}
 		},
 		created() {
@@ -93,7 +102,8 @@
 					this.api.home.withdrawCash({
 						userId: getApp().globalData.userdata.userId,
 						money: this.bondnum,
-					}).then(res  => {
+						payPassword: this.payPassword,
+					}).then(res => {
 						uni.navigateTo({
 							url: '/pages/other/tixiansuccess'
 						})
@@ -114,7 +124,7 @@
 
 <style scoped lang="scss">
 	.uni-page-body {
-		
+
 		.input-container {
 			padding: 30upx 34upx;
 

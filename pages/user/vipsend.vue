@@ -3,7 +3,7 @@
 
 		<view class="header-box">
 			<view class="uni-flex">
-				<image  :src="userdata.headImage" class="img"></image>
+				<image :src="userdata.headImage" class="img"></image>
 				<view class="name-box">
 					<text class="name">{{userdata.nickName}}</text>
 					<text class="vip" v-if="userdata.isVip == 1 ">{{userdata.vipLevel == 0 ? '黄金' : (userdata.vipLevel == 1 ? '钻石':'')}}</text>
@@ -18,7 +18,7 @@
 				VIP
 			</view>
 		</view>
-		
+
 		<view class="vip-content">
 			<view class="typelist">
 				<view class="item" v-for="(item,index) in viplist" :class="{'active': index == currentindex}" @tap="changevip(index)">
@@ -52,13 +52,13 @@
 				</view>
 			</view>
 		</view>
-	
-	
+
+
 		<view class="uni-list" v-if="isandroid">
-			<radio-group  @change="radioChange">
+			<radio-group @change="radioChange">
 				<label class="uni-list-cell uni-list-cell-pd uni-list-item " v-for="(item, index) in paylists" :key="item.value">
 					<view style="display:flex;justify-content: center;">
-						<image  mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
+						<image mode="aspectFit" style="width: 48upx;height: 48upx;margin-right: 20upx;" :src="item.icon"></image>
 						<text>{{item.name}}</text>
 					</view>
 					<view>
@@ -67,7 +67,7 @@
 				</label>
 			</radio-group>
 		</view>
-		
+
 		<view class="btnbox">
 			<view class="pri-box border-top">
 				<view class="sun">
@@ -79,7 +79,7 @@
 				确认支付
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 <script>
@@ -87,7 +87,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
-	var iapChannel,neigoulist;
+	var iapChannel, neigoulist;
 	export default {
 		components: {
 			uniList,
@@ -99,8 +99,7 @@
 			return {
 				userdata: {},
 				price: '',
-				items: [
-					{
+				items: [{
 						value: 'USA',
 						name: '余额支付',
 						icon: '/static/img/pay/yuebao.png',
@@ -111,15 +110,25 @@
 						icon: '/static/img/pay/weixin.png',
 					},
 				],
-				playlist: [
-					{
-						value: 'USA',
-						name: 'Apple pay',
-						icon: '/static/img/pay/applelogo.png',
-					},
-				],
+				playlist: [{
+					value: 'USA',
+					name: 'Apple pay',
+					icon: '/static/img/pay/applelogo.png',
+				}, ],
 				paylists: [],
-				viplist: [],
+				viplist: [{
+					"description": "开通黄金VIP功能可以发布5种求购信息，平台推荐3吨及以下货物等功能",
+					"price": 268,
+					"pricelocal": "zh_CN@currency=CNY",
+					"productid": "huangjinVIPs",
+					"name": "黄金"
+				}, {
+					"description": "开通钻石VIP功能可以发布5种求购信息，平台推荐3吨及以下货物等功能",
+					"price": 298,
+					"pricelocal": "zh_CN@currency=CNY",
+					"productid": "zuanshiVIPs",
+					"name": "钻石"
+				}],
 				chuildlist: [],
 				currentindex: 0,
 				childindex: 0,
@@ -127,73 +136,53 @@
 				isandroid: false,
 			}
 		},
-		computed: {
-		},
+		computed: {},
 		created() {
-			if (plus.os.name == 'Android') {
-				 this.isandroid = true;
-				 this.paylists = this.items;
-			}else {
-				this.paylists = this.playlist;
-				 this.isandroid = false;
-			}
 			this.userdata = getApp().globalData.userdata;
-			this.api.home.getMainVipList().then(res => {
-				this.viplist = res.data;
-				this.changevip(this.currentindex);
-			})
+			// if (plus && plus.os.name == 'iOS') {
+			// 	this.paylists = this.playlist;
+			// 	this.isandroid = false;
+			// 	this.changesuk(0);
+			// } else {
+				this.isandroid = true;
+				this.paylists = this.items;
+				this.api.home.getMainVipList().then(res => {
+					console.log(res);
+					this.viplist = res.data;
+					this.changevip(this.currentindex);
+				})
+			// }
 		},
 		onLoad() {
-				  // } else if (plus.os.name == 'iOS') {  
-			var IAPOrders = ['zuanshiVIPs', 'huangjinVIPs'];  
-			var _self = this;
-			// var IAPOrders = ['io.dcloud.payTest1', 'io.dcloud.payTest2'];
-			// 获取支付通道  
-			if (plus.os.name == 'iOS') {
-				plus.payment.getChannels(function(channels) {  
-					channels.forEach(item => {
-						if (item.id == 'appleiap'){ 
-							iapChannel = item;
-							item.requestOrder(['zuanshiVIPs', 'huangjinVIPs'], function(event) {
-								console.log(event);
-								neigoulist = event;
-								_self.changesuk(0);
-								// for (var index in event) {   
-								// 	var OrderItem = event[index];  
-								// 	console.log(OrderItem);
-								// 	console.log("Title:" + OrderItem.title + "Price:" + OrderItem.price + "Description:" + OrderItem.description + "ProductID:" + OrderItem.productid);  
-								// }  
-							}, function(errormsg) {  
-								console.log(errormsg)
-								console.log("11111：" + errormsg.message);  
-							});  
-						}
-					})
-				}, function(e) {  
-					console.log("2222222：" + e.message);  
-				});  
-			}
-			// document.addEventListener('plusready', plusReady, false); //uni-app不需要此代码  
+			// // 获取支付通道  
+			// if (plus && plus.os.name == 'iOS') {
+			// 	plus.payment.getChannels(function(channels) {
+			// 		channels.forEach(item => {
+			// 			if (item.id == 'appleiap') {
+			// 				iapChannel = item;
+			// 			}
+			// 		})
+			// 	});
+			// }
 		},
 		methods: {
 			subvip() {
 				if (this.isandroid) {
 					this.sub()
-				}else {
-					console.log(neigoulist);
+				} else {
 					uni.showLoading({
 						title: '支付中'
 					});
-					this.pay(neigoulist[this.currentindex].productid)
+					this.pay(this.viplist[this.currentindex].productid)
 				}
 			},
 			pay(id) {
 				var _that = this;
-				plus.payment.request(iapChannel, {  
-					"productid": id,  
-					"username": getApp().globalData.userdata.username,  
+				plus.payment.request(iapChannel, {
+					"productid": id,
+					"username": getApp().globalData.userdata.username,
 					quantity: 1,
-				}, function(result) { 
+				}, function(result) {
 					console.log(result)
 					uni.hideLoading();
 					plus.nativeUI.alert('支付成功', null, null, '关闭');
@@ -204,11 +193,11 @@
 						plus.nativeUI.alert('vip开通成功', null, null, '关闭');
 						uni.$emit('_updatehome');
 					})
-				}, function(e) {  
+				}, function(e) {
 					console.log(e)
 					uni.hideLoading();
-					plus.nativeUI.alert("支付失败", null, null, '关闭');  
-				});  
+					plus.nativeUI.alert("支付失败", null, null, '关闭');
+				});
 			},
 			radioChange(evt) {
 				for (let i = 0; i < this.items.length; i++) {
@@ -221,13 +210,13 @@
 			changesuk(childindex) {
 				this.childindex = childindex;
 				if (this.isandroid) {
-					 this.price = this.chuildlist[this.childindex].money / 100;
-				}else {
+					this.price = this.chuildlist[this.childindex].money / 100;
+				} else {
 					if (this.currentindex == 0) {
-						this.price = neigoulist[this.currentindex].price;
-					}else {
-						this.price = neigoulist[this.currentindex].price;
-					} 
+						this.price = this.viplist[this.currentindex].price;
+					} else {
+						this.price = this.viplist[this.currentindex].price;
+					}
 				}
 			},
 			sub() {
@@ -250,11 +239,11 @@
 								showCancel: false,
 							});
 							uni.$emit('_updatehome');
-						}else {
+						} else {
 							uni.requestPayment({
 								provider: 'wxpay',
 								orderInfo: orderString, //微信、支付宝订单数据
-								success: function (res) {
+								success: function(res) {
 									uni.$emit('_updatehome');
 									uni.showModal({
 										title: "提示",
@@ -262,12 +251,12 @@
 										showCancel: false,
 									});
 								},
-								fail: function (err) {
-								   uni.showModal({
-									title: "提示",
-									content: '支付失败',
-									showCancel: false,
-								   });
+								fail: function(err) {
+									uni.showModal({
+										title: "提示",
+										content: '支付失败',
+										showCancel: false,
+									});
 								}
 							});
 						}
@@ -281,6 +270,7 @@
 						mainVipId: this.viplist[this.currentindex].mainVipId
 					}
 				}).then(res => {
+					console.log(res);
 					this.chuildlist = res.data;
 					this.changesuk(0);
 				})
@@ -292,6 +282,7 @@
 <style scoped lang="scss">
 	.vipsend {
 		padding-bottom: 98upx;
+
 		.btnbox {
 			position: fixed;
 			bottom: 0;
@@ -300,38 +291,44 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+
 			.pri-box {
 				flex: 1;
 				padding-left: 50upx;
+
 				.sun {
 					height: 56upx;
 					font-size: 34upx;
 					font-weight: 500;
+
 					.price {
 						color: #E5AD0D;
 					}
 				}
+
 				.point {
 					height: 40upx;
 					color: #767676;
 					font-size: 24upx;
 				}
 			}
+
 			.rightbtn {
-				width:244upx;
-				height:96upx;
+				width: 244upx;
+				height: 96upx;
 				line-height: 96upx;
-				background:linear-gradient(180deg,rgba(255,204,60,1) 0%,rgba(254,229,172,1) 100%);
+				background: linear-gradient(180deg, rgba(255, 204, 60, 1) 0%, rgba(254, 229, 172, 1) 100%);
 				text-align: center;
 				color: #83551F;
 				font-size: 28upx;
 			}
 		}
-		
+
 		.vip-content {
 			.list-sku {
 				display: flex;
 				padding: 0upx 0upx 60upx 80upx;
+
 				.sku-item {
 					margin-right: 20upx;
 					color: #3D3D3D;
@@ -340,42 +337,50 @@
 					font-size: 28upx;
 					text-align: center;
 					border-radius: 20upx;
+
 					&.active {
 						background-color: #FFF2D3;
 					}
+
 					&.did {
 						border: 2upx solid rgba($color: #000000, $alpha: 0);
 						background-color: #AAAAAA;
 					}
 				}
 			}
+
 			.listhuanj {
 				padding: 27upx 0upx 30upx 80upx;
 				display: flex;
 				flex-wrap: wrap;
-				.hjitem{
+
+				.hjitem {
 					color: #FEC932;
 					font-size: 28upx;
 					margin-right: 20upx;
 				}
 			}
+
 			.typelist {
 				margin-top: 47upx;
 				padding: 0 80upx;
 				display: flex;
+
 				.item {
 					padding: 24upx;
 					margin-right: 60upx;
-					border:2upx solid #FEC932;
-					border-radius:12upx;
+					border: 2upx solid #FEC932;
+					border-radius: 12upx;
 					color: #3D3D3D;
 					font-size: 28upx;
+
 					&.active {
 						background-color: #FFF2D3;
 					}
 				}
 			}
 		}
+
 		.header-box {
 			background: linear-gradient(128deg, rgba(255, 204, 60, 1) 0%, rgba(254, 229, 172, 1) 100%);
 			padding: 40upx 20upx;
@@ -391,7 +396,7 @@
 				font-size: 200upx;
 				line-height: 1;
 				text-align: center;
-				color:rgba(254,254,254,0.37);
+				color: rgba(254, 254, 254, 0.37);
 			}
 
 			.img {
@@ -402,6 +407,7 @@
 
 			.vip-point {
 				margin-top: 20upx;
+
 				.vip-text {
 					color: #fff;
 					font-size: 22upx;
@@ -412,12 +418,14 @@
 				color: #fff;
 				width: 600upx;
 				margin-left: 10upx;
+
 				.name {
 					font-size: 32upx;
 					font-weight: 500;
 					text-align: left;
 					display: block;
 				}
+
 				.vip {
 					font-size: 38upx;
 					text-align: center;

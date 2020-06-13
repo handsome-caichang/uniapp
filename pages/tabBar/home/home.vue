@@ -65,7 +65,7 @@
 				<swiper class="swiper" :autoplay="true" :vertical="true" :circular="true" :display-multiple-items="1" :interval="3000"
 				 :duration="1000">
 					<block v-for="(item, index) in gonkaolist" :key="index">
-						<swiper-item>
+						<swiper-item @tap="tonot(item)">
 							<view class="swiper-item uni-ellipsis">{{ item.content }}</view>
 						</swiper-item>
 					</block>

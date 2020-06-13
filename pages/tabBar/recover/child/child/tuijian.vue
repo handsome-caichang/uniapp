@@ -1,7 +1,8 @@
 <template>
 	<view class="tuijian-box">
-		<view>
-			
+		<view style="width: 100%;text-align: center;height: 80upx;font-size: 48upx;color: #212121;" @tap="chooselocation">
+			<text style="float: left;">地区：</text>
+			<text> {{ region.label }}</text>
 		</view>
 		<view class="example-box" v-for="(item,index) in productList" :key="index" @tap="clickitem(item)">
 			<view class="uni-flex uni-row item-box">
@@ -34,14 +35,28 @@
 			<icon type="warn" size="80" color="#F8B551"></icon>
 			<view class="text">暂无数据</view>
 		</view>
+		<mpvue-city-picker ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue" @onConfirm="onConfirm"></mpvue-city-picker>
 	</view>
 </template>
 
 <script>
+	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
+	import provinceData from '@/components/mpvue-citypicker/city-data/province.js';
+	import cityData from '@/components/mpvue-citypicker/city-data/city.js';
+	import areaData from '@/components/mpvue-citypicker/city-data/area.js';
 	import utils from '@/components/shoyu-date/utils.filter.js';
 	export default {
+		components: {
+			mpvueCityPicker,
+		},
 		data() {
 			return {
+				cityPickerValue: [0, 0, 1],
+				region: {
+					label: "请点击选择地区",
+					value: [],
+					cityCode: ""
+				},
 				productList: [],
 				novip: true,
 				utils,
@@ -53,15 +68,70 @@
 			if (this.userdata.isVip == 1) {
 				this.novip = false;
 			}
-			this.getdata();
+			uni.getLocation({
+				geocode: true,
+				success: res => {
+					console.log(res);
+					var provinceindex = 0,
+						cityindex = 0,
+						districtindex = 0;
+					provinceData.forEach((item, index) => {
+						if (item.label == res.address.province) {
+							provinceindex = index;
+						}
+					})
+					cityData.forEach((item, index) => {
+						if (index == provinceindex) {
+							item.forEach((it, y) => {
+								if (it.label == res.address.city) {
+									cityindex = y;
+								}
+							})
+						}
+					})
+					areaData.forEach((item, index) => {
+						if (index == provinceindex) {
+							item.forEach((it, y) => {
+								if (cityindex == y) {
+									it.forEach((area, areaindex) => {
+										if (area.label == res.address.district) {
+											districtindex = areaindex;
+											this.region = {
+												label: area.label,
+												value: [provinceindex, cityindex, areaindex],
+												cityCode: area.value
+											}
+											this.cityPickerValue = [provinceindex, cityindex, areaindex];
+										}
+									})
+								}
+							})
+						}
+					})
+					this.getdata();
+				},
+				fail: err => {
+					this.getdata();
+				}
+			});
 		},
 		methods: {
+			chooselocation() {
+				this.$refs.mpvueCityPicker.show();
+			},
+			onConfirm(e) {
+				this.region = e;
+				this.region.city = e.label.split('-');
+				this.region.label = this.region.city[this.region.city.length - 1]
+				this.cityPickerValue = e.value;
+				this.getdata();
+			},
 			clickitem(item) {
 				if (this.novip) {
 					uni.showModal({
 						title: "提示",
 						content: '该操作需要开通VIP，请先前往我的->废品帮VIP，开通VIP服务',
-						success: function (res) {
+						success: function(res) {
 							if (res.confirm) {
 								console.log('用户点击确定');
 								uni.navigateTo({
@@ -85,6 +155,8 @@
 						userId: getApp().globalData.userdata.userId,
 						lat: "" + res.latitude,
 						lng: "" + res.longitude,
+						district: this.region.label,
+						cityCode: this.region.cityCode,
 						type: 1,
 					}
 				}).then(res => {

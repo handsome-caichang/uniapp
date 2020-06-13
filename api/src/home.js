@@ -6,6 +6,12 @@ export default {
 	// 			params: params
 	// 		});
 	// },
+	modifyPayPassword(params) {
+		return http.post(
+			'user/modifyPayPassword',
+			params
+		);
+	},
 	getCollectRecycleBinList(params) {
 		return http.get(
 			'user/getCollectRecycleBinList',
@@ -18,13 +24,13 @@ export default {
 			params
 		);
 	},
-	userBindCid(params ) {
+	userBindCid(params) {
 		return http.post(
 			'user/userBindCid',
 			params
 		);
 	},
-	collectRecycleBin(params ) {
+	collectRecycleBin(params) {
 		return http.post(
 			'user/collectRecycleBin',
 			params
@@ -60,7 +66,7 @@ export default {
 			params
 		);
 	},
-	recoverygetNewReceivedMatchList(params ) {
+	recoverygetNewReceivedMatchList(params) {
 		return http.get(
 			'recovery/getNewReceivedMatchList',
 			params
@@ -180,19 +186,19 @@ export default {
 			params
 		);
 	},
-	searchPriceByArea(params){
+	searchPriceByArea(params) {
 		return http.get(
 			'goods/searchPriceByArea',
 			params
 		);
 	},
-	realseRecovery(params){
+	realseRecovery(params) {
 		return http.post(
 			'recovery/realseRecovery',
 			params
 		);
 	},
-	realseGoods(params){
+	realseGoods(params) {
 		return http.post(
 			'realse/realseGoods',
 			params

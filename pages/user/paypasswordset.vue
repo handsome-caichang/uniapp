@@ -41,17 +41,11 @@
 		},
 		methods: {
 			fabu() {
-				if (this.newpassword !== this.conpassword) {
-					uni.showModal({
-						title: "提示",
-						content: '两次密码不一致',
-						showCancel: false
-					});
-				} else {
-					this.api.home.setPayPassword({
+				if (this.oldpassword) {
+					this.api.home.modifyPayPassword({
 						userId: getApp().globalData.userdata.userId,
 						oldPassword: this.oldpassword,
-						payPassword: this.newpassword
+						newPassword: this.newpassword
 					}).then(res => {
 						uni.showModal({
 							title: "提示",
@@ -59,6 +53,25 @@
 							showCancel: false
 						});
 					})
+				} else {
+					if (this.newpassword !== this.conpassword) {
+						uni.showModal({
+							title: "提示",
+							content: '两次密码不一致',
+							showCancel: false
+						});
+					} else {
+						this.api.home.setPayPassword({
+							userId: getApp().globalData.userdata.userId,
+							payPassword: this.newpassword
+						}).then(res => {
+							uni.showModal({
+								title: "提示",
+								content: '修改成功',
+								showCancel: false
+							});
+						})
+					}
 				}
 			}
 		}
@@ -69,12 +82,13 @@
 	page {
 		background: $page-color-base;
 	}
-	
+
 	.fo-box {
 		display: flex;
 		justify-content: center;
 		margin-top: 20upx;
 		margin-bottom: 20upx;
+
 		.primary-btn {
 			width: 326upx;
 			height: 98upx;
@@ -86,6 +100,7 @@
 			font-size: 38upx;
 		}
 	}
+
 	.list-cell {
 		display: flex;
 		align-items: center;
@@ -94,21 +109,24 @@
 		background: #fff;
 		justify-content: space-between;
 	}
+
 	.cell-more {
 		flex: 1;
-		font-size:$font-lg;
+		font-size: $font-lg;
 		color: #575757;
-		margin-left:10upx;
+		margin-left: 10upx;
 	}
+
 	.uni-input {
 		display: inline-block;
 		width: 400upx;
 		border: 2upx solid $border-color-base;
 	}
-	.cell-tit{
+
+	.cell-tit {
 		flex: 1;
 		font-size: $font-base + 2upx;
 		color: $font-color-dark;
-		margin-right:10upx;
+		margin-right: 10upx;
 	}
 </style>

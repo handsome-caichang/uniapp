@@ -4,42 +4,45 @@
 			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/headimg.png" title="头像" @tap="navTo('/pages/user/userinfo/headimgset')">
 				<image :src="userdata.headImage" style="width: 76upx;height: 76upx;border-radius: 50%;margin-right: 20upx;"></image>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="昵称" >
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/shiming.png" title="昵称">
 				<view class="uni-flex">
-					<input class="uni-input" style="text-align: right;width:400upx" @blur="saveuser" v-model="userdata.nickName" maxlength="10" type="text" placeholder="用户昵称" />
+					<input class="uni-input" style="text-align: right;width:400upx" @blur="saveuser" v-model="userdata.nickName"
+					 maxlength="10" type="text" placeholder="用户昵称" />
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/shiming.png" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')" >
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/shiming.png" title="实名认证" @tap="navTo('/pages/user/userinfo/userinfoset')">
 				<view class="uni-flex">
 					<!-- <text style="color: #575757;margin-right: 20upx;">张三</text> -->
 					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 1">审核中</text>
-					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 2" >已实名</text>
-					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="userdata.isReal == 3" >认证失败</text>
-					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="!userdata.isReal">未实名</text> 
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;" v-if="userdata.isReal == 2">已实名</text>
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="userdata.isReal == 3">认证失败</text>
+					<text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;" v-if="!userdata.isReal">未实名</text>
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/phone.png" title="绑定手机号" @tap="navTo('/pages/user/userinfo/setmobilephone')">
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/phone.png" title="绑定手机号" @tap="navTo('/pages/user/userinfo/setmobilephone')">
 				<text style="color: #575757;margin-right: 20upx;">{{userdata.mobilePhone}}</text>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/diqu.png" title="地区" @tap="setaddress" >
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/diqu.png" title="地区" @tap="setaddress">
 				<view class="uni-flex">
 					<text style="color: #575757;margin-right: 20upx;">{{region.label}}</text>
 					<!-- <text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #18C02C;">已实名</text> -->
 					<!-- <text style="padding: 0 20rpx;border-radius: 40upx;color: #fff;background-color: #666;">未实名</text> -->
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="从业年限" >
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/nianxian.png" title="从业年限">
 				<view class="uni-flex">
-					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.years" maxlength="2" type="number" placeholder="请填写从业年限" />
+					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.years" maxlength="2" type="number"
+					 placeholder="请填写从业年限" />
 				</view>
 			</uni-list-item>
-			<uni-list-item :show-extra-icon="true"  thumb="/static/img/user/nianxian.png" title="车牌号" >
+			<uni-list-item :show-extra-icon="true" thumb="/static/img/user/nianxian.png" title="车牌号">
 				<view class="uni-flex">
-					<input class="uni-input" style="text-align: right;" @blur="saveuser"  v-model="userdata.carCard" maxlength="10" type="text" placeholder="请填写车牌号" />
+					<input class="uni-input" style="text-align: right;" @blur="saveuser" v-model="userdata.carCard" maxlength="10"
+					 type="text" placeholder="请填写车牌号" />
 				</view>
 			</uni-list-item>
 			<!-- <uni-list-item :show-extra-icon="true"  thumb="/static/img/user/baozhenjin.png" title="缴纳保证金" @tap="navTo('/pages/user/userinfo/userbond')" /> -->
-			<uni-list-item :show-extra-icon="true" :showArrow="false"  thumb="/static/img/user/gengduo.png" title="更多展示" />
+			<uni-list-item :show-extra-icon="true" :showArrow="false" thumb="/static/img/user/gengduo.png" title="更多展示" />
 		</uni-list>
 		<view class="img-box">
 
@@ -50,7 +53,7 @@
 							<view class="uni-uploader__files">
 								<block v-for="(image,index) in imageList" :key="index">
 									<view class="uni-uploader__file">
-										<uni-icons type="close" size="20" color="#E7211A" class="sunui-img-removeicon clear-icon" @tap="delimg(index)" ></uni-icons>
+										<uni-icons type="close" size="20" color="#E7211A" class="sunui-img-removeicon clear-icon" @tap="delimg(index)"></uni-icons>
 										<image class="uni-uploader__img" :src="image" :data-src="image" @tap="previewImage"></image>
 									</view>
 								</block>
@@ -64,9 +67,9 @@
 			</view>
 
 		</view>
-		
+
 		<mpvue-city-picker :themeColor="themeColor" ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue" @onConfirm="onConfirm"></mpvue-city-picker>
-		 
+
 	</view>
 </template>
 <script>
@@ -122,14 +125,14 @@
 		},
 		created() {
 			this._updateuser();
-			uni.$on('_updatehome',function(data){
+			uni.$on('_updatehome', function(data) {
 				this._updateuser();
 			})
 		},
 		methods: {
 			_updateuser() {
 				this.userdata = getApp().globalData.userdata;
-				if(this.userdata.province) {
+				if (this.userdata.province) {
 					this.region.label = this.userdata.province + '-' + this.userdata.city + "-" + this.userdata.district;
 				}
 				this.imageList = this.userdata.images;
@@ -139,19 +142,19 @@
 				this.userdata.images = this.imageList;
 				this.saveuser();
 			},
- 			setaddress() {
+			setaddress() {
 				this.$refs.mpvueCityPicker.show()
 			},
 			saveuser() {
 				this.api.home.modifyUser({
-					headImage:this.userdata.headImage,
-					mobilePhone:this.userdata.mobilePhone,
+					headImage: this.userdata.headImage,
+					mobilePhone: this.userdata.mobilePhone,
 					nickName: this.userdata.nickName,
 					years: this.userdata.years,
 					images: this.userdata.images,
-					province:this.userdata.province,
-					city:this.userdata.city,
-					district:this.userdata.district,
+					province: this.userdata.province,
+					city: this.userdata.city,
+					district: this.userdata.district,
 					userId: this.userdata.userId,
 					carCard: this.userdata.carCard,
 				}).then(res => {
@@ -165,12 +168,12 @@
 				this.api.home.modifyUser({
 					headImage: this.userdata.headImage,
 					mobilePhone: this.userdata.mobilePhone,
-					years:  this.userdata.year,
+					years: this.userdata.year,
 					images: this.userdata.images,
 					nickName: this.userdata.nickName,
 					province: list[0],
 					city: list[1],
-					district:  list[2],
+					district: list[2],
 					userId: this.userdata.userId,
 					carCard: this.userdata.carCard,
 				}).then(res => {
@@ -248,14 +251,14 @@
 					sizeType: sizeType[this.sizeTypeIndex],
 					count: this.imageList.length + this.count[this.countIndex] > 9 ? 9 - this.imageList.length : this.count[this.countIndex],
 					success: (res) => {
-						
+
 						// this.imageList = this.imageList.concat(res.tempFilePaths);
 						var tempFilePaths = res.tempFilePaths;
 						//支持多图上传
 						for (var i = 0; i < res.tempFilePaths.length; i++) {
 							//显示消息提示框
 							uni.showLoading({
-							  mask: true
+								mask: true
 							})
 							//上传图片
 							//图片路径可自行修改
@@ -265,11 +268,11 @@
 									this.api.home.modifyUser({
 										headImage: this.headImage,
 										mobilePhone: this.userdata.mobilePhone,
-										years:  this.userdata.years,
+										years: this.userdata.years,
 										images: this.imageList,
-										province:this.userdata.province,
-										city:this.userdata.city,
-										district:this.userdata.district,
+										province: this.userdata.province,
+										city: this.userdata.city,
+										district: this.userdata.district,
 										userId: this.userdata.userId,
 										nickName: this.userdata.nickName,
 									}).then(res => {
@@ -314,6 +317,7 @@
 		.uni-list:after {
 			height: 0;
 		}
+
 		.uni-uploader__input-box,
 		.uni-uploader__file,
 		.uni-uploader__img {

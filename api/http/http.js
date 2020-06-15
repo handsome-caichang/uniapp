@@ -3,8 +3,8 @@ import Request from './request.js'
 const http = new Request()
 
 http.setConfig((config) => { /* 设置全局配置 */
-	// config.baseUrl = 'http://47.111.254.105:9000/api/' /* 根域名不同 */
-	config.baseUrl = 'http://47.111.254.105:8099/api/' /* 根域名不同 */
+	config.baseUrl = 'http://47.111.254.105:9000/api/' /* 根域名不同 */
+	// config.baseUrl = 'http://47.111.254.105:8099/api/' /* 根域名不同 */
 	config.header = {
 		...config.header,
 		// 'content-type': "application/json;charset=utf-8",

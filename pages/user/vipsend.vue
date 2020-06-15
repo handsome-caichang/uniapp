@@ -139,11 +139,11 @@
 		computed: {},
 		created() {
 			this.userdata = getApp().globalData.userdata;
-			// if (plus && plus.os.name == 'iOS') {
-			// 	this.paylists = this.playlist;
-			// 	this.isandroid = false;
-			// 	this.changesuk(0);
-			// } else {
+			if (plus && plus.os.name == 'iOS') {
+				this.paylists = this.playlist;
+				this.isandroid = false;
+				this.changesuk(0);
+			} else {
 				this.isandroid = true;
 				this.paylists = this.items;
 				this.api.home.getMainVipList().then(res => {
@@ -151,19 +151,19 @@
 					this.viplist = res.data;
 					this.changevip(this.currentindex);
 				})
-			// }
+			}
 		},
 		onLoad() {
-			// // 获取支付通道  
-			// if (plus && plus.os.name == 'iOS') {
-			// 	plus.payment.getChannels(function(channels) {
-			// 		channels.forEach(item => {
-			// 			if (item.id == 'appleiap') {
-			// 				iapChannel = item;
-			// 			}
-			// 		})
-			// 	});
-			// }
+			// 获取支付通道  
+			if (plus && plus.os.name == 'iOS') {
+				plus.payment.getChannels(function(channels) {
+					channels.forEach(item => {
+						if (item.id == 'appleiap') {
+							iapChannel = item;
+						}
+					})
+				});
+			}
 		},
 		methods: {
 			subvip() {

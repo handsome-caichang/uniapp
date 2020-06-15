@@ -21,7 +21,7 @@
 
 		<view class="vip-content">
 			<view class="typelist">
-				<view class="item" v-for="(item,index) in viplist" :class="{'active': index == currentindex}" @tap="changevip(index)">
+				<view class="item" v-for="(item,index) in viplist" :key="index" :class="{'active': index == currentindex}" @tap="changevip(index)">
 					{{item.name}}
 				</view>
 				<!-- <view class="item" :class="{'active': isactive}" @tap="changevip(true)">
@@ -47,7 +47,7 @@
 				</view>
 			</view>
 			<view class="list-sku">
-				<view class="sku-item" v-for="(item,index) in chuildlist" :class="{'active': childindex==index}" @tap="changesuk(index)">
+				<view class="sku-item" v-for="(item,index) in chuildlist" :key="index" :class="{'active': childindex==index}" @tap="changesuk(index)">
 					{{item.time}}个月
 				</view>
 			</view>
@@ -178,6 +178,8 @@
 			},
 			pay(id) {
 				var _that = this;
+				console.log(iapChannel);
+				console.log(id);
 				plus.payment.request(iapChannel, {
 					"productid": id,
 					"username": getApp().globalData.userdata.username,
@@ -264,16 +266,20 @@
 				})
 			},
 			changevip(index) {
+
 				this.currentindex = index;
-				this.api.home.getSubVipList({
-					data: {
-						mainVipId: this.viplist[this.currentindex].mainVipId
-					}
-				}).then(res => {
-					console.log(res);
-					this.chuildlist = res.data;
-					this.changesuk(0);
-				})
+				if (this.isandroid) {
+
+					this.api.home.getSubVipList({
+						data: {
+							mainVipId: this.viplist[this.currentindex].mainVipId
+						}
+					}).then(res => {
+						console.log(res);
+						this.chuildlist = res.data;
+						this.changesuk(0);
+					})
+				}
 			},
 		}
 	}

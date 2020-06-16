@@ -20,16 +20,15 @@
 		</view>
 
 		<view class="vip-content">
-			<view class="typelist">
-				<view class="item" v-for="(item,index) in viplist" :key="index" :class="{'active': index == currentindex}" @tap="changevip(index)">
+			<view class="typelist" v-show="isandroid">
+				<view class="item" v-for="(item,index) in viplist" :class="{'active': index == currentindex}" @tap="changevip(index)">
 					{{item.name}}
 				</view>
-				<!-- <view class="item" :class="{'active': isactive}" @tap="changevip(true)">
-					黄金VIP
+			</view>
+			<view class="typelist" v-show="!isandroid">
+				<view class="item" v-for="(item,index) in neigoulist" :class="{'active': index == currentindex}" @tap="changevip(index)">
+					{{item.title}}
 				</view>
-				<view class="item" :class="{'active': !isactive}" @tap="changevip(false)">
-					钻石VIP
-				</view> -->
 			</view>
 			<view class="listcon">
 				<view class="listhuanj" v-if="currentindex==0">
@@ -47,7 +46,7 @@
 				</view>
 			</view>
 			<view class="list-sku">
-				<view class="sku-item" v-for="(item,index) in chuildlist" :key="index" :class="{'active': childindex==index}" @tap="changesuk(index)">
+				<view class="sku-item" v-for="(item,index) in chuildlist" :class="{'active': childindex==index}" @tap="changesuk(index)">
 					{{item.time}}个月
 				</view>
 			</view>
@@ -87,7 +86,7 @@
 	import uniIcons from "@/components/uni-icons/uni-icons.vue"
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
-	var iapChannel, neigoulist;
+	var iapChannel;
 	export default {
 		components: {
 			uniList,
@@ -97,6 +96,7 @@
 		},
 		data() {
 			return {
+				neigoulist: [],
 				userdata: {},
 				price: '',
 				items: [{
@@ -116,19 +116,7 @@
 					icon: '/static/img/pay/applelogo.png',
 				}, ],
 				paylists: [],
-				viplist: [{
-					"description": "开通黄金VIP功能可以发布5种求购信息，平台推荐3吨及以下货物等功能",
-					"price": 268,
-					"pricelocal": "zh_CN@currency=CNY",
-					"productid": "huangjinVIPs",
-					"name": "黄金"
-				}, {
-					"description": "开通钻石VIP功能可以发布5种求购信息，平台推荐3吨及以下货物等功能",
-					"price": 298,
-					"pricelocal": "zh_CN@currency=CNY",
-					"productid": "zuanshiVIPs",
-					"name": "钻石"
-				}],
+				viplist: [],
 				chuildlist: [],
 				currentindex: 0,
 				childindex: 0,
@@ -139,31 +127,49 @@
 		computed: {},
 		created() {
 			this.userdata = getApp().globalData.userdata;
-			if (plus && plus.os.name == 'iOS') {
-				this.paylists = this.playlist;
-				this.isandroid = false;
-				this.changesuk(0);
-			} else {
+			if (plus.os.name == 'Android') {
 				this.isandroid = true;
 				this.paylists = this.items;
 				this.api.home.getMainVipList().then(res => {
-					console.log(res);
 					this.viplist = res.data;
 					this.changevip(this.currentindex);
 				})
+			} else {
+				this.paylists = this.playlist;
+				this.isandroid = false;
 			}
 		},
 		onLoad() {
+			// } else if (plus.os.name == 'iOS') {  
+			var IAPOrders = ['zuanshiVIPs', 'huangjinVIPs'];
+			var _self = this;
+			// var IAPOrders = ['io.dcloud.payTest1', 'io.dcloud.payTest2'];
 			// 获取支付通道  
-			if (plus && plus.os.name == 'iOS') {
+			if (plus.os.name == 'iOS') {
 				plus.payment.getChannels(function(channels) {
 					channels.forEach(item => {
 						if (item.id == 'appleiap') {
 							iapChannel = item;
+							item.requestOrder(['zuanshiVIPs', 'huangjinVIPs'], function(event) {
+								console.log(event);
+								_self.neigoulist = event;
+								_self.changesuk(0);
+								// for (var index in event) {   
+								// 	var OrderItem = event[index];  
+								// 	console.log(OrderItem);
+								// 	console.log("Title:" + OrderItem.title + "Price:" + OrderItem.price + "Description:" + OrderItem.description + "ProductID:" + OrderItem.productid);  
+								// }  
+							}, function(errormsg) {
+								console.log(errormsg)
+								console.log("11111：" + errormsg.message);
+							});
 						}
 					})
+				}, function(e) {
+					console.log("2222222：" + e.message);
 				});
 			}
+			// document.addEventListener('plusready', plusReady, false); //uni-app不需要此代码  
 		},
 		methods: {
 			subvip() {
@@ -173,13 +179,11 @@
 					uni.showLoading({
 						title: '支付中'
 					});
-					this.pay(this.viplist[this.currentindex].productid)
+					this.pay(this.neigoulist[this.currentindex].productid)
 				}
 			},
 			pay(id) {
 				var _that = this;
-				console.log(iapChannel);
-				console.log(id);
 				plus.payment.request(iapChannel, {
 					"productid": id,
 					"username": getApp().globalData.userdata.username,
@@ -215,9 +219,9 @@
 					this.price = this.chuildlist[this.childindex].money / 100;
 				} else {
 					if (this.currentindex == 0) {
-						this.price = this.viplist[this.currentindex].price;
+						this.price = this.neigoulist[this.currentindex].price;
 					} else {
-						this.price = this.viplist[this.currentindex].price;
+						this.price = this.neigoulist[this.currentindex].price;
 					}
 				}
 			},
@@ -266,7 +270,6 @@
 				})
 			},
 			changevip(index) {
-
 				this.currentindex = index;
 				if (this.isandroid) {
 
@@ -275,10 +278,11 @@
 							mainVipId: this.viplist[this.currentindex].mainVipId
 						}
 					}).then(res => {
-						console.log(res);
 						this.chuildlist = res.data;
 						this.changesuk(0);
 					})
+				} else {
+					this.changesuk(this.currentindex);
 				}
 			},
 		}

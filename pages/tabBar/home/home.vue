@@ -169,11 +169,12 @@
 			let _userclientid = uni.getStorageSync('_userclientid');
 			if (!_userclientid) {
 				_userclientid = plus.push.getClientInfo().clientid;
+				this.api.home.userBindCid({
+					userId: getApp().globalData.userdata.userId,
+					cid: _userclientid,
+				})
+				uni.setStorageSync('_userclientid', _userclientid);
 			}
-			this.api.home.userBindCid({
-				userId: getApp().globalData.userdata.userId,
-				cid: _userclientid,
-			})
 			this.doGetLocation();
 			var homethis = this;
 			uni.$on('_updatehome', function(data) {

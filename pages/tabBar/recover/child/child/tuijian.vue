@@ -138,6 +138,7 @@
 			bindPickerChange(e) {
 				this.protypeindex = e.target.value;
 				this.protype.value = this.goodtypelist[this.protypeindex].name;
+				this.getdata();
 			},
 			chooselocation() {
 				this.$refs.mpvueCityPicker.show();
@@ -176,11 +177,11 @@
 				this.api.home.goodsRecommend({
 					data: {
 						userId: getApp().globalData.userdata.userId,
-						lat: "" + res.latitude,
-						lng: "" + res.longitude,
+						lat: res.latitude,
+						lng: res.longitude,
 						district: this.region.label,
 						cityCode: this.region.cityCode,
-						classify: this.protype.value,
+						classifyName: this.protype.value,
 						type: 1,
 					}
 				}).then(res => {

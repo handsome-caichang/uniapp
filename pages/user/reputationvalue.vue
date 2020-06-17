@@ -3,27 +3,29 @@
 		<view class="header-box">
 			<image :src="userdata.headImage" class="img"></image>
 			<view class="uni-flex pinfen">
-				<uni-rate class="rate" :size="12" :value="2" />
-				<text class="list-succ" style="margin-left: 20upx;">3.15分</text>
+				<uni-rate class="rate" :size="12" :value="allNum" />
+				<text class="list-succ" style="margin-left: 20upx;">{{allNum}}分</text>
 			</view>
 		</view>
 		<uni-list>
 			<uni-list-item title="个人资料" :showArrow="false" :showBadge="true">
-				<text>1.5分 </text>
+				<text>{{xinyuzhi.realReputationValue }}分 </text>
 			</uni-list-item>
 			<uni-list-item title="从业年限" :showArrow="false" :showBadge="true">
-				<text>0.15分 </text>
+				<text>{{xinyuzhi.serviceReputationValue }}分 </text>
 			</uni-list-item>
 			<uni-list-item title="保证金" :showArrow="false" :showBadge="true">
-				<text>0分 </text>
+				<text>{{xinyuzhi.depostiReputationValue }}分</text>
 			</uni-list-item>
 			<uni-list-item title="服务综合评价" :showArrow="false" :showBadge="true">
-				<text>1.5分 </text>
+				<text>{{xinyuzhi.yearReputationValue }}分 </text>
 			</uni-list-item>
 		</uni-list>
 
 		<view class="uni-page-footer">
-			<view style="display: inline-block;" @tap="nto">评定方法</view><view style="display: inline-block;">    |    </view><view  style="display: inline-block;" @tap="dianhua">联系客服</view>
+			<view style="display: inline-block;" @tap="nto">评定方法</view>
+			<view style="display: inline-block;"> | </view>
+			<view style="display: inline-block;" @tap="dianhua">联系客服</view>
 		</view>
 
 	</view>
@@ -42,12 +44,34 @@
 		},
 		data() {
 			return {
-				userdata: {}
+				userdata: {},
+				xinyuzhi: {
+					realReputationValue: 0,
+					serviceReputationValue: 0,
+					depostiReputationValue: 0,
+					yearReputationValue: 0,
+				},
+			}
+		},
+		computed: {
+			allNum() {
+				const xx = this.xinyuzhi.realReputationValue + this.xinyuzhi.serviceReputationValue + this.xinyuzhi.depostiReputationValue +
+					this.xinyuzhi.yearReputationValue;
+				return xx;
 			}
 		},
 		created() {
 			this.userdata = getApp().globalData.userdata;
-			console.log(this.userdata);
+			this.api.home.getReputationValue({
+				data: {
+					userId: this.userdata.userId
+				}
+			}).then(res => {
+				this.xinyuzhi.realReputationValue = res.data.realReputationValue;
+				this.xinyuzhi.serviceReputationValue = res.data.realReputationValue;
+				this.xinyuzhi.depostiReputationValue = res.data.realReputationValue;
+				this.xinyuzhi.yearReputationValue = res.data.realReputationValue;
+			})
 		},
 		methods: {
 			nto() {
@@ -57,7 +81,7 @@
 			},
 			dianhua() {
 				uni.makePhoneCall({
-					 phoneNumber: '0574-5533-6130' //仅为示例
+					phoneNumber: '0574-5533-6130' //仅为示例
 				})
 			}
 		}
@@ -67,10 +91,11 @@
 <style scoped lang="scss">
 	.uni-page-body {
 		.header-box {
-			background:linear-gradient(175deg,rgba(61,140,243,1) 0%,rgba(116,227,255,1) 100%);
+			background: linear-gradient(175deg, rgba(61, 140, 243, 1) 0%, rgba(116, 227, 255, 1) 100%);
 			padding: 40upx;
 			margin-bottom: 24upx;
 			position: relative;
+
 			.xingyu {
 				position: absolute;
 				right: 18upx;
@@ -78,15 +103,17 @@
 				height: 148upx;
 				width: 275upx;
 			}
+
 			.pinfen {
 				align-items: center;
 				background-color: rgba($color: #ffffff, $alpha: 0.7);
 				padding: 0px 10upx;
 				border-radius: 10upx;
-				width: 240upx;
+				width: 300upx;
 				display: flex;
-				justify-content: center;
+				justify-content: space-around;
 			}
+
 			.img {
 				height: 142upx;
 				width: 142upx;

@@ -12,6 +12,12 @@ export default {
 			params
 		);
 	},
+	getReputationValue(params) {
+		return http.get(
+			'user/getReputationValue',
+			params
+		);
+	},
 	getCollectRecycleBinList(params) {
 		return http.get(
 			'user/getCollectRecycleBinList',

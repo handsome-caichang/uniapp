@@ -21,7 +21,7 @@
 		
 		<view class="point-box" v-if="userdata.isVip != 1">
 			<icon type="warn" size="20" ></icon>
-			<text style="margin-left: 10upx;">开通会员才能发布求购喔！钻石级别会员可加急</text>
+			<text style="margin-left: 10upx;">开通会员才能发布求购喔！非钻石会员加急无效</text>
 		</view>
 		<view class="uni-page-footer">
 			<uni-icons type="info-filled" class="icon" style="margin-right: 10upx;"></uni-icons>

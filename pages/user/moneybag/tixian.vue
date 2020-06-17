@@ -17,7 +17,7 @@
 				支付密码
 			</view>
 			<view class="input-box">
-				<input type="password" class="input" v-model="payPassword">
+				<input style="height: 80upx;" type="password" class="input" v-model="payPassword">
 			</view>
 		</view>
 		<view class="input-container">
@@ -101,7 +101,7 @@
 				if (this.bondnum) {
 					this.api.home.withdrawCash({
 						userId: getApp().globalData.userdata.userId,
-						money: this.bondnum,
+						money: this.bondnum * 100,
 						payPassword: this.payPassword,
 					}).then(res => {
 						uni.navigateTo({

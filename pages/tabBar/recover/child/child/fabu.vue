@@ -19,7 +19,7 @@
 			</view>
 		</view>
 		
-		<view class="point-box" v-if="userdata.isVip != 1">
+		<view class="point-box">
 			<icon type="warn" size="20" ></icon>
 			<text style="margin-left: 10upx;">开通会员才能发布求购喔！非钻石会员加急无效</text>
 		</view>

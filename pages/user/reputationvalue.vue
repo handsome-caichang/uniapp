@@ -3,8 +3,8 @@
 		<view class="header-box">
 			<image :src="userdata.headImage" class="img"></image>
 			<view class="uni-flex pinfen">
-				<uni-rate class="rate" :size="12" :value="allNum" />
-				<text class="list-succ" style="margin-left: 20upx;">{{allNum}}分</text>
+				<uni-rate class="rate" :size="12" :value="xinyuzhi.star" />
+				<text class="list-succ" style="margin-left: 20upx;">{{xinyuzhi.star}}分</text>
 			</view>
 		</view>
 		<uni-list>
@@ -50,16 +50,11 @@
 					serviceReputationValue: 0,
 					depostiReputationValue: 0,
 					yearReputationValue: 0,
+					star: 0,
 				},
 			}
 		},
-		computed: {
-			allNum() {
-				const xx = this.xinyuzhi.realReputationValue + this.xinyuzhi.serviceReputationValue + this.xinyuzhi.depostiReputationValue +
-					this.xinyuzhi.yearReputationValue;
-				return xx;
-			}
-		},
+		computed: {},
 		created() {
 			this.userdata = getApp().globalData.userdata;
 			this.api.home.getReputationValue({
@@ -67,10 +62,11 @@
 					userId: this.userdata.userId
 				}
 			}).then(res => {
-				this.xinyuzhi.realReputationValue = res.data.realReputationValue;
-				this.xinyuzhi.serviceReputationValue = res.data.realReputationValue;
-				this.xinyuzhi.depostiReputationValue = res.data.realReputationValue;
-				this.xinyuzhi.yearReputationValue = res.data.realReputationValue;
+				this.xinyuzhi.realReputationValue = res.data.realReputationValue / 100;
+				this.xinyuzhi.serviceReputationValue = res.data.serviceReputationValue / 100;
+				this.xinyuzhi.depostiReputationValue = res.data.depostiReputationValue / 100;
+				this.xinyuzhi.yearReputationValue = res.data.yearReputationValue / 100;
+				this.xinyuzhi.star = res.data.star / 100;
 			})
 		},
 		methods: {

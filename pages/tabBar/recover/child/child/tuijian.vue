@@ -31,7 +31,7 @@
 						<text style="margin-left: 10upx;">注册会员才能查看详情喔！</text>
 					</view>
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;">
-						<view class="price" style="font-size: 28upx;font-weight: 500;" v-if="item.bedrockPrice">{{item.outsidePrice}}元</view>
+						<view class="price" style="font-size: 28upx;font-weight: 500;" v-if="item.bedrockPrice">{{item.outsidePrice / 100}}元</view>
 						<view class="price" style="font-size: 28upx;font-weight: 500;" v-else>价格面议</view>
 						<text class="time" style="color: #343434;font-size: 22upx;">{{item.address}}</text>
 					</view>

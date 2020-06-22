@@ -1,7 +1,8 @@
 <template>
 	<view class="uni-page-body orderin">
 		<scroll-view class="scroll-h" :scroll-x="true" :show-scrollbar="false">
-			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 1 }" @tap="changetab(index)">
+			<view class="uni-tab-item" v-for="(item,index) in tablist" :key="index" :class="{'active': activeindex == index,'hongdian': index == 1 }"
+			 @tap="changetab(index)">
 				{{item}}
 				<text v-if="index == 1 && newleng" class="hongdiannum">{{newleng}}</text>
 			</view>
@@ -47,7 +48,7 @@
 						<view class="btnbox" style="margin-top: 30upx;" v-if="item.status == 0 || item.status == 1" @tap="guanli(item, '/pages/product/order/applicationrecord')">
 							<view style="color: #18C02C;border: 1upx solid #18C02C;padding: 2upx 20upx;border-radius: 20upx;">管理</view>
 						</view>
-						<view class="btnbox" style="margin-top: 30upx;" v-if="item.status == 99 " >
+						<view class="btnbox" style="margin-top: 30upx;" v-if="item.status == 99 ">
 							<view class="btn" style="color: #DD524D;font-size: 34upx;margin-right: 20upx;">匹配关闭</view>
 						</view>
 					</view>
@@ -80,7 +81,7 @@
 							</view>
 							<view class="btn" v-if="item.status == 0" style="color: #fff;background-color: #18C02C;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">接受</view>
 							<view class="btn" v-if="item.status == 1" style="color: #fff;background-color: #575757;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已同意</view>
-							<view class="btn"  v-if="item.status == 99" style="color: #fff;background-color: #DD524D;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已拒绝</view>
+							<view class="btn" v-if="item.status == 99" style="color: #fff;background-color: #DD524D;font-size: 28upx;padding: 0upx 20upx;border-radius: 20upx;margin-right: 40upx;">已拒绝</view>
 						</uni-list-item>
 					</uni-list>
 				</view>
@@ -93,8 +94,8 @@
 				</view>
 				<view class="uni-list">
 					<uni-list>
-						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'时间：'+item.createTime+'  '+item.sellDistrict"
-						 v-for="(item,index) in successlist" :key="index" @tap="toorderdetail(item, '/pages/product/order/orderdetail')">
+						<uni-list-item class="" :thumb="item.buyUserHeadImage" :note="'时间：'+item.createTime+'  '+item.sellDistrict" v-for="(item,index) in successlist"
+						 :key="index" @tap="toorderdetail(item, '/pages/product/order/orderdetail')">
 							<view slot="content" style="height: 50upx;">
 								<text style="font-size: 34upx;margin-right: 20upx;">{{item.buyUserName}}</text>
 							</view>
@@ -103,7 +104,7 @@
 								<uni-rate class="rate" :size="12" :value="item.start" />
 							</view>
 							<view class="btn" v-if="item.status == 99" style="color: #DD524D;font-size: 34upx;margin-right: 20upx;">匹配关闭</view>
-							<view class="btn"  v-if="item.status == 0 || item.status == 1" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
+							<view class="btn" v-if="item.status == 0 || item.status == 1" style="color: #18C02C;font-size: 34upx;margin-right: 20upx;">匹配成功</view>
 						</uni-list-item>
 					</uni-list>
 				</view>
@@ -140,13 +141,13 @@
 				jilulist: [],
 				activeindex: 0,
 				huishoulist: [],
-				newleng: 1,
+				newleng: 0,
 			}
 		},
 		created() {
 			this.api.home.realsegetNewReceivedMatchList({
 				data: {
-					userId:  getApp().globalData.userdata.userId,
+					userId: getApp().globalData.userdata.userId,
 				}
 			}).then(res => {
 				this.newleng = res.data.length;
@@ -172,6 +173,13 @@
 					this.getjilu();
 				} else if (curindex == 2) {
 					this.getshoudao();
+					this.api.home.realsegetNewReceivedMatchList({
+						data: {
+							userId: getApp().globalData.userdata.userId,
+						}
+					}).then(res => {
+						this.newleng = res.data.length;
+					})
 				} else if (curindex == 3) {
 					this.getMatchSuccessList();
 				}
@@ -237,7 +245,7 @@
 				});
 			},
 			guanli(item, url) {
-				getApp().globalData.userlistmanage =  Object.assign({}, item);;
+				getApp().globalData.userlistmanage = Object.assign({}, item);;
 				uni.navigateTo({
 					url,
 				})
@@ -313,9 +321,11 @@
 					background-color: $font-color-light;
 					color: $font-color-withe;
 				}
+
 				&.hongdian {
 					position: relative;
 				}
+
 				.hongdiannum {
 					position: absolute;
 					border-radius: 50%;

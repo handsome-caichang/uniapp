@@ -23,7 +23,7 @@
 						<text class="time" style="color: #575757;font-size: 20upx;">更新时间：{{utils.timeTodate('m-d', item.createTime)}}</text>
 					</view>
 					<view class="uni-flex" style="justify-content: space-between;align-items: center;height: 40upx;">
-						<view style="color: #212121;font-size: 28upx;">{{item.name}}</view>
+						<view style="color: #212121;font-size: 28upx;">{{item.district ? item.district : item.name}}</view>
 						<text class="detail-btn" :class="novip?'noclick':''">查看详情</text>
 					</view>
 					<view class="vipmore" v-if="novip">
@@ -180,7 +180,6 @@
 						lat: res.latitude,
 						lng: res.longitude,
 						district: this.region.label,
-						cityCode: this.region.cityCode,
 						classifyName: this.protype.value,
 						type: 1,
 					}

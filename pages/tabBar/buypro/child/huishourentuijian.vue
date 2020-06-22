@@ -2,7 +2,7 @@
 	<view class="listbox" style="padding: 0upx 40upx 40upx;">
 		<view style="width: 100%;text-align: center;height: 80upx;font-size: 48upx;color: #212121;" @tap="chooselocation">
 			<text style="float: left;">地区：</text>
-			<text>	{{ region.label }}</text>
+			<text> {{ region.label }}</text>
 		</view>
 		<view class="example-box" v-for="(item, index) in huishoulist" :key="index" @tap="todetail(item)">
 			<view class="uni-flex uni-row item-box">
@@ -57,13 +57,15 @@
 				geocode: true,
 				success: res => {
 					console.log(res);
-					var provinceindex = 0,cityindex =0,districtindex=0;
-					provinceData.forEach((item,index) => {
+					var provinceindex = 0,
+						cityindex = 0,
+						districtindex = 0;
+					provinceData.forEach((item, index) => {
 						if (item.label == res.address.province) {
 							provinceindex = index;
 						}
 					})
-					cityData.forEach((item,index)=> {
+					cityData.forEach((item, index) => {
 						if (index == provinceindex) {
 							item.forEach((it, y) => {
 								if (it.label == res.address.city) {
@@ -72,11 +74,11 @@
 							})
 						}
 					})
-					areaData.forEach((item,index)=> {
+					areaData.forEach((item, index) => {
 						if (index == provinceindex) {
 							item.forEach((it, y) => {
 								if (cityindex == y) {
-									it.forEach((area, areaindex)=> {
+									it.forEach((area, areaindex) => {
 										if (area.label == res.address.district) {
 											districtindex = areaindex;
 											this.region = {
@@ -84,7 +86,7 @@
 												value: [provinceindex, cityindex, areaindex],
 												cityCode: area.value
 											}
-											this.cityPickerValue =  [provinceindex, cityindex, areaindex];
+											this.cityPickerValue = [provinceindex, cityindex, areaindex];
 										}
 									})
 								}
@@ -103,7 +105,7 @@
 			onConfirm(e) {
 				this.region = e;
 				this.region.city = e.label.split('-');
-				this.region.label = this.region.city[this.region.city.length-1]
+				this.region.label = this.region.city[this.region.city.length - 1]
 				this.cityPickerValue = e.value;
 				this.getdata();
 			},
@@ -116,7 +118,6 @@
 						countPerPage: 2000,
 						pageIndex: 1,
 						district: this.region.label,
-						cityCode: this.region.cityCode
 					}
 				}).then(res => {
 					console.log(res)

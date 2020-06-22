@@ -31,7 +31,16 @@
 			<view class="uni-flex item-box">
 				<view class="uni-label-box">
 					<image class="img-icon" src="/static/img/huozhu/dizhi.png"></image>
-					<text class="text bitian">货物地址</text>
+					<text class="text bitian">货物区域</text>
+				</view>
+				<view class="input-box" @tap="chooselocation">
+					<text> {{ region.label }}</text>
+				</view>
+			</view>
+			<view class="uni-flex item-box">
+				<view class="uni-label-box">
+					<image class="img-icon" src="/static/img/address.jpeg"></image>
+					<text class="text bitian">详情地址</text>
 				</view>
 				<view class="input-box">
 					<input class="uni-input" v-model="address" type="text" placeholder="货物地址" />
@@ -61,7 +70,7 @@
 					<text class="text">允许匹配数</text>
 				</view>
 				<view class="input-box">
-					<picker @change="bindPickerChanges"  style="width: 100%;" :value="protypepipindex" :range="piplist" range-key="name">
+					<picker @change="bindPickerChanges" style="width: 100%;" :value="protypepipindex" :range="piplist" range-key="name">
 						<view class="uni-input">{{protypepip.value ? protypepip.value : protypepip.label }}</view>
 					</picker>
 					<!-- <input class="uni-input" v-model="pipeinum" maxlength="2" type="number" placeholder="如不输入，系统默认无限量" /> -->
@@ -87,7 +96,7 @@
 							<view class="uni-uploader__files">
 								<block v-for="(image,index) in imageList" :key="index">
 									<view class="uni-uploader__file">
-										<uni-icons type="close" size="20" color="#E7211A" class="sunui-img-removeicon clear-icon" @tap="delimg(index)" ></uni-icons>
+										<uni-icons type="close" size="20" color="#E7211A" class="sunui-img-removeicon clear-icon" @tap="delimg(index)"></uni-icons>
 										<image class="uni-uploader__img" :src="image" :data-src="image" @tap="previewImage"></image>
 									</view>
 								</block>
@@ -112,7 +121,7 @@
 			<icon type="warn" size="12" />
 			<text class="text">中途退出系统将不保留此次编辑</text>
 		</view>
-
+		<mpvue-city-picker ref="mpvueCityPicker" :pickerValueDefault="cityPickerValue" @onConfirm="onConfirm"></mpvue-city-picker>
 	</view>
 </template>
 
@@ -127,17 +136,31 @@
 		['original'],
 		['compressed', 'original']
 	]
-	import { mapMutations,mapState } from 'vuex';
+	import mpvueCityPicker from '@/components/mpvue-citypicker/mpvueCityPicker.vue'
+	import {
+		mapMutations,
+		mapState
+	} from 'vuex';
+	import provinceData from '@/components/mpvue-citypicker/city-data/province.js';
+	import cityData from '@/components/mpvue-citypicker/city-data/city.js';
+	import areaData from '@/components/mpvue-citypicker/city-data/area.js';
 	import permision from "@/common/permission.js"
 	import uniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uploadImage from '@/common/ossutil/uploadFile.js';
 	export default {
 		components: {
 			uniIcons,
+			mpvueCityPicker,
 		},
 		data() {
 			return {
 				themeColor: '#007AFF',
+				cityPickerValue: [0, 0, 1],
+				region: {
+					label: "请点击选择地区",
+					value: [],
+					cityCode: ""
+				},
 				protype: {
 					label: "请选择货物类别",
 					value: "",
@@ -146,21 +169,18 @@
 					label: "请选择",
 					value: "不限",
 				},
-				piplist: [
-					{
-						name: '不限'
-					},{
-						name: '1'
-					},{
-						name: '5'
-					},{
-						name: '10'
-					}
-				],
+				piplist: [{
+					name: '不限'
+				}, {
+					name: '1'
+				}, {
+					name: '5'
+				}, {
+					name: '10'
+				}],
 				protypepipindex: 0,
 				protypeindex: 0,
-				array: [
-				],
+				array: [],
 				cityPickerValue: [0, 0, 1],
 				numberleng: "",
 				price: "",
@@ -182,10 +202,53 @@
 		created() {
 			let userdata = getApp().globalData.userdata;
 			if (userdata.province) {
-				this.address = userdata.province + userdata.city + userdata.district;
+				this.region.label = userdata.province + '-' + userdata.city + "-" + userdata.district;
+				var provinceindex = 0,
+					cityindex = 0,
+					districtindex = 0;
+				provinceData.forEach((item, index) => {
+					if (item.label == userdata.province) {
+						provinceindex = index;
+					}
+				})
+				cityData.forEach((item, index) => {
+					if (index == provinceindex) {
+						item.forEach((it, y) => {
+							if (it.label == userdata.city) {
+								cityindex = y;
+							}
+						})
+					}
+				})
+				areaData.forEach((item, index) => {
+					if (index == provinceindex) {
+						item.forEach((it, y) => {
+							if (cityindex == y) {
+								it.forEach((area, areaindex) => {
+									if (area.label == userdata.district) {
+										districtindex = areaindex;
+										this.region.value = [provinceindex, cityindex, areaindex];
+										this.region.cityCode = area.value;
+										this.cityPickerValue = [provinceindex, cityindex, areaindex];
+									}
+								})
+							}
+						})
+					}
+				})
 			}
 		},
 		methods: {
+			onConfirm(e) {
+				console.log(e);
+				this.region = e;
+				this.region.city = e.label;
+				this.cityPickerValue = e.value;
+				console.log(this.region.label.split('-'));
+			},
+			chooselocation() {
+				this.$refs.mpvueCityPicker.show();
+			},
 			delimg(index) {
 				this.imageList.splice(index, 1)
 			},
@@ -203,7 +266,7 @@
 					uni.showModal({
 						title: "提示",
 						content: '该操作需要实名，请先前往我的->点击头像->实名认证，进行实名认证',
-						success: function (res) {
+						success: function(res) {
 							if (res.confirm) {
 								console.log('用户点击确定');
 								uni.navigateTo({
@@ -217,7 +280,7 @@
 					return;
 				}
 				let address = uni.getStorageSync('_location');
-				
+
 				if (!this.protype.value) {
 					uni.showModal({
 						title: "提示",
@@ -287,11 +350,11 @@
 					"bedrockPrice": +this.price * 100,
 					"outsidePrice": +this.price * 100,
 					"remark": this.remark,
-					province: address.address.province,
-					city: address.address.city,
-					district: address.address.district,
-					lat: ""+address.latitude,
-					lng: ""+address.longitude,
+					province: this.region.label.split('-')[0],
+					city: this.region.label.split('-')[1],
+					district: this.region.label.split('-')[2],
+					lat: "" + address.latitude,
+					lng: "" + address.longitude,
 				}).then(res => {
 					uni.navigateTo({
 						url: "/pages/other/fabusuccess"
@@ -302,7 +365,7 @@
 				// })
 			},
 			selectprotype() {
-				
+
 			},
 			async checkPermission(code) {
 				let type = code ? code - 1 : this.sourceTypeIndex;
@@ -372,14 +435,14 @@
 						for (var i = 0; i < res.tempFilePaths.length; i++) {
 							//显示消息提示框
 							uni.showLoading({
-							  mask: true
+								mask: true
 							})
 							//上传图片
 							//图片路径可自行修改
 							uploadImage(res.tempFilePaths[i], 'images/',
 								result => {
 									this.imageList = this.imageList.concat([result]);
-									 uni.hideLoading();
+									uni.hideLoading();
 								}
 							)
 						}
@@ -399,7 +462,7 @@
 					current: current,
 					urls: this.imageList
 				})
-				
+
 			},
 		}
 	}
@@ -408,11 +471,13 @@
 <style lang="scss" scoped>
 	.container-fabu {
 		padding: 40upx 20upx 0upx;
+
 		.fo-box {
 			display: flex;
 			justify-content: center;
 			margin-top: 20upx;
 			margin-bottom: 20upx;
+
 			.primary-btn {
 				width: 326upx;
 				height: 98upx;
@@ -424,6 +489,7 @@
 				font-size: 38upx;
 			}
 		}
+
 		.uni-list:before {
 			height: 0;
 		}

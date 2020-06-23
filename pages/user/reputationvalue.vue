@@ -12,13 +12,13 @@
 				<text>{{xinyuzhi.realReputationValue }}分 </text>
 			</uni-list-item>
 			<uni-list-item title="从业年限" :showArrow="false" :showBadge="true">
-				<text>{{xinyuzhi.depostiReputationValue }}分 </text>
+				<text>{{xinyuzhi.yearReputationValue }}分 </text>
 			</uni-list-item>
 			<uni-list-item title="保证金" :showArrow="false" :showBadge="true">
-				<text>{{xinyuzhi.serviceReputationValue }}分</text>
+				<text>{{xinyuzhi.depositReputationValue }}分</text>
 			</uni-list-item>
 			<uni-list-item title="服务综合评价" :showArrow="false" :showBadge="true">
-				<text>{{xinyuzhi.yearReputationValue }}分 </text>
+				<text>{{xinyuzhi.serviceReputationValue}}分 </text>
 			</uni-list-item>
 		</uni-list>
 
@@ -48,7 +48,7 @@
 				xinyuzhi: {
 					realReputationValue: 0,
 					serviceReputationValue: 0,
-					depostiReputationValue: 0,
+					depositReputationValue: 0,
 					yearReputationValue: 0,
 					star: 0,
 				},
@@ -64,7 +64,7 @@
 			}).then(res => {
 				this.xinyuzhi.realReputationValue = res.data.realReputationValue / 100;
 				this.xinyuzhi.serviceReputationValue = res.data.serviceReputationValue / 100;
-				this.xinyuzhi.depostiReputationValue = res.data.depositReputationValue / 100;
+				this.xinyuzhi.depositReputationValue = res.data.depositReputationValue / 100;
 				this.xinyuzhi.yearReputationValue = res.data.yearReputationValue / 100;
 				this.xinyuzhi.star = res.data.star / 100;
 			})

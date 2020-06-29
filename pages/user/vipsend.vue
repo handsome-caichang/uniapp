@@ -141,7 +141,7 @@
 		},
 		onLoad() {
 			// } else if (plus.os.name == 'iOS') {  
-			var IAPOrders = ['zuanshiVIPs', 'huangjinVIPs'];
+			var IAPOrders = ['huangjinVIPs', 'zuanshiVIPs'];
 			var _self = this;
 			// var IAPOrders = ['io.dcloud.payTest1', 'io.dcloud.payTest2'];
 			// 获取支付通道  
@@ -150,9 +150,9 @@
 					channels.forEach(item => {
 						if (item.id == 'appleiap') {
 							iapChannel = item;
-							item.requestOrder(['zuanshiVIPs', 'huangjinVIPs'], function(event) {
+							item.requestOrder(['huangjinVIPs', 'zuanshiVIPs'], function(event) {
 								console.log(event);
-								_self.neigoulist = event;
+								_self.neigoulist = event.reverse();
 								_self.changesuk(0);
 								// for (var index in event) {   
 								// 	var OrderItem = event[index];  

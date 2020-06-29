@@ -82,7 +82,7 @@
 				};
 				data.forEach(item => {
 					Mix.categories.push(item.time);
-					Mix.series[0].data.push(item.sumIncome)
+					Mix.series[0].data.push(item.sumIncome / 100)
 				})
 				this.showMix("canvasMix", Mix);
 			},
@@ -119,8 +119,6 @@
 						gridType: 'dash',
 						dashLength: 4,
 						splitNumber: 5,
-						min: 10,
-						max: 180,
 						format: (val) => {
 							return val.toFixed(0)
 						}

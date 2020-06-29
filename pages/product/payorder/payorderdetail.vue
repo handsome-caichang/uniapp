@@ -15,7 +15,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="content-pro" style="display: flex;">
+	<!-- 	<view class="content-pro" style="display: flex;">
 			<view class="left" style="flex: 1;">
 				<view class="title">
 					买家是否录入订单：<view>
@@ -36,8 +36,20 @@
 					卖家录入金额：<view>{{ orderdetail.sellMoney ? orderdetail.sellMoney / 100 : ''}} 元</view>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="content-pro" style="padding-top: 0px;">
+			<view class="title">
+				买家是否录入订单：{{orderdetail.isBuyWrite==1?'已录入':'未录入'}}
+			</view>
+			<view class="title">
+				卖家是否录入订单：{{orderdetail.isSellWrite==1?'已录入':'未录入'}}
+			</view>
+			<view class="title">
+				买家录入金额：{{ orderdetail.buyMoney ? orderdetail.buyMoney / 100 : ""}} 元
+			</view>
+			<view class="title">
+				卖家录入金额：{{ orderdetail.sellMoney ? orderdetail.sellMoney / 100 : ""}} 元
+			</view>
 			<view class="title">
 				交易类型：{{orderdetail.buyType==1?'称重交易':'估值交易' }}
 			</view>

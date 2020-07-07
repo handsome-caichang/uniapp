@@ -208,7 +208,26 @@
 						let datetime = new Date(time).getTime();
 						item.createTime = datetime;
 					})
-					this.jilulist = res.data;
+					let list = res.data.sort(company);
+			
+					
+					
+					function company(value1,value2){
+						   if (value1.createTime < value2.createTime) {
+						
+						       return 1;
+						
+						   } else if (value1.createTime > value2.createTime) {
+						
+						       return -1;
+						
+						   } else {
+						
+						       return 0;
+						
+						   }
+					}
+					this.jilulist = list;
 				})
 			},
 			getMatchSuccessList() {
@@ -217,7 +236,7 @@
 						userId: getApp().globalData.userdata.userId
 					}
 				}).then(res => {
-					this.successlist = res.data;
+					this.successlist = res.data.reverse();
 				})
 			},
 			getshoudao() {

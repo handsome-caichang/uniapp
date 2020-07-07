@@ -25,11 +25,12 @@
 			}
 		},
 		created() {
-			this.api.home.getNewSingleNoticeList({
+			this.api.home.getSingleNoticeList({
 				data: {
 					userId: getApp().globalData.userdata.userId
 				}
 			}).then(res => {
+				console.log(res.data)
 				this.list = res.data;
 			})
 		},

@@ -60,6 +60,12 @@ export default {
 			params
 		);
 	},
+	getSingleNoticeList(params) {
+		return http.get(
+			'advert/getSingleNoticeList',
+			params
+		);
+	},
 	getSubVipList(params) {
 		return http.get(
 			'wallet/getSubVipList',
@@ -141,6 +147,12 @@ export default {
 	getBillList(params) {
 		return http.get(
 			'bill/getBillList',
+			params
+		);
+	},
+	getBillListYear(params) {
+		return http.get(
+			'bill/getOrderBillListYear',
 			params
 		);
 	},

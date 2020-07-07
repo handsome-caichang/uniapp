@@ -187,6 +187,18 @@
 		},
 		onShow() {
 			this._updateuserhome();
+			// this.api.home.getNewSingleNoticeList({
+			// 	data: {
+			// 		userId: getApp().globalData.userdata.userId
+			// 	}
+			// }).then(res => {
+			// 	if(res.data.length > 0){
+					
+			// 	}else{
+			// 		console.log(document.querySelector(".uni-page-head-btn-red-dot"))
+			// 		document.querySelector(".uni-page-head-btn-red-dot").setAttribute("class","uni-page-head-btn");
+			// 	}
+			// })
 		},
 		onNavigationBarButtonTap(e) {
 			const index = e.index;

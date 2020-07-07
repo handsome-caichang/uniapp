@@ -57,15 +57,15 @@
 				uni.showLoading({
 					title: "正在加载数据..."
 				})
-				this.api.home.getBillList({
+				var date = new Date();
+				var year=date.getFullYear(); //获取完整的年份(4位)
+				this.api.home.getBillListYear({
 					data: {
 						userId: getApp().globalData.userdata.userId,
-						countPerPage: 1000,
-						pageIndex: 1,
-						orderType: -1,
+						year:year,
+						type:1,
 					}
 				}).then(res => {
-					console.log(res);
 					uni.hideLoading();
 					this.fillData(res.data);
 				})
@@ -82,7 +82,7 @@
 				};
 				data.forEach(item => {
 					Mix.categories.push(item.time);
-					Mix.series[0].data.push(item.sumSpend / 100)
+					Mix.series[0].data.push(item.sum)
 				})
 				this.showMix("canvasMix", Mix);
 			},
@@ -90,7 +90,7 @@
 				canvasObj[canvasId] = new uCharts({
 					$this: _self,
 					canvasId: canvasId,
-					type: 'mix',
+					type: 'column',
 					fontSize: 11,
 					padding: [15, 15, 0, 15],
 					legend: {

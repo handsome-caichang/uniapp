@@ -2,20 +2,20 @@
 	<view class="uni-page-body payorderdetail">
 		<view class="uni-flex content">
 			<view class="left">
-				<image :src="orderdetail.buyUser.headImage" class="headerimg"></image>
+				<image :src="orderdetail.sellUser.headImage" class="headerimg"></image>
 				<view class="title" style="font-weight: 500;margin-top: 30upx;">
-					{{orderdetail.buyUser.nickName}}
+					{{orderdetail.sellUser.nickName}}
 				</view>
 			</view>
 			<image class="jiaoyiimg" src="/static/img/jiaoyi.png"></image>
 			<view class="right">
-				<image :src="orderdetail.sellUser.headImage" class="headerimg"></image>
+				<image :src="orderdetail.buyUser.headImage" class="headerimg"></image>
 				<view class="title" style="font-weight: 500;margin-top: 30upx;">
-					<text>{{orderdetail.sellUser.nickName}}</text>
+					<text>{{orderdetail.buyUser.nickName}}</text>
 				</view>
 			</view>
 		</view>
-	<!-- 	<view class="content-pro" style="display: flex;">
+		<view class="content-pro" style="display: flex;">
 			<view class="left" style="flex: 1;">
 				<view class="title">
 					买家是否录入订单：<view>
@@ -36,9 +36,9 @@
 					卖家录入金额：<view>{{ orderdetail.sellMoney ? orderdetail.sellMoney / 100 : ''}} 元</view>
 				</view>
 			</view>
-		</view> -->
+		</view>
 		<view class="content-pro" style="padding-top: 0px;">
-			<view class="title">
+			<!-- <view class="title">
 				买家是否录入订单：{{orderdetail.isBuyWrite==1?'已录入':'未录入'}}
 			</view>
 			<view class="title">
@@ -49,7 +49,7 @@
 			</view>
 			<view class="title">
 				卖家录入金额：{{ orderdetail.sellMoney ? orderdetail.sellMoney / 100 : ""}} 元
-			</view>
+			</view> -->
 			<view class="title">
 				交易类型：{{orderdetail.buyType==1?'称重交易':'估值交易' }}
 			</view>

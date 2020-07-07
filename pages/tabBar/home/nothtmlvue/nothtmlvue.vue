@@ -15,8 +15,9 @@
 
 		},
 		created() {
-			console.log(uni.getStorageSync("_notContent"))
-			this.content = uni.getStorageSync("_notContent").content;
+			var str = uni.getStorageSync("_notContent").content;
+			var str2 = str.replace(new RegExp("img ","gm"),"img style='max-width:100% !important;'");
+			this.content = str2;
 		}
 	}
 </script>
@@ -29,7 +30,8 @@
 		padding: 20upx;
 
 		img {
-			width: 100%;
+			width: 100% !important;
 		}
 	}
+	
 </style>

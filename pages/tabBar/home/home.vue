@@ -167,14 +167,14 @@
 		},
 		created() {
 			let _userclientid = uni.getStorageSync('_userclientid');
-			if (!_userclientid) {
+		/* 	if (!_userclientid) {
 				_userclientid = plus.push.getClientInfo().clientid;
 				this.api.home.userBindCid({
 					userId: getApp().globalData.userdata.userId,
 					cid: _userclientid,
 				})
 				uni.setStorageSync('_userclientid', _userclientid);
-			}
+			} */
 			this.doGetLocation();
 			var homethis = this;
 			uni.$on('_updatehome', function(data) {
@@ -253,7 +253,7 @@
 					let userdata = uni.getStorageSync('userdata');
 					let newuserdata = Object.assign(userdata, res.data);
 					uni.setStorageSync('userdata', newuserdata);
-					console.log(newuserdata)
+	
 					app.globalData.userdata = newuserdata;
 					uni.$emit('_updateuser');
 				})
@@ -300,22 +300,23 @@
 				this.api.home.getNoticeList().then(res => {
 					this.gonkaolist = res.data;
 				})
-				// this.api.home.goodsRecommend({
-				// 	data: {
-				// 		userId: app.globalData.userdata.userId,
-				// 		lat: "28.22329671223958",
-				// 		lng: "112.8799093967014",
-				// 		type: 0,
-				// 	}
-				// }).then(res => {
-				// 	console.log(res);
-				// 	res.data.forEach(item => {
-				// 		let time = item.createTime.replace(' ', "T")
-				// 		let datetime = new Date(time).getTime();
-				// 		item.createTime = datetime;
-				// 	})
-				// 	this.huowulist = res.data;
-				// })
+				this.api.home.goodsRecommend({
+					data: {
+						userId: app.globalData.userdata.userId,
+						lat: "28.22329671223958",
+						lng: "112.8799093967014",
+						type: 0,
+					}
+				}).then(res => {
+			
+					res.data.forEach(item => {
+						let time = item.createTime.replace(' ', "T")
+						let datetime = new Date(time).getTime();
+						item.createTime = datetime;
+					})
+					console.log(res.data)
+					this.huowulist = res.data;
+				})
 				// 货物推荐
 				uni.getLocation({
 					geocode: true,
@@ -334,6 +335,7 @@
 								let datetime = new Date(time).getTime();
 								item.createTime = datetime;
 							})
+							console.log(res.data)
 							this.huowulist = res.data;
 						})
 					},

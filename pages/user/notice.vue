@@ -30,7 +30,6 @@
 					userId: getApp().globalData.userdata.userId
 				}
 			}).then(res => {
-				console.log(res.data)
 				this.list = res.data;
 			})
 		},

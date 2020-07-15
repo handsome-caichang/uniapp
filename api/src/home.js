@@ -276,6 +276,12 @@ export default {
 			params
 		);
 	},
+	getNewNoticeList(params) {
+		return http.get(
+			'advert/getNewNoticeList',
+			params
+		);
+	},
 	getIndustryInformationList(params) {
 		return http.get(
 			'advert/getIndustryInformationList',

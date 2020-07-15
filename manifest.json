@@ -2,7 +2,7 @@
     "name" : "废品帮",
     "appid" : "__UNI__EA893EF",
     "description" : "一个回收平台",
-    "versionName" : "1.0.3",
+    "versionName" : "1.0.6",
     "versionCode" : 1,
     "transformPx" : false,
     /* 5+App特有相关 */
@@ -129,13 +129,13 @@
                 },
                 "ios" : {
                     "iphone" : {
-                        "portrait-896h@3x" : "unpackage/res/icons/ios/1242x2688.png",
-                        "portrait-896h@2x" : "unpackage/res/icons/ios/828x1792.png",
-                        "iphonex" : "unpackage/res/icons/ios/1125x2436.png",
-                        "retina55" : "unpackage/res/icons/ios/1242x2208.png",
-                        "retina47" : "unpackage/res/icons/ios/750x1334.png",
-                        "retina40" : "unpackage/res/icons/ios/640x1136.png",
-                        "retina35" : "unpackage/res/icons/ios/640x960.png"
+                        "portrait-896h@3x" : "",
+                        "portrait-896h@2x" : "",
+                        "iphonex" : "",
+                        "retina55" : "",
+                        "retina47" : "",
+                        "retina40" : "",
+                        "retina35" : ""
                     }
                 }
             }
